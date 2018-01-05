@@ -1,0 +1,185 @@
+
+html{
+   
+    height: 100%;
+    body{
+        height: 100%;
+        font-size:16px;
+    }
+}
+*{
+    box-sizing: border-box;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a{
+    color: #333333;
+    text-decoration: none;
+}
+.spinner {
+  width: 60px;
+  height: 60px;
+ 
+  position: relative;
+  margin: 100px auto;
+}
+ 
+.double-bounce1, .double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #67CF22;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+   
+  -webkit-animation: bounce 2.0s infinite ease-in-out;
+  animation: bounce 2.0s infinite ease-in-out;
+}
+ 
+.double-bounce2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+ 
+@-webkit-keyframes bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+ 
+@keyframes bounce {
+  0%, 100% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% {
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+.listpage th .el-input__inner{
+    height:30px;
+    border-color:#ccc;
+}
+ .listpage th .el-input{
+    margin-top: 10px;
+ }
+.add-project .el-input__inner{
+    height:35px;
+    border-color:#ccc;
+}
+.add-project .el-textarea textarea{
+    border-color:#ccc;
+} 
+.add-project h3,.add-project h2{
+    padding-left:10px; 
+}
+.add-project .el-form-item .el-form-item__label{
+    width:40%;   
+}
+.add-project .el-form-item .el-form-item__content{
+    margin-left:40% !important;
+    width:43%;
+}
+.add-project .el-form-item.oneline{
+    width:50%;
+}
+.add-project .el-form-item.oneline .el-textarea__inner{
+    min-height:100px!important;
+    width:220%;
+}
+
+.add-project .el-form-item .el-form-item__content .el-select{
+    width:100%;
+}
+.add-project .el-date-editor.el-input{
+    width:100%;
+}
+.pagination-container .el-pagination__total{
+    margin-left:10px;
+}
+.listpage .el-icon-info{
+    color:#66b1ff;
+    
+}
+.listpage .el-icon-edit{
+    color:#85ce61;
+}
+
+.listpage .el-icon-delete{
+    color:#f78989;
+}
+.el-icon-info,.el-icon-edit,.el-icon-delete{
+    cursor: pointer;
+}
+.el-upload{
+    width:100%;
+    height: 100%;
+}
+
+.add-project{
+    .big-base-container{
+        .singal-base-container{
+            .el-form-item{
+                width:50%;
+            }
+        }   
+    }
+}
+.add-project{
+    .big-base-container{
+        .singal-base-container{
+            .el-form-item{
+                .el-form-item__content{
+                    width:80%;
+                }
+            }
+        }   
+    }
+}
+.add-project{
+    .big-base-container{
+        .singal-base-container{
+            .el-form-item{
+                .el-textarea__inner{
+                    min-height:80px !important;
+                }
+            }
+        }   
+    }
+}
+.spv-member-list .el-table__body-wrapper{
+    overflow-x: hidden;
+}  

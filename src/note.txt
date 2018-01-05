@@ -1,0 +1,83 @@
+1.状态管理工具实现的就是多组件件的数据共享
+
+2.类似于本地存储  
+
+
+1.安装vuex   npm i vuex --save
+
+2.创建store
+
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)//在vue里插件的使用，都必须使用Vue.use  全局使用
+
+new Vuex.Store(options) options上面配置好要管理的state
+
+3.在根实例里配置store
+  
+  在所以的组件里都可以通过this.$store来获取到相关属性和方法
+  
+  
+4.在组件里使用state上管理的状态   通过计算属性
+
+  1.computed:{
+  	num:function(){
+  		return this.$store.state.num
+  	}
+  }
+  
+  2.computed:mapState(['num'])
+  
+  3.computed:mapState({
+  	_num:'num'
+  })
+  
+  4.computed:{
+  	
+  	...mapState(['num'])
+  }
+
+
+5.更改state里的数据
+
+  1.配置一个mutaitions 纯对象，里面有很多直接更改状态的方法
+  
+  2.在组件（view）去调用mutations 的方法，this.$store.commit(方法名，参数),
+    mutation的方法第一个参数为state，第二个以及后面的都是view传递的参数
+    
+    
+6.衍生状态，二次封装状态  创建getters 建立好getters里的数据和state的数据的关系，在store进行配置
+
+  vue里使用getters的数据 计算属性：
+  computed:{
+  	double_num:function(){
+  		return this.$store.getters.doublenum
+  	}
+  }
+  
+  利用mapGetters辅助函数  和mapState一样
+  
+  ...mapGetters({
+  		double_num:'doublenum'
+  	})
+
+ 
+7.actions 因为mutations应该更纯粹，不应该包含异步请求等等操作，它需要做的就是更改状态
+  
+  所以我们在view和mutations之间创建一个actions。让view调用actions，actions来调用mutations，这样的话。actions里就可以包含异步操作了
+  
+  调用actions的方法  this.$store.dispatch(方法名，参数)  actions方法的第一个参数是一个包含commit方法的对象，第二个参数为view传递过来数据
+  
+  
+  在methods里可以使用mapActions辅助函数来将actions里的方法放入到组件的methods方法里
+  
+  
+
+
+
+
+  
+  
+
+  
