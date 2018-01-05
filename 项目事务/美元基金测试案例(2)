@@ -1,0 +1,267 @@
+﻿proj
+1.获取列表
+/admin/proj/list
+{"code":"SUCCESS","returnMessage":"SUCCESS","data":[{"portfolioid":"P00001","abbname":"QiuTan (Qiuba)","fullname":"One Dream Inc.","abbnamechi":"球吧","fullnamechi":"广州就乐网络科技有限公司","reportname":"QiuTan-Qiuba (One Dream Inc.)","logo":"../docs/logos/qiutan(qiuba).jpg","projectmanager":"S0135","idginhousecounsel":"S0078","projectbuddy":"","idgboardrepresentative":"S0135","idgroleid":2,"stageid":3,"initialroleid":2,"firstinvestid":2,"sectorid":1,"subsectorid":2,"onelinedesc":"Qiuba is a social network platform for sports fans.","onelinedeschi":null,"website":"http://www.ihuoliao.com","headcount":"6","antidilutionid":7,"locationid":6,"foundeddate":"2014","registerno":"OS-288274","formid":2,"liquidationpreference":"N/A","telephone":"86-020-85653515","fax":"86-020-85653515","address":"广州市天河区科韵路24-26号测绘大厦809室","addresschi":"广州市天河区科韵路24-26号测绘大厦809室","privateorpublic":"Realized","adrratio":"","lockupperiod":"","lockupexpireddate":-2209017600000,"stockexchangeid":0,"stockcode":"","spvjurisdition":"","ceo":"","product":"","primarybusiness":"","ytd":"December 31","approved":false,"directors":"","idgboardseatno":1,"totalboardseatno":1,"fundoffund":false,"remarkes":"","portfoliostatusdate":1473091200000,"auditconfaddress":null,"auditconfaddress2":null,"auditconfaddress3":null,"nomineename":null,"iceforceid":null,"observer":null,"memo":"from 201411, also in HK Co."},{"portfolioid":"P00002","abbname":"Helijia","fullname":"Helijia Inc.","abbnamechi":"河狸家","fullnamechi":"","reportname":"Helijia Inc.","logo":"../docs/logos/helijia3.jpg","projectmanager":"S0036","idginhousecounsel":"S0078","projectbuddy":"","idgboardrepresentative":"S0025","idgroleid":2,"stageid":3,"initialroleid":2,"firstinvestid":2,"sectorid":1,"subsectorid":27,"onelinedesc":"Helijia is an on-demand manicure services companion mobile app that allows users to make appointments for manicure services on the go.","onelinedeschi":null,"website":"http://www.helijia.cn","headcount":"0","antidilutionid":7,"locationid":6,"foundeddate":"2014","registerno":"OS-289788","formid":2,"liquidationpreference":"N/A","telephone":"(+86) 1860-059-2750","fax":"(+86) 1860-059-2750","address":"Suite #4-210, Governors Square, 23 Lime Tree Bay Avenue, PO Box 32311, Grand Cayman KY1-1209, Cayman Islands","addresschi":"北京市朝阳区酒仙桥北路7号电通时代文化广场1号楼B座","privateorpublic":"Private","adrratio":"","lockupperiod":"","lockupexpireddate":-2209017600000,"stockexchangeid":0,"stockcode":"","spvjurisdition":"","ceo":"","product":"","primarybusiness":"","ytd":"December 31","approved":true,"directors":"","idgboardseatno":1,"totalboardseatno":1,"fundoffund":false,"remarkes":null,"portfoliostatusdate":null,"auditconfaddress":null,"auditconfaddress2":null,"auditconfaddress3":null,"nomineename":null,"iceforceid":"5238","observer":null,"memo":"董事变更为Jeacy中201608"}]}
+
+1.1 获取列表属性
+
+/sys/dict
+{"dictArray":"IDG_Staff,DDL_PortfolioStatus"}
+
+2.获取单个项目
+/admin/proj/entity/{id}
+{
+    "code": "SUCCESS",
+    "returnMessage": "SUCCESS",
+    "data": {
+        "portfolioid": "P01033",
+        "abbname": "TEST-ZZ-3",
+        "fullname": "TEST-ZZ-2",
+        "abbnamechi": "测试2",
+        "fullnamechi": "测试2",
+        "reportname": "TEST-2-R",
+        "projectmanager": "S0001",
+        "heldbyspvflag": false,
+        "idgonboardflag": true,
+        "portfoliostatus": null,
+        "portfoliostatusstr": null,
+        "heldbyspv": null,
+        "idgboardrepresentative": "S0078",
+        "idgboardrepresentativestr": "Yilan Xie(谢一岚)",
+        "logo": "../docs/logos/qiutan(qiuba).jpg",
+        "projectmanagerstr": "Simon Ho(何志成)",
+        "idginhousecounsel": "S0077",
+        "idginhousecounselstr": "Xiaobing Yin(尹晓兵)",
+        "projectbuddy": "S0006,S0008,S0007",
+        "projectbuddystr": "Stephenie Chiang(蔣康婷),Katie Liu(廖靜儀),Ada Xu(徐竑迪)",
+        "idgroleid": 2,
+        "idgroleidstr": "Lead Investor",
+        "stageid": 3,
+        "stageidstr": "Early",
+        "initialroleid": 2,
+        "initialroleidstr": "Initiating",
+        "firstinvestid": 2,
+        "firstinvestidstr": "Series A",
+        "sectorid": 1,
+        "sectoridstr": "TMT",
+        "subsectorid": 2,
+        "subsectoridstr": "Internet/mobile application",
+        "antidilutionid": 7,
+        "antidilutionidstr": "Too early to tell",
+        "locationid": 6,
+        "locationidstr": "Cayman Islands",
+        "formid": 2,
+        "formidstr": "Variable Interest Entity(VIE)",
+        "stockexchangeid": 0,
+        "stockexchangeidstr": null,
+        "onelinedesc": "Qiuba is a social network platform for sports fans.",
+        "onelinedeschi": null,
+        "website": "http://www.ihuoliao.com",
+        "headcount": "6",
+        "foundeddate": "2014",
+        "registerno": "OS-288274",
+        "liquidationpreference": "N/A",
+        "telephone": "86-020-85653515",
+        "fax": "86-020-85653515",
+        "address": "广州市天河区科韵路24-26号测绘大厦809室",
+        "addresschi": "广州市天河区科韵路24-26号测绘大厦809室",
+        "adrratio": "",
+        "lockupperiod": "",
+        "lockupexpireddate": -2209017600000,
+        "stockcode": "",
+        "spvjurisdition": "",
+        "ceo": "",
+        "product": "",
+        "primarybusiness": "",
+        "ytd": "December 31",
+        "approved": false,
+        "idgboardseatno": 1,
+        "totalboardseatno": 1,
+        "fundoffund": false,
+        "remarkes": "",
+        "portfoliostatusdate": 1473091200000,
+        "auditconfaddress": null,
+        "auditconfaddress2": null,
+        "auditconfaddress3": null,
+        "nomineename": null,
+        "iceforceid": null,
+        "observer": "S0001",
+        "observerstr": "Simon Ho(何志成)",
+        "memo": "from 201411, also in HK Co."
+    }
+}
+
+3. addProjEntity
+/admin/proj/add
+{"abbname":"TEST-ZZ-6","fullname":"TEST-ZZ-6","abbnamechi":"测试6","fullnamechi":"测试6","reportname":"TEST-2-R","logo":"../docs/logos/qiutan(qiuba).jpg","projectmanager":"S0001,S0002" ,"projectbuddy":"S0006,S0008","idgroleid":2,"stageid":3,"initialroleid":2,"firstinvestid":2,"sectorid":1,"subsectorid":2,"onelinedesc":"Qiuba is a social network platform for sports fans.","onelinedeschi":null,"website":"http://www.ihuoliao.com","headcount":"6","antidilutionid":7,"idginhousecounsel":"S0078","locationid":6,"foundeddate":"2014","registerno":"OS-288274","formid":2,"idgboardrepresentative":"S0135","liquidationpreference":"N/A","telephone":"86-020-85653515","fax":"86-020-85653515","address":"广州市天河区科韵路24-26号测绘大厦809室","addresschi":"广州市天河区科韵路24-26号测绘大厦809室","privateorpublic":"Realized","adrratio":"","lockupperiod":"","lockupexpireddate":-2209017600000,"stockexchangeid":0,"stockcode":"","spvjurisdition":"","ceo":"","product":"","primarybusiness":"","ytd":"December 31","approved":false,"idgboardseatno":1,"totalboardseatno":1,"fundoffund":false,"remarkes":"","portfoliostatusdate":1473091200000,"auditconfaddress":null,"auditconfaddress2":null,"auditconfaddress3":null,"nomineename":null,"iceforceid":null,"observer":"S0009,S00010","memo":"from 201411, also in HK Co.","idgonboardflag":true,
+    "portfoliostatus": 1
+}
+4.updateProjInfo
+/admin/proj/update
+{"portfolioid": "P01034","abbname":"TEST-ZZ-6","fullname":"TEST-ZZ-6","abbnamechi":"测试6","fullnamechi":"测试6","reportname":"TEST-2-R","logo":"../docs/logos/qiutan(qiuba).jpg","projectmanager":"S0001,S0002" ,"projectbuddy":"S0006,S0008","idgroleid":2,"stageid":3,"initialroleid":2,"firstinvestid":2,"sectorid":1,"subsectorid":2,"onelinedesc":"Qiuba is a social network platform for sports fans.","onelinedeschi":null,"website":"http://www.ihuoliao.com","headcount":"6","antidilutionid":7,"idginhousecounsel":"S0078","locationid":6,"foundeddate":"2014","registerno":"OS-288274","formid":2,"idgboardrepresentative":"S0135","liquidationpreference":"N/A","telephone":"86-020-85653515","fax":"86-020-85653515","address":"广州市天河区科韵路24-26号测绘大厦809室","addresschi":"广州市天河区科韵路24-26号测绘大厦809室","privateorpublic":"Realized","adrratio":"","lockupperiod":"","lockupexpireddate":-2209017600000,"stockexchangeid":0,"stockcode":"","spvjurisdition":"","ceo":"","product":"","primarybusiness":"","ytd":"December 31","approved":false,"idgboardseatno":1,"totalboardseatno":1,"fundoffund":false,"remarkes":"","portfoliostatusdate":1473091200000,"auditconfaddress":null,"auditconfaddress2":null,"auditconfaddress3":null,"nomineename":null,"iceforceid":null,"observer":"S0009,S00010","memo":"from 201411, also in HK Co.","idgonboardflag":true,
+    "portfoliostatus": 2
+}
+5.删除项目
+admin/proj/delete/P01030
+{
+    "code": "SUCCESS",
+    "returnMessage": "SUCCESS",
+    "data": null,
+    "count": null
+}
+
+Sys 
+1./sys/dict获取字典下拉列表
+入参:{"dictArray":"DDL_IDGRole,DDL_Stage"}
+返回:
+{
+    "code": "SUCCESS",
+    "returnMessage": "SUCCESS",
+    "data": [
+        {
+            "baseType": "DDL_IDGRole",
+            "baseInfoList": [
+                {
+                    "baseId": 2,
+                    "baseName": "Lead Investor"
+                },
+                {
+                    "baseId": 3,
+                    "baseName": "Co-Investor"
+                },
+                {
+                    "baseId": 4,
+                    "baseName": "Incubator"
+                },
+                {
+                    "baseId": 7,
+                    "baseName": "Sole-Investor"
+                },
+                {
+                    "baseId": 8,
+                    "baseName": "Co-lead investor"
+                },
+                {
+                    "baseId": 9,
+                    "baseName": "Advisor"
+                },
+                {
+                    "baseId": 10,
+                    "baseName": "Observer"
+                },
+                {
+                    "baseId": 11,
+                    "baseName": "Bond holder"
+                },
+                {
+                    "baseId": 13,
+                    "baseName": "JV partner"
+                },
+                {
+                    "baseId": 14,
+                    "baseName": "Passive"
+                }
+            ]
+        },
+        {
+            "baseType": "DDL_Stage",
+            "baseInfoList": [
+                {
+                    "baseId": 2,
+                    "baseName": "Seed"
+                },
+                {
+                    "baseId": 3,
+                    "baseName": "Early"
+                },
+                {
+                    "baseId": 4,
+                    "baseName": "Start-Up"
+                },
+                {
+                    "baseId": 5,
+                    "baseName": "Later"
+                },
+                {
+                    "baseId": 8,
+                    "baseName": "Growth"
+                }
+            ]
+        }
+    ]
+}
+
+
+
+
+
+
+proj contact
+1./admin/proj/contact/list/{portfolioID}
+
+2./admin/proj/contact/add
+{
+            "portfolioid": "P01029",
+            "firstnameeng": "Frank",
+            "lastnameeng": "",
+            "firstnamechi": "",
+            "lastnamechi": "",
+            "title": "",
+            "email": "frank.luo@yilan.tv",
+            "officeno": "",
+            "mobileno": "",
+            "faxno": "",
+            "address": "",
+            "nickname": "罗总",
+            "createdby": "S0238",
+            "createddate": 1509412157000,
+            "modifiedby": "S0238",
+            "modifieddate": 1509581464000,
+            "emailcontactortype": null,
+            "approved": false,
+            "status": null,
+            "preferredlanguage": "C",
+            "financialcollection": null,
+            "businessupdate": "CC",
+            "auditconfirmation": "",
+            "ccpm": false,
+            "quarterlyemail": null
+        }
+
+3./admin/proj/contact/update
+        {
+            "contactid": 6746,
+            "portfolioid": "P01029",
+            "firstnameeng": "Frank111",
+            "lastnameeng": "2",
+            "firstnamechi": "3",
+            "lastnamechi": "4",
+            "title": "",
+            "email": "frank.luo@yilan.tv",
+            "officeno": "",
+            "mobileno": "",
+            "faxno": "",
+            "address": "",
+            "nickname": "罗总",
+            "createdby": "",
+            "createddate": 1513577883147,
+            "modifiedby": "",
+            "modifieddate": 1513577883147,
+            "emailcontactortype": null,
+            "approved": false,
+            "status": null,
+            "preferredlanguage": "C",
+            "financialcollection": null,
+            "businessupdate": "CC",
+            "auditconfirmation": "",
+            "ccpm": false,
+            "quarterlyemail": null
+        }
+
+
+sys
+
+3.baseInfo
+{"dictArray":"DDL_IDGRole,DDL_StockExchange"}
+
+
