@@ -1,0 +1,18 @@
+http://blog.csdn.net/zhangfeng1133/article/details/51841605
+Bcore     http://www.laozuo.org/5886.html
+bootswitch          https://bootswatch.com/cerulean/
+10款基于bootstrap 的后台管理框架    http://www.laozuo.org/5886.html
+
+metro   https://www.js-css.cn/divcss/admin/metro/index.html
+
+mvn --projects backend spring-boot:run 
+
+mvn spring-boot:run
+
+https://www.ico.la/   ico图标
+
+192.168.105.11  //中文投资管理系统
+
+li_zhao
+a1231231
+
