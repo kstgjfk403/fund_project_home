@@ -2,8 +2,8 @@
 <div class="spv-member-list">
     <Header></Header>
     <div class="spv-list-container">
-        <div class="spv-left">
-            <el-card class="box-card">
+        <div class="spv-left" >
+            <el-card class="box-card" style="height:464px;">
                 <div slot="header" class="clearfix">
                     <span>SPV</span>
                     <el-button style="float: right; padding: 3px 0" type="text">Add</el-button>
@@ -17,13 +17,12 @@
             </el-card>
         </div>
         <div class="spv-right">
-            <div class="spv-right-top">
-                <el-card class="box-card">
-                <div slot="header" class="clearfix">
+            <div class="spv-right-top">    
+                <div class="clearfix">
                     <span>基本信息</span>
                 </div>
                 <el-table
-                    :data="tableData"
+                    :data="tableData1"
                     border
                     stripe
                     style="width: 100%">
@@ -42,44 +41,57 @@
                     label="地址">
                     </el-table-column>
                 </el-table>
-            </el-card>
             </div>
-            <div class="spv-right-bottom">
-                <el-card class="box-card">
-                <div slot="header" class="clearfix">
+            <div class="spv-right-bottom">    
+                <div class="clearfix">
                     <div class="form-container">
-                        <el-form :model="ruleForm" :rules="rules" label-width="40px" ref="ruleForm">
+                        <el-form :model="ruleForm" :rules="rules" label-width="40px" ref="ruleForm1">
                             <el-form-item label="Time">
                                 <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
                             </el-form-item>
                         </el-form>
                     </div>
-                    <el-button style="float: left; margin:2px 0 0 10px" size="medium" type="primary">Add</el-button>
+                    <el-button style="float: left; margin:3px 0 0 10px" size="medium" type="primary" @click="dialogTableVisible=true">Add</el-button>
                 </div>
-                <el-table
-                    :data="tableData"
-                    border
-                    stripe
-                    style="width: 100%;">
-                    <el-table-column
-                        prop="date"
-                        label="日期"
-                        width="180">
-                    </el-table-column>
-                    <el-table-column
-                    prop="name"
-                    label="姓名"
-                    width="180">
-                    </el-table-column>
-                    <el-table-column
-                    prop="address"
-                    label="地址">
-                    </el-table-column>
+                <el-table :data="tableData" border stripe :span-method="objectSpanMethod">
+                    <el-table-column prop="date" label="日期" width="180" sortable></el-table-column>
+                    <el-table-column prop="name" label="股东名称" width="180"></el-table-column>
+                    <el-table-column prop="address" label="股东类别"></el-table-column>
+                    <el-table-column prop="address" label="认缴金额(元)" sortable></el-table-column>
+                    <el-table-column prop="address" label="占比(%)" sortable></el-table-column>
                 </el-table>
-            </el-card>
             </div>
         </div>
     </div>
+    <el-dialog title="ADD" :visible.sync="dialogTableVisible">
+        <div class="edit-input">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm2" :inline="true">
+                <el-form-item label="股东类别">
+                    <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
+                        <el-option label="区域一" value="shanghai"></el-option>
+                        <el-option label="区域二" value="beijing"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="股东名称">
+                    <el-input v-model="ruleForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="证件凭证">
+                    <el-input v-model="ruleForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="金额(万元)">
+                    <el-input v-model="ruleForm.name"></el-input>
+                </el-form-item>
+            </el-form>
+        </div>
+        <el-table bordered :data="tableData">
+            <el-table-column prop="date" label="日期" width="180" sortable></el-table-column>
+            <el-table-column prop="name" label="股东名称" width="180"></el-table-column>
+            <el-table-column prop="address" label="股东类别"></el-table-column>
+            <el-table-column prop="address" label="认缴金额(元)" sortable></el-table-column>
+            <el-table-column prop="address" label="占比(%)" sortable></el-table-column>
+            <el-table-column prop="address" label="操作"></el-table-column>
+        </el-table>
+    </el-dialog>
 </div>
 </template>
 <script>
@@ -89,6 +101,7 @@ export default {
     name:"spvlist",
     data:function(){  
         return {
+            dialogTableVisible:false,
             labelposition:"right",
             treedata: [{
                 id:0,
@@ -133,11 +146,32 @@ export default {
             children: 'children',
                 label: 'label'
             },
-            tableData: [{
-                date: '2016-05-02',
+            tableData1: [{
+                date: '2016-06-02',
                 name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
+                address: '上海市普陀区金'
             }],
+            tableData: [{
+                date: '2016-08-02',
+                name: '王小虎',
+                address: '上海市普陀区金'
+            },
+            {
+                date: '2016-05-05',
+                name: '王小虎',
+                address: '上海市普陀区金'
+            },
+            {
+                date: '2016-05-06',
+                name: '王小虎',
+                address: '上海市普陀区金'
+            },
+            {
+                date: '2016-05-07',
+                name: '王小虎',
+                address: '上海市普陀区金'
+            }
+            ],
             ruleForm:{
                 name: '',
                 region: '',
@@ -147,6 +181,11 @@ export default {
                 type: [],
                 resource: '',
                 desc: ''
+            },
+            rules:{
+                region:[
+                    { required: true, message: '请选择活动区域', trigger: 'change' }
+                ]
             }
         }   
     },
@@ -160,7 +199,22 @@ export default {
             console.log(b)
             console.log(c)
             console.log(this.$refs.spvTree.getCheckedNodes());
+        },
+        objectSpanMethod({ row, column, rowIndex, columnIndex }) {
+        if (columnIndex === 0) {
+          if (rowIndex % 2 === 0) {
+            return {
+              rowspan: 2,
+              colspan: 1
+            };
+          } else {
+            return {
+              rowspan: 0,
+              colspan: 0
+            };
+          }
         }
+      }
     },
     components:{
         Header
@@ -170,7 +224,7 @@ export default {
 <style scoped lang="scss">
 	.spv-member-list{
         width:100%;
-        padding:0 10px;
+        padding:15px 10px;
         box-sizing: border-box;
     }
     .spv-list-container {
@@ -186,14 +240,36 @@ export default {
         .spv-left{
             float:left;
             width:15%;
+            height:600px;
         }
         .spv-right{
             float:left;
-            width:85%;
+            width:80%;
+            margin-left:2%;
             .spv-right-top{
                 margin-bottom:30px;
+                border-radius:4px;
+                overflow:hidden;
+            }
+            .spv-right-bottom{
+                border-radius:4px;
+                overflow:hidden;
             }
         }
     }
-    
+    .spv-right .clearfix{
+        background:#eee;
+        padding:5px 15px;
+        box-sizing:border-box;
+        span{
+            color:#606266;
+        }
+    }
+    .spv-list-container::after{
+        content:'';
+        height: 0;
+        clear: both;
+        display:block;
+        visibility: hidden;
+    }
 </style>

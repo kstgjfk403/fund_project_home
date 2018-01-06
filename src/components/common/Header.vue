@@ -29,9 +29,9 @@
                 <router-link class="invest-fund" to='listpage'>Portfolio</router-link>
               </div>
             </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="#">Blog</a>
-            </li> -->
+            <li class="nav-item">
+              <router-link class="nav-link" to='spvlist'>SPV</router-link>
+            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="download">Cerulean <span class="caret"></span></a>
               <div class="dropdown-menu" aria-labelledby="download">

@@ -182,4 +182,35 @@ a{
 }
 .spv-member-list .el-table__body-wrapper{
     overflow-x: hidden;
+}
+//spv 弹框的样式调整。。。包括里面嵌套的表格
+
+.spv-member-list .el-dialog{
+    border-radius:4px;
+    width:68%;
+    overflow:hidden;
+    .el-input__inner{
+        height:30px;
+        border-color:#ccc;
+        font-size:12px;
+    }
+    .el-form-item{
+        width:23%;
+        .el-form-item__content{
+            width:65%;
+        }
+        .el-form-item__label{
+            width:35%;
+            font-size:12px;    
+        }
+    }
+    .el-select-dropdown__item{
+        font-size:12px;
+    }
+    .el-table--fit{
+        font-size:12px;
+    }
+    .el-dialog__header{
+        background:#eee;
+    }
 }  
