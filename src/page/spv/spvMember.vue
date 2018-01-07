@@ -2,8 +2,8 @@
 <div class="spv-member-list">
     <Header></Header>
     <div class="spv-list-container">
-        <div class="spv-left" >
-            <el-card class="box-card" style="height:464px;">
+        <div class="spv-left">
+            <el-card class="box-card" style="height:560px;">
                 <div slot="header" class="clearfix">
                     <span>SPV</span>
                     <el-button style="float: right; padding: 3px 0" type="text">Add</el-button>
@@ -12,34 +12,19 @@
                     highlight-current 
                     ref="spvTree" 
                     :props="defaultProps" 
-                    @node-click="handleNodeClick">
+                    >
                 </el-tree>
             </el-card>
         </div>
         <div class="spv-right">
             <div class="spv-right-top">    
                 <div class="clearfix">
-                    <span>基本信息</span>
+                    <span>Base Information</span>
                 </div>
-                <el-table
-                    :data="tableData1"
-                    border
-                    stripe
-                    style="width: 100%">
-                    <el-table-column
-                    prop="date"
-                    label="日期"
-                    width="180">
-                    </el-table-column>
-                    <el-table-column
-                    prop="name"
-                    label="姓名"
-                    width="180">
-                    </el-table-column>
-                    <el-table-column
-                    prop="address"
-                    label="地址">
-                    </el-table-column>
+                <el-table :data="tableData2" border stripe style="width: 100%">
+                    <el-table-column prop="date2" label="日期"></el-table-column>
+                    <el-table-column prop="name2" label="姓名"></el-table-column>
+                    <el-table-column prop="address2" label="地址"></el-table-column>
                 </el-table>
             </div>
             <div class="spv-right-bottom">    
@@ -143,13 +128,23 @@ export default {
                 }]
             }],
             defaultProps: {
-            children: 'children',
+                children: 'children',
                 label: 'label'
             },
-            tableData1: [{
-                date: '2016-06-02',
-                name: '王小虎',
-                address: '上海市普陀区金'
+            tableData2: [{
+                date2: '2016-06-02',
+                name2: '王小虎',
+                address2: '上海市普陀区金'
+            },
+            {
+                date2: '2016-06-02',
+                name2: '王小虎',
+                address2: '上海市普陀区金'
+            },
+            {
+                date2: '2016-06-02',
+                name2: '王小虎',
+                address2: '上海市普陀区金'
             }],
             tableData: [{
                 date: '2016-08-02',
@@ -191,14 +186,14 @@ export default {
     },
     mounted:function(){
        
-       
     },
     methods:{
-        handleNodeClick(a,b,c){  
-            console.log(a)
-            console.log(b)
-            console.log(c)
-            console.log(this.$refs.spvTree.getCheckedNodes());
+        handleNodeClick(a,b,c){
+            event.stopPropagation()  
+            // console.log(a)
+            // console.log(b)
+            // console.log(c)
+            // console.log(this.$refs.spvTree.getCheckedNodes());
         },
         objectSpanMethod({ row, column, rowIndex, columnIndex }) {
         if (columnIndex === 0) {

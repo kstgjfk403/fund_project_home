@@ -4,8 +4,8 @@ export function switchStr(obj){
         var str;
         for(var i in dataobj){
             if(dataobj[i] instanceof Array){
-              str=dataobj[i].join();
-              dataobj[i]=str;
+                str=dataobj[i].join();
+                dataobj[i]=str;
             }
         }
         return dataobj;
@@ -46,9 +46,9 @@ export function toLocalString(ms,symbol){
     var reg = /^[1-9][0-9]*$/;
     var marker,dateObj,timeString;
     if(reg.test(ms)){
-          marker=symbol||"/";
-          dateObj=new Date(ms);
-          timeString=dateObj.getFullYear()+marker+(dateObj.getMonth()+1)+marker+dateObj.getDate();
+        marker=symbol||"/";
+        dateObj=new Date(ms);
+        timeString=dateObj.getFullYear()+marker+(dateObj.getMonth()+1)+marker+dateObj.getDate();
     }
     return timeString
 }
