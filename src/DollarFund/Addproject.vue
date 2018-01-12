@@ -18,10 +18,16 @@
                     </el-form-item>
                     
                     <el-form-item label="Financial Year End">
-                        <el-input v-model="formData.yearend"></el-input>
+                        <el-select v-model="formData.yearend" placeholder="请选择活动区域">
+                        <el-option :key="item.baseId" 
+                            :label="item.baseName" 
+                            :value="item.baseId" 
+                            v-for="item in dictarraylist.YTD"></el-option>
+                        </el-select>
                     </el-form-item>
                     <el-form-item label="Fund Closing Date" multiple>
-                        <el-input v-model="formData.closedate"></el-input>
+                        <!--<el-input v-model="formData.closedate"></el-input>-->
+                        <el-date-picker v-model="formData.closedate" type="date" placeholder="选择日期"></el-date-picker>
                     </el-form-item>
                     <el-form-item label="Total GP Commitment">
                         <el-input v-model="formData.totalgpcommitnum" placeholder="多选+搜索select框" filterable  @change="togetherChange"></el-input>
@@ -32,7 +38,7 @@
                         <el-option :key="item.baseId" 
                             :label="item.baseName" 
                             :value="item.baseId" 
-                            v-for="item in dictarraylist.DDL_AntiDilution"></el-option>
+                            v-for="item in dictarraylist.CURRENCY"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="Incorprated In">
@@ -95,7 +101,8 @@
                     </el-form-item>
                     
                     <el-form-item label="Formation Date" prop="formationdate">
-                        <el-input v-model="formData.formationdate"></el-input>
+                        <!-- <el-input v-model="formData.formationdate"></el-input> -->
+                        <el-date-picker v-model="formData.formationdate" type="date" placeholder="选择日期"></el-date-picker>
                     </el-form-item>
                     <el-form-item label="Total LP Commitment">
                         <el-input v-model="formData.totallpcommitnum" placeholder="请选择活动区域"></el-input>
@@ -152,10 +159,14 @@
             </div>
         </div>
         <el-form-item style="margin-top:15px;">
-            <el-button type="primary" size="mini" @click="submitForm1('userform')" v-if="opreationType=='creatuserform'">创建</el-button>
-            <el-button type="primary" size="mini" @click="submitForm2('userform')" v-else>更新</el-button>
-            <el-button size="mini" @click="resetForm('userform')">重置</el-button>
-            <router-link to="fundlistpage" style="margin-left:10px"><el-button size="mini">返回</el-button></router-link>
+            <div v-if="opreationType=='creatuserform'">
+                <el-button type="primary" size="mini" @click="submitForm1('userform')">创建</el-button>
+                <router-link to="fundlistpage" style="margin-left:10px"><el-button size="mini">返回</el-button></router-link>
+            </div>
+            <div v-else>
+                <el-button type="primary" size="mini" @click="submitForm2('userform')">更新</el-button>
+                <el-button size="mini" type="primary" @click="linktodetail">返回</el-button>
+            </div>
         </el-form-item> 
     </el-form>
 </div>
@@ -243,11 +254,7 @@ export default {
             { message: 'required', trigger: 'blur' }
           ],
           registerno: [
-            {  message: 'required', trigger: 'blur' }
-            
-          ],
-          totalboardseatno: [
-            {type:"number", message: 'required', trigger: 'blur' }
+            {  message: 'required', trigger: 'blur' }   
           ],
           headcount: [
             { message: 'required', trigger: 'blur' } 
@@ -282,43 +289,49 @@ export default {
         }  
       }
     },
-    mounted:function(){
-        //this.requserlist();//获取列表数据
+    created(){
         var way=this.$route.query.path;
         var fundid=this.$route.query.fundid;
         this.classOperation(way,fundid);
     },
+    mounted:function(){
+        this.requserlist();//获取列表数据
+    },
     methods:{
-    //    requserlist(){
-    //        var enterobj={
-    //            dictArray:'DDL_IDGRole,DDL_Stage,DDL_InitialRole,DDL_IDGFirstInvest,DDL_Sector,DDL_SubSector,DDL_AntiDilution,DDL_IncorpLocation,DDL_CompanyLegalForm,DDL_PortfolioStatus,DDL_StockExchange,IDG_Staff,YTD'
-    //        }
-    //        axioss.reqdroplist(enterobj).then(res=>{
-    //               this.dictarraylist=method.translateFormat(res.data.data);
-    //               this.subsectorlist=this.dictarraylist.DDL_SubSector;
-    //               this.extraarr=this.dictarraylist.DDL_SubSector.slice();
-    //               console.log("获取数据列表成功")
-    //           }).catch(res=>{
-    //              console.log(res);
-    //           })
-    //    },
-       linktodetail(id){
+       requserlist(){
+           var enterobj={
+               dictArray:'DDL_IncorpLocation,YTD,CURRENCY'
+           }
+           axioss.reqdroplist(enterobj).then(res=>{
+                  this.dictarraylist=method.translateFormat(res.data.data);
+                  console.log(this.dictarraylist)
+              }).catch(res=>{
+                 console.log(res);
+              })
+       },
+       linktodetail(){
+           var id=this.formData.fundid
            this.$router.push({ path: "funddetail", query: { fundid: id } })
+       },
+       linktolist(){
+           this.$router.push({ name: "fundlistpage"})
        },
        submitForm1(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
                 var tranForm=this.formData;
-                tranForm.closedate=method.toMs(tranForm.closedate);
-                tranForm.formationdate=method.toMs(tranForm.formationdate);
+                console.log(tranForm)
+                // tranForm.closedate=method.toMs(tranForm.closedate);
+                // tranForm.formationdate=method.toMs(tranForm.formationdate);
                 axioss.submitinfo2(tranForm).then(res=>{
-                  //console.log(res)
+                  console.log(res)
                   var flag=res.data.code=="SUCCESS";
-                  if(flag){
+                  if(flag){ 
                       this.$message({
                           type:'success',
                           message:'创建成功'
                       })
+                      this.linktolist()
                   }else{
                       this.$message({
                           type:'warning',
@@ -341,11 +354,11 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
               var tranForm=this.formData;
-              tranForm.closedate=method.toMs(tranForm.closedate);
-              tranForm.formationdate=method.toMs(tranForm.formationdate);
+              //tranForm.closedate=method.toMs(tranForm.closedate);
+              //tranForm.formationdate=method.toMs(tranForm.formationdate);
               axioss.modifyinfo2(tranForm).then(res=>{
-                  console.log(res)
-                  this.linktodetail(this.formData.fundid); 
+                  //console.log(res)
+                  this.linktodetail(); 
               }).catch(res => {
                   console.log(res)
               })
@@ -357,10 +370,6 @@ export default {
             return false;
           }
         });
-      },
-      resetForm(formName) {
-        alert('reset')
-        this.$refs[formName].resetFields();
       },
       togetherChange(id){
           var empty=[];
@@ -380,8 +389,9 @@ export default {
                 var tranRes=res.data.data;
                 var closedate=tranRes.closedate;
                 var formationdate=tranRes.formationdate;
-                tranRes.closedate=method.toLocalString(closedate);
-                tranRes.formationdate=method.toLocalString(formationdate);                
+                //console.log(res)
+                //tranRes.closedate=method.toLocalString(closedate);
+                //tranRes.formationdate=method.toLocalString(formationdate);                
                 this.formData=tranRes;
                 //console.log(tranRes); 
             }).catch((res)=>{

@@ -3,23 +3,23 @@
     <div class="listpage">
         <Header></Header>
         <div class="wrapper-container">
-            <div class="button-container"  style="margin:0 auto;margin-top:10px;">
+            <div class="button-container" style="margin:0 auto;margin-top:10px;">
                 <el-button type="primary" @click="linkto('addproject')">New</el-button>
             </div>
             <div class="position-container">
                 <div class="table-responsive">
-                    <table class="table table-hover table-bordered" style="table-layout:fixed;">
+                    <table class="table table-hover table-bordered table-condensed" style="table-layout:fixed;">
                         <thead>
                             <tr>
                             <th scope="col">Fund Type    
-                                <el-input placeholder="请输入Fund Type" v-model="fundData.fundtypeid"></el-input>
+                                <el-input v-model="fundData.fundtypeid" @input.native="searchData"></el-input>
                             </th>
                             <th scope="col">Fund Family Name
                                 
-                                <el-input class="search" placeholder="请输入Fund Family Name" v-model="fundData.fundfamillyname" @input.native="searchData"></el-input>
+                                <el-input class="search" v-model="fundData.fundfamillyname" @input.native="searchData"></el-input>
                             </th>
                             <th scope="col">Fund Abbr. Name
-                                <el-input class="search" placeholder="请输入Fund Abbr. Name" v-model="fundData.fundname" @input.native="searchData"></el-input>
+                                <el-input class="search" v-model="fundData.fundname" @input.native="searchData"></el-input>
                                 <!-- <input @input="searchData"> -->
                             </th>
                             <th scope="col">Fund Full Name
@@ -28,44 +28,11 @@
                             </th>
                             <th scope="col">基金全名
                                 <el-input class="search" placeholder="请输入基金全名" v-model="fundData.fundfullnamechi" @input.native="searchData"></el-input>
-                                
                             </th>
-                            <!-- <th scope="col">Registered Address
-                                <el-input class="search" placeholder="请输入Registered Address" v-model="fundData.regaddress" @input.native="searchData"></el-input>
-                            </th> -->
-                            <!-- <th scope="col">Industry focus
-                                <el-input class="search" placeholder="请输入Industry focus" v-model="fundData.mainindustry" @input.native="searchData"></el-input>                               
-                            </th> -->
-                            
-                            <!-- <th scope="col">Incorporated In                        
-                                <el-select placeholder="请选择" v-model="fundData.incorplocation"  clearable filterable @change="selectchange">
-                                <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                </el-option>    
-                                </el-select>
-                            </th> -->
-                            <!-- <th scope="col">Financial Year End
-                                <el-input class="search" placeholder="请输入Financial Year End" v-model="fundData.yearend" @input.native="searchData('fullnamechi',fullnamechival)"></el-input>                               
-                            </th> -->
-                            
-                            <!-- <th scope="col">Total LP Commitment
-                                <el-input class="search" placeholder="请输入Total LP Commitment" v-model="fundData.totallpcommitnum" @input.native="searchData"></el-input>                        
-                            </th> -->
-                            <!-- <th scope="col">Total GP Commitment
-                                <el-input class="search" placeholder="请输入Total GP Commitment" v-model="fundData.totalgpcommitnum" @input.native="searchData"></el-input>  
-                            </th> -->
                             <th scope="col" style="width:185px;">LP+GP Commitment
-                                <el-input class="search" placeholder="请输入Programe Name" v-model="fundData.totalcommitmentnum" @input.native="searchData"></el-input>                        
+                                <!-- <el-input class="search" placeholder="请输入Programe Name" v-model="fundData.totalcommitmentnum" @input.native="searchData"></el-input>-->
                             </th>
-                            <!--<th scope="col">Formation Date
-                                <el-input class="search" placeholder="请输入Programe Name" v-model="fundData.formationdate" @input.native="searchData('fullnamechi',fullnamechival)"></el-input>  
-                            </th>
-                            <th scope="col">Fund Closing Date
-                                <el-input class="search" placeholder="请输入Programe Name" v-model="fundData.closedate" @input.native="searchData('fullnamechi',fullnamechival)"></el-input>
-                            </th> -->
+                            
                             <th scope="col" style="width:240px;">Management Fee Structure
                                 <el-input class="search" placeholder="请输入Management Fee Structure" v-model="fundData.managfeedesc" @input.native="searchData"></el-input>                        
                             </th>                            
@@ -76,16 +43,6 @@
                             <th scope="col">GP Name
                                 <el-input class="search" placeholder="请输入Management Fee Structure" v-model="fundData.gpname" @input.native="searchData"></el-input>                        
                             </th>
-                            <!-- <th scope="col">Fund Currency
-                                <el-select placeholder="请选择" v-model='fundData.totalcommitmentcur' clearable @change="selectchange">
-                                <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                </el-option>    
-                                </el-select>
-                            </th> -->
                             <th scope="col">操作</th>
                             </tr>
                         </thead>
@@ -95,20 +52,11 @@
                             <td>{{item.fundfamillyname}}</td>
                             <td>{{item.fundname}}</td>
                             <td>{{item.fundfullnameeng}}</td>
-                            <td>{{item.fundfullnamechi}}</td>
-                            <!-- <td>{{item.regaddress}}</td> -->
-                            <!-- <td>{{item.mainindustry}}</td> -->
-                            <!-- <td>{{item.incorplocation}}</td> -->
-                            <!-- <td>{{item.yearend}}</td> -->
-                            <!-- <td>{{item.totallpcommitnum}}</td> -->
-                            <!-- <td>{{item.totalgpcommitnum}}</td> -->
-                            <td>{{item.totalcommitmentnum}}</td>
-                            <!-- <td>{{item.formationdate}}</td>
-                            <td>{{item.closedate}}</td> -->
+                            <td>{{item.fundfullnamechi}}</td>                            
+                            <td>{{item.totalcommitmentnum}}</td>               
                             <td>{{item.managfeedesc}}</td>
                             <td>{{item.capitalallocationsdesc}}</td>
-                            <td>{{item.gpname}}</td>
-                            <!-- <td>{{item.totalcommitmentcur}}</td> -->
+                            <td>{{item.gpname}}</td>                           
                             <td>
                                 <i class="el-icon-info" @click="linkto('details',item.fundid)"></i>                            
                                 <i class="el-icon-edit" @click="linkto('editor',item.fundid)"></i>
@@ -128,20 +76,11 @@
 <script>
 import axioss from "../api/axios";
 import Header from "../components/common/Header";
+import * as method from '@/api/method';
 export default {
   name: "fundlistpage",
   data: function() {
     return {
-        //   bankname:'',
-        //   bankaddress:'',
-        //   bankaccount:'',
-        //   swiftcode:'',
-        //   auditor:'',
-        //   legaladvisor:'',
-        //   taxrepresentative:'',
-        //   magtcompany:'',
-        //   magtcomincorporated:'',
-        //   taxid:''
         portfolioid: "",
         pageCurrent: 1,
         pageCount: 10,
@@ -152,18 +91,9 @@ export default {
             fundfamillyname:'',
             fundname:'',
             fundfullnameeng:'',
-            fundfullnamechi:'',
-            //regaddress:'',
-            //mainindustry:'',
-            //incorplocation:'',
-            //yearend:'',
-            //totallpcommitnum:'',
-            //totalgpcommitnum:'',
-            totalcommitmentnum:'',
-            //totalcommitmentcur:'',
+            fundfullnamechi:'',            
+            totalcommitmentnum:'',            
             managfeedesc:'',
-            //formationdate:'',
-            //closedate:'',
             capitalallocationsdesc:'',
             gpname:''
         },
@@ -181,7 +111,6 @@ export default {
   },
   mounted: function() {
     this.submitpage(this.pageCurrent, this.pageCount);
-    //this.fetchperStatus();
   },
   components: {
     Header
@@ -192,12 +121,16 @@ export default {
       var obj={pageIndex:pageIndex,pageCount:pageCount}
       this.fundData.pageIndex=pageIndex;
       this.fundData.pageCount=pageCount;
-      //console.log(this.fundData);
       axioss.reqmemberlist2(obj)
         .then(res => {
-          //console.log(res);
-          that.alllistData = res.data.data;
-          this.allcount=res.data.count;
+            console.log(res)
+            var trans=res.data.data;
+            for(var i=0;i<trans.length;i++){
+                var num=trans[i].totalcommitmentnum;
+                trans[i].totalcommitmentnum=method.toThousands(num);
+            }
+           that.alllistData = trans;
+           this.allcount=res.data.count;
         })
         .catch(err => {
           console.log(err);
@@ -292,17 +225,16 @@ export default {
 }
  .table tr th {
   vertical-align: top;
-  width:175px;
+  width:166px;
   text-align:center;
 }
 .table tr th:last-child {
   width:130px;
 }
 .table tr td {
-  width: 175px;
-  white-space: nowrap;
+  width: 166px;
+  white-space: wrap;
   overflow: hidden;
-  text-overflow: ellipsis;
   color:#666;
 }
 .table tr td:last-child{
@@ -313,16 +245,14 @@ export default {
 }
 .pagination-container{
     width:100%;
-    height:50px;
-    
+    height:50px; 
 }
 .position-container{
-    width:85%;margin:0 auto;
+    width:95%;margin:0 auto;
     position:relative;
 }
 .el-button--primary {
   margin: 10px 0;
-  
   background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
 }
 
@@ -335,7 +265,7 @@ export default {
 .button-container{
     /* border:1px solid #ddd; */
     border-bottom:none;
-    width:85%;
+    width:95%;
 }
 [class^=el-icon-]{
     margin-left:8px;

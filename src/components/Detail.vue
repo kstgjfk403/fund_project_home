@@ -121,11 +121,12 @@
 <script>
 import axioss from '../api/axios'
 import Header from "./common/Header"
+import * as method from "@/api/method"
 export default {
     name:"Detail",
-    imageUrl: '',
     data:function(){
       return {
+        imageUrl: '',
         detaildata:'',
         isActive:{
             bacinfo:true,
@@ -142,8 +143,12 @@ export default {
     methods:{
         requestdetails(portfolioid){
           axioss.reqdetails(portfolioid).then((res)=>{
-              this.detaildata=res.data.data;
-              //console.log(res);
+                var obj=res.data.data;
+                obj.portfoliostatusdate=method.toLocalString(obj.portfoliostatusdate)
+                obj.lockupexpireddate=method.toLocalString(obj.lockupexpireddate)
+                this.detaildata=obj;
+                //console.log(res);
+
           }).catch((res)=>{
               console.log(res);
           })
@@ -271,6 +276,7 @@ export default {
       justify-content: center;
       align-items:center;
       margin-right:20px;
+      position:relative;
     }
     .primary-detail-container{
        box-shadow: 0 0 3px 2px #ddd;
@@ -307,10 +313,11 @@ export default {
     .base-info ul li span{
       display:inline-block;
       width:50%;
-      text-overflow:ellipsis;
+      /* text-overflow:ellipsis; */
       overflow:hidden;
-      white-space:nowrap;
+      /* white-space:nowrap; */
       color:#666;
       /* font-weight: bold;  */
+      vertical-align:top;
     }
 </style>

@@ -43,7 +43,7 @@ export function deleteattr(obj){
 }
 //将毫秒数转成标准时间格式;
 export function toLocalString(ms,symbol){
-    var reg = /^[1-9][0-9]*$/;
+    var reg = /^-?[1-9][0-9]*$/;
     var marker,dateObj,timeString;
     if(reg.test(ms)){
         marker=symbol||"/";
@@ -52,9 +52,30 @@ export function toLocalString(ms,symbol){
     }
     return timeString
 }
-//将标准时间转成毫秒数格式;
+//将标准时间转成毫秒数格式;//要求日期格式2018/12/23
 export function toMs(date){
-    var toms=new Date(date).getTime();
-    //console.log(toms)
+    var toms;
+    console.log(typeof date=='string');
+    if(typeof data=='string'){
+        toms=new Date(date).getTime();
+    }
     return toms;
+}
+
+//时间对象格式化
+export function formatTime(time,symbol){
+    var marker=symbol||'/';
+     var timeString=time.getFullYear()+marker+(time.getMonth()+1)+marker+time.getDate();
+    return timeString;
+}
+//数字千分位格式化
+export function toThousands(num) {  
+    var result = '', counter = 0;  
+    num = (num || 0).toString();  
+    for (var i = num.length - 1; i >= 0; i--) {  
+        counter++;  
+        result = num.charAt(i) + result;  
+        if (!(counter % 3) && i != 0) { result = ',' + result; }  
+    }  
+    return result;  
 }

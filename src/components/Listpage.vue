@@ -9,7 +9,7 @@
             <div class="position-container">
             <!-- <div style="position:relative;margin-top:5px;overflow-x:auto;width:82%;margin:0 auto;"> -->
                 <div class="table-responsive">
-                <table class="table table-hover table-bordered" style="table-layout:fixed;">
+                <table class="table table-hover table-bordered table-condensed" style="table-layout:fixed;">
                     <thead>
                         <tr>
                         <th scope="col">Programe Name    
@@ -284,9 +284,8 @@ export default {
 }
 .table tr td {
   width: 175px;
-  white-space: nowrap;
+  white-space: wrap;
   overflow: hidden;
-  text-overflow: ellipsis;
   color:#666;
 }
 .table tr td:last-child{
@@ -301,7 +300,7 @@ export default {
     
 }
 .position-container{
-    width:85%;margin:0 auto;
+    width:95%;margin:0 auto;
     position:relative;
 }
 .el-button--primary {
@@ -319,7 +318,7 @@ export default {
 .button-container{
     /* border:1px solid #ddd; */
     border-bottom:none;
-    width:85%;
+    width:95%;
 }
 [class^=el-icon-]{
     margin-left:8px;

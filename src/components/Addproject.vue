@@ -1,22 +1,22 @@
 <template>
 <div class="add-project">
     <Header></Header>
-    <!-- <h2>添加项目信息</h2> -->
+    <!--<h2>添加项目信息</h2>-->
     <el-form :label-position="labelposition" :model="formData" :rules="rules" ref="userform">
         <h3>Essential information </h3>
         <div class="base-info-container">
             <div class="baseinfo-left">
                 <el-form-item label="Project Name" prop="abbname">
-                    <el-input v-model="formData.abbname" placeholder="pls enter projectname"></el-input>
+                    <el-input v-model="formData.abbname"></el-input>
                 </el-form-item>
                 <el-form-item label="Compony Lagel Name" prop="companyname">
-                    <el-input v-model="formData.companyname" placeholder="pls enter company name"></el-input>
+                    <el-input v-model="formData.companyname"></el-input>
                 </el-form-item>
                 <el-form-item label="Report Name" prop="reportname">
-                    <el-input v-model="formData.reportname" placeholder="pls enter report name"></el-input>
+                    <el-input v-model="formData.reportname"></el-input>
                 </el-form-item>
                 <el-form-item label="Portflio Status">
-                    <el-select v-model="formData.portfoliostatus" placeholder="请选择活动区域">
+                    <el-select v-model="formData.portfoliostatus">
                     <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
@@ -24,7 +24,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="IDG Role">
-                    <el-select v-model="formData.idgroleid" placeholder="请选择活动区域">
+                    <el-select v-model="formData.idgroleid">
                         <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
@@ -32,7 +32,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Initial Role" multiple>
-                    <el-select v-model="formData.initialroleid" placeholder="请选择活动区域">
+                    <el-select v-model="formData.initialroleid">
                         <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
@@ -40,7 +40,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Industry Sector" prop="sectorid">
-                    <el-select v-model="formData.sectorid" placeholder="多选+搜索select框" filterable  @change="togetherChange">
+                    <el-select v-model="formData.sectorid" filterable  @change="togetherChange">
                         <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
@@ -49,7 +49,7 @@
                 </el-form-item>
                 
                 <el-form-item label="Anticipated Eixt">
-                    <el-select v-model="formData.antidilutionid" placeholder="请选择活动区域">
+                    <el-select v-model="formData.antidilutionid">
                     <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
@@ -57,7 +57,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Incorprated In">
-                    <el-select v-model="formData.locationid" placeholder="请选择活动区域">
+                    <el-select v-model="formData.locationid">
                     <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
@@ -65,11 +65,11 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Company register No" prop="registerno">
-                    <el-input v-model="formData.registerno" placeholder="pls company register no"></el-input>
+                    <el-input v-model="formData.registerno"></el-input>
                 </el-form-item>
                 
                 <el-form-item label="Financial YTD"> 
-                    <el-select v-model="formData.ytd" placeholder="select框" filterable>
+                    <el-select v-model="formData.ytd" filterable>
                         <el-option :key="item.baseId" 
                         :label="item.baseId" 
                         :value="item.baseId" 
@@ -79,19 +79,19 @@
             </div>
             <div class="baseinfo-right">
                 <el-form-item label="项目名称" prop="abbnamechi">
-                    <el-input v-model="formData.abbnamechi" placeholder="请输入项目名称"></el-input>
+                    <el-input v-model="formData.abbnamechi"></el-input>
                 </el-form-item>
                 <el-form-item label="公司名称" prop="fullnamechi">
-                    <el-input v-model="formData.fullnamechi" placeholder="请输入公司名称"></el-input>
+                    <el-input v-model="formData.fullnamechi"></el-input>
                 </el-form-item>
                 <el-form-item label="CEO" prop="ceo">
-                    <el-input v-model="formData.ceo" placeholder="pls enter ceo"></el-input>
+                    <el-input v-model="formData.ceo"></el-input>
                 </el-form-item>
                 <el-form-item label="Portfolio Status Date">
                     <el-date-picker v-model="formData.portfoliostatusdate" type="date" placeholder="选择日期"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="Inistial Stage">
-                    <el-select v-model="formData.stageid" placeholder="请选择活动区域">
+                    <el-select v-model="formData.stageid">
                     <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
@@ -99,7 +99,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="IDG First Investment">
-                    <el-select v-model="formData.firstinvestid" placeholder="请选择活动区域">
+                    <el-select v-model="formData.firstinvestid">
                     <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
@@ -107,15 +107,15 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Sub Sector" prop="subsectorid">
-                    <el-select v-model="formData.subsectorid" placeholder="请选择活动区域">
+                    <el-select v-model="formData.subsectorid">
                     <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
                         v-for="item in subsectorlist"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="Total Border Representative" prop="totalboardseatno">
-                    <el-input v-model="formData.totalboardseatno" placeholder="pls enter total border representative"></el-input>
+                <el-form-item label="Total Border Representative">
+                    <el-input v-model="formData.totalboardseatno"></el-input>
                 </el-form-item>
                 <el-form-item label="Fund of Fund" prop="fundoffund">
                     <el-checkbox-group v-model="formData.fundoffund">
@@ -130,7 +130,7 @@
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="Ivestment Structure legal form">
-                    <el-select v-model="formData.formid" placeholder="请选择活动区域">
+                    <el-select v-model="formData.formid">
                     <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
@@ -143,7 +143,7 @@
         <div class="base-info-container">
             <div class="baseinfo-left">
                 <el-form-item label="Project Manager" prop="projectmanager">
-                    <el-select v-model="formData.projectmanager" placeholder="多选+搜索select框" multiple filterable>
+                    <el-select v-model="formData.projectmanager" multiple filterable>
                         <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
@@ -151,7 +151,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Project Buddy" prop="projectbuddy">
-                    <el-select v-model="formData.projectbuddy" placeholder="多选+搜索select框" multiple filterable>
+                    <el-select v-model="formData.projectbuddy" multiple filterable>
                         <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
@@ -159,7 +159,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="IDG board representative">
-                    <el-select v-model="formData.idgboardrepresentative" placeholder="多选+搜索select框" multiple filterable>
+                    <el-select v-model="formData.idgboardrepresentative" multiple filterable>
                         <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
@@ -169,7 +169,7 @@
             </div>
             <div class="baseinfo-right">
                 <el-form-item label="IDG Inhouse Counsel">
-                    <el-select v-model="formData.idginhousecounsel" placeholder="多选+搜索select框" multiple filterable>
+                    <el-select v-model="formData.idginhousecounsel" multiple filterable>
                         <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
@@ -177,7 +177,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Observer" prop="observer">
-                    <el-select v-model="formData.observer" placeholder="多选+搜索select框" multiple filterable>
+                    <el-select v-model="formData.observer" multiple filterable>
                         <el-option :key="item.baseId" 
                         :label="item.baseName" 
                         :value="item.baseId" 
@@ -193,10 +193,10 @@
         <div class="base-info-container">
             <div class="baseinfo-left">
                 <el-form-item label="Company Website" prop="website">
-                    <el-input v-model="formData.website" placeholder="pls enter company website"></el-input>
+                    <el-input v-model="formData.website"></el-input>
                 </el-form-item>
                 <el-form-item label="Fax" prop="fax">
-                    <el-input v-model="formData.fax" placeholder="pls enter fax"></el-input>
+                    <el-input v-model="formData.fax"></el-input>
                 </el-form-item>               
                 <el-form-item label="Business Adress">
                     <el-input type="textarea" v-model="formData.address" style="min-height:75px;"></el-input>
@@ -205,7 +205,7 @@
                     <el-input type="textarea" v-model="formData.primarybusiness" style="min-height:75px;"></el-input>
                 </el-form-item>               
                 <el-form-item label="Line2" prop="auditconfaddress2">
-                    <el-input v-model="formData.auditconfaddress2" placeholder="pls enter line"></el-input>
+                    <el-input v-model="formData.auditconfaddress2"></el-input>
                 </el-form-item>
                 <el-form-item label="Line3">
                     <el-input type="textarea" v-model="formData.auditconfaddress3"></el-input>
@@ -213,22 +213,22 @@
             </div>
             <div class="baseinfo-right">
                 <el-form-item label="Tel" prop="telephone">
-                    <el-input v-model="formData.telephone" placeholder="pls enter tel"></el-input>
+                    <el-input v-model="formData.telephone"></el-input>
                 </el-form-item>
                 <el-form-item label="Product(White Book)" prop="product">
-                    <el-input v-model="formData.product" placeholder="pls enter product"></el-input>
+                    <el-input v-model="formData.product"></el-input>
                 </el-form-item>
                 <el-form-item label="Comment" prop="remarkes">
-                    <el-input v-model="formData.remarkes" placeholder="pls enter comment"></el-input>
+                    <el-input v-model="formData.remarkes"></el-input>
                 </el-form-item>               
                 <el-form-item label="Company HeadCount" prop="headcount">
-                    <el-input v-model="formData.headcount" placeholder="pls enter company head count"></el-input>
+                    <el-input v-model="formData.headcount"></el-input>
                 </el-form-item>
                 <el-form-item label="Nominee Name" prop="nomineename">
-                    <el-input v-model="formData.nomineename" placeholder="pls enter nominee name"></el-input>
+                    <el-input v-model="formData.nomineename"></el-input>
                 </el-form-item>
                 <el-form-item label="Audit Conf Adress" prop="auditconfaddress">
-                    <el-input v-model="formData.auditconfaddress" placeholder="pls enter audit conf adress"></el-input>
+                    <el-input v-model="formData.auditconfaddress"></el-input>
                 </el-form-item>
                    
             </div>
@@ -237,10 +237,14 @@
             </el-form-item>
         </div>
         <el-form-item style="margin-top:15px;">
-            <el-button type="primary" size="mini" @click="submitForm1('userform')" v-if="opreationType=='creatuserform'">创建</el-button>
-            <el-button type="primary" size="mini" @click="submitForm2('userform')" v-else>更新</el-button>
-            <el-button size="mini" @click="resetForm('userform')">重置</el-button>
-            <router-link to="listpage" style="margin-left:10px"><el-button size="mini">返回</el-button></router-link>
+            <div v-if="opreationType=='creatuserform'">
+                <el-button type="primary" size="mini" @click="submitForm1('userform')">创建</el-button>
+                <router-link to="listpage" style="margin-left:10px"><el-button size="mini">返回</el-button></router-link>
+            </div>
+            <div v-else>
+                <el-button type="primary" size="mini" @click="submitForm2('userform')">更新</el-button>
+                <el-button size="mini" type="primary" @click="linktodetail">返回</el-button>
+            </div>
         </el-form-item> 
     </el-form>
 </div>
@@ -355,7 +359,7 @@ export default {
             
           ],
           totalboardseatno: [
-            {type:"number", message: 'required', trigger: 'blur' }
+            {message: 'required', trigger: 'blur' }
           ],
           headcount: [
             { message: 'required', trigger: 'blur' } 
@@ -390,11 +394,13 @@ export default {
         }  
       }
     },
-    mounted:function(){
-        this.requserlist();
+    created(){
         var way=this.$route.query.path;
         var portfolioid=this.$route.query.portfolioid;
         this.classOperation(way,portfolioid);
+    },
+    mounted:function(){
+        this.requserlist();
     },
     methods:{
        requserlist(){
@@ -409,14 +415,30 @@ export default {
                 console.log(res);
               })
        },
-       linktodetail(id){
+       linktodetail(){
+           var id=this.formData.portfolioid;
            this.$router.push({ path: "detail", query: { portfolioid: id } })
+       },
+       linktolist(){
+           this.$router.push({name:'listpage'});
        },
        submitForm1(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
               axioss.submitinfo(this.formData).then(res=>{
-                  //console.log(res)
+                  var flag=res.data.code=="SUCCESS";
+                  if(flag){ 
+                      this.$message({
+                          type:'success',
+                          message:'创建成功'
+                      })
+                      this.linktolist();
+                  }else{
+                      this.$message({
+                          type:'warning',
+                          message:'创建失败'
+                      })
+                  }
               }).catch(res => {
                   console.log(res)
               })
@@ -435,7 +457,7 @@ export default {
               //console.log(this.formData)
               axioss.modifyinfo(this.formData).then(res=>{
                   //console.log(res)
-                  this.linktodetail(this.formData.portfolioid); 
+                  this.linktodetail(); 
               }).catch(res => {
                   //console.log(res)
               })
@@ -448,10 +470,8 @@ export default {
           }
         });
       },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      },
       togetherChange(id){
+          this.formData.subsectorid='';
           var empty=[];
           var len=this.extraarr.length;
           for(var i=0;i<len;i++){
@@ -470,11 +490,11 @@ export default {
                 var newobjdetail=method.deleteattr(detailobj);
                 var obj=method.nulltostr(newobjdetail);
                 //console.log(obj)
-                obj.projectmanager=obj.projectmanager.split(","); 
-                obj.projectbuddy=obj.projectbuddy.split(",");
-                obj.idgboardrepresentative=obj.idgboardrepresentative.split(",");
-                obj.idginhousecounsel=obj.idginhousecounsel.split(",")
-                obj.observer=obj.observer.split(",");
+                obj.projectmanager=obj.projectmanager==''?[]:obj.projectmanager.split(","); 
+                obj.projectbuddy=obj.projectbuddy==''?[]:obj.projectbuddy.split(",");
+                obj.idgboardrepresentative=obj.idgboardrepresentative==''?[]:obj.idgboardrepresentative.split(",");
+                obj.idginhousecounsel=obj.idginhousecounsel==''?[]:obj.idginhousecounsel.split(",")
+                obj.observer=obj.observer==''?[]:obj.observer.split(",");
                 obj.privateorpublic="Realized";
                 delete obj.heldbyspvflag;
                 delete obj.heldbyspv;

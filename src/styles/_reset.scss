@@ -177,11 +177,12 @@ a{
         }   
     }
 }
-.spv-member-list .el-table__body-wrapper{
-    overflow-x: hidden;
+// .spv-member-list 
+.el-table__body-wrapper .el-table__body{
+    //overflow-x: hidden;
+    width:auto!important;
 }
-//spv 弹框的样式调整。。。包括里面嵌套的表格
-
+//spv 弹框的样式调整...包括里面嵌套的表格
 .spv-member-list .el-dialog{
     border-radius:4px;
     width:68%;
@@ -191,8 +192,13 @@ a{
         border-color:#ccc;
         font-size:12px;
     }
+    .inputnone{
+        .el-input__inner{   
+            border-color:transparent;
+        }
+    }
     .el-form-item{
-        width:23%;
+        width:31%;
         .el-form-item__content{
             width:65%;
         }
@@ -210,4 +216,14 @@ a{
     .el-dialog__header{
         background:#eee;
     }
+}
+.loan .el-input{
+    width:auto;
+}
+// .loan .el-form-item{
+//     display: inline-block;
+// }
+.loan .select-container .el-form-item{
+    width:33%;
+    float:left;
 }  

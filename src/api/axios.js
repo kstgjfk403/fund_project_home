@@ -44,13 +44,51 @@ export default {
     
     //添加项目信息2
     submitinfo2(obj){
-        //var newobj=method.switchStr(obj);
-        //console.log(newobj);
         return axios.post("/api/admin/fund/add",obj);
     },
     //修改项目信息2
     modifyinfo2(obj){
         //var objj=method.switchStr(obj)
         return axios.post('/api/admin/fund/update',obj);
+    },
+    //获取spv列表;
+    reqSpvList(){
+        return axios.get('/api/admin/spv/list');
+    },
+    //获取spv列表;
+    querySpv(id){
+        return axios.get('/api/admin/spv/entity/'+id);
+    },
+    //添加spv
+    addSpv(obj){
+        return axios.post('/api/admin/spv/add',obj);
+    },
+    //修改spv列表
+    updateSpv(obj){
+        return axios.post('/api/admin/spv/update',obj);
+    },
+    //删除spv列表数据。
+    deleteSpv(id){
+        return axios.post('/api/admin/spv/delete/'+id,{spvid:id})
+    },
+    //获取股东信息列表
+    reqShareList(id){
+        return axios.get('/api/admin/spv/investor/list/'+id)
+    },
+    //更新股东认缴信息
+    updateShare(obj){
+        return axios.post('/api/admin/spv/investor/update',obj)
+    },
+    //按变更日期删除股东信息
+    deleteShare(obj){
+        return axios.post('/api/admin/spv/investor/delete',obj)
+    },
+    //shareholder下拉列表
+    reqSharedrop(obj){
+        return axios.post('/api/sys/dict', obj)
+    },
+    //查询股东信息
+    queryShare(obj){
+        return axios.post('/api/admin/spv/investor/sublist',obj)
     }
 }

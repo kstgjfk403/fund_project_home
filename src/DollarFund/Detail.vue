@@ -239,7 +239,7 @@ export default {
         cursor: pointer;
         text-overflow:ellipsis;
         overflow:hidden;
-        white-space:nowrap;
+        white-space:wrap;
         border-bottom:1px solid #ddd;
         text-align: center;
     }
@@ -328,11 +328,12 @@ export default {
     .base-info ul li span{
       display:inline-block;
       width:50%;
-      text-overflow:ellipsis;
+      /* text-overflow:ellipsis; */
       overflow:hidden;
-      white-space:nowrap;
+      /* white-space:nowrap; */
       color:#666;
       /* font-weight: bold;  */
+      vertical-align:top;
     }
     .detail-margin{
         margin-bottom: 30px;

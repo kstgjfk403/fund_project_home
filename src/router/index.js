@@ -8,6 +8,7 @@
  import FundDetail from '../DollarFund/Detail'
  import FundAddproject from '../DollarFund/Addproject'
  import SpvList from "../page/spv/spvMember"
+ import InvestManage from "@/page/investManage/investmanager"
  export default new Router({
    routes: [
     //portfolio
@@ -21,6 +22,8 @@
     {path:'/funddetail',name:'funddetail',component: FundDetail},
     {path:'/fundaddproject',name:'fundaddproject',component: FundAddproject},
     //spv
-    {path:"/spvlist",name:"spvlist",component:SpvList}
+    {path:"/spvlist",name:"spvlist",component:SpvList},
+    //invest
+    {path:'/investmanage',name:'investmanage',component:InvestManage}
    ]
  })

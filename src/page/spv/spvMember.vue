@@ -6,13 +6,16 @@
             <el-card class="box-card" style="height:560px;">
                 <div slot="header" class="clearfix">
                     <span>SPV</span>
-                    <el-button style="float: right; padding: 3px 0" type="text">Add</el-button>
+                    <el-button @click="changeShow('add')" style="float: right; padding: 3px 0" type="text">Add</el-button>
                 </div>
-                <el-tree :data="treedata"
+                <el-tree :data="spvTreeData"
                     highlight-current 
                     ref="spvTree" 
-                    :props="defaultProps" 
-                    >
+                    :props="defaultProps"
+                    @node-click="handleNodeClick"
+                    node-key="id"
+                    :default-expanded-keys="['S00000']"
+                    default-expand-all>
                 </el-tree>
             </el-card>
         </div>
@@ -21,162 +24,261 @@
                 <div class="clearfix">
                     <span>Base Information</span>
                 </div>
-                <el-table :data="tableData2" border stripe style="width: 100%">
-                    <el-table-column prop="date2" label="日期"></el-table-column>
-                    <el-table-column prop="name2" label="姓名"></el-table-column>
-                    <el-table-column prop="address2" label="地址"></el-table-column>
+                <el-table :data="spvData" border stripe style="width: 100%">
+                    <el-table-column prop="spvtypestr" label="Type"></el-table-column>
+                    <el-table-column prop="spvname" label="SPV Name"></el-table-column>
+                    <el-table-column prop="spvnamechi" label="spv中文名"></el-table-column>
+                    <el-table-column prop="regaddress" label="Registor Address"></el-table-column>
+                    <el-table-column prop="remarks" label="Remarks"></el-table-column>
+                    <el-table-column label="Operation">
+                        <template slot-scope="scope">
+                            <i class="el-icon-delete" @click="deleteSpv"></i>
+                            <i class="el-icon-edit" @click="changeShow('update')"></i>
+                        </template>
+                    </el-table-column>
                 </el-table>
             </div>
             <div class="spv-right-bottom">    
                 <div class="clearfix">
                     <div class="form-container">
-                        <el-form :model="ruleForm" :rules="rules" label-width="40px" ref="ruleForm1">
-                            <el-form-item label="Time">
-                                <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.date1" style="width: 100%;"></el-date-picker>
+                        <el-form>
+                            <el-form-item label="Date">                                                   
+                                <el-date-picker type="date" placeholder="选择日期" v-model="addShareData.capdatestr" value-format="yyyy-MM-dd"></el-date-picker>
+                                <!-- <el-date-picker type="date" placeholder="选择日期" v-model="datetime" v-show="false" value-format="yyyy-MM-dd"></el-date-picker>-->
+                                <!-- v-model="addShareData.capdate"-->
                             </el-form-item>
                         </el-form>
                     </div>
-                    <el-button style="float: left; margin:3px 0 0 10px" size="medium" type="primary" @click="dialogTableVisible=true">Add</el-button>
+                    <el-button style="float: left; margin:3px 0 0 10px" size="medium" type="primary" @click="isShareShow">Add</el-button>
                 </div>
-                <el-table :data="tableData" border stripe :span-method="objectSpanMethod">
-                    <el-table-column prop="date" label="日期" width="180" sortable></el-table-column>
-                    <el-table-column prop="name" label="股东名称" width="180"></el-table-column>
-                    <el-table-column prop="address" label="股东类别"></el-table-column>
-                    <el-table-column prop="address" label="认缴金额(元)" sortable></el-table-column>
-                    <el-table-column prop="address" label="占比(%)" sortable></el-table-column>
-                </el-table>
+                <table class="table table-hover table-bordered table-condensed" id="table1" style="table-layout:fixed;">
+                    <thead>
+                        <tr>
+                            <th scope="col">日期</th>
+                            <th scope="col">股东名称</th>
+                            <th scope="col">类别</th>
+                            <th scope="col">股东类别</th>
+                            <th scope="col">认缴金额 </th>
+                            <th scope="col">占比</th>
+                            <th scope="col">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in shareListData">
+                            <td scope="row">{{item.capdatestr}}</td>
+                            <td>{{item.stockholdername}}</td>
+                            <td>{{item.type}}</td>
+                            <td>{{item.stockholdertypestr}}</td>
+                            <td>{{item.lpaamt}}</td>
+                            <td>{{item.lpaamtprop}}</td>
+                            <td>                           
+                                <i class="el-icon-delete" @click="deleteShare(item.capdatestr)"></i>
+                                <i class="el-icon-search" @click="queryShare(item.spvid,item.capdatestr)"></i>
+                            </td>
+                        </tr>   
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    <el-dialog title="ADD" :visible.sync="dialogTableVisible">
+    <el-dialog title="ADD Shareholder" :visible.sync="shareView">
         <div class="edit-input">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm2" :inline="true">
-                <el-form-item label="股东类别">
-                    <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="股东名称">
-                    <el-input v-model="ruleForm.name"></el-input>
-                </el-form-item>
-                <el-form-item label="证件凭证">
-                    <el-input v-model="ruleForm.name"></el-input>
-                </el-form-item>
-                <el-form-item label="金额(万元)">
-                    <el-input v-model="ruleForm.name"></el-input>
+            <el-form :model="addShareData" ref="shareForm" :inline="true">
+                <div class="top">
+                    <el-form-item label="日期">
+                        <el-input v-model="addShareData.capdatestr" disabled></el-input>
+                    </el-form-item>
+                    <el-form-item label="投资类别">
+                        <el-select v-model="addShareData.stockholdertype" placeholder="请选择活动区域" @change="togetherChange">
+                            <el-option :key='item.baseId'
+                                :label="item.baseName" 
+                                :value="item.baseId"
+                                v-for="item in dropType"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="金额(万元)">
+                        <el-input v-model="addShareData.lpaamt"></el-input>
+                    </el-form-item>     
+                </div>
+                <div class="bottom">
+                    <el-form-item label="基金/spv">
+                        <el-select v-model="addShareData.stockholderid" placeholder="请选择活动区域" :disabled="isDisabled2">
+                            <el-option v-for='item in fundspvData'
+                            :key='item.baseId' :label='item.baseName' :value="item.baseId" @click.native="reqValue($event)"></el-option> 
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="股东名称">
+                        <el-input v-model="addShareData.stockholdername" :disabled='isDisabled'></el-input>
+                    </el-form-item>
+                    <el-form-item label="CODE">
+                        <el-input v-model="addShareData.stockholdercode" :disabled="isDisabled"></el-input>
+                    </el-form-item>    
+                </div>
+                <div class="bottom">
+                    <el-form-item label="股东Type">
+                        <el-select v-model="addShareData.type" v-if="whichTypeShow">
+                            <el-option value='GP'></el-option>
+                            <el-option value='LP'></el-option> 
+                        </el-select>
+                        <el-input v-model="addShareData.type" disabled v-else></el-input>
+                    </el-form-item>
+                </div>
+                <el-form-item style="float:right;text-align:right;">
+                    <el-button type="primary" size="mini" @click="localAdd">add</el-button>
                 </el-form-item>
             </el-form>
         </div>
-        <el-table bordered :data="tableData">
-            <el-table-column prop="date" label="日期" width="180" sortable></el-table-column>
-            <el-table-column prop="name" label="股东名称" width="180"></el-table-column>
-            <el-table-column prop="address" label="股东类别"></el-table-column>
-            <el-table-column prop="address" label="认缴金额(元)" sortable></el-table-column>
-            <el-table-column prop="address" label="占比(%)" sortable></el-table-column>
-            <el-table-column prop="address" label="操作"></el-table-column>
-        </el-table>
+        <table class="table table-hover table-bordered table-condensed" style="table-layout:fixed;">
+            <thead>
+                <tr>
+                    <th scope="col">日期</th>
+                    <th scope="col">股东名称</th>
+                    <th scope="col">股东类别</th>
+                    <th scope="col">投资类别</th>
+                    <th scope="col">认缴金额 </th>
+                    <th scope="col">占比</th>
+                    <th scope="col">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in addShareShow">
+                    <td scope="row">{{item.capdatestr}}</td>
+                    <td>{{item.stockholdername}}</td>
+                    <td>{{item.type}}</td>
+                    <td>{{item.stockholdertypestr}}</td>
+                    <td><el-input v-model="item.lpaamt" v-isedit class="inputnone"></el-input></td>
+                    <td>{{item.lpaamtprop}}</td>
+                    <td>                           
+                        <i class="el-icon-delete" @click="addDelete(item.capid)"></i>
+                    </td>
+                </tr>   
+            </tbody>
+        </table>
+        <el-button type="primary" size="mini" @click="submitShare('shareForm')" style="float:right;">创建</el-button>
+    </el-dialog>
+    <el-dialog title="ADD Spv" :visible.sync="spvView">
+        <div class="edit-input">
+            <el-form :model="addSpvData" ref="addSpvForm" :inline="true">
+                <el-form-item label="SPV Name">
+                    <el-input v-model="addSpvData.spvname"></el-input>
+                </el-form-item>
+                <el-form-item label="spv中文名">
+                    <el-input v-model="addSpvData.spvnamechi"></el-input>
+                </el-form-item>
+                <el-form-item label="Address">
+                    <el-input v-model="addSpvData.regaddress"></el-input>
+                </el-form-item>
+                <el-form-item label="Remarks">
+                    <el-input v-model="addSpvData.remarks"></el-input>
+                </el-form-item>
+                <el-form-item label="Type">
+                    <el-select v-model="addSpvData.spvtype" placeholder="请选Type">
+                        <el-option v-for='item in dropSpvType'
+                        :key='item.baseId' :label='item.baseName' :value="item.baseId"></el-option> 
+                    </el-select>
+                </el-form-item>
+            </el-form>
+        </div>
+        <div class="spv-build" style="text-align:center;">
+            <el-button size='mini' style="background:#eee;color:#666;" @click="submitSpv('addSpvForm','add')" v-if="isShow">Build</el-button>
+            <el-button size='mini' style="background:#eee;color:#666;" @click="submitSpv('addSpvForm','update')" v-else>Update</el-button>
+        </div> 
     </el-dialog>
 </div>
 </template>
 <script>
 import Header from "../../components/common/Header";	
 import axioss from '../../api/axios';
+import * as method from "../../api/method";
 export default {
     name:"spvlist",
+
     data:function(){  
         return {
-            dialogTableVisible:false,
+            isDisabled2:false,
+            isDisabled:false,
+            canAdd:false,
+            canShareAdd:false,
+            spvId:'S00001',
+            formDate:'',
+            isShow:true,
+            spvView:false,
+            shareView:false,
+            whichTypeShow:true,
             labelposition:"right",
-            treedata: [{
-                id:0,
-                label:'SPV',
-                children:[{
-                id: 1,
-                label: '一级 1',
-                children: [{
-                    id: 4,
-                    label: '二级 1-1',
-                    children: [{
-                    id: 9,
-                    label: '三级 1-1-1'
-                    }, {
-                    id: 10,
-                    label: '三级 1-1-2'
-                    }]
-                }]
-                }, {
-                id: 2,
-                label: '一级 2',
-                children: [{
-                    id: 5,
-                    label: '二级 2-1'
-                }, {
-                    id: 6,
-                    label: '二级 2-2'
-                }]
-                }, {
-                id: 3,
-                label: '一级 3',
-                children: [{
-                    id: 7,
-                    label: '二级 3-1'
-                }, {
-                    id: 8,
-                    label: '二级 3-2'
-                }]
-                }]
-            }],
+            parentid:'',
+            spvTreeData: [],
             defaultProps: {
                 children: 'children',
                 label: 'label'
             },
-            tableData2: [{
-                date2: '2016-06-02',
-                name2: '王小虎',
-                address2: '上海市普陀区金'
-            },
-            {
-                date2: '2016-06-02',
-                name2: '王小虎',
-                address2: '上海市普陀区金'
-            },
-            {
-                date2: '2016-06-02',
-                name2: '王小虎',
-                address2: '上海市普陀区金'
-            }],
-            tableData: [{
-                date: '2016-08-02',
-                name: '王小虎',
-                address: '上海市普陀区金'
-            },
-            {
-                date: '2016-05-05',
-                name: '王小虎',
-                address: '上海市普陀区金'
-            },
-            {
-                date: '2016-05-06',
-                name: '王小虎',
-                address: '上海市普陀区金'
-            },
-            {
-                date: '2016-05-07',
-                name: '王小虎',
-                address: '上海市普陀区金'
-            }
+            spvData: [
+                {
+                    spvname:'no data',
+                    spvnamechi:'no data',
+                    regaddress:'no data',
+                    remarks:'no data',
+                    spvtype:''
+                }
             ],
-            ruleForm:{
-                name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
+            shareListData: [],
+            resetaddSpvData:{
+                spvname:'',
+                spvnamechi:'',
+                regaddress:'',
+                remarks:'',
+                spvlevel:'',
+                parentspvid: '',
+                isleaf:'',
+                spvtype:''
             },
+            addSpvData:{
+                spvname:'',
+                spvnamechi:'',
+                regaddress:'',
+                remarks:'',
+                spvlevel:'',
+                parentspvid: '',
+                isleaf:'',
+                spvtype:''
+            },
+            resetaddShareData:{
+                capid:0,                
+                capdatestr:"",
+                spvid: "",
+                stockholdername:"",
+                stockholdertype:"",
+                stockholderid:"",
+                stockholdercode:"",
+                lpaamt:"",
+                lpaamtdate:"",
+                lpaamtprop:'',
+                type:''                  
+            },
+            addShareData:{
+                capid:0,                
+                capdatestr:"",
+                spvid: "",
+                stockholdername:"",
+                stockholdertype:"",
+                stockholderid:"",
+                stockholdercode:"",
+                lpaamt:"",
+                lpaamtdate:"",
+                lpaamtprop:'',
+                type:''                  
+            },
+            addShareShow:[],
+            addShareShow2:[],
+            fundspvData:'',
+            dropFundData:'',
+            dropSpvData:'',
+            dropType:'',
+            dropSpvType:[
+                {baseID:'',baseName:''},
+                {baseID:'',baseName:''},
+                {baseID:'',baseName:''}
+            ],
             rules:{
                 region:[
                     { required: true, message: '请选择活动区域', trigger: 'change' }
@@ -184,32 +286,283 @@ export default {
             }
         }   
     },
-    mounted:function(){
-       
-    },
-    methods:{
-        handleNodeClick(a,b,c){
-            event.stopPropagation()  
-            // console.log(a)
-            // console.log(b)
-            // console.log(c)
-            // console.log(this.$refs.spvTree.getCheckedNodes());
-        },
-        objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-        if (columnIndex === 0) {
-          if (rowIndex % 2 === 0) {
-            return {
-              rowspan: 2,
-              colspan: 1
-            };
-          } else {
-            return {
-              rowspan: 0,
-              colspan: 0
-            };
-          }
+    updated(){  
+        function mc(tableId, startRow, endRow, col) { 
+        var tb = document.getElementById(tableId); 
+        if (col >= tb.rows[0].cells.length) { 
+            return; 
+        } 
+        if (col == 0) { 
+            endRow = tb.rows.length-1; 
+        } 
+        for (var i = startRow; i < endRow; i++) {
+            if(tb.rows[startRow].cells[col].textContent){   
+                if (tb.rows[startRow].cells[col].textContent == tb.rows[i + 1].cells[0].textContent) { 
+                    tb.rows[i + 1].removeChild(tb.rows[i + 1].cells[0]); 
+                    tb.rows[startRow].cells[col].rowSpan = (tb.rows[startRow].cells[col].rowSpan | 0) + 1; 
+                    if (i == endRow - 1 && startRow != endRow) { 
+                        mc(tableId, startRow, endRow, col + 1); 
+                    } 
+                } else { 
+                    mc(tableId, startRow, i + 0, col + 1); 
+                    startRow = i + 1; 
+                }
+            }
         }
-      }
+    } 
+        mc('table1',0,0,0);
+    },
+    mounted:function(){
+        //console.log("mounted")
+        this.reqSpvList();
+        this.reqSharedrop();
+        this.reqShareList();
+        this.querySpv(this.spvId);  
+    },
+    methods:{ 
+        reqSpvList(){
+            axioss.reqSpvList().then(res=>{
+                //console.log(res)
+                this.spvTreeData.splice(0,1,res.data.data)
+            })
+        },
+        querySpv(spvId){
+            axioss.querySpv(spvId).then(res=>{
+                this.whichType(res.data.data.spvtype);
+                this.spvData.splice(0,1,res.data.data);
+                console.log(res)
+            })
+        },
+        queryShare(spvid,capdatestr){
+            var obj={spvid:spvid,capdatestr:capdatestr}
+            //console.log(obj)
+            this.addShareData.capdatestr=capdatestr;
+            axioss.queryShare(obj).then(res=>{
+                //console.log(res);
+                this.addShareShow=res.data.data;
+                this.shareView=true;
+            })
+        },
+        handleNodeClick(dataNode,node,treeCom){
+            console.log(node)
+            this.canAdd=true;
+            this.spvId=node.data.id;
+            this.addSpvData.isleaf=node.isLeaf;
+            this.addSpvData.spvlevel=node.level;
+            this.addSpvData.parentspvid=node.data.id;
+            this.parentid=node.parent.data.id;
+            this.reqShareList();
+            this.querySpv(this.spvId);
+        },
+        submitSpv(formName,whichOper){
+            if(whichOper=='add'){
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {      
+                        if(this.addSpvData.hasOwnProperty('spvid')){
+                            delete this.addSpvData.spvid;
+                        }
+                        this.addSpvData.spvlevel++;
+                        this.addSpvData.isleaf="Y";
+                        console.log(this.addSpvData)
+                        axioss.addSpv(this.addSpvData).then(res=>{
+                            //console.log(res)
+                            if(res.data.code=='SUCCESS'){
+                                this.reqSpvList();
+                                Object.assign(this.addSpvData,this.resetaddSpvData);//清空对象的值。
+                                this.$message({
+                                    type:'success',
+                                    message:"Succeed to add spv!!!"
+                                })
+                            }else{
+                                this.$message({
+                                    type:'warning',
+                                    message:"Failed to add spv!!!"
+                                })
+                            }
+                            this.spvView=false;
+                        })
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            }else{
+                this.$refs[formName].validate((valid) => {
+                    //console.log(this.addSpvData);
+                    if (valid) {
+                        console.log(this.addSpvData)   
+                        axioss.updateSpv(this.addSpvData).then(res=>{
+                            if(res.data.code=='SUCCESS'){
+                                this.reqSpvList();
+                                this.querySpv(this.spvId);
+                                this.$message({
+                                    type:'success',
+                                    message:"Succeed to update spv!!!"
+                                })
+                            }else{
+                                this.$message({
+                                    type:'warning',
+                                    message:"Failed to update spv!!!"
+                                })
+                            }
+                            this.spvView=false;
+                        })
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            }    
+        },
+        submitShare(formName){
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    axioss.updateShare(this.addShareShow).then(res=>{
+                        this.reqShareList();
+                        this.addShareShow=[];
+                        this.shareView=false;
+                        //Object.assign(this.addShareData,this.resetaddShareData);
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+        },
+        deleteShare(capdate){
+            var obj={};
+            obj.spvid=this.spvId,
+            obj.capdatestr=capdate;
+            axioss.deleteShare(obj).then(res=>{
+                //console.log(res);
+                this.reqShareList();
+            })
+        },
+        addDelete(id){
+            for(var i=0;i<this.addShareShow.length;i++){
+                if(this.addShareShow[i].capid==id){
+                    this.addShareShow.splice(i,1);
+                } 
+            }     
+        },
+        localAdd(){
+            this.addShareData.lpaamtdate=this.addShareData.capdatestr
+            this.addShareData.spvid=this.spvId;
+            this.addShareData.capid=this.addShareData.capid+1;
+            var datastr=JSON.stringify(this.addShareData);
+            var dataobj=JSON.parse(datastr);
+            this.addShareShow.push(dataobj);
+            this.calculate(this.addShareShow);
+        },
+        calculate(data){
+            var sum=0;
+            for(var i=0;i<data.length;i++){
+                sum+=parseFloat(data[i].lpaamt);
+            }
+            for(var i=0;i<data.length;i++){
+                data[i].lpaamtprop=(parseFloat(data[i].lpaamt)/sum*100).toFixed(2);
+                //console.log(parseFloat(data[i].lpaamt)/sum)
+            }
+        },
+        changeShow(whichOper){
+            if(!this.canAdd){
+                alert("请选择项目");
+                return;
+            }
+            this.spvView=true;
+            this.isShow=whichOper=='add'?true:false;
+            if(whichOper=='update'){
+                axioss.querySpv(this.spvId).then(res=>{
+                    console.log(res);
+                    this.addSpvData=res.data.data;
+                })
+            }
+        },
+        isShareShow(){
+            if(this.addShareData.capdatestr){
+                this.shareView=true;
+            }else{
+                alert('请选则变更日期！！！')
+            } 
+        },
+        deleteSpv(){   
+            axioss.deleteSpv(this.spvId).then(res=>{
+                this.reqSpvList();
+                console.log(this.addSpvData.parentspvid)
+                this.querySpv(this.parentid);
+                axioss.reqShareList(this.parentid).then(res=>{
+                    console.log(res)
+                    this.shareListData=res.data.data;
+                })
+            })
+        },
+        reqShareList(){
+            axioss.reqShareList(this.spvId).then(res=>{
+                console.log(res)
+                this.shareListData=res.data.data;
+            })
+        },
+        reqSharedrop(){
+            axioss.reqdroplist({dictArray:"FUND,SPV,DDL_SpvInvestorType,DDL_SpvType"}).then(res=>{
+                this.dropFundData=res.data.data[0].baseInfoList;
+                this.dropSpvData=res.data.data[1].baseInfoList;
+                this.dropType=res.data.data[2].baseInfoList;
+                this.dropSpvType=res.data.data[3].baseInfoList;
+                console.log(res)
+            })    
+        },
+        togetherChange(id){
+            this.addShareData.stockholderid='';
+            this.addShareData.stockholdername='';
+            this.addShareData.stockholdercode='';
+            if(id=='1'){
+                this.fundspvData=this.dropFundData;
+                this.isDisabled=true;
+            }else if(id=='2'){
+                this.fundspvData=this.dropSpvData;
+                this.isDisabled=true;
+            }else{
+                this.isDisabled=false;
+            }
+            this.isDisabled2=!this.isDisabled;         
+        },
+        reqValue(event){
+            console.log(event.target.textContent)
+            this.addShareData.stockholdername=event.target.textContent;
+        },
+        whichType(type){//在handleclick中调用。
+            if(type=="2"||type=="3"){
+                this.whichTypeShow=false;
+                this.addShareData.type='stockholder';
+            }else{
+                this.whichTypeShow=true;
+                this.addShareData.type='';
+            }
+        }
+    },
+    watch:{
+        'addShareShow':{
+            handler(newValue,oldValue){
+                console.log(newValue);
+                if(newValue!=[]){
+                    this.calculate(this.addShareShow);
+                }    
+            },
+            deep:true
+        }
+    },
+    directives:{
+        isedit:{
+            inserted:function(el){
+                var inp=el.children[0];
+                inp.onfocus=function(){
+                    this.style.borderColor="#ccc";
+                };
+                inp.onblur=function(){
+                    this.style.borderColor="transparent";
+                }
+            }
+        }
     },
     components:{
         Header
@@ -224,7 +577,7 @@ export default {
     }
     .spv-list-container {
         .form-container{
-            width:20%;
+            width:27%;
             float:left;
             .el-form-item{
                 margin-bottom: 0;
@@ -266,5 +619,8 @@ export default {
         clear: both;
         display:block;
         visibility: hidden;
+    }
+    .top,.bottom{
+        margin:0 auto;
     }
 </style>
