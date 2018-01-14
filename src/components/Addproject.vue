@@ -2,8 +2,9 @@
 <div class="add-project">
     <Header></Header>
     <!--<h2>添加项目信息</h2>-->
+    <div class="big-container">
     <el-form :label-position="labelposition" :model="formData" :rules="rules" ref="userform">
-        <h3>Essential information </h3>
+        <h3 ref="bacinfo">Essential information </h3>
         <div class="base-info-container">
             <div class="baseinfo-left">
                 <el-form-item label="Project Name" prop="abbname">
@@ -139,7 +140,7 @@
                 </el-form-item>
             </div>
         </div>
-        <h3>Personnel information</h3>
+        <h3 ref="person">Personnel information</h3>
         <div class="base-info-container">
             <div class="baseinfo-left">
                 <el-form-item label="Project Manager" prop="projectmanager">
@@ -189,7 +190,7 @@
                 </el-form-item>
             </div>
         </div>
-        <h3>Contact information </h3>
+        <h3 ref="contactinfo">Contact information </h3>
         <div class="base-info-container">
             <div class="baseinfo-left">
                 <el-form-item label="Company Website" prop="website">
@@ -236,7 +237,7 @@
                 <el-input type="textarea" v-model="formData.onelinedesc"></el-input>
             </el-form-item>
         </div>
-        <el-form-item style="margin-top:15px;">
+        <el-form-item class="addpro-button">
             <div v-if="opreationType=='creatuserform'">
                 <el-button type="primary" size="mini" @click="submitForm1('userform')">创建</el-button>
                 <router-link to="listpage" style="margin-left:10px"><el-button size="mini">返回</el-button></router-link>
@@ -247,14 +248,22 @@
             </div>
         </el-form-item> 
     </el-form>
+    </div>
+    <Ivestment></Ivestment>
+    <Navlist v-on:toScorll="scrolltoview" :isactive='isActive'></Navlist>
+
 </div>
 </template>
 <script>
+import Ivestment from '@/page/InvestManage/investmanager';
 import Header from "./common/Header";
 import * as method from "../api/method";	
 import axioss from '../api/axios';
+import mix from "@/api/mixin";
+import Navlist from '@/components/common/Nav'
 export default {
     name:"AddProject",
+    mixins:[mix],
     data:function(){  
       return {
         labelposition:"right",
@@ -263,6 +272,12 @@ export default {
         extraarr:[],
         foundeddatee:"",
         opreationType:'creatuserform',
+        isActive:{
+            bacinfo:true,
+            person:false,
+            contactinfo:false,
+            loan:false
+        },
         formData: {
           abbname: '',
           abbnamechi: '',
@@ -506,19 +521,28 @@ export default {
       }
     },
     components:{
-        Header
+        Header,
+        Ivestment,
+        Navlist
     } 	
 }
 </script>
 <style scoped>
 	.add-project{
-        width:1140px;
-        margin:0 auto;
+        width:85%;
+        margin-left:156px;
+        float:left;
+        margin-top:20px;
+    }
+    .add-project .big-container{
+        border:1px solid #ddd;
     }
     .add-project .base-info-container{
         border:1px solid #ddd;
         box-shadow:0 0 2px #eee;
         border-radius:3px;
+        border-left:none;
+        border-right:none;
     } 
     .add-project .el-form-item{
         font-family:'droid';
@@ -543,5 +567,5 @@ export default {
     .add-project .el-form-item label,.add-project .el-form-item .el-form-item__content{
         width:50%;
     }
-   
+    
 </style>

@@ -109,21 +109,18 @@
             </ul>
         </div>
     </div>
-    <ol class="navlist droid">
-      <li class="title">Nav</li>
-      <li @click="scrolltoview('bacinfo')" :class='{navactive:isActive.bacinfo}'>Basic</li>
-      <li @click="scrolltoview('legalinfo')" :class='{navactive:isActive.legalinfo}'>LEGAL</li>
-      <li @click="scrolltoview('contactinfo')" :class='{navactive:isActive.contactinfo}'>CONTACT</li>
-      <li @click="scrolltoview('listinginfo')" :class='{navactive:isActive.listinginfo}'>IPO/LISTING</li>
-  </ol>
+    <Navlist v-on:toScorll="scrolltoview" :isactive="isActive"></Navlist>
 </div>
 </template>
 <script>
 import axioss from '../api/axios'
 import Header from "./common/Header"
 import * as method from "@/api/method"
+import Navlist from '@/components/common/Nav'
+import mix from "@/api/mixin"
 export default {
     name:"Detail",
+    mixins:[mix],//混入视图滚动方法
     data:function(){
       return {
         imageUrl: '',
@@ -133,7 +130,7 @@ export default {
             legalinfo:false,
             contactinfo:false,
             listinginfo:false
-        }
+        },
       }
     },
     mounted:function(){    
@@ -148,25 +145,9 @@ export default {
                 obj.lockupexpireddate=method.toLocalString(obj.lockupexpireddate)
                 this.detaildata=obj;
                 //console.log(res);
-
           }).catch((res)=>{
               console.log(res);
           })
-        },
-        scrolltoview(eletoview){
-            var obj=this.$refs[eletoview];
-            var scrolly=window.scrollY
-            var _top=obj.getBoundingClientRect().top;
-            var top=_top+scrolly-130;
-            document.documentElement.scrollTop=top;
-            this.confirmActive(eletoview)
-        },
-        confirmActive(obj){
-            var isActive=this.isActive;
-            for(var item in isActive){
-                isActive[item]=false;
-            }
-            isActive[obj]=true;
         },
         linktoeditor(id){
             this.$router.push({ path: "addproject", query:{portfolioid:id,path:'editor'}})
@@ -195,7 +176,8 @@ export default {
         }
     },
     components:{
-        Header
+        Header,
+        Navlist
     } 	
 }
 </script>
@@ -209,7 +191,7 @@ export default {
     .basic-detail-container .base-info-first ul li span:first-child{
         font-weight:600;
     }
-    .basic-detail-container .navlist{
+    /* .basic-detail-container .navlist{
         position: fixed;
         top:75px;
         left:20px;
@@ -232,18 +214,18 @@ export default {
     .navactive{
         background:#00a1e9;
         color:white;
-    }
+    } */
     .avatar-uploader{
         position: absolute;
         width:100%;
         height:100%;
     }
-    .basic-detail-container .navlist .title{
+    /* .basic-detail-container .navlist .title{
         text-align:center;
         font-weight:600;
         background:white;
         color:#00a1e9;
-    } 
+    }  */
     .basic-detail-container h3{
       margin:10px 0;
     }

@@ -1,18 +1,23 @@
 <template>
-<div class="loan">
+<div class="loan" ref='loan'>
     <div class="loan-table-container">
         <h3 class="h3">Loan</h3>
         <el-table :data="tableData" border style="overflow:hidden;">
             <el-table-column prop="date" label="日期"></el-table-column>
             <el-table-column prop="name" label="姓名"></el-table-column>
             <el-table-column prop="address" label="地址"></el-table-column>
+            <el-table-column prop="address" label="地址"></el-table-column>
+            <el-table-column prop="address" label="地址"></el-table-column>
+            <el-table-column prop="address" label="地址"></el-table-column>
+            <el-table-column prop="address" label="地址"></el-table-column>
+            <el-table-column prop="address" label="地址"></el-table-column>
         </el-table>
         <div class="table-foot">
-            <i class="el-icon-edit"></i>
+            <i class="el-icon-edit" @click="loanVisible=true"></i>
             <i class="el-icon-delete"></i>
         </div>
     </div>
-
+    <el-dialog title="Loan Edit" :visible.sync="loanVisible">
     <div class="select-container">
         <el-form :model="loanForm" ref="loanForm" :label-position='labelPosition'>
             <div class="select-fixed">
@@ -79,7 +84,13 @@
             </div>
         </el-form>
     </div>
-    <!-- <div v-else-if="loanType=='Calpatal Interest'">
+    <div slot="footer" class="dialog-footer">
+        <el-button @click="loanVisible = false" size='mini'>取 消</el-button>
+        <el-button type="primary" size='mini' @click="loanVisible = false">确 定</el-button>
+    </div>
+    </el-dialog>
+</div>
+<!-- <div v-else-if="loanType=='Calpatal Interest'">
         <el-form-item label="Interest From">
             <el-select v-model="loanForm.value14" placeholder="请选择">
                 <el-option v-for="item in options" :key="item.value"
@@ -101,33 +112,44 @@
             <el-input v-model="loanForm.value15"></el-input>
         </el-form-item>
     </div> -->
-</div>
 </template>
 <script>	
 import axioss from '@/api/axios';
 import * as method from "@/api/method";
+import mix from "@/api/mixin";
+import bus from "@/api/eventbus";
 export default {
     name:"loan",
+    mixins:[mix],
     data(){  
         return {
+            loanVisible:false,
             loanType:'brigeLoans',
             labelPosition:'right',
             tableData: [{
                 date: '2016-05-02',
                 name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
+                address: '上海市普陀区'
             }, {
                 date: '2016-05-04',
                 name: '王小虎',
-                address: '上海市普陀区金沙江路 1517 弄'
+                address: '上海市普陀'
             }, {
                 date: '2016-05-01',
                 name: '王小虎',
-                address: '上海市普陀区金沙江路 1519 弄'
+                address: '上海市普陀'
             }, {
                 date: '2016-05-03',
                 name: '王小虎',
-                address: '上海市普陀区金沙江路 1516 弄'
+                address: '上海市普陀'
+            },{
+                date: '2016-05-02',
+                name: '王小虎',
+                address: '上海市普陀区'
+            },{
+                date: '2016-05-02',
+                name: '王小虎',
+                address: '上海市普陀'
             }],
             loanForm:{
                 value1:'',value2:'',value3:'',value4:'',value5:'',value55:'',
@@ -152,7 +174,9 @@ export default {
         
     },
     mounted(){
-       
+       bus.$on('toscorll',(ace)=>{
+           this.scrolltoview(ace);
+       })
     },
     methods:{ 
         
@@ -160,7 +184,7 @@ export default {
     watch:{
         'addShareShow':{
             handler(newValue,oldValue){
-                   
+                
             },
             deep:true
         }
@@ -179,6 +203,7 @@ export default {
         .loan-table-container h3{
             font-size:20px;
             padding:5px 0;
+            padding-left:10px;
             background:#eee;
             margin: 0;
             border-bottom: 1px solid #ebeef5;
@@ -187,8 +212,9 @@ export default {
     .loan-table-container .table-foot{
         background:#eee;
         padding:5px 0;
+        padding-left:10px;
     }
     .select-container{
-        width:80%;
+        width:100%;
     }
 </style>

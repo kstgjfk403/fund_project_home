@@ -110,6 +110,15 @@ a{
     margin-left:40% !important;
     width:43%;
 }
+.add-project .el-form-item.addpro-button{
+    margin:0;
+    padding:5px 15px;
+    box-sizing: border-box;
+}
+.add-project .el-form-item.addpro-button .el-form-item__content{
+    text-align:right;
+    width:auto;
+}
 .add-project .el-form-item.oneline{
     width:50%;
 }
@@ -226,4 +235,31 @@ a{
 .loan .select-container .el-form-item{
     width:33%;
     float:left;
-}  
+}
+.loan .select-container{
+    overflow:hidden;
+    .el-select{
+        .el-input{
+            width:100%;
+        }
+        width:45%;
+    }
+    .el-input{
+        width:100%;
+    }
+    .el-form-item__label{
+        width:40%;
+    }
+    .el-table td, .el-table th{
+        padding:2px 0;
+    }
+}
+.loan{
+    .el-dialog{
+        width:85%;
+        .el-dialog__body{
+            padding-top:14px;
+            padding-bottom:7px;
+        }
+    }
+}
