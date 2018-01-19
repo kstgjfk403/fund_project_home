@@ -1,29 +1,13 @@
-
-
-var arr=[];
-var brr=[];
 const actions = {
-	addGood({commit},good){
-		
-	},
-	reduce({commit},id){
-		
-	},
-	add({commit},id){
-		
-	},
-	remove({commit},id){	
-		commit("remove",id)
-	},
-	putPosition({commit},Position){
-		
-	},
-	savesearch({commit},savegood){	
-		commit("save",savegood)
-	},
-	savehistory({commit},searchhistory){
-		
-	}	
+	storedata({commit},id){
+        commit('storedata',id);
+        localStorage.portfolioid=id;		
+    },
+    updateData({commit}){
+        var id=localStorage.portfolioid;
+        console.log('action'+id)
+        commit('updateData',id)
+    }
 }
 
-//export default actions
+export default actions

@@ -63,7 +63,12 @@
               <li><span>Company Headcount：</span><span>{{detaildata.headcount}}</span></li>
             </ul>
             <ul>
+                <li><span>CEO：</span><span>{{detaildata.ceo}}</span></li>
                 <li><span>Found of Found：</span><span>{{detaildata.fundoffund}}</span></li>
+            </ul>
+            <ul>
+              <li><span>Primary Business：</span><span>{{detaildata.auditconfaddress}}</span></li>
+              <li><span>Product：</span><span>{{detaildata.product}}</span></li>
             </ul>
         </div>
     </div>
@@ -78,6 +83,17 @@
               <li><span>IDG Observer:</span><span>{{detaildata.observerstr}}</span></li>
               <li><span>Liquidation preference：</span><span>{{detaildata.liquidationpreference}}</span></li>
             </ul>
+            <ul>
+              <li><span>Year Of Incorporation：</span><span>{{detaildata.auditconfaddress}}</span></li>
+              <li><span>Incorporated In：</span><span>{{detaildata.product}}</span></li>
+            </ul>
+            <ul>
+              <li><span>Company Register No.：</span><span>{{detaildata.auditconfaddress}}</span></li>
+              <li><span>Investment Legal form：</span><span>{{detaildata.product}}</span></li>
+            </ul>
+            <ul>
+              <li><span>Total Boardseat NO.：</span><span>{{detaildata.auditconfaddress}}</span></li>
+            </ul>
         </div>
     </div>
     <div class="base-info" ref="contactinfo">
@@ -86,8 +102,13 @@
             <ul>
               <li><span>Business address(Eng)：</span><span>{{detaildata.address}}</span></li>
               <li><span>Business address(chi)：</span><span>{{detaildata.addresschi}}</span></li>
+            </ul>
+            <ul>
               <li><span>Telephone：</span><span>{{detaildata.telephone}}</span></li>
               <li><span>Fax：</span><span>{{detaildata.fax}}</span></li>
+            </ul>
+            
+            <ul>
               <li><span>Audit Comformation Address：</span><span>{{detaildata.auditconfaddress}}</span></li>
             </ul>
         </div>
@@ -96,7 +117,7 @@
         <h4><span class="droid">IPO/LISTING RECORD(if applicable)</span></h4>
         <div class="base-info-content">
             <ul>
-              <li><span>Portfolio Status Effective Date：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
+              <li><span>Portfolio Status：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
               <li><span>Stock Exchange：</span><span>{{detaildata.stockexchangeidstr}}</span></li>
             </ul>
             <ul>
@@ -106,6 +127,14 @@
             <ul>
               <li><span>Lockup expired on：</span><span>{{detaildata.lockupexpireddate}}</span></li>
               <li><span>ADR Ratio：</span><span>{{detaildata.adrratio}}</span></li>
+            </ul>
+            <ul>
+              <li><span> Effective Date：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
+              <li><span>Financial YTD：</span><span>{{detaildata.stockexchangeidstr}}</span></li>
+            </ul>
+            <ul>
+              <li><span> IPO Date：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
+              <li><span>Stock Code：</span><span>{{detaildata.stockexchangeidstr}}</span></li>
             </ul>
         </div>
     </div>

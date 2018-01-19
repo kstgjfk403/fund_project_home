@@ -1,14 +1,15 @@
  import Vue from 'vue'
  import Router from 'vue-router'
-  Vue.use(Router)
+ Vue.use(Router)
  import Listpage from '../components/Listpage'
  import Detail from '../components/Detail'
  import Addproject from '../components/Addproject'
  import FundListpage from '../DollarFund/Listpage'
  import FundDetail from '../DollarFund/Detail'
  import FundAddproject from '../DollarFund/Addproject'
- import SpvList from "../page/spv/spvMember"
- import InvestManage from "@/page/investManage/investmanager"
+ import SpvList from "../page/spv/spvMember"//delete
+ import CapTable from "@/page/capTable/capTable"//delete
+ import InvestManage from "@/page/InvestManage/investmanager"
  export default new Router({
    routes: [
     //portfolio
@@ -24,6 +25,7 @@
     //spv
     {path:"/spvlist",name:"spvlist",component:SpvList},
     //invest
-    {path:'/investmanage',name:'investmanage',component:InvestManage}
+    {path:'/investmanage',name:'investmanage',component:InvestManage},
+    {path:'/captable',name:'captable',component:CapTable}
    ]
  })

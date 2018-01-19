@@ -27,7 +27,7 @@ export default {
             isActive[obj]=true;
         },
         scrollto(ele){
-            if(ele=="loan"){
+            if(ele=="CapTable"||ele=="Invest"){
                 bus.$emit('toscorll',ele)
             }else{   
                 this.$emit('toScorll',ele);

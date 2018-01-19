@@ -70,13 +70,19 @@ export function formatTime(time,symbol){
 }
 //数字千分位格式化
 export function toThousands(num) {  
-    var result = '', counter = 0;  
-    num = (num || 0).toString();  
+    var result = '', counter = 0;
+    var reg=/^\-/;
+    var num1=num;
+    num = (num || 0).toString();
+    num=num.replace(reg,'');
     for (var i = num.length - 1; i >= 0; i--) {  
         counter++;  
         result = num.charAt(i) + result;  
         if (!(counter % 3) && i != 0) { result = ',' + result; }  
-    }  
+    }
+    if(num1<0){
+        result="-"+result
+    }
     return result;  
 }
 //合并单元格
@@ -102,4 +108,31 @@ export function mc(tableId, startRow, endRow, col) {
             }
         }
     }
-} 
+}
+//数据处理函数
+export function handleData(data,fun){
+    var objem={};
+    var arrem=[];
+    if(data.constructor==Array){
+        for(var i=0;i<data.length;i++){//可以用递归处理更复杂/深的数据结构
+            arrem[i]=fun(data[i]);
+        }
+        return arrem;
+    }else if(data.constructor==Object){//可以用递归处理更复杂/深的数据结构
+        for(var i in data){
+            objem[i]=fun(data[i])
+        }
+        return objem;
+    }
+    
+}
+//获取地址栏参数
+// export function GetQueryString(name)
+// {
+//     var arr1,arr2,arr3,id;
+//     arr1=window.location.href;
+//     arr2=arr1.split("?");
+//     arr3=arr2[1].split('&');
+//     id=arr3[0].split('=');
+//     return id[0]
+// }

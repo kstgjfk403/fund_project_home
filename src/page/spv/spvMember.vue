@@ -19,7 +19,7 @@
                 </el-tree>
             </el-card>
         </div>
-        <div class="spv-right">
+        <div class="spv-right" v-if="allListShow">
             <div class="spv-right-top">    
                 <div class="clearfix">
                     <span>Base Information</span>
@@ -38,6 +38,7 @@
                     </el-table-column>
                 </el-table>
             </div>
+            
             <div class="spv-right-bottom">    
                 <div class="clearfix">
                     <div class="form-container">
@@ -80,6 +81,49 @@
                 </table>
             </div>
         </div>
+        <div class="position-container spv-right" v-else>
+            <!-- <div style="position:relative;margin-top:5px;overflow-x:auto;width:82%;margin:0 auto;"> -->
+                <div class="table-responsive">
+                <table class="table table-hover table-bordered table-condensed" style="table-layout:fixed;">
+                    <thead>
+                        <tr>
+                        <th scope="col">Type    
+                            <!-- <el-input placeholder="请输入Programe Name" v-model="abbnameval" @input.native="searchData('abbname',abbnameval)"></el-input> -->
+                        </th>
+                        <th scope="col">SPV Name    
+                            <!-- <el-input class="search" placeholder="请输入Programe Name" v-model="abbnamechival" @input.native="searchData('abbnamechi',abbnamechival)"></el-input> -->
+                        </th>
+                        <th scope="col">spv中文名
+                            <!-- <el-input class="search" placeholder="请输入Programe Name" v-model="fullnameval" @input.native="searchData('fullname',fullnameval)"></el-input> -->
+                        </th>
+                        <th scope="col">Registor Address
+                            <!-- <el-input class="search" placeholder="请输入Programe Name" v-model="fullnamechival" @input.native="searchData('fullnamechi',fullnamechival)"></el-input>-->
+                        </th>
+                        <th scope="col">Remarks
+                            <!-- <el-input class="search" placeholder="请输入Programe Name" v-model="fullnamechival" @input.native="searchData('fullnamechi',fullnamechival)"></el-input>-->
+                        </th>
+                        <th scope="col">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in allSpvList">
+                            <td>{{item.spvtypestr}}</td>
+                            <td @click="querySpvAll(item.spvid)" style="color:#00a1e9;cursor:pointer;">{{item.spvname}}</td>
+                            <td>{{item.spvnamechi}}</td>
+                            <td>{{item.regaddress}}</td>
+                            <td>{{item.remarks}}</td>
+                            <td>                           
+                                <i class="el-icon-delete" @click="deleteSpvAll(item.spvid)"></i>
+                                <i class="el-icon-edit" @click="changeShow('update',item.spvid)"></i>
+                            </td>
+                        </tr>   
+                    </tbody>
+                </table>
+                <div class="pagination-container">
+                    <el-pagination background layout="prev, pager, next,jumper,total" :total="allcount" :page-size='10' :current-page.sync="pageCurrent" @current-change="handleCurrentChange" style="position:absolute;left:50%;bottom:25px;transform: translate(-50%);"></el-pagination>    
+                </div>
+            </div>
+            </div>
     </div>
     <el-dialog title="ADD Shareholder" :visible.sync="shareView">
         <div class="edit-input">
@@ -192,9 +236,12 @@ import axioss from '../../api/axios';
 import * as method from "../../api/method";
 export default {
     name:"spvlist",
-
     data:function(){  
         return {
+            pageCurrent: 1,
+            pageCount: 10,
+            allcount: 0,
+            pagesize:2,
             isDisabled2:false,
             isDisabled:false,
             canAdd:false,
@@ -205,6 +252,8 @@ export default {
             spvView:false,
             shareView:false,
             whichTypeShow:true,
+            allListShow:false,
+            allSpvList:[],
             labelposition:"right",
             parentid:'',
             spvTreeData: [],
@@ -286,28 +335,57 @@ export default {
             }
         }   
     },
-    updated(){  
-        method.mc('table1',0,0,0);
+    updated(){
+        this.$nextTick(function(){
+            method.mc('table1',0,0,0);
+        })
     },
     mounted:function(){
         //console.log("mounted")
+       var obj={pageIndex:this.pageCurrent,pageCount:2,spvname:'SPV'}
+        this.reqSpvallList(obj);
         this.reqSpvList();
         this.reqSharedrop();
         this.reqShareList();
-        this.querySpv(this.spvId);  
+        //this.querySpv(this.spvId);
+        this.reqSpvallList();  
     },
-    methods:{ 
+    methods:{
+        querySpvAll(id){
+            this.spvId=id;
+            this.querySpv(id);
+            this.reqShareList(id);
+            this.allListShow=true;
+        },
+        handleCurrentChange(){
+            var obj={pageIndex:this.pageCurrent,pageCount:2,spvname:'SPV'}
+            this.reqSpvallList(obj);
+        }, 
         reqSpvList(){
             axioss.reqSpvList().then(res=>{
-                //console.log(res)
+                console.log(res)
                 this.spvTreeData.splice(0,1,res.data.data)
+            })
+        },
+        reqSpvallList(obj){
+            axioss.reqSpvallList(obj).then(res=>{
+                this.allSpvList=res.data.data;
+                this.allcount=res.data.count;
+            })
+        },
+        deleteSpvAll(id){
+            axioss.deleteSpv(id).then(res=>{
+                this.reqSpvList();
+                var obj={pageIndex:this.pageCurrent,pageCount:2,spvname:'SPV'}
+                this.reqSpvallList(obj)
             })
         },
         querySpv(spvId){
             axioss.querySpv(spvId).then(res=>{
                 this.whichType(res.data.data.spvtype);
                 this.spvData.splice(0,1,res.data.data);
-                console.log(res)
+                //this.allListShow=true;
+                //console.log(res)
             })
         },
         queryShare(spvid,capdatestr){
@@ -321,7 +399,7 @@ export default {
             })
         },
         handleNodeClick(dataNode,node,treeCom){
-            console.log(node)
+            //console.log(node)
             this.canAdd=true;
             this.spvId=node.data.id;
             this.addSpvData.isleaf=node.isLeaf;
@@ -330,6 +408,11 @@ export default {
             this.parentid=node.parent.data.id;
             this.reqShareList();
             this.querySpv(this.spvId);
+            if(node.data.id=='S00000'){
+                this.allListShow=!this.allListShow;
+            }else{
+                this.allListShow=true;
+            }
         },
         submitSpv(formName,whichOper){
             if(whichOper=='add'){
@@ -340,7 +423,7 @@ export default {
                         }
                         this.addSpvData.spvlevel++;
                         this.addSpvData.isleaf="Y";
-                        console.log(this.addSpvData)
+                        //console.log(this.addSpvData)
                         axioss.addSpv(this.addSpvData).then(res=>{
                             //console.log(res)
                             if(res.data.code=='SUCCESS'){
@@ -367,11 +450,13 @@ export default {
                 this.$refs[formName].validate((valid) => {
                     //console.log(this.addSpvData);
                     if (valid) {
-                        console.log(this.addSpvData)   
+                        //console.log(this.addSpvData)   
                         axioss.updateSpv(this.addSpvData).then(res=>{
                             if(res.data.code=='SUCCESS'){
                                 this.reqSpvList();
                                 this.querySpv(this.spvId);
+                                this.reqShareList(this.spvId);
+                                this.allListShow=true;
                                 this.$message({
                                     type:'success',
                                     message:"Succeed to update spv!!!"
@@ -441,16 +526,19 @@ export default {
                 //console.log(parseFloat(data[i].lpaamt)/sum)
             }
         },
-        changeShow(whichOper){
-            if(!this.canAdd){
+        changeShow(whichOper,id){
+            var spvid=id||this.spvId;
+            console.log(spvid)
+            if(!this.canAdd&&whichOper=='add'){
                 alert("请选择项目");
                 return;
             }
             this.spvView=true;
             this.isShow=whichOper=='add'?true:false;
+            this.spvId=spvid;
             if(whichOper=='update'){
-                axioss.querySpv(this.spvId).then(res=>{
-                    console.log(res);
+                axioss.querySpv(spvid).then(res=>{
+                    //console.log(res);
                     this.addSpvData=res.data.data;
                 })
             }
@@ -473,9 +561,10 @@ export default {
                 })
             })
         },
-        reqShareList(){
-            axioss.reqShareList(this.spvId).then(res=>{
-                console.log(res)
+        reqShareList(id){
+            var spvid=id||this.spvId;
+            axioss.reqShareList(spvid).then(res=>{
+                //console.log(res)
                 this.shareListData=res.data.data;
             })
         },
@@ -485,7 +574,7 @@ export default {
                 this.dropSpvData=res.data.data[1].baseInfoList;
                 this.dropType=res.data.data[2].baseInfoList;
                 this.dropSpvType=res.data.data[3].baseInfoList;
-                console.log(res)
+                //console.log(res)
             })    
         },
         togetherChange(id){
@@ -504,7 +593,7 @@ export default {
             this.isDisabled2=!this.isDisabled;         
         },
         reqValue(event){
-            console.log(event.target.textContent)
+            //console.log(event.target.textContent)
             this.addShareData.stockholdername=event.target.textContent;
         },
         whichType(type){//在handleclick中调用。
@@ -600,4 +689,37 @@ export default {
     .top,.bottom{
         margin:0 auto;
     }
+    .el-pagination {
+        text-align: center;
+        padding: 10px 0;
+        }
+        .table tr th {
+        vertical-align: top;
+        width:120px;
+        text-align:center;
+        }
+        .table tr th:last-child {
+        width:130px;
+        }
+        .table tr td {
+        width: 120px;
+        white-space: wrap;
+        overflow: hidden;
+        color:#666;
+        }
+        .table tr td:last-child{
+            text-align: center;
+        }
+        .table tr th,.table tr td{
+            border-color:#ddd;
+        }
+        .pagination-container{
+            width:100%;
+            height:50px;
+            
+        }
+        .position-container{
+            width:95%;margin:0 auto;
+            position:relative;
+        }
 </style>

@@ -169,6 +169,7 @@ export default {
       if (path == "details") {
         this.$router.push({ path: "detail", query: { portfolioid: id } });
       } else if (path == "editor") {
+        this.$store.dispatch('storedata',id)
         this.$router.push({ path: "addproject", query:{portfolioid:id,path:'editor'}})
       } else if (path == "addproject") {
         this.$router.push({ path: "addproject",query:{path:'add'}});
@@ -261,6 +262,10 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    beforeRouteLeave (to, from, next) {
+        alert()
+        //console.log(this.$route.query.portfolioid);
     }
   }
 };

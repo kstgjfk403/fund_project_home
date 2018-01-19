@@ -136,15 +136,14 @@ a{
 .pagination-container .el-pagination__total{
     margin-left:10px;
 }
-.listpage .el-icon-info{
+.el-icon-info,.el-icon-circle-plus{
     color:#66b1ff;
-    
 }
-.listpage .el-icon-edit{
+.el-icon-edit{
     color:#85ce61;
 }
 
-.listpage .el-icon-delete{
+.el-icon-delete{
     color:#f78989;
 }
 .el-icon-info,.el-icon-edit,.el-icon-delete{
@@ -187,11 +186,17 @@ a{
     }
 }
 // .spv-member-list 
-.el-table__body-wrapper .el-table__body{
+
+.spv-member-list .el-table__body-wrapper .el-table__body{
     //overflow-x: hidden;
     width:auto!important;
 }
 //spv 弹框的样式调整...包括里面嵌套的表格
+.inputnone{
+    .el-input__inner{   
+        border-color:transparent;
+    }
+}
 .spv-member-list .el-dialog{
     border-radius:4px;
     width:68%;
@@ -201,11 +206,7 @@ a{
         border-color:#ccc;
         font-size:12px;
     }
-    .inputnone{
-        .el-input__inner{   
-            border-color:transparent;
-        }
-    }
+    
     .el-form-item{
         width:31%;
         .el-form-item__content{
@@ -229,9 +230,6 @@ a{
 .loan .el-input{
     width:auto;
 }
-// .loan .el-form-item{
-//     display: inline-block;
-// }
 .loan .select-container .el-form-item{
     width:33%;
     float:left;
@@ -254,7 +252,8 @@ a{
         padding:2px 0;
     }
 }
-.loan{
+.capTable,.loan{
+    margin-bottom:20px;
     .el-dialog{
         width:85%;
         .el-dialog__body{
@@ -262,4 +261,30 @@ a{
             padding-bottom:7px;
         }
     }
+}
+.capTable .content .el-table__body-wrapper{
+    overflow: hidden;
+}
+.invest .select-container{
+    overflow:hidden;
+    .el-select{
+        .el-input{
+            width:100%;
+        }
+        width:100%;
+    }
+}
+.invest .table-condensed > tbody > tr > td{
+    padding:0
+}
+.invest{
+    .table{
+        td{
+            padding:0;
+        }
+    }
+}
+.el-select-dropdown__item:hover{
+    background:#00a1e9;
+    color:white;
 }

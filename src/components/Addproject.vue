@@ -1,10 +1,10 @@
 <template>
 <div class="add-project">
     <Header></Header>
-    <!--<h2>添加项目信息</h2>-->
     <div class="big-container">
+    <div class="title">BasicInfo</div>
     <el-form :label-position="labelposition" :model="formData" :rules="rules" ref="userform">
-        <h3 ref="bacinfo">Essential information </h3>
+        <h3 ref="BasicInfo">Essential information </h3>
         <div class="base-info-container">
             <div class="baseinfo-left">
                 <el-form-item label="Project Name" prop="abbname">
@@ -140,7 +140,7 @@
                 </el-form-item>
             </div>
         </div>
-        <h3 ref="person">Personnel information</h3>
+        <h3>Personnel information</h3>
         <div class="base-info-container">
             <div class="baseinfo-left">
                 <el-form-item label="Project Manager" prop="projectmanager">
@@ -190,7 +190,7 @@
                 </el-form-item>
             </div>
         </div>
-        <h3 ref="contactinfo">Contact information </h3>
+        <h3>Contact information </h3>
         <div class="base-info-container">
             <div class="baseinfo-left">
                 <el-form-item label="Company Website" prop="website">
@@ -250,17 +250,19 @@
     </el-form>
     </div>
     <Ivestment></Ivestment>
+    <CapTable></CapTable>
     <Navlist v-on:toScorll="scrolltoview" :isactive='isActive'></Navlist>
-
 </div>
 </template>
 <script>
 import Ivestment from '@/page/InvestManage/investmanager';
 import Header from "./common/Header";
+import CapTable from "@/page/capTable/capTable";
 import * as method from "../api/method";	
 import axioss from '../api/axios';
 import mix from "@/api/mixin";
-import Navlist from '@/components/common/Nav'
+import Navlist from '@/components/common/Nav';
+import store from '@/vuex/store';
 export default {
     name:"AddProject",
     mixins:[mix],
@@ -273,10 +275,10 @@ export default {
         foundeddatee:"",
         opreationType:'creatuserform',
         isActive:{
-            bacinfo:true,
-            person:false,
-            contactinfo:false,
-            loan:false
+            BasicInfo:true,
+            //contact:false,
+            Invest:false,
+            CapTable:false
         },
         formData: {
           abbname: '',
@@ -414,8 +416,13 @@ export default {
         var portfolioid=this.$route.query.portfolioid;
         this.classOperation(way,portfolioid);
     },
+    updated(){
+         var portfolioid=this.$route.query.portfolioid;
+         this.$store.dispatch('storedata',portfolioid);
+    },
     mounted:function(){
         this.requserlist();
+        var portfolioid=this.$route.query.portfolioid;
     },
     methods:{
        requserlist(){
@@ -523,7 +530,8 @@ export default {
     components:{
         Header,
         Ivestment,
-        Navlist
+        Navlist,
+        CapTable
     } 	
 }
 </script>
@@ -554,8 +562,9 @@ export default {
         flex-wrap:wrap;
     }
     .add-project h3{
-        font-size:20px;
-        margin:15px 0;
+        font-size:16px;
+        padding:5px 0;
+        background:#eee;
     }
     .add-project .baseinfo-left,.add-project .baseinfo-right{
         width:50%;
@@ -567,5 +576,12 @@ export default {
     .add-project .el-form-item label,.add-project .el-form-item .el-form-item__content{
         width:50%;
     }
-    
+    .title{
+        padding:10px;
+        box-sizing: border-box;
+        font-size: 20px;
+        color:white;
+        font-weight:bold;
+        background:#00a1e9;
+    }
 </style>

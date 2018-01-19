@@ -10,9 +10,9 @@ import App from './App';
 import router from './router';
 import store from './vuex/store';
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css'
+import 'element-ui/lib/theme-chalk/index.css';
 import axios from "axios";
-import './styles/iconfont.css'
+import './styles/iconfont.css';
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 axios.defaults.baseURL = 'http://localhost:8080';
@@ -22,5 +22,6 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: { App },
+  store
 })

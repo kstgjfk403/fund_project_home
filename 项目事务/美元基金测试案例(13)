@@ -1,4 +1,4 @@
-
+﻿
 -----------------------------------------proj start-------------------------------------------
 1.获取列表
 /admin/proj/list
@@ -416,7 +416,7 @@ http://localhost:8080/api/admin/fund/delete/{fundId}
 http://localhost:8080/api/admin/spv/delete/S00007
 
 5.获取spv树形列表   GET
-http://localhost:8080/api/admin/spv/list
+http://localhost:8080/api/admin/spv/tree
 {
     "code": "SUCCESS",
     "returnMessage": "SUCCESS",
@@ -462,6 +462,40 @@ http://localhost:8080/api/admin/spv/list
     "count": null
 }
 
+5.获取spv列表   POST
+http://localhost:8080/api/admin/spv/list
+请求：{"pageIndex":1,"pageCount":2,"spvname":"zz"}
+返回：{
+    "code": "SUCCESS",
+    "returnMessage": "SUCCESS",
+    "data": [
+        {
+            "spvid": "S00000",
+            "spvname": "SPV",
+            "spvnamechi": "SPV信息",
+            "parentspvid": "-1",
+            "spvlevel": 1,
+            "regaddress": "",
+            "remarks": "",
+            "isleaf": "N",
+            "spvtype": 1,
+            "spvtypestr": "partnerCompany"
+        },
+        {
+            "spvid": "S00001",
+            "spvname": "SPVtest1-update",
+            "spvnamechi": "SPV测试1",
+            "parentspvid": "S00000",
+            "spvlevel": 2,
+            "regaddress": "测试地址",
+            "remarks": "测试",
+            "isleaf": "N",
+            "spvtype": 2,
+            "spvtypestr": "limitedCompany"
+        }
+    ],
+    "count": 8
+}
 
 spv cap table股东信息
 股东的类别 我们就约定好：GP/LP/stockholder
@@ -573,3 +607,271 @@ http://localhost:8080/api/admin/spv/investor/sublist
     "count": null
 }
 ----------------------------spv end-----------------------------------------------------------
+
+----------------------投资协议----------------------------------------------------------
+一.借款
+1.按portfolioId获取借款列表 GET
+http://localhost:8080/api/admin/proj/invest/note/list/P00001
+{
+    "code": "SUCCESS",
+    "returnMessage": "SUCCESS",
+    "data": [
+        {
+            "noteid": "N0001",
+            "portfolioid": "P00001",
+            "fundid": "F0001",
+            "fundname": "CVC4Main",
+            "fundfamillyname": "Venture IV",
+            "closedate": 1406131200000,
+            "notetype": "Bridging Loans",
+            "notenum": 354600,
+            "currency": "USD",
+            "feedate": null,
+            "noteotherfee": 0,
+            "duedate": 1420128000000,
+            "interestrate": "0",
+            "interestdesc": "",
+            "extension": false,
+            "extensiondate": -2209017600000,
+            "taxlotdate": -2209017600000,
+            "vouncher": ""
+        },
+        {
+            "noteid": "N0002",
+            "portfolioid": "P00001",
+            "fundid": "F0002",
+            "fundname": "CVC4Invdsfsdf",
+            "fundfamillyname": "Venture IVdfsdfsdf",
+            "closedate": 1406131200000,
+            "notetype": "Bridging Loans",
+            "notenum": 45400,
+            "currency": "USD",
+            "feedate": null,
+            "noteotherfee": 0,
+            "duedate": 1420128000000,
+            "interestrate": "0",
+            "interestdesc": "",
+            "extension": false,
+            "extensiondate": -2209017600000,
+            "taxlotdate": -2209017600000,
+            "vouncher": ""
+        }
+    ],
+    "count": null
+}
+2.按照noteid获取借款列表 GET
+http://localhost:8080/api/admin/proj/invest/note/entity/N0001
+{
+    "code": "SUCCESS",
+    "returnMessage": "SUCCESS",
+    "data": {
+        "noteid": "N0001",
+        "portfolioid": "P00001",
+        "fundid": "F0001",
+        "fundname": "CVC4Main",
+        "fundfamillyname": "Venture IV",
+        "closedate": 1406131200000,
+        "notetype": "Bridging Loans",
+        "notenum": 354600,
+        "currency": "USD",
+        "feedate": null,
+        "noteotherfee": 0,
+        "duedate": 1420128000000,
+        "interestrate": "0",
+        "interestdesc": "",
+        "extension": false,
+        "extensiondate": -2209017600000,
+        "taxlotdate": -2209017600000,
+        "vouncher": ""
+    },
+    "count": null
+}
+3.新建贷款 POST
+http://localhost:8080/api/admin/proj/invest/note/add
+请求
+{
+        "portfolioid": "P00001",
+        "fundfamillyname": "Venture IV",
+        "closedate": 1406131200000,
+        "notetype": "Bridging Loans",
+        "notenum": 354600,
+        "currency": "USD",
+        "feedate": 1420128000000,
+        "noteotherfee": 100,
+        "duedate": 1420128000000,
+        "interestrate": "0",
+        "interestdesc": "",
+        "extension": false,
+        "extensiondate": -2209017600000,
+        "taxlotdate": -2209017600000,
+        "vouncher": ""
+    }
+4.更新贷款 POST
+http://localhost:8080/api/admin/proj/invest/note/update
+请求
+{
+        "noteid": "N2247",
+        "portfolioid": "P00001",
+        "fundid": "F0025",
+        "fundname": "CC3Main",
+        "fundfamillyname": "IDGCC3",
+        "closedate": 1406131200000,
+        "notetype": "Bridging Loans",
+        "notenum": 322686,
+        "currency": "USD",
+        "feedate": 1420128000000,
+        "noteotherfee": 91,
+        "duedate": 1420128000000,
+        "interestrate": "0",
+        "interestdesc": "",
+        "extension": false,
+        "extensiondate": -2209017600000,
+        "taxlotdate": -2209017600000,
+        "vouncher": ""
+    }
+4.删除贷款 POST
+http://localhost:8080/api/admin/proj/invest/note/delete/N2246
+
+二、投资(不包含债转股的情况)
+1.按portfolioId获取投资列表 GET
+http://localhost:8080/api/admin/proj/invest/equity/list/P00818
+返回
+{
+    "code": "SUCCESS",
+    "returnMessage": "SUCCESS",
+    "data": [
+        {
+            "eiid": "EI7412",
+            "portfolioid": "P00818",
+            "fundid": "F0022",
+            "investtype": "Shares Split",
+            "closedate": 1510588800000,
+            "round": "",
+            "securitytypeid": 6,
+            "securitytypeidstr": "Equity Interest",
+            "shareownedno": 80,
+            "conversionratio": 1,
+            "cost": null,
+            "otherfees": null,
+            "remarks": null,
+            "costrelization": null,
+            "proceeds": null,
+            "currency": null,
+            "taxlotdate": null,
+            "vouncher": null,
+            "convertamount": null,
+            "additionalcost": null,
+            "otherproceeds": null,
+            "fundname": "Test Fund",
+            "fundfamillyname": "Test Fund"
+        },
+        {
+            "eiid": "EI7413",
+            "portfolioid": "P00818",
+            "fundid": "F0022",
+            "investtype": "Shares Split",
+            "closedate": 1510588800000,
+            "round": "",
+            "securitytypeid": 6,
+            "securitytypeidstr": "Equity Interest",
+            "shareownedno": 160,
+            "conversionratio": 1,
+            "cost": null,
+            "otherfees": null,
+            "remarks": null,
+            "costrelization": null,
+            "proceeds": null,
+            "currency": null,
+            "taxlotdate": null,
+            "vouncher": null,
+            "convertamount": null,
+            "additionalcost": null,
+            "otherproceeds": null,
+            "fundname": "Test Fund",
+            "fundfamillyname": "Test Fund"
+        }
+    ],
+    "count": null
+}
+2.按portfolioId获取投资列表 GET
+http://localhost:8080/api/admin/proj/invest/equity/entity/EI7406
+{
+    "code": "SUCCESS",
+    "returnMessage": "SUCCESS",
+    "data": {
+        "eiid": "EI7406",
+        "portfolioid": "P00818",
+        "fundid": "F0022",
+        "investtype": "Equity Interest",
+        "closedate": 1483200000000,
+        "round": "",
+        "securitytypeid": 6,
+        "securitytypeidstr": "Equity Interest",
+        "shareownedno": 100,
+        "conversionratio": 1,
+        "cost": 1000,
+        "otherfees": 100,
+        "remarks": "",
+        "costrelization": 0,
+        "proceeds": 0,
+        "currency": "USD",
+        "taxlotdate": null,
+        "vouncher": null,
+        "convertamount": null,
+        "additionalcost": null,
+        "otherproceeds": 0,
+        "fundname": "Test Fund",
+        "fundfamillyname": "Test Fund"
+    },
+    "count": null
+}
+3.新建贷款 POST
+http://localhost:8080/api/admin/proj/invest/note/add
+{
+        "portfolioid": "P00818",
+        "investtype": "Equity Interest",
+        "closedate": 1483200000000,
+        "round": "",
+        "securitytypeid": 6,
+        "securitytypeidstr": "Equity Interest",
+        "shareownedno": 88,
+        "conversionratio": 1,
+        "cost": 1112,
+        "otherfees": 88,
+        "remarks": "",
+        "costrelization": 0,
+        "proceeds": 0,
+        "currency": "USD",
+        "taxlotdate": null,
+        "vouncher": null,
+        "convertamount": null,
+        "additionalcost": null,
+        "otherproceeds": 0,
+        "fundfamillyname": "IDGCC3"
+    }
+4.更新贷款 POST
+http://localhost:8080/api/admin/proj/invest/equity/update
+        {
+            "eiid": "EI7466",
+            "fundid": "F0026",
+            "portfolioid": "P00818",
+            "investtype": "Equity Interest",
+            "closedate": 1483200000000,
+            "round": "",
+            "securitytypeid": 6,
+            "securitytypeidstr": "Equity Interest",
+            "shareownedno": 88,
+            "conversionratio": 1,
+            "cost": 1112,
+            "otherfees": 89,
+            "remarks": "zzzz",
+            "costrelization": 0,
+            "proceeds": 0,
+            "currency": "USD",
+            "taxlotdate": null,
+            "vouncher": null,
+            "convertamount": null,
+            "additionalcost": null,
+            "otherproceeds": 0,
+            "fundfamillyname": "IDGCC3"
+    }

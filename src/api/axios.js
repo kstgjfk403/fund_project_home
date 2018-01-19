@@ -51,11 +51,15 @@ export default {
         //var objj=method.switchStr(obj)
         return axios.post('/api/admin/fund/update',obj);
     },
-    //获取spv列表;
+    //获取spv树形列表;
     reqSpvList(){
-        return axios.get('/api/admin/spv/list');
+        return axios.get('/api/admin/spv/tree');
     },
-    //获取spv列表;
+    //获取整个spv列表。
+    reqSpvallList(obj){
+        return axios.post("/api/admin/spv/list",obj);
+    },
+    //获取spv单个信息;
     querySpv(id){
         return axios.get('/api/admin/spv/entity/'+id);
     },
@@ -63,7 +67,7 @@ export default {
     addSpv(obj){
         return axios.post('/api/admin/spv/add',obj);
     },
-    //修改spv列表
+    //修改spv列表.
     updateSpv(obj){
         return axios.post('/api/admin/spv/update',obj);
     },
@@ -90,5 +94,54 @@ export default {
     //查询股东信息
     queryShare(obj){
         return axios.post('/api/admin/spv/investor/sublist',obj)
+    },
+    //按portfolioId获取借款列表 GET
+    reqLoanList(id){
+        return axios.get('/api/admin/proj/invest/note/list/'+id)
+    },
+    //查询单个借款
+    querySingal(id){
+        return axios.get('/api/admin/proj/invest/note/entity/'+id)
+    },
+    //新建借款
+    addLoan(obj){
+        return axios.post('/api/admin/proj/invest/note/add/',obj)
+    },
+    //获取select的下拉列表
+    reqSelectList(obj){
+        return axios.post('/api/sys/dict', obj)
+    },
+    //update
+    updateLoan(obj){
+        return axios.post('/api/admin/proj/invest/note/update/',obj)
+    },
+    //删除贷款
+    deletLoan(id){
+        return axios.post("/api/admin/proj/invest/note/delete/"+id,{noteid:id})
+    },
+    //获取investType下拉列表
+    invesDropList(obj){
+        return axios.post('/api/sys/dict', obj)
+    },
+    //获取invest列表
+    reqinvestList(id){
+        return axios.get('/api/admin/proj/invest/equity/list/'+id)
+    },
+    //新建invest
+    addInvest(obj){
+        return axios.post('/api/admin/proj/invest/equity/add/',obj)
+    },
+    //update invest
+    updateInvest(obj){
+        return axios.post('/api/admin/proj/invest/equity/update/',obj)
+    },
+    //删除 invest
+    deletInvest(id){
+        return axios.post("/api/admin/proj/invest/equity/delete/"+id,{noteid:id})
+    },
+    //获取loantoequity列表
+    reqLoanToEquity(obj){
+        console.log(obj);
+        return axios.post("/api/admin/proj/invest/n2i/list/",obj)
     }
 }
