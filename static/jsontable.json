@@ -1,0 +1,20 @@
+
+{
+    "code": "SUCCESS",
+    "returnMessage": "SUCCESS",
+    "data": [
+        {
+            "closedate": 1454256000000,
+            "remainderamount": 790000,
+            "otherfees": 0,
+            "fundfamillyname": "Test Fund"
+        },
+        {
+            "closedate": 1452009600000,
+            "remainderamount": 980000,
+            "otherfees": 25,
+            "fundfamillyname": "Test Fund"
+        }
+    ],
+    "count": null
+}
