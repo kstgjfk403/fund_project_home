@@ -4,7 +4,10 @@ import Vuex from "vuex"
 import actions from "./actions"
 Vue.use(Vuex)
 const state={
-	portfolioid:''
+    portfolioid:'',
+    capTabelData:[],
+    CapTabelList:[],
+    isDetail:true
 }
 
 const getters={
@@ -16,6 +19,16 @@ const mutations={
     },
     updateData(state,id){
         state.portfolioid=localStorage.portfolioid;
+    },
+    saveCapTabel(state,data){
+        state.capTabelData=data;
+    },
+    saveCapTabelList(state,data){
+        state.CapTabelList=data;
+    },
+    isDetail(state,data){
+        console.log(data.isDetail)
+        state.isDetail=data.isDetail;
     }
 }
 

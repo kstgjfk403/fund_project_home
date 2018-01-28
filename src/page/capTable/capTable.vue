@@ -1,149 +1,90 @@
 <template>
-<div class="capTable">
-    <div class="title" ref="CapTable">CapTable History</div>
-    <div class="loan-table-container">
-        <h3 class="h3">CapTable History</h3>
-        <el-table :data="tableData3" style="width: 100%">
-            <el-table-column prop="date" label="股东信息" width="150">
-                <el-table-column prop="name" label="股东类型" width="130"></el-table-column>
-                <el-table-column prop="name" label="股东" width="130"></el-table-column>
-            </el-table-column>
-            <el-table-column label="第一轮 2014-05-06">
-                <el-table-column prop="name" label="认缴注册资本" width="130"></el-table-column>
-                <el-table-column prop="province" label="认缴投资额" width="130"></el-table-column>
-                <el-table-column prop="address" label="股比" width="130"></el-table-column>
-                <el-table-column prop="address" label="股比" width="130"></el-table-column>
-            </el-table-column>
-            <el-table-column label="第二轮 2014-05-06">
-                <el-table-column prop="name" label="认缴注册资本" width="130"></el-table-column>
-                <el-table-column prop="province" label="认缴投资额" width="130"></el-table-column>
-                <el-table-column prop="address" label="股比" width="130"></el-table-column>
-                <el-table-column prop="address" label="股比" width="130"></el-table-column>
-            </el-table-column>
-            <el-table-column label="合计">
-                <el-table-column prop="province" label="累计投资额" width="130"></el-table-column>
-                <el-table-column prop="address" label="股比" width="130"></el-table-column>
-            </el-table-column>
-        </el-table>
-        <div class="table-foot">
-            <i class="el-icon-circle-plus" @click="handleAdd"></i>
-        </div>
-    </div>
-    <el-dialog title="capTable Edit" :visible.sync="capVisible">
-        <div class="select-container">
-            <div class="select-fixed">
-                <el-form :model="capForm" ref="capForm">
-                    <el-form-item label="Invest Type">
-                        <el-select placeholder="请选择" v-model="capForm.a">
-                            <el-option label="dsf" value="dfddsf" key="w"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="Payment Date">
-                        <el-date-picker type="date" placeholder="选择日期">
-                        </el-date-picker>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-select v-model="capForm.b">
-                            <el-option label="dsf" value="dfdsf" key="d"></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-form>
+    <div class="capTable loan" ref="CapTable">
+        <div class="title">CapTable History</div>
+        <div class="loan-table-container">
+            <h3 class="h3">CapTable History</h3>
+            <el-table :data="capTabelList" style="width: 100%">
+                <el-table-column prop="date" label="股东信息" width="150">
+                    <el-table-column prop="name" label="股东类型" width="130"></el-table-column>
+                    <el-table-column prop="name" label="股东" width="130"></el-table-column>
+                </el-table-column>
+                <el-table-column label="第一轮 2014-05-06">
+                    <el-table-column prop="name" label="认缴注册资本" width="130"></el-table-column>
+                    <el-table-column prop="province" label="认缴投资额" width="130"></el-table-column>
+                    <el-table-column prop="address" label="股比" width="130"></el-table-column>
+                    <el-table-column prop="address" label="股比" width="130"></el-table-column>
+                </el-table-column>
+                <el-table-column label="第二轮 2014-05-06">
+                    <el-table-column prop="name" label="认缴注册资本" width="130"></el-table-column>
+                    <el-table-column prop="province" label="认缴投资额" width="130"></el-table-column>
+                    <el-table-column prop="address" label="股比" width="130"></el-table-column>
+                    <el-table-column prop="address" label="股比" width="130"></el-table-column>
+                </el-table-column>
+                <el-table-column label="合计">
+                    <el-table-column prop="province" label="累计投资额" width="130"></el-table-column>
+                    <el-table-column prop="address" label="股比" width="130"></el-table-column>
+                </el-table-column>
+            </el-table>
+            <div class="table-foot">
             </div>
         </div>
-        <div class="content">
-            <el-table :data="tableData6" border 
-                :summary-method="getSummaries" show-summary style="width: 100%;">
-                <el-table-column prop="id" label="ID" width="180"></el-table-column>
-                <el-table-column prop="name" label="姓名"></el-table-column>
-                <el-table-column prop="amount1" label="数值 1（元）"> </el-table-column>
-                <el-table-column prop="amount2" label="数值 2（元）"></el-table-column>
-                <el-table-column prop="amount3" label="数值 3（元）"></el-table-column>
-            </el-table>
-        </div>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="capVisible = false" size='mini'>取 消</el-button>
-        </div>
-    </el-dialog>
-</div>
+    </div>
 </template>
 <script>	
 import axioss from '@/api/axios';
 import * as method from "@/api/method";
 import bus from "@/api/eventbus";
-import mix from "@/api/mixin";
 export default {
     name:"CapTable",
-    mixins:[mix],
     data(){  
         return {
+            heightObj:'',
             capVisible:false,
-            capForm:{
-            },
-            tableData3: [{
-                date: '2016-05-03',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金',
-                zip: 200333
-                }, {
-                date: '2016-05-02',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙',
-                zip: 200333
-                }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙',
-                zip: 200333
-                }],
-            tableData6: [{
-                id: '12987122',
-                name: '王小虎',
-                amount1: '234',
-                amount2: '3.2',
-                amount3: 10
-                }, {
-                id: '12987123',
-                name: '王小虎',
-                amount1: '165',
-                amount2: '4.43',
-                amount3: 12
-                }, {
-                id: '12987124',
-                name: '王小虎',
-                amount1: '324',
-                amount2: '1.9',
-                amount3: 9
-                }, {
-                id: '12987125',
-                name: '王小虎',
-                amount1: '621',
-                amount2: '2.2',
-                amount3: 17
-                }, {
-                id: '12987126',
-                name: '王小虎',
-                amount1: '539',
-                amount2: '4.1',
-                amount3: 15
-            }]
+            capSelectList:[], 
+            // capTabelList: [
+
+            // ]
         }
     },
     updated(){
     },
     mounted(){
-        bus.$on('toscorll',(ace)=>{
-           this.scrolltoview(ace);
+        bus.$on('toScorll',(ace,arr)=>{
+           this.scrolltoview(ace,arr);
        });
     },
     methods:{
+        reqdroplist(){
+            var obj={dictArray:"DDL_ShareType"}
+            axioss.reqdroplist(obj).then(res=>{
+                this.capSelectList=res.data.data[0].baseInfoList;
+            })
+        },
         handleAdd(){
+            this.reqdroplist();//获取新建时的下拉列表数据。
             this.capVisible=true;
+        },
+        submitInputForm(fromName){
+            this.$refs[capInputForm].validate((validate)=>{
+                if(validate){
+                    axioss.addShareHolder(obj).then(res=>{
+                        console.log(res);
+                        if(res.data.code=="SUCCESS"){
+                            this.$message({
+                                type:'success',
+                                message: '创建成功'
+                            })
+                        }else{
+                            this.$message({
+                                type:'warning',
+                                message: '创建失败'
+                            })
+                        }
+                    })
+                }else{
+                    console.log('err submit')
+                }
+            })
         },
         getSummaries(param){
             const { columns, data } = param;
@@ -170,10 +111,42 @@ export default {
             }
             });
             return sums;
+        },
+        scrolltoview(eletoview){
+            var obj=this.$refs[eletoview];
+            if(!this.heightObj){
+                this.heightObj=this.$refs["CapTable"].offsetHeight
+            }
+            if(!obj){
+                this.$refs["CapTable"].style.height=50+"px";
+                this.$refs["CapTable"].style.overflow='hidden';
+            }
+            if(obj){
+                var scrolly=window.scrollY
+                var _top=obj.getBoundingClientRect().top;
+                var top=_top+scrolly;
+                document.documentElement.scrollTop=-(top-_top);
+                obj.style.height=this.heightObj+"px"
+            }   
         }
     },
     computed:{
-
+        capTabelList(){
+            return this.$store.state.capTabelList;
+        }
+    },
+    directives:{
+        isedit:{
+            inserted:function(el){
+                var inp=el.children[0];
+                inp.onfocus=function(){
+                    this.style.borderColor="#ccc";
+                };
+                inp.onblur=function(){
+                    this.style.borderColor="transparent";
+                }
+            }
+        }
     }
 }
 </script>

@@ -18,7 +18,7 @@
             <el-table-column prop="extensiondate" label="Extension Date" width="130"></el-table-column>
             <el-table-column prop="taxlotdate" label="Tax Lot Date" width="130"></el-table-column>
             <el-table-column prop="vouncher" label="Vouncher" width="90"></el-table-column>
-            <el-table-column prop="vouncher" label="操作" width="60" fixed='right'>
+            <el-table-column prop="vouncher" label="操作" width="60" fixed='right' v-if="isDetail">
                 <template slot-scope="scope">
                     <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
                     <i class="el-icon-delete" @click="deletLoan(scope.$index, scope.row)"></i>
@@ -26,7 +26,7 @@
             </el-table-column>
         </el-table>
         <div class="table-foot">
-            <i class="el-icon-circle-plus" @click="handleAdd"></i>
+            <i class="el-icon-circle-plus" @click="handleAdd" v-if="isDetail"></i>
         </div>
     </div>
     <el-dialog title="Loan Edit" :visible.sync="loanVisible">
@@ -51,8 +51,8 @@
                 </el-form-item>
                 <el-form-item label="Currency">
                     <el-select v-model="loanForm.currency" placeholder="请选择">
-                        <!-- <el-option v-for="item in options" :key="item.value"
-                        :label="item.label" :value="item.value"></el-option> -->
+                        <el-option v-for="item in selectlist.CURRENCY" :key="item.baseId"
+                        :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
                 </el-form-item>
             </div>
@@ -194,15 +194,15 @@ export default {
             })
         },
         reqSelectList(){
-            var obj={dictArray:"DDL_NoteType,FUNDFAMILY"};
+            var obj={dictArray:"DDL_NoteType,FUNDFAMILY,CURRENCY"};
             axioss.reqSelectList(obj).then(res=>{
                 var data=res.data.data,newdata;
                 newdata=method.translateFormat(data);
                 this.selectlist=newdata;
             })
         },
-        querySingal(id){
-            axioss.querySingal(id).then(res=>{
+        queryLoanSingal(id){
+            axioss.queryLoanSingal(id).then(res=>{
                 var newdata=res.data.data;
                 this.loanForm=newdata;
             })
@@ -279,7 +279,7 @@ export default {
             this.submitButton=false;
             this.loanVisible=true;
             this.disable=true;
-            this.querySingal(id)
+            this.queryLoanSingal(id)
         },
         handleAdd(){
             Object.assign(this.loanForm,this.loanFormEmpty);
@@ -305,6 +305,9 @@ export default {
                 this.$store.dispatch('updateData');
             }
             return this.$store.state.portfolioid
+        },
+        isDetail(){
+            return this.$store.state.isDetail;
         }
     }
 }
@@ -328,5 +331,7 @@ export default {
     .select-container{
         width:100%;
     }
-    
+    .displaynone{
+        display: none;
+    }
 </style>

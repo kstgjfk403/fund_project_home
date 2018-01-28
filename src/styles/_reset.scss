@@ -252,7 +252,17 @@ a{
         padding:2px 0;
     }
 }
-.capTable,.loan{
+.loan{
+    margin-bottom:20px;
+    .el-dialog{
+        width:85%;
+        .el-dialog__body{
+            padding-top:14px;
+            padding-bottom:7px;
+        }
+    }
+}
+.capTable{
     margin-bottom:20px;
     .el-dialog{
         width:85%;
@@ -263,6 +273,9 @@ a{
     }
 }
 .capTable .content .el-table__body-wrapper{
+    overflow: hidden;
+}
+.exit .el-table__body-wrapper{
     overflow: hidden;
 }
 .invest .select-container{
@@ -287,4 +300,33 @@ a{
 .el-select-dropdown__item:hover{
     background:#00a1e9;
     color:white;
+}
+.valuation .el-form-item{
+    margin-bottom:10px;
+}
+.el-radio-group{
+    width:90%;
+}
+.el-radio-group .el-radio{
+    width:10%;
+    margin-left:30px;
+    margin-top: 10px;
+}
+// .valuation .valuation-top .el-form{
+//     overflow: hidden;
+// }
+// .valuation .valuation-top{
+//     overflow: hidden;
+//     margin-top:15px;
+    
+// }
+// .valuation .valuation-top .el-form-item{
+//     width:23%;
+//     float:left;
+// }
+.valuation .select-container .select-fixed .el-input{
+    width:auto;
+}
+.valuation .el-table__body-wrapper {
+    overflow: hidden;
 }

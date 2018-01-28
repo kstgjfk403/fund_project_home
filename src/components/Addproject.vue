@@ -1,10 +1,10 @@
 <template>
 <div class="add-project">
     <Header></Header>
-    <div class="big-container">
+    <div class="big-container" ref="BasicInfo">
     <div class="title">BasicInfo</div>
     <el-form :label-position="labelposition" :model="formData" :rules="rules" ref="userform">
-        <h3 ref="BasicInfo">Essential information </h3>
+        <h3>Essential information </h3>
         <div class="base-info-container">
             <div class="baseinfo-left">
                 <el-form-item label="Project Name" prop="abbname">
@@ -251,7 +251,7 @@
     </div>
     <Ivestment></Ivestment>
     <CapTable></CapTable>
-    <Navlist v-on:toScorll="scrolltoview" :isactive='isActive'></Navlist>
+    <Navlist v-on:toscorll="scrolltoview" :isactive='isActive'></Navlist>
 </div>
 </template>
 <script>
@@ -260,12 +260,10 @@ import Header from "./common/Header";
 import CapTable from "@/page/capTable/capTable";
 import * as method from "../api/method";	
 import axioss from '../api/axios';
-import mix from "@/api/mixin";
 import Navlist from '@/components/common/Nav';
 import store from '@/vuex/store';
 export default {
     name:"AddProject",
-    mixins:[mix],
     data:function(){  
       return {
         labelposition:"right",
@@ -274,6 +272,7 @@ export default {
         extraarr:[],
         foundeddatee:"",
         opreationType:'creatuserform',
+        heightObj:'',
         isActive:{
             BasicInfo:true,
             //contact:false,
@@ -511,7 +510,7 @@ export default {
                 //console.log(detailobj);
                 var newobjdetail=method.deleteattr(detailobj);
                 var obj=method.nulltostr(newobjdetail);
-                //console.log(obj)
+                //console.log(obj);
                 obj.projectmanager=obj.projectmanager==''?[]:obj.projectmanager.split(","); 
                 obj.projectbuddy=obj.projectbuddy==''?[]:obj.projectbuddy.split(",");
                 obj.idgboardrepresentative=obj.idgboardrepresentative==''?[]:obj.idgboardrepresentative.split(",");
@@ -525,7 +524,24 @@ export default {
                 console.log(res);
             })
           }
-      }
+      },
+      scrolltoview(eletoview,arr){
+            var obj=this.$refs[eletoview];
+            if(!this.heightObj){
+                this.heightObj=this.$refs["BasicInfo"].offsetHeight
+            }
+            if(!obj){
+                this.$refs["BasicInfo"].style.height=50+"px";
+                this.$refs["BasicInfo"].style.overflow='hidden';
+            }
+            if(obj){
+                var scrolly=window.scrollY
+                var _top=obj.getBoundingClientRect().top;
+                var top=_top+scrolly-130;
+                document.documentElement.scrollTop=top;
+                obj.style.height=this.heightObj+"px"
+            }  
+        }
     },
     components:{
         Header,

@@ -100,7 +100,7 @@ export default {
         return axios.get('/api/admin/proj/invest/note/list/'+id)
     },
     //查询单个借款
-    querySingal(id){
+    queryLoanSingal(id){
         return axios.get('/api/admin/proj/invest/note/entity/'+id)
     },
     //新建借款
@@ -137,11 +137,62 @@ export default {
     },
     //删除 invest
     deletInvest(id){
-        return axios.post("/api/admin/proj/invest/equity/delete/"+id,{noteid:id})
+        return axios.post("/api/admin/proj/invest/equity/delete/"+id,{eiid:id})
     },
     //获取loantoequity列表
     reqLoanToEquity(obj){
         console.log(obj);
         return axios.post("/api/admin/proj/invest/n2i/list/",obj)
+    },
+    //按Eiid查询单条记录
+    querySingalData(id){
+        return axios.get('/api/admin/proj/invest/equity/entity/'+id)
+    },
+    //captable  
+    //1.新增股东
+    addShareHolder(obj){
+        return axios.post('/api/admin/proj/captable/investor/add',obj)
+    },
+    reqCaptableList(obj){
+        return axios.post('/api/admin/proj/captable/investor/list',obj)
+    },
+    //查询 captable 单个数据，会获取到一个列表。同上
+    //Exit
+    //获取下拉列表数据，同上。
+    //Exit
+    reqExitShareList(obj){
+        return axios.post('/api/admin/proj/exit/share/list',obj)
+    },
+    //新建exit;
+    addExit(obj){
+        return axios.post('/api/admin/proj/exit/add',obj)
+    },
+    //获取exit列表数据
+    reqExitList(id){
+        return axios.get('/api/admin/proj/exit/list/'+id)
+    },
+    querySingal(id){
+        return axios.get('/api/admin/proj/exit/entity/'+id)
+    },
+    updateExit(obj){
+        return axios.post('/api/admin/proj/exit/update',obj)
+    },
+    deleteExit(id){
+        return axios.post('/api/admin/proj/exit/delete/'+id,{id:id})
+    },
+    //valuation
+    //获取valuation 下拉列表的数据
+    reqselectlist(){
+        return axios.get('/api/sys/fundfamilyList');
+    },
+    //请求fund
+    reqFundFamilyName(id){
+        return axios.get('/api/sys/fund/'+id);
+    },
+    //提交数据
+    reqValList(obj){
+        return axios.post('/api/admin/valuation/list',obj)
     }
+    //
+    
 }

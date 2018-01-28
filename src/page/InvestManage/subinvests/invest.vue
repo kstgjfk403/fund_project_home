@@ -17,7 +17,7 @@
             <el-table-column prop="proceeds" label="Gross Proceeds" width="150"></el-table-column>
             <el-table-column prop="taxlotdate" label="Tax Lot Date" width="150"></el-table-column>
             <el-table-column prop="vouncher" label="vouncher" width="150"></el-table-column>
-            <el-table-column label="操作" width="60" fixed='right'>
+            <el-table-column label="操作" width="60" fixed='right' v-if="isDetail">
                 <template slot-scope="scope">
                     <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
                     <i class="el-icon-delete" @click="handleDelet(scope.$index, scope.row)"></i>
@@ -25,7 +25,7 @@
             </el-table-column>
         </el-table>
         <div class="table-foot">
-            <i class="el-icon-circle-plus" @click="handleAdd"></i>
+            <i class="el-icon-circle-plus" @click="handleAdd" v-if="isDetail"></i>
         </div>
     </div>
     <el-dialog title="Invest Edit" :visible.sync="investVisible">
@@ -48,6 +48,10 @@
                         :label="item.baseName" :value="item.baseName"></el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item label="Termsign Date">
+                    <el-date-picker v-model="investForm.termsigndate" type="date" placeholder="选择日期" :disabled="isDisable">
+                    </el-date-picker>
+                </el-form-item>
             </div>
             <div v-if="investType=='Loan To Equity'">
                 <el-form-item label="Round">
@@ -58,8 +62,8 @@
                 </el-form-item>            
                 <el-form-item label="Currency">
                     <el-select v-model="investForm.currency" placeholder="请选择">
-                        <el-option v-for="item in options" :key="item.value"
-                        :label="item.label" :value="item.value"></el-option>
+                        <el-option v-for="item in fundCurrencyList" :key="item.baseId"
+                        :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
                 </el-form-item>   
             </div>
@@ -85,8 +89,8 @@
                 </el-form-item>
                 <el-form-item label="Currency">
                     <el-select v-model="investForm.currency" placeholder="请选择">
-                        <el-option v-for="item in options" :key="item.value"
-                        :label="item.label" :value="item.value"></el-option>
+                        <el-option v-for="item in fundCurrencyList" :key="item.baseId"
+                        :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Remarks">
@@ -121,8 +125,8 @@
                 </el-form-item>
                 <el-form-item label="Currency">
                     <el-select v-model="investForm.currency" placeholder="请选择">
-                        <el-option v-for="item in options" :key="item.value"
-                        :label="item.label" :value="item.value"></el-option>
+                        <el-option v-for="item in fundCurrencyList" :key="item.baseId"
+                        :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Remarks">
@@ -149,8 +153,8 @@
                 </el-form-item>
                 <el-form-item label="Currency">
                     <el-select v-model="investForm.currency" placeholder="请选择">
-                        <el-option v-for="item in options" :key="item.value"
-                        :label="item.label" :value="item.value"></el-option>
+                        <el-option v-for="item in fundCurrencyList" :key="item.baseId"
+                        :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Tax Lot Date">
@@ -185,8 +189,8 @@
                 </el-form-item>
                 <el-form-item label="Currency">
                     <el-select v-model="investForm.currency" placeholder="请选择">
-                        <el-option v-for="item in options" :key="item.value"
-                        :label="item.label" :value="item.value"></el-option>
+                        <el-option v-for="item in fundCurrencyList" :key="item.baseId"
+                        :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Remarks">
@@ -238,7 +242,7 @@
                             <td><el-input v-model="item.shareownedno" v-isedit class="inputnone"></el-input></td>
                             <td><el-input v-model="item.cost" v-isedit class="inputnone"></el-input></td>
                             <td><el-input v-model="item.additionalcost" v-isedit class="inputnone"></el-input></td>
-                            <td><el-select v-model="investForm.securitytypeid" placeholder="" v-isedit class="inputnone">
+                            <td><el-select v-model="item.securitytypeid" placeholder="" v-isedit class="inputnone">
                                 <el-option value="2" label="2"></el-option>
                                 <el-option value="2" label="3"></el-option>
                                 <el-option value="2" label="6"></el-option>
@@ -250,36 +254,51 @@
             </div>
         </el-form>
     </div>
+    <subCapTable :dataObj='dataObj' v-show='isCaptableShow'></subCapTable>
     <div slot="footer" class="dialog-footer">
         <el-button @click="investVisible = false" size='mini'>取 消</el-button>
         <el-button v-if="buttonShow=='add'" type="primary" size='mini' @click="submitForm('investForm','add')">创建</el-button>
         <el-button v-else type="primary" size='mini' @click="submitForm('investForm','update')">更新</el-button>
     </div>
+    <!-- <div slot="footer">
+        <subCapTable :dataObj='dataObj'></subCapTable>
+    </div> -->
     </el-dialog>
 </div>
 </template>
 <script>	
 import axioss from '@/api/axios';
 import mix from "@/api/mixin";
+import * as method from "@/api/method";
+import subCapTable from "../../capTable/subCapTable"
 export default {
     name:"invest",
     mixins:[mix],
     data(){  
         return {
+            isCaptableShow:false,
             isDisable:false,
             investVisible:false,
+            isReqLoanToEquity:false,
             investType:'',
             isTableShow:'',
             labelPosition:'right',
             buttonShow:'add',
             fundFamily:'',
+            dataObj:{
+                eiid:"",
+                portfolioid:"",
+                fundid:"",
+                investtype:"",
+                closedate: '',
+                round: "",
+                securitytypeid:''
+            },
             investData: [
             ],
             loanToEquityData:[
             ],
-            loanToEquityForm:{
-                portfolioloantoequityList:[]
-            },
+            
             translateObj:{
                 Common:2,
                 Preferred:3,
@@ -289,6 +308,7 @@ export default {
             },
             investTypeList:'',
             fundFamilyList:'',
+            fundCurrencyList:[],
             investForm:{
                 investtype:'',
                 closedate:'',
@@ -307,8 +327,19 @@ export default {
                 otherproceeds:'',
                 additionalcost:'',
                 proceeds:'',
-                costrelization: 0
+                costrelization: 0,
+                termsigndate:''
             },
+            emptyInvestForm:{
+                investtype:'',closedate:'',fundfamillyname:'',
+                cost:'',interestproceeds:'',securitytypeid:'',
+                round:'',shareownedno:'',conversionratio:'',
+                otherfees:'',currency:'USD',remarks:'',
+                taxlotdate:'',vouncher:'',otherproceeds:'',
+                additionalcost:'',proceeds:'',costrelization: 0,
+                termsigndate:''
+            },
+            capTabelList:[],
             options:[
                {
                 value: 'USD',
@@ -326,23 +357,52 @@ export default {
     },
     methods:{ 
         invesDropList(){
-            var obj={dictArray:"DDL_InvestType,FUNDFAMILY,DDL_SecurityType"};
+            var obj={dictArray:"DDL_InvestType,FUNDFAMILY,DDL_SecurityType,CURRENCY"};
             axioss.invesDropList(obj).then(res=>{
                 //console.log(res)
                 this.investTypeList=res.data.data[0].baseInfoList;
                 this.fundFamilyList=res.data.data[1].baseInfoList;
+                this.fundCurrencyList=res.data.data[3].baseInfoList;
             })
         },
         reqinvestList(id){
             var portfolioid=id||this.portfolioid;
             axioss.reqinvestList(portfolioid).then(res=>{
-                this.investData=res.data.data;
+                //console.log(res.data.data)
+                this.investData=this.formatTime(res.data.data);
             })
         },
         reqLoanToEquity(fundfamillyname,portfolioid){
             var obj={fundfamillyname:fundfamillyname,portfolioid:portfolioid}
             axioss.reqLoanToEquity(obj).then(res=>{
-                this.loanToEquityData=res.data.data;
+                //console.log(res.data.data)
+                this.loanToEquityData=this.formatTime(res.data.data);
+            })
+        },
+        reqCaptableList(){
+            var obj={};
+            obj.portfolioid=this.portfolioid;
+            obj.termsigndate=this.dataObj.termsigndate?this.dataObj.termsigndate:1484150400000;
+            obj.maxtermsigndate=this.investForm.maxtermsigndate;
+            axioss.reqCaptableList(obj).then(res=>{
+                this.capTabelList=res.data.data;
+                this.dispatch("saveCapTabelList",this.capTabelList)
+            })
+        },
+        querySingalData(id){
+            axioss.querySingalData(id).then(res=>{
+                console.log(res);
+                var newdata=JSON.stringify(res.data.data);
+                var data=JSON.parse(newdata);
+                this.dataObj.portfolioid=data.portfolioid;
+                this.dataObj.termsigndate=data.termsigndate;
+                this.dataObj.round=data.round;
+                this.dataObj.securitytypeid=data.securitytypeid;
+                this.dataObj.eiid=data.eiid;
+                this.dataObj.securitytypeid=data.securitytypeid;
+                this.investForm=this.translateEdit(data,this.translateObj);
+                this.loanToEquityData=this.formatTime(res.data.data.portfolioloantoequityList);
+                this.whichShow(data.investtype);
             })
         },
         submitForm(formName,type){
@@ -350,8 +410,9 @@ export default {
                 if (valid) {
                     console.log(this.investForm);
                     var obj=this.translateSubmit(this.investForm,this.translateObj)
+                    obj.portfoliocaptablevalueList=this.capFormList;
                     if(this.isTableShow=='LoanToEquity1'){
-                        obj.portfolioloantoequityList=loanToEquityData;
+                        obj.portfolioloantoequityList=this.toMs(this.loanToEquityData);
                     }
                     console.log(obj)
                     if(type=="add"){
@@ -365,7 +426,7 @@ export default {
                                 })
                                 this.investVisible=false;
                                 this.reqinvestList(this.portfolioid);
-                                this.investForm={};
+                                Object.assign(this.investForm,this.emptyInvestForm);
                             }else{
                                 this.$message({
                                     type:'warning',
@@ -382,8 +443,9 @@ export default {
                                     message: '更新成功'
                                 })
                                 this.investVisible=false;
-                                this.reqinvestList(this.portfolioid);
-                                this.investForm={};
+                                this.reqinvestList(this.portfolioid);//请求invest数据
+                                Object.assign(this.investForm,this.emptyInvestForm);
+                                this.reqCaptableList();//更新完成请求CapTable数据
                             }else{
                                 this.$message({
                                     type:'warning',
@@ -399,6 +461,8 @@ export default {
             });
         },
         handleAdd(){
+            this.isCaptableShow=false;
+            this.isReqLoanToEquity=true;
             this.isDisable=false;
             this.investForm={currency:'USD'};
             this.investVisible=true;
@@ -407,12 +471,15 @@ export default {
             this.whichShow('');
         },
         handleEdit(index,data){
+            this.isCaptableShow=true;
+            this.isReqLoanToEquity=false;
             this.isDisable=true;
             this.investVisible=true;
             this.buttonShow='eidt';
             this.investForm.investtype=data.investtype;
-            this.whichShow(data.investtype);
-            this.investForm=this.translateEdit(data,this.translateObj)
+            //更新时,去查询单条记录。
+            console.log(data.eiid);
+            this.querySingalData(data.eiid);  
         },
         handleDelet(index,data){ 
             var id=data.eiid;
@@ -445,15 +512,19 @@ export default {
             }else{
                 if(this.investForm.fundfamillyname){
                     this.isTableShow='LoanToEquity1'
-                    this.reqLoanToEquity(this.investForm.fundfamillyname,this.portfolioid)
+                    if(this.isReqLoanToEquity){
+                        this.reqLoanToEquity(this.investForm.fundfamillyname,this.portfolioid)
+                    }
                 }
             }
         },
         showTable(val){
             if(val){
                 if(this.investType=='Equity Investment&Loan To Equity'||this.investType=='Loan To Equity')
-                this.isTableShow='LoanToEquity1'
-                this.reqLoanToEquity(val,this.portfolioid)
+                    this.isTableShow='LoanToEquity1'
+                    if(this.isReqLoanToEquity){
+                        this.reqLoanToEquity(val,this.portfolioid);
+                    }
             }else{
                 this.isTableShow=''
             }
@@ -466,7 +537,6 @@ export default {
                 data.securitytypeid=obj[val]
                 return data
             }
-            
         },
         translateEdit(data,obj){
             var val=data.securitytypeid;
@@ -480,6 +550,22 @@ export default {
                 }
             }
             return data;
+        },
+        formatTime(data){
+            if(data&&data!=null&&data!=[]){
+                for(var i=0;i<data.length;i++){
+                    data[i].closedate=method.toLocalString(data[i].closedate)
+                }
+            }
+            return data   
+        },
+        toMs(data){
+            if(data.constructor==Array&&data!=[]){
+                for(var i=0;i<data.length;i++){
+                    data[i].closedate=method.toMs(data[i].closedate)
+                }
+            }
+            return data
         }
     },
     computed:{
@@ -487,8 +573,17 @@ export default {
             if(this.$store.state.portfolioid==''){
                 this.$store.dispatch('updateData');
             }
-            return this.$store.state.portfolioid
+            return this.$store.state.portfolioid;
+        },
+        capFormList(){
+            return this.$store.state.capTabelData;
+        },
+        isDetail(){
+            return this.$store.state.isDetail;
         }
+    },
+    components:{
+        subCapTable
     },
     directives:{
         isedit:{

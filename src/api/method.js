@@ -14,12 +14,14 @@ export function switchStr(obj){
 export function translateFormat(arr){
         var newobj={};
         var len=arr.length;
-        for(var i=0;i<len;i++){
-            if(!newobj.hasOwnProperty(arr[i].baseType)){
-                var proname=arr[i].baseType
-                newobj[proname]=arr[i].baseInfoList
+        if(arr){
+            for(var i=0;i<len;i++){
+                if(!newobj.hasOwnProperty(arr[i].baseType)){
+                    var proname=arr[i].baseType
+                    newobj[proname]=arr[i].baseInfoList
+                }
             }
-        }
+        }         
         return newobj;
     }
 //删除对象属性
@@ -55,13 +57,10 @@ export function toLocalString(ms,symbol){
 //将标准时间转成毫秒数格式;//要求日期格式2018/12/23
 export function toMs(date){
     var toms;
-    console.log(typeof date=='string');
-    if(typeof data=='string'){
-        toms=new Date(date).getTime();
-    }
-    return toms;
+        toms=new Date(date)
+        var ms=toms.getTime();
+    return ms;
 }
-
 //时间对象格式化
 export function formatTime(time,symbol){
     var marker=symbol||'/';
@@ -70,15 +69,15 @@ export function formatTime(time,symbol){
 }
 //数字千分位格式化
 export function toThousands(num) {  
-    var result = '', counter = 0;
+    var result='', counter=0;
     var reg=/^\-/;
     var num1=num;
-    num = (num || 0).toString();
+    num=(num||0).toString();
     num=num.replace(reg,'');
-    for (var i = num.length - 1; i >= 0; i--) {  
+    for(var i=num.length-1; i>=0;i--) {  
         counter++;  
-        result = num.charAt(i) + result;  
-        if (!(counter % 3) && i != 0) { result = ',' + result; }  
+        result=num.charAt(i)+result;  
+        if (!(counter%3)&&i!= 0) {result=','+result;}  
     }
     if(num1<0){
         result="-"+result
@@ -86,53 +85,43 @@ export function toThousands(num) {  
     return result;  
 }
 //合并单元格
-export function mc(tableId, startRow, endRow, col) { 
-    var tb = document.getElementById(tableId); 
-    if (col >= tb.rows[0].cells.length) { 
+export function mc(tableId,startRow,endRow,col) { 
+    var tb =document.getElementById(tableId); 
+    if (col>=tb.rows[0].cells.length) { 
         return; 
     } 
-    if (col == 0) { 
-        endRow = tb.rows.length-1; 
+    if (col==0) { 
+        endRow=tb.rows.length-1; 
     } 
-    for (var i = startRow; i < endRow; i++) {
+    for (var i=startRow; i<endRow;i++) {
         if(tb.rows[startRow].cells[col].textContent){   
-            if (tb.rows[startRow].cells[col].textContent == tb.rows[i + 1].cells[0].textContent) { 
-                tb.rows[i + 1].removeChild(tb.rows[i + 1].cells[0]); 
-                tb.rows[startRow].cells[col].rowSpan = (tb.rows[startRow].cells[col].rowSpan | 0) + 1; 
-                if (i == endRow - 1 && startRow != endRow) { 
-                    mc(tableId, startRow, endRow, col + 1); 
+            if (tb.rows[startRow].cells[col].textContent==tb.rows[i+1].cells[0].textContent){ 
+                tb.rows[i+1].removeChild(tb.rows[i+1].cells[0]); 
+                tb.rows[startRow].cells[col].rowSpan=(tb.rows[startRow].cells[col].rowSpan|0)+1; 
+                if (i==endRow-1&&startRow!=endRow){ 
+                    mc(tableId,startRow,endRow,col+1); 
                 } 
             } else { 
-                mc(tableId, startRow, i + 0, col + 1); 
-                startRow = i + 1; 
+                mc(tableId,startRow,i+0,col+1); 
+                startRow=i+1; 
             }
         }
     }
 }
-//数据处理函数
-export function handleData(data,fun){
-    var objem={};
-    var arrem=[];
-    if(data.constructor==Array){
-        for(var i=0;i<data.length;i++){//可以用递归处理更复杂/深的数据结构
-            arrem[i]=fun(data[i]);
+
+//拼接字符串
+export function ConcatStr(data){
+    var len=data.length;
+    for(var i=0;i<len;i++){
+        var obj=data[i].baseName,str='';
+        for(var j in obj){
+            if(j=='fundfamillyname'||j=='securitytype'||j=='round'||j=='shareremain'){
+                str+=obj[j]+'_'
+            }
         }
-        return arrem;
-    }else if(data.constructor==Object){//可以用递归处理更复杂/深的数据结构
-        for(var i in data){
-            objem[i]=fun(data[i])
-        }
-        return objem;
+        
+        data[i].baseName=str.slice(0,str.length-1);
     }
-    
+    return data;
 }
-//获取地址栏参数
-// export function GetQueryString(name)
-// {
-//     var arr1,arr2,arr3,id;
-//     arr1=window.location.href;
-//     arr2=arr1.split("?");
-//     arr3=arr2[1].split('&');
-//     id=arr3[0].split('=');
-//     return id[0]
-// }
+

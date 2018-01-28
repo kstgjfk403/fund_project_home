@@ -423,9 +423,7 @@ export default {
                         }
                         this.addSpvData.spvlevel++;
                         this.addSpvData.isleaf="Y";
-                        //console.log(this.addSpvData)
                         axioss.addSpv(this.addSpvData).then(res=>{
-                            //console.log(res)
                             if(res.data.code=='SUCCESS'){
                                 this.reqSpvList();
                                 Object.assign(this.addSpvData,this.resetaddSpvData);//清空对象的值。

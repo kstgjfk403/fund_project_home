@@ -167,9 +167,12 @@ export default {
     },
     linkto(path, id) {
       if (path == "details") {
+        this.$store.dispatch('storedata',id)
+        this.$store.dispatch('isDetail',{isDetail:false})
         this.$router.push({ path: "detail", query: { portfolioid: id } });
       } else if (path == "editor") {
         this.$store.dispatch('storedata',id)
+        this.$store.dispatch('isDetail',{isDetail:true})
         this.$router.push({ path: "addproject", query:{portfolioid:id,path:'editor'}})
       } else if (path == "addproject") {
         this.$router.push({ path: "addproject",query:{path:'add'}});

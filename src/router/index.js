@@ -10,6 +10,7 @@
  import SpvList from "../page/spv/spvMember"//delete
  import CapTable from "@/page/capTable/capTable"//delete
  import InvestManage from "@/page/InvestManage/investmanager"
+ import Valuation from "@/components/Valuation"
  export default new Router({
    routes: [
     //portfolio
@@ -26,6 +27,8 @@
     {path:"/spvlist",name:"spvlist",component:SpvList},
     //invest
     {path:'/investmanage',name:'investmanage',component:InvestManage},
-    {path:'/captable',name:'captable',component:CapTable}
+    {path:'/captable',name:'captable',component:CapTable},
+    //one
+    {path:'/valuation',name:'valuation',component:Valuation}
    ]
  })

@@ -27,140 +27,144 @@
         </div>
     </div>
     </div>
-    <div class="base-info base-info-first" style="margin-top:0;border-top:none;">
-        
-        <div class="base-info-content" ref="bacinfo" style="margin-top:15px;">
-            <ul>
-              <li><span>Project Name：</span><span>{{detaildata.abbname}}</span></li>
-              <li><span>Project Name(chinese)：</span><span>{{detaildata.abbnamechi}}</span></li>
-            </ul>
-            <ul>
-              <li><span>Compony Lagel Name：</span><span>{{detaildata.fullname}}</span></li>
-              <li><span>Compony Lagel Name(chinese)：</span><span>{{detaildata.fullnamechi}}</span></li>
-            </ul>
-            <ul>
-              <li><span>Report Name：</span><span>{{detaildata.reportname}}</span></li>
-              <li><span>Project Manager：</span><span>{{detaildata.projectmanagerstr}}</span></li>
-            </ul>
-            <ul>
-              <li><span>IDG Role：</span><span>{{detaildata.idgroleidstr}}</span></li>
-              <li><span>Initial Role：</span><span>{{detaildata.initialroleidstr}}</span></li>
-            </ul>
-            <ul>
-              <li><span>Industry Sector：</span><span>{{detaildata.sectoridstr}}</span></li>
-              <li><span>One Line Description：</span><span>{{detaildata.onelinedesc}}</span></li>
-            </ul>
-            <ul>
-              <li><span>Anticipated Exit：</span><span>{{detaildata.antidilutionidstr}}</span></li>
-              <li><span>Project Buddy(2nd manager)：</span><span>{{detaildata.projectbuddystr}}</span></li>
-            </ul>
-            <ul>
-              <li><span>Inistial Stage：</span><span>{{detaildata.stageidstr}}</span></li>
-              <li><span>Inistial Series(participated)：</span><span>暂无</span></li>
-            </ul>
-            <ul>
-              <li><span>Sub-Sector：</span><span>{{detaildata.subsectoridstr}}</span></li>
-              <li><span>Company Headcount：</span><span>{{detaildata.headcount}}</span></li>
-            </ul>
-            <ul>
-                <li><span>CEO：</span><span>{{detaildata.ceo}}</span></li>
-                <li><span>Found of Found：</span><span>{{detaildata.fundoffund}}</span></li>
-            </ul>
-            <ul>
-              <li><span>Primary Business：</span><span>{{detaildata.auditconfaddress}}</span></li>
-              <li><span>Product：</span><span>{{detaildata.product}}</span></li>
-            </ul>
+    <div class="base-info-container" ref="BasicInfo">
+        <div class="base-info base-info-first" style="margin-top:0;border-top:none;">
+            <div class="base-info-content" style="margin-top:15px;">
+                <ul>
+                <li><span>Project Name：</span><span>{{detaildata.abbname}}</span></li>
+                <li><span>Project Name(chinese)：</span><span>{{detaildata.abbnamechi}}</span></li>
+                </ul>
+                <ul>
+                <li><span>Compony Lagel Name：</span><span>{{detaildata.fullname}}</span></li>
+                <li><span>Compony Lagel Name(chinese)：</span><span>{{detaildata.fullnamechi}}</span></li>
+                </ul>
+                <ul>
+                <li><span>Report Name：</span><span>{{detaildata.reportname}}</span></li>
+                <li><span>Project Manager：</span><span>{{detaildata.projectmanagerstr}}</span></li>
+                </ul>
+                <ul>
+                <li><span>IDG Role：</span><span>{{detaildata.idgroleidstr}}</span></li>
+                <li><span>Initial Role：</span><span>{{detaildata.initialroleidstr}}</span></li>
+                </ul>
+                <ul>
+                <li><span>Industry Sector：</span><span>{{detaildata.sectoridstr}}</span></li>
+                <li><span>One Line Description：</span><span>{{detaildata.onelinedesc}}</span></li>
+                </ul>
+                <ul>
+                <li><span>Anticipated Exit：</span><span>{{detaildata.antidilutionidstr}}</span></li>
+                <li><span>Project Buddy(2nd manager)：</span><span>{{detaildata.projectbuddystr}}</span></li>
+                </ul>
+                <ul>
+                <li><span>Inistial Stage：</span><span>{{detaildata.stageidstr}}</span></li>
+                <li><span>Inistial Series(participated)：</span><span>暂无</span></li>
+                </ul>
+                <ul>
+                <li><span>Sub-Sector：</span><span>{{detaildata.subsectoridstr}}</span></li>
+                <li><span>Company Headcount：</span><span>{{detaildata.headcount}}</span></li>
+                </ul>
+                <ul>
+                    <li><span>CEO：</span><span>{{detaildata.ceo}}</span></li>
+                    <li><span>Found of Found：</span><span>{{detaildata.fundoffund}}</span></li>
+                </ul>
+                <ul>
+                <li><span>Primary Business：</span><span>{{detaildata.auditconfaddress}}</span></li>
+                <li><span>Product：</span><span>{{detaildata.product}}</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="base-info">
+            <h4><span class="droid">LEGAL DATA</span></h4>
+            <div class="base-info-content">
+                <ul>
+                <li><span>IDG Inhouse Counsel：</span><span>{{detaildata.idginhousecounselstr}}</span></li>
+                <li><span>IDG board representative：</span><span>{{detaildata.idgboardrepresentativestr}}</span></li>
+                </ul>
+                <ul>
+                <li><span>IDG Observer:</span><span>{{detaildata.observerstr}}</span></li>
+                <li><span>Liquidation preference：</span><span>{{detaildata.liquidationpreference}}</span></li>
+                </ul>
+                <ul>
+                <li><span>Year Of Incorporation：</span><span>{{detaildata.auditconfaddress}}</span></li>
+                <li><span>Incorporated In：</span><span>{{detaildata.product}}</span></li>
+                </ul>
+                <ul>
+                <li><span>Company Register No.：</span><span>{{detaildata.auditconfaddress}}</span></li>
+                <li><span>Investment Legal form：</span><span>{{detaildata.product}}</span></li>
+                </ul>
+                <ul>
+                <li><span>Total Boardseat NO.：</span><span>{{detaildata.auditconfaddress}}</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="base-info">
+            <h4><span class="droid">CONTACT INFORMATION</span></h4>
+            <div class="base-info-content">
+                <ul>
+                <li><span>Business address(Eng)：</span><span>{{detaildata.address}}</span></li>
+                <li><span>Business address(chi)：</span><span>{{detaildata.addresschi}}</span></li>
+                </ul>
+                <ul>
+                <li><span>Telephone：</span><span>{{detaildata.telephone}}</span></li>
+                <li><span>Fax：</span><span>{{detaildata.fax}}</span></li>
+                </ul>
+                
+                <ul>
+                <li><span>Audit Comformation Address：</span><span>{{detaildata.auditconfaddress}}</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="base-info" style="margin-bottom:40px;">
+            <h4><span class="droid">IPO/LISTING RECORD(if applicable)</span></h4>
+            <div class="base-info-content">
+                <ul>
+                <li><span>Portfolio Status：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
+                <li><span>Stock Exchange：</span><span>{{detaildata.stockexchangeidstr}}</span></li>
+                </ul>
+                <ul>
+                <li><span>Ticker：</span><span>{{detaildata.stockcode}}</span></li>
+                <li><span>Lockup period：</span><span>{{detaildata.lockupperiod}}</span></li>
+                </ul>
+                <ul>
+                <li><span>Lockup expired on：</span><span>{{detaildata.lockupexpireddate}}</span></li>
+                <li><span>ADR Ratio：</span><span>{{detaildata.adrratio}}</span></li>
+                </ul>
+                <ul>
+                <li><span> Effective Date：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
+                <li><span>Financial YTD：</span><span>{{detaildata.stockexchangeidstr}}</span></li>
+                </ul>
+                <ul>
+                <li><span> IPO Date：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
+                <li><span>Stock Code：</span><span>{{detaildata.stockexchangeidstr}}</span></li>
+                </ul>
+            </div>
         </div>
     </div>
-    <div class="base-info" ref="legalinfo">
-        <h4><span class="droid">LEGAL DATA</span></h4>
-        <div class="base-info-content">
-            <ul>
-              <li><span>IDG Inhouse Counsel：</span><span>{{detaildata.idginhousecounselstr}}</span></li>
-              <li><span>IDG board representative：</span><span>{{detaildata.idgboardrepresentativestr}}</span></li>
-            </ul>
-            <ul>
-              <li><span>IDG Observer:</span><span>{{detaildata.observerstr}}</span></li>
-              <li><span>Liquidation preference：</span><span>{{detaildata.liquidationpreference}}</span></li>
-            </ul>
-            <ul>
-              <li><span>Year Of Incorporation：</span><span>{{detaildata.auditconfaddress}}</span></li>
-              <li><span>Incorporated In：</span><span>{{detaildata.product}}</span></li>
-            </ul>
-            <ul>
-              <li><span>Company Register No.：</span><span>{{detaildata.auditconfaddress}}</span></li>
-              <li><span>Investment Legal form：</span><span>{{detaildata.product}}</span></li>
-            </ul>
-            <ul>
-              <li><span>Total Boardseat NO.：</span><span>{{detaildata.auditconfaddress}}</span></li>
-            </ul>
-        </div>
-    </div>
-    <div class="base-info" ref="contactinfo">
-        <h4><span class="droid">CONTACT INFORMATION</span></h4>
-        <div class="base-info-content">
-            <ul>
-              <li><span>Business address(Eng)：</span><span>{{detaildata.address}}</span></li>
-              <li><span>Business address(chi)：</span><span>{{detaildata.addresschi}}</span></li>
-            </ul>
-            <ul>
-              <li><span>Telephone：</span><span>{{detaildata.telephone}}</span></li>
-              <li><span>Fax：</span><span>{{detaildata.fax}}</span></li>
-            </ul>
-            
-            <ul>
-              <li><span>Audit Comformation Address：</span><span>{{detaildata.auditconfaddress}}</span></li>
-            </ul>
-        </div>
-    </div>
-    <div class="base-info" ref="listinginfo" style="margin-bottom:40px;">
-        <h4><span class="droid">IPO/LISTING RECORD(if applicable)</span></h4>
-        <div class="base-info-content">
-            <ul>
-              <li><span>Portfolio Status：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
-              <li><span>Stock Exchange：</span><span>{{detaildata.stockexchangeidstr}}</span></li>
-            </ul>
-            <ul>
-              <li><span>Ticker：</span><span>{{detaildata.stockcode}}</span></li>
-              <li><span>Lockup period：</span><span>{{detaildata.lockupperiod}}</span></li>
-            </ul>
-            <ul>
-              <li><span>Lockup expired on：</span><span>{{detaildata.lockupexpireddate}}</span></li>
-              <li><span>ADR Ratio：</span><span>{{detaildata.adrratio}}</span></li>
-            </ul>
-            <ul>
-              <li><span> Effective Date：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
-              <li><span>Financial YTD：</span><span>{{detaildata.stockexchangeidstr}}</span></li>
-            </ul>
-            <ul>
-              <li><span> IPO Date：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
-              <li><span>Stock Code：</span><span>{{detaildata.stockexchangeidstr}}</span></li>
-            </ul>
-        </div>
-    </div>
-    <Navlist v-on:toScorll="scrolltoview" :isactive="isActive"></Navlist>
+    <Ivestment></Ivestment>
+    <CapTable></CapTable>
+    <Navlist v-on:toscorll="scrolltoview" :isactive="isActive"></Navlist>
 </div>
 </template>
 <script>
-import axioss from '../api/axios'
-import Header from "./common/Header"
-import * as method from "@/api/method"
-import Navlist from '@/components/common/Nav'
-import mix from "@/api/mixin"
+import axioss from '../api/axios';
+import Header from "./common/Header";
+import * as method from "@/api/method";
+import Navlist from '@/components/common/Nav';
+import Ivestment from '@/page/InvestManage/investmanager';
+import CapTable from "@/page/capTable/capTable";
 export default {
     name:"Detail",
-    mixins:[mix],//混入视图滚动方法
     data:function(){
-      return {
-        imageUrl: '',
-        detaildata:'',
-        isActive:{
-            bacinfo:true,
-            legalinfo:false,
-            contactinfo:false,
-            listinginfo:false
-        },
-      }
+        return {
+            heightObj:'',
+            imageUrl: '',
+            detaildata:'',
+            isActive:{
+                BasicInfo:true,
+                //contact:false,
+                Invest:false,
+                CapTable:false
+            }
+        }
     },
     mounted:function(){    
         this.requestdetails(this.$route.query.portfolioid);
@@ -202,66 +206,54 @@ export default {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
                 return false;
             }
+        },
+        scrolltoview(eletoview,arr){
+            var obj=this.$refs[eletoview];
+            if(!this.heightObj){
+                this.heightObj=this.$refs["BasicInfo"].offsetHeight;
+            }
+            if(!obj){
+                this.$refs["BasicInfo"].style.height=42+"px";
+                this.$refs["BasicInfo"].style.overflow='hidden';
+            }
+            if(obj){
+                var scrolly=window.scrollY;
+                var _top=obj.getBoundingClientRect().top;
+                var top=_top+scrolly-130;
+                document.documentElement.scrollTop=top;
+                obj.style.height=this.heightObj+"px"
+            }  
         }
     },
     components:{
         Header,
-        Navlist
+        Navlist,
+        Ivestment,
+        CapTable
     } 	
 }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     .basic-detail-container{
-      width:72%;
-      margin:0 auto;
+      width:82%;
+      margin-left:12%;
     }
     .basic-detail-container .base-info-first ul li span:first-child{
         font-weight:600;
     }
-    /* .basic-detail-container .navlist{
-        position: fixed;
-        top:75px;
-        left:20px;
-        background:white;
-        border-radius:3px;
-        box-shadow:0 0 3px #eee;
-        width:130px;
-        border:1px solid #ddd;
-        border-bottom:none;
-    }
-    .basic-detail-container .navlist li{
-        padding:10px 10px;
-        cursor: pointer;
-        text-overflow:ellipsis;
-        overflow:hidden;
-        white-space:nowrap;
-        border-bottom:1px solid #ddd;
-        text-align: center;
-    }
-    .navactive{
-        background:#00a1e9;
-        color:white;
-    } */
     .avatar-uploader{
         position: absolute;
         width:100%;
         height:100%;
     }
-    /* .basic-detail-container .navlist .title{
-        text-align:center;
-        font-weight:600;
-        background:white;
-        color:#00a1e9;
-    }  */
+    
     .basic-detail-container h3{
       margin:10px 0;
     }
     .detail-background{
       height:140px;
-      width:100%;
-      /* background:url("https://static.licdn.com/sc/h/3chad3rzxalsf65nuo7hxciac") no-repeat; */
+      width:100%;      
       margin-top:20px;
       background:#3c8dbc;
       display: flex;
@@ -271,7 +263,6 @@ export default {
     .detail-background ul li span{
       color:white;
       font-size:20px;
-      /* font-weight:bold; */
     }
     .detail-background ul{
       margin-left:20px;
@@ -295,7 +286,6 @@ export default {
     .base-info{
       width:100%;  
       margin-top:15px;
-      /* line-height:30px; */
       box-sizing:border-box;
       padding:15px;
       padding-top:5px;
@@ -324,11 +314,8 @@ export default {
     .base-info ul li span{
       display:inline-block;
       width:50%;
-      /* text-overflow:ellipsis; */
       overflow:hidden;
-      /* white-space:nowrap; */
       color:#666;
-      /* font-weight: bold;  */
       vertical-align:top;
     }
 </style>

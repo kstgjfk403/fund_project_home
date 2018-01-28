@@ -27,12 +27,9 @@ export default {
             isActive[obj]=true;
         },
         scrollto(ele){
-            if(ele=="CapTable"||ele=="Invest"){
-                bus.$emit('toscorll',ele)
-            }else{   
-                this.$emit('toScorll',ele);
-            }
             this.confirmActive(ele);
+            bus.$emit('toScorll',ele,this.isactive);
+            this.$emit('toscorll',ele,this.isactive);  
         }
     }	
 }
