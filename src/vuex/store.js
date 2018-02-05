@@ -6,7 +6,7 @@ Vue.use(Vuex)
 const state={
     portfolioid:'',
     capTabelData:[],
-    CapTabelList:[],
+    capTabelList:[],
     isDetail:true
 }
 
@@ -24,11 +24,14 @@ const mutations={
         state.capTabelData=data;
     },
     saveCapTabelList(state,data){
-        state.CapTabelList=data;
+        state.capTabelList=data;
     },
     isDetail(state,data){
-        console.log(data.isDetail)
+        //console.log(data.isDetail)
         state.isDetail=data.isDetail;
+    },
+    updateIsDetail(state,data){
+        state.isDetail=data;
     }
 }
 

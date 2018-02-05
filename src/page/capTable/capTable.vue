@@ -3,47 +3,46 @@
         <div class="title">CapTable History</div>
         <div class="loan-table-container">
             <h3 class="h3">CapTable History</h3>
-            <el-table :data="capTabelList" style="width: 100%">
-                <el-table-column prop="date" label="股东信息" width="150">
-                    <el-table-column prop="name" label="股东类型" width="130"></el-table-column>
-                    <el-table-column prop="name" label="股东" width="130"></el-table-column>
+            <div class="table-content">
+            <el-table :data="item.baseName" style="width: 100%" v-for="(item,index) in firstContentList" :key="index+1">
+                <el-table-column label="股东信息" width="150">
+                    <el-table-column prop="sharetype" label="股东类型" width="130"></el-table-column>
+                    <el-table-column prop="securitytypeidstr" label="ShareType" width="130"></el-table-column>
                 </el-table-column>
-                <el-table-column label="第一轮 2014-05-06">
-                    <el-table-column prop="name" label="认缴注册资本" width="130"></el-table-column>
-                    <el-table-column prop="province" label="认缴投资额" width="130"></el-table-column>
-                    <el-table-column prop="address" label="股比" width="130"></el-table-column>
-                    <el-table-column prop="address" label="股比" width="130"></el-table-column>
-                </el-table-column>
-                <el-table-column label="第二轮 2014-05-06">
-                    <el-table-column prop="name" label="认缴注册资本" width="130"></el-table-column>
-                    <el-table-column prop="province" label="认缴投资额" width="130"></el-table-column>
-                    <el-table-column prop="address" label="股比" width="130"></el-table-column>
-                    <el-table-column prop="address" label="股比" width="130"></el-table-column>
-                </el-table-column>
-                <el-table-column label="合计">
-                    <el-table-column prop="province" label="累计投资额" width="130"></el-table-column>
-                    <el-table-column prop="address" label="股比" width="130"></el-table-column>
+                <el-table-column :label="item.baseId">
+                    <el-table-column prop="cost" label="认缴注册资本" width="130" :formatter="numberFormat"></el-table-column>
+                    <el-table-column prop="shareownedno" label="认缴投资额" width="130" :formatter="numberFormat"></el-table-column>
+                    <el-table-column prop="proper" label="股比(%)" width="130" :formatter="properFormat"></el-table-column>
+                    <el-table-column prop="properwithoutesop" label="withoutESOP(%)" width="130" :formatter="properFormat"></el-table-column>
                 </el-table-column>
             </el-table>
-            <div class="table-foot">
+            <el-table :data="item.baseName" style="width: 100%" v-for="(item,index) in otherContentList" :key="index">
+                <el-table-column :label="item.baseId">
+                    <el-table-column prop="cost" label="认缴注册资本" width="130" :formatter="numberFormat"></el-table-column>
+                    <el-table-column prop="shareownedno" label="认缴投资额" width="130" :formatter="numberFormat"></el-table-column>
+                    <el-table-column prop="proper" label="股比(%)" width="130" :formatter="properFormat"></el-table-column>
+                    <el-table-column prop="properwithoutesop" label="withoutESOP(%)" width="130" :formatter="properFormat"></el-table-column>
+                </el-table-column>
+            </el-table>
             </div>
         </div>
     </div>
 </template>
-<script>	
+<script>
 import axioss from '@/api/axios';
 import * as method from "@/api/method";
 import bus from "@/api/eventbus";
 export default {
     name:"CapTable",
-    data(){  
+    data(){
         return {
             heightObj:'',
             capVisible:false,
-            capSelectList:[], 
-            // capTabelList: [
-
-            // ]
+            capSelectList:[],
+            capTableHeadList:[],
+            capTableContentList:[],
+            firstContentList:[],
+            otherContentList:[]
         }
     },
     updated(){
@@ -52,6 +51,8 @@ export default {
         bus.$on('toScorll',(ace,arr)=>{
            this.scrolltoview(ace,arr);
        });
+       this.reqTableHead();
+       this.reqTableContent();
     },
     methods:{
         reqdroplist(){
@@ -60,9 +61,41 @@ export default {
                 this.capSelectList=res.data.data[0].baseInfoList;
             })
         },
+      numberFormat: function (row, column) {
+        var num = row[column.property];
+        if (num == undefined) {
+          return "";
+        }
+        return method.toThousands(num);
+      },
+      properFormat: function (row, column) {
+        var num = row[column.property];
+        if (num == undefined) {
+          return "";
+        }
+        return num*100;
+      },
+
         handleAdd(){
             this.reqdroplist();//获取新建时的下拉列表数据。
             this.capVisible=true;
+        },
+        reqTableHead(){
+            var portfolioid=this.portfolioid;
+            axioss.reqTableHead(portfolioid).then(res=>{
+                console.log(res);
+                this.capTableHeadList=res.data.data;
+                this.capTableHeadList=this.toHeader(res.data.data);
+                console.log(this.capTableHeadList);
+            })
+        },
+        reqTableContent(){
+            axioss.reqTableContent(this.portfolioid).then(res=>{
+                console.log(res);
+                this.capTableContentList=res.data.data;
+                this.firstContentList=res.data.data.slice(0,1);
+                this.otherContentList=res.data.data.slice(1);
+            })
         },
         submitInputForm(fromName){
             this.$refs[capInputForm].validate((validate)=>{
@@ -86,32 +119,6 @@ export default {
                 }
             })
         },
-        getSummaries(param){
-            const { columns, data } = param;
-            const sums = [];
-            console.log(columns)
-            columns.forEach((column, index) => {
-            if (index === 0) {
-                sums[index] = '总价';
-                return;
-            }
-            const values = data.map(item => Number(item[column.property]));
-            if (!values.every(value => isNaN(value))) {
-                sums[index] = values.reduce((prev, curr) => {
-                const value = Number(curr);
-                if (!isNaN(value)) {
-                    return prev + curr;
-                } else {
-                    return prev;
-                }
-                }, 0);
-                sums[index] += '元';
-            } else {
-                sums[index] = 'N/A';
-            }
-            });
-            return sums;
-        },
         scrolltoview(eletoview){
             var obj=this.$refs[eletoview];
             if(!this.heightObj){
@@ -127,12 +134,29 @@ export default {
                 var top=_top+scrolly;
                 document.documentElement.scrollTop=-(top-_top);
                 obj.style.height=this.heightObj+"px"
-            }   
+            }
+        },
+        toHeader(data){
+            var len=data.length;
+            for(var i=0;i<len;i++){
+                for(var j in data[i]){
+                    if(/[0-9]/.test(j)){
+                        data[i].header=(data[i])[j];
+                    }
+                }
+            }
+            return data;
         }
     },
     computed:{
         capTabelList(){
             return this.$store.state.capTabelList;
+        },
+        portfolioid(){
+            if(this.$store.state.portfolioid==''){
+                this.$store.dispatch('updateData');
+            }
+            return this.$store.state.portfolioid;
         }
     },
     directives:{
@@ -151,7 +175,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-	
+
         .loan-table-container h3{
             font-size:16px;
             padding:5px 0;
@@ -160,7 +184,7 @@ export default {
             margin: 0;
             border-bottom: 1px solid #ebeef5;
         }
-    
+
     .loan-table-container .table-foot{
         background:#eee;
         padding:5px 0;
@@ -180,5 +204,9 @@ export default {
         color:white;
         font-weight:bold;
         background:#00a1e9;
+    }
+    .loan-table-container .table-content{
+        white-space: nowrap;
+        overflow-x:scroll;
     }
 </style>

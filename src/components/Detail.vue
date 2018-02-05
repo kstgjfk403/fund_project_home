@@ -12,7 +12,7 @@
                 <el-button type="primary" size="small" icon="el-icon-printer" style="float:right;margin-right:10px;background:#31b0d5;"></el-button>
             </li>
             <li><span>Project Manager：</span><span>{{detaildata.projectmanagerstr}}</span></li>
-            <li><span>Compony Lagel Name：</span><span>{{detaildata.fullname}}</span></li>  
+            <li><span>Compony Lagel Name：</span><span>{{detaildata.fullname}}</span></li>
         </ul>
         <div class="primary-img">
           <img src="../../static/images/head-img.png">
@@ -22,7 +22,7 @@
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">    
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
           </el-upload>
         </div>
     </div>
@@ -107,7 +107,7 @@
                 <li><span>Telephone：</span><span>{{detaildata.telephone}}</span></li>
                 <li><span>Fax：</span><span>{{detaildata.fax}}</span></li>
                 </ul>
-                
+
                 <ul>
                 <li><span>Audit Comformation Address：</span><span>{{detaildata.auditconfaddress}}</span></li>
                 </ul>
@@ -117,7 +117,7 @@
             <h4><span class="droid">IPO/LISTING RECORD(if applicable)</span></h4>
             <div class="base-info-content">
                 <ul>
-                <li><span>Portfolio Status：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
+                <li><span>Portfolio Status：</span><span>{{detaildata.portfoliostatusstr}}</span></li>
                 <li><span>Stock Exchange：</span><span>{{detaildata.stockexchangeidstr}}</span></li>
                 </ul>
                 <ul>
@@ -141,6 +141,8 @@
     </div>
     <Ivestment></Ivestment>
     <CapTable></CapTable>
+    <FinancialInfo></FinancialInfo>
+    <Director></Director>
     <Navlist v-on:toscorll="scrolltoview" :isactive="isActive"></Navlist>
 </div>
 </template>
@@ -151,6 +153,8 @@ import * as method from "@/api/method";
 import Navlist from '@/components/common/Nav';
 import Ivestment from '@/page/InvestManage/investmanager';
 import CapTable from "@/page/capTable/capTable";
+import FinancialInfo from "@/page/financial/FinancialInformation";
+import Director from "@/page/directorandsuper/Director";
 export default {
     name:"Detail",
     data:function(){
@@ -160,13 +164,14 @@ export default {
             detaildata:'',
             isActive:{
                 BasicInfo:true,
-                //contact:false,
                 Invest:false,
-                CapTable:false
+                CapTable:false,
+                Financial:false,
+                Director:false
             }
         }
     },
-    mounted:function(){    
+    mounted:function(){
         this.requestdetails(this.$route.query.portfolioid);
         //console.log(this.detaildata.portfolioid);
     },
@@ -222,15 +227,17 @@ export default {
                 var top=_top+scrolly-130;
                 document.documentElement.scrollTop=top;
                 obj.style.height=this.heightObj+"px"
-            }  
+            }
         }
     },
     components:{
         Header,
         Navlist,
         Ivestment,
-        CapTable
-    } 	
+        CapTable,
+        FinancialInfo,
+        Director
+    }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -247,13 +254,13 @@ export default {
         width:100%;
         height:100%;
     }
-    
+
     .basic-detail-container h3{
       margin:10px 0;
     }
     .detail-background{
       height:140px;
-      width:100%;      
+      width:100%;
       margin-top:20px;
       background:#3c8dbc;
       display: flex;
@@ -284,7 +291,7 @@ export default {
        box-shadow: 0 0 3px 2px #ddd;
     }
     .base-info{
-      width:100%;  
+      width:100%;
       margin-top:15px;
       box-sizing:border-box;
       padding:15px;
@@ -304,9 +311,9 @@ export default {
       padding-bottom:5px;
       margin-bottom:10px;
     }
-    .base-info h4 span{    
+    .base-info h4 span{
         color:#1d9ce5;
-        font-size:22px; 
+        font-size:22px;
     }
     .basic-detail-container h3{
       padding:15px 0;

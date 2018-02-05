@@ -3,13 +3,13 @@
     <div class="loan-table-container">
         <h3 class="h3">Loan</h3>
         <el-table ref="singleTable" :data="loanData" border>
-            <el-table-column fixed prop="fundfamillyname" label="Family" width="150"></el-table-column>
-            <el-table-column prop="notenum" label="Loan Amount" width="150"></el-table-column>
-            <el-table-column prop="fundname" label="Foud" width="110"></el-table-column>
-            <el-table-column prop="feedate" label="Fee Date" width="80"></el-table-column>
-            <el-table-column prop="notetype" Loans label="Note Type" width="150"></el-table-column>
-            <el-table-column prop="closedate" label="Payment" width="100"></el-table-column>
+            <el-table-column fixed prop="fundfamillyname" label="Family" width="110"></el-table-column>
+            <el-table-column prop="fundname" label="Fund" width="110"></el-table-column>
+            <el-table-column prop="notetype" Loans label="Note Type" width="120"></el-table-column>
+            <el-table-column prop="closedate" label="Payment Date" width="120"></el-table-column>
             <el-table-column prop="duedate" label="Due Date" width="90"></el-table-column>
+            <el-table-column prop="feedate" label="Fee Date" width="90"></el-table-column>
+            <el-table-column prop="notenum" label="Loan Amount" width="150"></el-table-column
             <el-table-column prop="noteotherfee" label="Other Fees" width="100"></el-table-column>
             <el-table-column prop="currency" label="Currency" width="100"></el-table-column>
             <el-table-column prop="interestrate" label="Rate(%)" width="100"></el-table-column>
@@ -44,7 +44,7 @@
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="Fund Family" prop="fundfamillyname">
-                    <el-select v-model="loanForm.fundfamillyname" placeholder="请选择" :disabled='disable'>
+                    <el-select v-model="loanForm.fundfamillyname" placeholder="请选择" :disabled='disable' filterable>
                         <el-option v-for="item in selectlist.FUNDFAMILY" :key="item.baseId"
                         :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
@@ -60,17 +60,19 @@
                 <el-form-item label="Loan Amount" prop="notenum">
                     <el-input v-model="loanForm.notenum"></el-input>
                 </el-form-item>
-                <el-form-item label="Legal Fees">
-                    <el-input v-model="loanForm.feedate"></el-input>
+              <el-form-item label="Due Date">
+                <el-date-picker v-model="loanForm.duedate" type="date" placeholder="选择日期">
+                </el-date-picker>
+              </el-form-item>
+                <el-form-item label="Fees Date">
+                    <!--<el-input v-model="loanForm.feedate"></el-input>-->
+                  <el-date-picker v-model="loanForm.feedate" type="date" placeholder="选择日期">
+                  </el-date-picker>
                 </el-form-item>
                 <el-form-item label="Other Fees">
                     <el-input v-model="loanForm.noteotherfee"></el-input>
                 </el-form-item>
-                <el-form-item label="Due Date">
-                    <el-date-picker v-model="loanForm.duedate" type="date" placeholder="选择日期">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item label="Interest Rate">
+                <el-form-item label="Interest Rate(%)">
                     <el-input v-model="loanForm.interestrate"></el-input>
                 </el-form-item>
                 <el-form-item label="Interest Description">
@@ -101,12 +103,12 @@
     </el-dialog>
 </div>
 </template>
-<script>	
+<script>
 import axioss from '@/api/axios';
 import * as method from "@/api/method";
 export default {
     name:"Loan",
-    data(){  
+    data(){
         return {
             loanVisible:false,
             loanType:'brigeLoans',
@@ -153,7 +155,7 @@ export default {
             },
             rules: {
                 notenum: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },  
+                    { required: true, message: '请输入活动名称', trigger: 'blur' },
                 ],
                 notetype: [
                     { required: true, message: 'pls choose', trigger: 'change' }
@@ -175,9 +177,9 @@ export default {
                 }, {
                 value: '选项3',
                 label: '蚵仔煎'
-                } 
+                }
             ]
-        }   
+        }
     },
     updated(){
     },
@@ -289,11 +291,11 @@ export default {
         },
         handleData(data){
             for(var i=0;i<data.length;i++){
-                data[i].closedate=method.toLocalString(data[i].closedate,"-");
-                data[i].feedate=method.toLocalString(data[i].feedate,"-");
-                data[i].duedate=method.toLocalString(data[i].duedate,"-");
-                data[i].extensiondate=method.toLocalString(data[i].extensiondate,"-");
-                data[i].taxlotdate=method.toLocalString(data[i].taxlotdate,"-");
+                data[i].closedate=method.toLocalString(data[i].closedate,"/");
+                data[i].feedate=method.toLocalString(data[i].feedate,"/");
+                data[i].duedate=method.toLocalString(data[i].duedate,"/");
+                data[i].extensiondate=method.toLocalString(data[i].extensiondate,"/");
+                data[i].taxlotdate=method.toLocalString(data[i].taxlotdate,"/");
                 data[i].notenum=method.toThousands(data[i].notenum);
             }
             return data;

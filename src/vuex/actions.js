@@ -15,6 +15,11 @@ const actions = {
     },
     isDetail({commit},data){
         commit('isDetail',data);
+        localStorage.isDetail=data.isDetail;
+    },
+    updateIsDetail({commit}){
+        var isDetail=localStorage.isDetail;
+        commit('isDetail',isDetail);
     }
 }
 

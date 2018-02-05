@@ -1,7 +1,7 @@
 
 <template>
     <ol class="navlist droid">
-        <li class="title">Nav</li>
+        <!--<li class="title"></li>-->
         <li v-for="(value,key) in isactive" @click="scrollto(key)" :class="{navactive:value}">{{key}}</li>
     </ol>
 </template>
@@ -29,15 +29,15 @@ export default {
         scrollto(ele){
             this.confirmActive(ele);
             bus.$emit('toScorll',ele,this.isactive);
-            this.$emit('toscorll',ele,this.isactive);  
+            this.$emit('toscorll',ele,this.isactive);
         }
-    }	
+    }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-   
+
     .navlist{
         position: fixed;
         top:75px;
@@ -67,5 +67,5 @@ export default {
         font-weight:600;
         background:white;
         color:#00a1e9;
-    }     
+    }
 </style>

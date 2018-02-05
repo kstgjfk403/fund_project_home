@@ -2,12 +2,16 @@
 <div class="exit loan">
     <div class="loan-table-container">
         <h3 class="h3">Exit</h3>
-        <el-table ref="singleTable" :data="exitData" border>
-            <el-table-column prop="costrelization" label="costRelization"></el-table-column>
+        <el-table ref="singleTable" :data="exitData" border style="width:100%;">
+            <el-table-column prop="exittype" label="exitType"></el-table-column>
+            <el-table-column prop="exitmode" label="exitMode"></el-table-column>
+            <el-table-column prop="costrelization" label="costRelization" width="130" :formatter="numberFormat"></el-table-column>
             <el-table-column prop="round" label="round"></el-table-column>
-            <el-table-column prop="shareownedno" label="shares"></el-table-column>
+            <el-table-column prop="shareexit" label="shares" :formatter="numberFormat" ></el-table-column>
             <el-table-column prop="fundfamillyname" label="Fund Family"></el-table-column>
-            <el-table-column prop="closedate" label="closeDate"></el-table-column>
+            <el-table-column prop="closedate" label="closeDate" width='130'></el-table-column>
+            <el-table-column prop="currency" label="currency"></el-table-column>
+            <el-table-column prop="shareremain" label="shareremain" :formatter="numberFormat"></el-table-column>
             <el-table-column prop="vouncher" label="操作" v-if="isDetail">
                 <template slot-scope="scope">
                     <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
@@ -40,7 +44,7 @@
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item label="Fund Family">
-                        <el-select v-model="exitForm.fundfamillyname" placeholder="请选择" @change="creatShareList" filterable>
+                        <el-select v-model="exitForm.fundfamillyname" placeholder="请选择" @change="creatShareList" filterable :disabled="isDisabled">
                             <el-option v-for="item in exitDropList.FUNDFAMILY" :key="item.baseId"
                              :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
@@ -53,7 +57,7 @@
                     </el-form-item>
                 </div>
                 <div v-if="exitForm.exittype=='Loan'">
-                    <el-form-item label="costRelization ">
+                    <el-form-item label="costRelization">
                         <el-input v-model="exitForm.shareexit"></el-input>
                     </el-form-item>
                     <el-form-item label="proceeds">
@@ -84,14 +88,15 @@
     </el-dialog>
 </div>
 </template>
-<script>	
+<script>
 import axioss from '@/api/axios';
 import * as method from "@/api/method";
 export default {
     name:"Exit",
-    data(){  
+    data(){
         return {
             exitId:'',
+            isDisabled:false,
             shareList:[],
             ExitVisible:false,
             buttonShow:true,
@@ -117,8 +122,14 @@ export default {
                 shareremain:'',
                 securitytypeid:'',
                 round:""
+            },
+            exitFormEmpty:{
+                exitmode:'',exittype:'',fundfamillyname:"",
+                portfolioid:"",closedate:'',currency:"USD",
+                costrelization:'',proceeds:'',shareexit:'',
+                shareremain:'',securitytypeid:'',round:""
             }
-        }   
+        }
     },
     updated(){
 
@@ -134,6 +145,13 @@ export default {
                 this.exitDropList=method.translateFormat(res.data.data);
             })
         },
+      numberFormat: function (row, column) {
+        var num = row[column.property];
+        if (num == undefined) {
+          return "";
+        }
+        return method.toThousands(num);
+      },
         reqExitShareList(obj){
             axioss.reqExitShareList(obj).then(res=>{
                 this.sharelistData=res.data.data;
@@ -146,7 +164,8 @@ export default {
         reqExitList(id){
             var portfolioid=id||this.portfolioid;
             axioss.reqExitList(portfolioid).then(res=>{
-                this.exitData=res.data.data;
+                console.log(res);
+                this.exitData=this.formatTime(res.data.data);//gai
             })
         },
         querySingal(id){
@@ -169,6 +188,7 @@ export default {
                                 })
                                 this.ExitVisible=false;
                                 this.reqExitList(this.portfolioid);
+                                Object.assign(this.exitForm,this.exitFormEmpty)
                             }else{
                                 this.$message({
                                     type:'warning',
@@ -186,6 +206,7 @@ export default {
                                 })
                                 this.ExitVisible=false;
                                 this.reqExitList(this.portfolioid);
+                                Object.assign(this.exitForm,this.exitFormEmpty)
                             }else{
                                 this.$message({
                                     type:'warning',
@@ -201,10 +222,12 @@ export default {
             });
         },
         handleAdd(){
+            this.isDisabled=false;
             this.ExitVisible=true;
             this.buttonShow=true;
         },
         handleEdit(index,data){
+            this.isDisabled=true;
             this.ExitVisible=true;
             this.buttonShow=false;
             this.querySingal(data.id);
@@ -259,6 +282,14 @@ export default {
                 }
             }
             this.ExitModeDataList=empty;
+        },
+        formatTime(data){
+            if(data&&data!=null&&data!=[]){
+                for(var i=0;i<data.length;i++){
+                    data[i].closedate=method.toLocalString(data[i].closedate);
+                }
+            }
+            return data
         }
     },
     computed:{

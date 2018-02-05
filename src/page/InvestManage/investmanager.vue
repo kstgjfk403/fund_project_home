@@ -4,12 +4,14 @@
     <Loan></Loan>
     <Invest></Invest>
     <Exit></Exit>
+    <Warran></Warran>
 </div>
 </template>
 <script>
 import Loan from './subinvests/loan';
 import Invest from "./subinvests/invest";
 import Exit from "./subinvests/exit";
+import Warran from "./subinvests/warran";
 import bus from "@/api/eventbus";
 export default {
     name:"investmanger",
@@ -49,7 +51,8 @@ export default {
     components:{
         Loan,
         Invest,
-        Exit
+        Exit,
+        Warran
     } 	
 }
 </script>

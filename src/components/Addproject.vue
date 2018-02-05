@@ -10,70 +10,70 @@
                 <el-form-item label="Project Name" prop="abbname">
                     <el-input v-model="formData.abbname"></el-input>
                 </el-form-item>
-                <el-form-item label="Compony Lagel Name" prop="companyname">
-                    <el-input v-model="formData.companyname"></el-input>
+                <el-form-item label="Company Legal Name" prop="fullname">
+                    <el-input v-model="formData.fullname"></el-input>
                 </el-form-item>
                 <el-form-item label="Report Name" prop="reportname">
                     <el-input v-model="formData.reportname"></el-input>
                 </el-form-item>
-                <el-form-item label="Portflio Status">
+                <el-form-item label="Portfolio Status">
                     <el-select v-model="formData.portfoliostatus">
-                    <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
+                    <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
                         v-for="item in dictarraylist.DDL_PortfolioStatus"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="IDG Role">
+                <el-form-item label="IDG Role(Lead/Co-invest)">
                     <el-select v-model="formData.idgroleid">
-                        <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
-                        v-for="item in dictarraylist.DDL_IDGRole"></el-option>   
+                        <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
+                        v-for="item in dictarraylist.DDL_IDGRole"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Initial Role" multiple>
                     <el-select v-model="formData.initialroleid">
-                        <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
+                        <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
                         v-for="item in dictarraylist.DDL_InitialRole"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Industry Sector" prop="sectorid">
                     <el-select v-model="formData.sectorid" filterable  @change="togetherChange">
-                        <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
+                        <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
                         v-for="item in dictarraylist.DDL_Sector"></el-option>
                     </el-select>
                 </el-form-item>
-                
-                <el-form-item label="Anticipated Eixt">
+
+                <el-form-item label="Anticipated Exit">
                     <el-select v-model="formData.antidilutionid">
-                    <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
+                    <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
                         v-for="item in dictarraylist.DDL_AntiDilution"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Incorprated In">
                     <el-select v-model="formData.locationid">
-                    <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
+                    <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
                         v-for="item in dictarraylist.DDL_IncorpLocation"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="Company register No" prop="registerno">
+                <el-form-item label="Company Register No." prop="registerno">
                     <el-input v-model="formData.registerno"></el-input>
                 </el-form-item>
-                
-                <el-form-item label="Financial YTD"> 
+
+                <el-form-item label="Financial YTD">
                     <el-select v-model="formData.ytd" filterable>
-                        <el-option :key="item.baseId" 
-                        :label="item.baseId" 
-                        :value="item.baseId" 
+                        <el-option :key="item.baseId"
+                        :label="item.baseId"
+                        :value="item.baseId"
                         v-for="item in dictarraylist.YTD"></el-option>
                     </el-select>
                 </el-form-item>
@@ -91,50 +91,50 @@
                 <el-form-item label="Portfolio Status Date">
                     <el-date-picker v-model="formData.portfoliostatusdate" type="date" placeholder="选择日期"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="Inistial Stage">
+                <el-form-item label="Initial Stage">
                     <el-select v-model="formData.stageid">
-                    <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
+                    <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
                         v-for="item in dictarraylist.DDL_Stage"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="IDG First Investment">
                     <el-select v-model="formData.firstinvestid">
-                    <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
+                    <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
                         v-for="item in dictarraylist.DDL_IDGFirstInvest"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Sub Sector" prop="subsectorid">
                     <el-select v-model="formData.subsectorid">
-                    <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
+                    <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
                         v-for="item in subsectorlist"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="Total Border Representative">
+                <el-form-item label="Total Board Representative No.">
                     <el-input v-model="formData.totalboardseatno"></el-input>
                 </el-form-item>
                 <el-form-item label="Fund of Fund" prop="fundoffund">
                     <el-checkbox-group v-model="formData.fundoffund">
-                        <el-checkbox label="基金" value="true" name="type"></el-checkbox>
+                        <el-checkbox label="" value="true" name="type"></el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
-                <el-form-item label="Year of Incorpration">                    
+                <el-form-item label="Year of Incorpration">
                     <el-date-picker v-model="formData.foundeddate"
                         align="right"
                         type="year"
                         placeholder="选择年" format='yyyy'>
                     </el-date-picker>
                 </el-form-item>
-                <el-form-item label="Ivestment Structure legal form">
+                <el-form-item label="Investment structure legal form">
                     <el-select v-model="formData.formid">
-                    <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
+                    <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
                         v-for="item in dictarraylist.DDL_CompanyLegalForm"></el-option>
                     </el-select>
                 </el-form-item>
@@ -145,43 +145,43 @@
             <div class="baseinfo-left">
                 <el-form-item label="Project Manager" prop="projectmanager">
                     <el-select v-model="formData.projectmanager" multiple filterable>
-                        <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
+                        <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
                         v-for="item in dictarraylist.IDG_Staff"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Project Buddy" prop="projectbuddy">
                     <el-select v-model="formData.projectbuddy" multiple filterable>
-                        <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
+                        <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
                         v-for="item in dictarraylist.IDG_Staff"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="IDG board representative">
+                <el-form-item label="IDG Board Representative">
                     <el-select v-model="formData.idgboardrepresentative" multiple filterable>
-                        <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
+                        <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
                         v-for="item in dictarraylist.IDG_Staff"></el-option>
                     </el-select>
-                </el-form-item>             
+                </el-form-item>
             </div>
             <div class="baseinfo-right">
                 <el-form-item label="IDG Inhouse Counsel">
                     <el-select v-model="formData.idginhousecounsel" multiple filterable>
-                        <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
+                        <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
                         v-for="item in dictarraylist.IDG_Staff"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Observer" prop="observer">
                     <el-select v-model="formData.observer" multiple filterable>
-                        <el-option :key="item.baseId" 
-                        :label="item.baseName" 
-                        :value="item.baseId" 
+                        <el-option :key="item.baseId"
+                        :label="item.baseName"
+                        :value="item.baseId"
                         v-for="item in dictarraylist.IDG_Staff"></el-option>
                     </el-select>
                 </el-form-item>
@@ -198,22 +198,22 @@
                 </el-form-item>
                 <el-form-item label="Fax" prop="fax">
                     <el-input v-model="formData.fax"></el-input>
-                </el-form-item>               
-                <el-form-item label="Business Adress">
+                </el-form-item>
+                <el-form-item label="Business Address">
                     <el-input type="textarea" v-model="formData.address" style="min-height:75px;"></el-input>
                 </el-form-item>
                 <el-form-item label="Primary Business">
                     <el-input type="textarea" v-model="formData.primarybusiness" style="min-height:75px;"></el-input>
-                </el-form-item>               
+                </el-form-item>
                 <el-form-item label="Line2" prop="auditconfaddress2">
                     <el-input v-model="formData.auditconfaddress2"></el-input>
                 </el-form-item>
                 <el-form-item label="Line3">
                     <el-input type="textarea" v-model="formData.auditconfaddress3"></el-input>
-                </el-form-item>                                       
+                </el-form-item>
             </div>
             <div class="baseinfo-right">
-                <el-form-item label="Tel" prop="telephone">
+                <el-form-item label="	Tel." prop="telephone">
                     <el-input v-model="formData.telephone"></el-input>
                 </el-form-item>
                 <el-form-item label="Product(White Book)" prop="product">
@@ -221,36 +221,38 @@
                 </el-form-item>
                 <el-form-item label="Comment" prop="remarkes">
                     <el-input v-model="formData.remarkes"></el-input>
-                </el-form-item>               
+                </el-form-item>
                 <el-form-item label="Company HeadCount" prop="headcount">
                     <el-input v-model="formData.headcount"></el-input>
                 </el-form-item>
                 <el-form-item label="Nominee Name" prop="nomineename">
                     <el-input v-model="formData.nomineename"></el-input>
                 </el-form-item>
-                <el-form-item label="Audit Conf Adress" prop="auditconfaddress">
+                <el-form-item label="Audit Conf Address" prop="auditconfaddress">
                     <el-input v-model="formData.auditconfaddress"></el-input>
                 </el-form-item>
-                   
+
             </div>
-            <el-form-item label="One line Discription" class="oneline">
+            <el-form-item label="One line Description" class="oneline">
                 <el-input type="textarea" v-model="formData.onelinedesc"></el-input>
             </el-form-item>
         </div>
         <el-form-item class="addpro-button">
             <div v-if="opreationType=='creatuserform'">
-                <el-button type="primary" size="mini" @click="submitForm1('userform')">创建</el-button>
-                <router-link to="listpage" style="margin-left:10px"><el-button size="mini">返回</el-button></router-link>
+                <el-button type="primary" size="mini" @click="submitForm1('userform')">Submit</el-button>
+                <router-link to="listpage" style="margin-left:10px"><el-button size="mini">Return</el-button></router-link>
             </div>
             <div v-else>
-                <el-button type="primary" size="mini" @click="submitForm2('userform')">更新</el-button>
-                <el-button size="mini" type="primary" @click="linktodetail">返回</el-button>
+                <el-button type="primary" size="mini" @click="submitForm2('userform')">Submit</el-button>
+                <el-button size="mini" type="primary" @click="linktodetail">Return</el-button>
             </div>
-        </el-form-item> 
+        </el-form-item>
     </el-form>
     </div>
     <Ivestment></Ivestment>
     <CapTable></CapTable>
+    <FinancialInfo></FinancialInfo>
+    <Director></Director>
     <Navlist v-on:toscorll="scrolltoview" :isactive='isActive'></Navlist>
 </div>
 </template>
@@ -258,13 +260,15 @@
 import Ivestment from '@/page/InvestManage/investmanager';
 import Header from "./common/Header";
 import CapTable from "@/page/capTable/capTable";
-import * as method from "../api/method";	
+import FinancialInfo from "@/page/financial/FinancialInformation";
+import Director from "@/page/directorandsuper/Director";
+import * as method from "../api/method";
 import axioss from '../api/axios';
 import Navlist from '@/components/common/Nav';
 import store from '@/vuex/store';
 export default {
     name:"AddProject",
-    data:function(){  
+    data:function(){
       return {
         labelposition:"right",
         dictarraylist:'',
@@ -275,9 +279,10 @@ export default {
         heightObj:'',
         isActive:{
             BasicInfo:true,
-            //contact:false,
             Invest:false,
-            CapTable:false
+            CapTable:false,
+            Financial:false,
+            Director:false
         },
         formData: {
           abbname: '',
@@ -338,7 +343,7 @@ export default {
           iceforceid: null,
           idgonboardflag: true,
         },
-        
+
         rules: {
           abbname: [
             { message: 'required', trigger: 'blur' }
@@ -346,8 +351,8 @@ export default {
           abbnamechi: [
             {message: '必填', trigger: 'blur' }
           ],
-          companyname:[
-            { message: 'required', trigger: 'blur' }      
+          fullname:[
+            { message: 'required', trigger: 'blur' }
           ],
           fullnamechi:[
             { message: '必填', trigger: 'blur' }
@@ -372,19 +377,19 @@ export default {
           ],
           registerno: [
             {  message: 'required', trigger: 'blur' }
-            
+
           ],
           totalboardseatno: [
             {message: 'required', trigger: 'blur' }
           ],
           headcount: [
-            { message: 'required', trigger: 'blur' } 
+            { message: 'required', trigger: 'blur' }
           ],
           website: [
             { message: 'required', trigger: 'blur' }
           ],
           fax: [
-            { message: 'required', trigger: 'blur' }  
+            { message: 'required', trigger: 'blur' }
           ],
           telephone: [
             { message: 'required', trigger: 'blur' }
@@ -407,7 +412,7 @@ export default {
           idgboard: [
             { message: 'required', trigger: 'blur' }
           ]
-        }  
+        }
       }
     },
     created(){
@@ -431,7 +436,7 @@ export default {
            axioss.reqdroplist(enterobj).then(res=>{
                 this.dictarraylist=method.translateFormat(res.data.data);
                 this.subsectorlist=this.dictarraylist.DDL_SubSector;
-                this.extraarr=this.dictarraylist.DDL_SubSector.slice();  
+                this.extraarr=this.dictarraylist.DDL_SubSector.slice();
               }).catch(res=>{
                 console.log(res);
               })
@@ -448,7 +453,7 @@ export default {
           if (valid) {
               axioss.submitinfo(this.formData).then(res=>{
                   var flag=res.data.code=="SUCCESS";
-                  if(flag){ 
+                  if(flag){
                       this.$message({
                           type:'success',
                           message:'创建成功'
@@ -478,7 +483,7 @@ export default {
               //console.log(this.formData)
               axioss.modifyinfo(this.formData).then(res=>{
                   //console.log(res)
-                  this.linktodetail(); 
+                  this.linktodetail();
               }).catch(res => {
                   //console.log(res)
               })
@@ -511,7 +516,7 @@ export default {
                 var newobjdetail=method.deleteattr(detailobj);
                 var obj=method.nulltostr(newobjdetail);
                 //console.log(obj);
-                obj.projectmanager=obj.projectmanager==''?[]:obj.projectmanager.split(","); 
+                obj.projectmanager=obj.projectmanager==''?[]:obj.projectmanager.split(",");
                 obj.projectbuddy=obj.projectbuddy==''?[]:obj.projectbuddy.split(",");
                 obj.idgboardrepresentative=obj.idgboardrepresentative==''?[]:obj.idgboardrepresentative.split(",");
                 obj.idginhousecounsel=obj.idginhousecounsel==''?[]:obj.idginhousecounsel.split(",")
@@ -540,15 +545,17 @@ export default {
                 var top=_top+scrolly-130;
                 document.documentElement.scrollTop=top;
                 obj.style.height=this.heightObj+"px"
-            }  
+            }
         }
     },
     components:{
         Header,
         Ivestment,
         Navlist,
-        CapTable
-    } 	
+        CapTable,
+        FinancialInfo,
+        Director
+    }
 }
 </script>
 <style scoped>
@@ -567,7 +574,7 @@ export default {
         border-radius:3px;
         border-left:none;
         border-right:none;
-    } 
+    }
     .add-project .el-form-item{
         font-family:'droid';
     }
@@ -587,7 +594,7 @@ export default {
         padding:10px;
     }
     .add-project h3,.add-project h2{
-        padding-left:10px; 
+        padding-left:10px;
     }
     .add-project .el-form-item label,.add-project .el-form-item .el-form-item__content{
         width:50%;
