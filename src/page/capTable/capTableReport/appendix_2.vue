@@ -17,20 +17,20 @@
             </el-form-item>
         </el-form>
     </div>
-  
+
   <el-table
     border
     :data="tableData"
     style="width: 100%;"
     height="450"
     :key="searchForm.fundid+searchForm.closedate"
-    class="mytable">    
+    class="mytable">
     <el-table-column
-      fixed      
+      fixed
       prop="projName"
       label="Project name"
       width="300">
-    </el-table-column> 
+    </el-table-column>
     <el-table-column
       prop="BusinessDescription"
       label="Business description"
@@ -49,18 +49,18 @@
     <el-table-column
       prop="BoardSeat"
       label="Board Seat"
-      width="300">
+      width="100">
     </el-table-column>
     <el-table-column
       prop="Sector"
       label="Sector"
-      width="500">
+      width="400">
     </el-table-column>
-    <el-table-column      
+    <el-table-column
       prop="FirstFunding"
       label="FirstFunding"
       width="150">
-    </el-table-column>    
+    </el-table-column>
     <el-table-column
       prop="Ownership"
       label="Ownership"
@@ -69,17 +69,17 @@
     <el-table-column
       prop="cost"
       :label="'Cost @ '+tableInfoObj.quarter"
-      width="140">
+      width="120">
     </el-table-column>
     <el-table-column
       prop="MarketValue"
       :label="'Market Value @ '+tableInfoObj.quarter"
-      width="140">
+      width="120">
     </el-table-column>
     <el-table-column
       prop="CapitalInvestedToDate"
       label="Capital Invested to date"
-      width="300">
+      width="150">
     </el-table-column>
     <el-table-column
       prop="Reserves"
@@ -185,9 +185,9 @@ import Header from "@/components/common/Header";
         })
     },
     methods:{
-        reqSearchData(obj){             
+        reqSearchData(obj){
             axioss.capitalfundAppendix_2(obj).then(res=>{
-                //console.log(res)                
+                //console.log(res)
                 if(res.data && res.data.code=="SUCCESS"){
                     //console.log("searchDate",res.data);
                     let data = res.data.data;
@@ -196,12 +196,12 @@ import Header from "@/components/common/Header";
                     let dataTemp1 = JSON.parse(JSON.stringify(this.dataEmp));
                     dataTemp1[0].projName="Private companies";
                     let dataTemp2 = JSON.parse(JSON.stringify(this.dataEmp));
-                    dataTemp2[0].projName="Public companies";                    
+                    dataTemp2[0].projName="Public companies";
 
                     /* 数据处理 */
                     data.forEach((item,index) => {
                         if(index==1){
-                            mydata= mydata.concat(dataTemp1,item.baseName,this.dataEmp);                            
+                            mydata= mydata.concat(dataTemp1,item.baseName,this.dataEmp);
                         }else if(index==2){
                              mydata= mydata.concat(dataTemp2,item.baseName,this.dataEmp);
                         }else if(index==3){
@@ -214,10 +214,10 @@ import Header from "@/components/common/Header";
                     mydata.forEach((item,index)=>{
                         handleArr.forEach((itemchild)=>{
                              mydata[index][itemchild]=this.mytoThousands(item[itemchild],"$");
-                        });                        
-                    })                    
+                        });
+                    })
                     this.tableData = mydata;
-                    console.log(this.tableData,"tabledata")                 
+                    console.log(this.tableData,"tabledata")
                 }
             })
         },
@@ -250,14 +250,14 @@ import Header from "@/components/common/Header";
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.reqSearchData(this.searchForm);
-                    
+
                 }
-                
-            });    
+
+            });
         }
     }
   }
-  
+
 </script>
 <style>
 .mytable.el-table td:nth-of-type(9),

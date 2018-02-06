@@ -8,8 +8,8 @@
             <li>
                 <span>Project Name：</span><span>{{detaildata.abbname}}</span>
                 <router-link to="listpage"><el-button type="primary" size="small" style="float:right;background:#31b0d5;">return</el-button></router-link>
-                <el-button type="primary" size="small" icon="el-icon-edit" style="float:right;margin-right:10px;background:#31b0d5;" @click="linktoeditor(detaildata.portfolioid)"></el-button>
-                <el-button type="primary" size="small" icon="el-icon-printer" style="float:right;margin-right:10px;background:#31b0d5;"></el-button>
+                <el-button type="primary" size="small" icon="el-icon-edit" style="float:right;margin-right:10px;background:#31b0d5;color:white;" @click="linktoeditor(detaildata.portfolioid)"></el-button>
+                <el-button type="primary" size="small" icon="el-icon-printer" style="float:right;margin-right:10px;background:#31b0d5;color:white;"></el-button>
             </li>
             <li><span>Project Manager：</span><span>{{detaildata.projectmanagerstr}}</span></li>
             <li><span>Compony Lagel Name：</span><span>{{detaildata.fullname}}</span></li>
@@ -143,6 +143,7 @@
     <CapTable></CapTable>
     <FinancialInfo></FinancialInfo>
     <Director></Director>
+    <Bonus></Bonus>
     <Navlist v-on:toscorll="scrolltoview" :isactive="isActive"></Navlist>
 </div>
 </template>
@@ -155,6 +156,7 @@ import Ivestment from '@/page/InvestManage/investmanager';
 import CapTable from "@/page/capTable/capTable";
 import FinancialInfo from "@/page/financial/FinancialInformation";
 import Director from "@/page/directorandsuper/Director";
+import Bonus from "@/page/bonus/Bonus";
 export default {
     name:"Detail",
     data:function(){
@@ -167,13 +169,13 @@ export default {
                 Invest:false,
                 CapTable:false,
                 Financial:false,
-                Director:false
+                Director:false,
+                Bonus:false
             }
         }
     },
     mounted:function(){
         this.requestdetails(this.$route.query.portfolioid);
-        //console.log(this.detaildata.portfolioid);
     },
     methods:{
         requestdetails(portfolioid){
@@ -182,9 +184,7 @@ export default {
                 obj.portfoliostatusdate=method.toLocalString(obj.portfoliostatusdate)
                 obj.lockupexpireddate=method.toLocalString(obj.lockupexpireddate)
                 this.detaildata=obj;
-                //console.log(res);
           }).catch((res)=>{
-              console.log(res);
           })
         },
         linktoeditor(id){
@@ -192,8 +192,6 @@ export default {
         },
         handleAvatarSuccess(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
-            console.log(res)
-            console.log(file)
         },
         beforeAvatarUpload(file) {
             const isJpeg = file.type === 'image/jpeg';
@@ -202,7 +200,6 @@ export default {
             const isPng = file.type === "image/png";
             const isBmp = file.type === "image/bmp";
             const isLt2M = file.size / 1024 / 1024 < 2;
-            console.log(file.type);
             if ((!isJPG)&&(!isJpeg)&&(!isGif)&&(!isPng)&&(!isBmp)) {
                 this.$message.error('上传头像图片格式不正确!');
                 return false;
@@ -236,7 +233,8 @@ export default {
         Ivestment,
         CapTable,
         FinancialInfo,
-        Director
+        Director,
+        Bonus
     }
 }
 </script>

@@ -31,9 +31,11 @@
 <script>
 import axioss from '@/api/axios';
 import * as method from "@/api/method";
-import bus from "@/api/eventbus";
+import bus from '@/api/eventbus'
+import mix from "@/api/mixin"
 export default {
     name:"CapTable",
+    mixins:[mix],
     data(){
         return {
             heightObj:'',
@@ -48,8 +50,8 @@ export default {
     updated(){
     },
     mounted(){
-        bus.$on('toScorll',(ace,arr)=>{
-           this.scrolltoview(ace,arr);
+        bus.$on('toScorll',(ace)=>{
+           this.scrolltoview(ace,'CapTable');
        });
        this.reqTableHead();
        this.reqTableContent();
@@ -73,7 +75,7 @@ export default {
         if (num == undefined) {
           return "";
         }
-        return num*100;
+        return (num*100).toFixed(2);
       },
 
         handleAdd(){
@@ -118,23 +120,6 @@ export default {
                     console.log('err submit')
                 }
             })
-        },
-        scrolltoview(eletoview){
-            var obj=this.$refs[eletoview];
-            if(!this.heightObj){
-                this.heightObj=this.$refs["CapTable"].offsetHeight
-            }
-            if(!obj){
-                this.$refs["CapTable"].style.height=50+"px";
-                this.$refs["CapTable"].style.overflow='hidden';
-            }
-            if(obj){
-                var scrolly=window.scrollY
-                var _top=obj.getBoundingClientRect().top;
-                var top=_top+scrolly;
-                document.documentElement.scrollTop=-(top-_top);
-                obj.style.height=this.heightObj+"px"
-            }
         },
         toHeader(data){
             var len=data.length;

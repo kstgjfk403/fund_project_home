@@ -1,0 +1,20 @@
+
+@font-face {font-family: "droid";
+  src: url('DroidSerif-Regular.ttf?t=1501727885437'); /* IE9*/
+  src: url('DroidSerif-Regular.ttf?t=1501727885437#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('DroidSerif-Regular.ttf?t=1501727885437') format('woff'), /* chrome, firefox */
+  url('DroidSerif-Regular.ttf?t=1501727885437') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('DroidSerif-Regular.ttf?t=1501727885437#iconfont') format('svg'); /* iOS 4.1- */
+}
+.basic-detail-container .base-info-content ul li span{
+  font-family:"droid" !important;
+}
+.droid {
+  font-family:"droid" !important;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+

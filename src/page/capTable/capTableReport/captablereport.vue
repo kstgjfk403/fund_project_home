@@ -46,7 +46,7 @@
                 <template v-for="item in captableContent">
                     <tr><td scope="row">{{item.Company}}</td><td>{{transformNum(item.Shares)}}</td>
                         <td>{{item.PurchasedDate}}</td><td>{{item.SoldDate}}</td><td>{{transformNum(item.ProceedsSales)}}</td><td>{{transformNum(item.BasisCost)}}</td>
-                        <td>{{item.RealizedGain}}</td><td>{{item.PurchasedDate=='multiple:'?'return of capital':''}}</td>
+                        <td>{{item.RealizedGainLoss | transformNum}}</td><td>{{item.PurchasedDate=='multiple:'?'return of capital':''}}</td>
                     </tr>
                     <tr class="empty" v-if="item.PurchasedDate=='multiple:'">
                         <td scope="row"></td><td></td><td></td><td></td><td></td>
@@ -83,8 +83,10 @@
 import axioss from '@/api/axios';
 import Header from "@/components/common/Header";
 import * as method from '@/api/method'
+import mix from '@/api/mixin'
 export default {
   name: "captablereport",
+  mixins:[mix],
   data: function() {
     return {
         searchForm:{
@@ -129,7 +131,7 @@ export default {
                     this.reqCaptableGainloss(this.searchForm)
                     this.reqCaptableGainlossSum(this.searchForm)
                 }
-            })    
+            })
         },
         transformNum(num){
             var newNum=method.toThousands(num);
@@ -149,7 +151,7 @@ export default {
    .captableReport .table-container2 .table td,.table th{
         height:25px;
     }
-    .borderbottom{ 
+    .borderbottom{
         border-bottom:1px solid black;
     }
     .bordertop{
@@ -164,6 +166,6 @@ export default {
     }
     .table td{
         border:1px solid #ddd;
-        
+
     }
 </style>

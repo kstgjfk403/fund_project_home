@@ -11,7 +11,7 @@
 import Loan from './subinvests/loan';
 import Invest from "./subinvests/invest";
 import Exit from "./subinvests/exit";
-import Warran from "./subinvests/warran";
+import Warran from "./subinvests/warrant";
 import bus from "@/api/eventbus";
 export default {
     name:"investmanger",
@@ -41,9 +41,11 @@ export default {
             }
             if(obj){
                 var scrolly=window.scrollY
-                var _top=obj.getBoundingClientRect().top;
-                var top=_top+scrolly;
-                document.documentElement.scrollTop=-(top-_top);
+                var _top;
+                setTimeout(function(){
+                    _top=obj.getBoundingClientRect().top;
+                    document.documentElement.scrollTop=_top;
+                },0)
                 obj.style.height=this.heightObj+"px"
             }
         }

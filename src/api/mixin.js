@@ -1,31 +1,52 @@
+import {toThousands} from './method'
 export default {
     data(){
         return {
-            heightObj:{}
+            heightObj:''
         }
     },
     methods:{
-        scrolltoview(eletoview,arr){
+        showToast(status,type,succMes,failMes){
+            if(status.toLocaleLowerCase()=='success'){
+                this.$message({
+                    type: type,
+                    message: succMes
+                });
+                return true;
+            } else {
+                this.$message({
+                    type: type,
+                    message: failMes
+                });
+                return false;
+            }
+        },
+        scrolltoview(eletoview,message){
             var obj=this.$refs[eletoview];
-            console.log(eletoview);
-            console.log(arr);
-            if(this.heightObj=={}){
-                for(var j in arr){
-                    this.heightObj[j]=this.$refs[j].offsetHeight
-                }
+            if(!this.heightObj){
+                this.heightObj=this.$refs[message].offsetHeight
+            }
+            if(!obj){
+                this.$refs[message].style.height=50+"px";
+                this.$refs[message].style.overflow='hidden';
             }
             if(obj){
                 var scrolly=window.scrollY;
-                var _top=obj.getBoundingClientRect().top;
-                var top=_top+scrolly-130;
-                document.documentElement.scrollTop=top;
-                if(arr[eletoview]){
-                    obj.style.height=this.heightObj[eletoview];
-                }else{
-                    
-                }
-                
-            } 
+                var _top;
+                setTimeout(function(){
+                    _top=obj.getBoundingClientRect().top;
+                    document.documentElement.scrollTop=_top;
+                },0)
+                obj.style.height=this.heightObj+"px"
+            }
         }
-    }
+    },
+    filters:{
+        transformNum(num){
+            if(typeof num != 'number'){
+                return ''
+            }
+            return toThousands(num);
+        }
+    },
 }

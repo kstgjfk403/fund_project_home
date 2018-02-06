@@ -2,7 +2,7 @@
     <div class="capTable loan">
         <div class="select-container">
             <div class="select-fixed">
-                <el-form :model="capInputForm" ref="capInputForm">
+                <el-form :model="capInputForm" ref="capInputForm" style="overflow:hidden;width:90%;display:inline-block;">
                     <el-form-item label="股东类型">
                         <el-select placeholder="请选择" v-model="capInputForm.sharetype" @change="hanleShareChange">
                             <el-option v-for="item in capSelectList" :label="item.baseName" :value="item.baseId" :key="item.baseId"></el-option>
@@ -21,11 +21,10 @@
                             <el-option v-for="item in shareTypeList" :label="item.baseName" :value="item.baseId" :key="item.baseId"></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="submitInputForm('capInputForm','add')">创建股东</el-button>
-                        <!-- <el-button type="primary" @click="submitInputForm('capInputForm','update')">更新股东</el-button> -->
-                    </el-form-item>
                 </el-form>
+                <div style="text-align:right;display:inline-block;margin-bottom: 13px;">   
+                    <el-button type="primary" size="mini" @click="submitInputForm('capInputForm','add')">创建股东</el-button>
+                </div>
             </div>
         </div>
         <div class="content">
@@ -46,8 +45,8 @@
                         <td>{{item.shareowner}}</td>
                         <td><el-input  v-isedit class="inputnone" v-model="item.shareownedno"></el-input></td>
                         <td><el-input  v-isedit class="inputnone" v-model="item.cost"></el-input></td>
-                        <td>{{item.proper}}</td>
-                        <td>{{item.properwithoutesop}}</td>
+                        <td>{{properFormat(item.proper)}}</td>
+                        <td>{{properFormat(item.properwithoutesop)}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -60,7 +59,7 @@ import * as method from "@/api/method";
 import bus from "@/api/eventbus";
 export default {
     name:"subCapTable",
-    props:['dataObj','investForm','buttonShow','capTableData'],
+    props:['dataObj','investForm','buttonShow'],
     data(){
         return {
             heightObj:'',
@@ -85,14 +84,6 @@ export default {
         }
     },
     mounted(){
-
-//      let investType = this.dataObj.investtype.trim();
-//      console.log(investType)
-//      if(investType == 'Equity Interest'||investType == 'Convert To Equity Interest'){
-//          this.cellName = '总认缴资本'
-//      }else {
-//        this.cellName = '总股数'
-//      }
         this.reqdroplist();
         this.spanCell('capTable');
     },
@@ -106,18 +97,20 @@ export default {
                 this.fundList=res.data.data[2].baseInfoList;
             })
         },
+      properFormat: function (num) {
+        if (num == undefined) {
+          return "";
+        }
+        return (num*100).toFixed(2);
+      },
         querySingalData(id){
             axioss.querySingalData(id).then(res=>{
 
             })
         },
         reqCaptableList(obj){
-
-            //
             axioss.reqCaptableList(obj).then(res=>{
                 console.log(res);
-                //this.capTableData=res.data.data;
-                //this.$store.dispatch('saveCapTabel',this.capTableData);
                 this.$store.dispatch('saveCapTabel',res.data.data);
             })
         },
@@ -135,9 +128,7 @@ export default {
                         this.dataObj.termsigndate=this.dataObj.termsigndate?this.dataObj.termsigndate:1484150400000;
                         Object.assign(this.dataObj,this.capInputForm);
                     }
-                    console.log(this.dataObj)
                     axioss.addShareHolder(this.dataObj).then(res=>{
-                        console.log(res);
                         if(res.data.code=="SUCCESS"){
                             this.$message({
                                 type:'success',
@@ -155,9 +146,6 @@ export default {
                     console.log('err submit')
                 }
             })
-        },
-        saveData(){
-
         },
         hanleShareChange(val){
             this.idg=val;
@@ -204,7 +192,8 @@ export default {
             return this.$store.state.capTabelData;
         },
         mycellname(){
-          let investType = this.dataObj.investtype.trim();
+          //let investType = this.dataObj.investtype.trim();
+          let investType = this.dataObj.investtype;
           console.log(investType)
           if(investType == 'Equity Interest'||investType == 'Convert To Equity Interest'){
             this.cellName = '总认缴资本'

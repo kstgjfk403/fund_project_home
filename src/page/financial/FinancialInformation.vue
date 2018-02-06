@@ -32,15 +32,15 @@
         </el-table-column>
         <el-table-column prop="address" label="Rate" width="140">
         </el-table-column>
-        <el-table-column label="操作" width="60" fixed='right' v-if="isDetail">
+        <el-table-column label="操作" width="60" fixed='right' v-if="isDetail!='false'">
             <template slot-scope="scope">
                 <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
                 <i class="el-icon-delete" @click="handleDelet(scope.$index, scope.row)"></i>
             </template>
         </el-table-column>
         </el-table>
-        <div class="table-foot" v-if="isDetail">
-            <i class="el-icon-circle-plus" @click="handleAdd"></i>
+        <div class="table-foot">
+            <i class="el-icon-circle-plus" @click="handleAdd" v-if="isDetail!='false'"></i>
         </div>
     </div>
     <el-dialog title="Financial Information" :visible.sync="financialVisible">
@@ -103,8 +103,10 @@
 <script>
 import axioss from '@/api/axios';
 import bus from '@/api/eventbus'
+import mix from "@/api/mixin"
 export default {
     name:"financialinformation",
+    mixins:[mix],
     data(){
         return {
             heightObj:'',
@@ -143,8 +145,8 @@ export default {
 
     },
     mounted(){
-        bus.$on('toScorll',(ace,arr)=>{
-           this.scrolltoview(ace,arr);
+        bus.$on('toScorll',(ace)=>{
+           this.scrolltoview(ace,'Financial');
         });
     },
     methods:{
@@ -188,27 +190,13 @@ export default {
                     }
                 });
             })
-        },
-        scrolltoview(eletoview,arr){
-            var obj=this.$refs[eletoview];
-            if(!this.heightObj){
-                this.heightObj=this.$refs["Financial"].offsetHeight
-            }
-            if(!obj){
-                this.$refs["Financial"].style.height=50+"px";
-                this.$refs["Financial"].style.overflow='hidden';
-            }
-            if(obj){
-                var scrolly=window.scrollY
-                var _top=obj.getBoundingClientRect().top;
-                var top=_top+scrolly;
-                document.documentElement.scrollTop=-(top-_top);
-                obj.style.height=this.heightObj+"px"
-            }
         }
     },
     computed:{
         isDetail(){
+            if(this.$store.state.isDetail==''){
+                this.$store.dispatch('updateIsDetail');
+            }
             return this.$store.state.isDetail;
         }
     }

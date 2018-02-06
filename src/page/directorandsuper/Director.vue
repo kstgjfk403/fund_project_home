@@ -17,14 +17,14 @@
         </el-table-column>
         <el-table-column prop="name" label="End Date" width="140">
         </el-table-column>
-        <el-table-column label="操作" width="60" v-if="isDetail">
+        <el-table-column label="操作" width="60" v-if="isDetail!='false'">
             <template slot-scope="scope">
                 <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
                 <i class="el-icon-delete" @click="handleDelet(scope.$index, scope.row)"></i>
             </template>
         </el-table-column>
         </el-table>
-        <div class="table-foot" v-if="isDetail">
+        <div class="table-foot" v-if="isDetail!='false'">
             <i class="el-icon-circle-plus" @click="handleAdd"></i>
         </div>
     </div>
@@ -64,8 +64,10 @@
 <script>
 import axioss from '@/api/axios';
 import bus from '@/api/eventbus'
+import mix from "@/api/mixin"
 export default {
     name:"director",
+    mixins:[mix],
     data(){
         return {
             heightObj:'',
@@ -104,8 +106,8 @@ export default {
 
     },
     mounted(){
-        bus.$on('toScorll',(ace,arr)=>{
-           this.scrolltoview(ace,arr);
+        bus.$on('toScorll',(ace)=>{
+           this.scrolltoview(ace,'Director');
         });
     },
     methods:{
@@ -149,27 +151,13 @@ export default {
                     }
                 });
             })
-        },
-        scrolltoview(eletoview,arr){
-            var obj=this.$refs[eletoview];
-            if(!this.heightObj){
-                this.heightObj=this.$refs["Director"].offsetHeight
-            }
-            if(!obj){
-                this.$refs["Director"].style.height=50+"px";
-                this.$refs["Director"].style.overflow='hidden';
-            }
-            if(obj){
-                var scrolly=window.scrollY
-                var _top=obj.getBoundingClientRect().top;
-                var top=_top+scrolly;
-                document.documentElement.scrollTop=-(top-_top);
-                obj.style.height=this.heightObj+"px"
-            }
         }
     },
     computed:{
         isDetail(){
+            if(this.$store.state.isDetail==''){
+                this.$store.dispatch('updateIsDetail');
+            }
             return this.$store.state.isDetail;
         }
     }

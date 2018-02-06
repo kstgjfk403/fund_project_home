@@ -10,17 +10,14 @@
             <el-table-column prop="securitytypeidstr" label="Share Type" width="150"></el-table-column>
             <el-table-column prop="closedate" label="Payment Date" width="150"></el-table-column>
             <el-table-column prop="round" label="Round" width="110"></el-table-column>
-
             <el-table-column prop="shareownedno" label="Shares Acquired" width="150" :formatter="numberFormat" ></el-table-column>
-            <!---->
             <el-table-column prop="cost" label="Cost" width="100" :formatter="numberFormat"></el-table-column>
             <el-table-column prop="otherfees" label="Fees" width="80" :formatter="numberFormat"></el-table-column>
-            <!-- <el-table-column prop="proceeds" label="Gross Proceeds" width="150"></el-table-column> -->
             <el-table-column prop="taxlotdate" label="Tax Lot Date" width="150"></el-table-column>
             <el-table-column prop="vouncher" label="vouncher" width="150"></el-table-column>
           <el-table-column prop="conversionratio" label="Rate" width="70"></el-table-column>
-          <el-table-column prop="convertamount" label="convert amount" width="150"></el-table-column>
-            <el-table-column label="操作" width="60" fixed='right' v-if="isDetail">
+          <el-table-column prop="convertamount" label="convert amount" width="150" :formatter="numberFormat"></el-table-column>
+            <el-table-column label="操作" width="60" fixed='right' v-if="isDetail!='false'">
                 <template slot-scope="scope">
                     <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
                     <i class="el-icon-delete" @click="handleDelet(scope.$index, scope.row)"></i>
@@ -28,7 +25,7 @@
             </el-table-column>
         </el-table>
         <div class="table-foot">
-            <i class="el-icon-circle-plus" @click="handleAdd" v-if="isDetail"></i>
+            <i class="el-icon-circle-plus" @click="handleAdd" v-if="isDetail!='false'"></i>
         </div>
     </div>
     <el-dialog title="Invest Edit" :visible.sync="investVisible">
@@ -239,7 +236,7 @@
                         <tr v-for="item in loanToEquityData">
                             <td scope="row">{{item.closedate}}</td>
                             <td>{{item.fundfamillyname}}</td>
-                            <td>{{item.remainderamount}}</td>
+                            <td>{{item.remainderamount | transformNum}}</td>
                             <td><el-input v-model="item.otherfees" v-isedit class="inputnone"></el-input></td>
                             <td><el-input v-model="item.convertamount" v-isedit class="inputnone"></el-input></td>
                             <td><el-input v-model="item.proceeds" v-isedit class="inputnone"></el-input></td>
@@ -267,9 +264,9 @@
 </template>
 <script>
 import axioss from '@/api/axios';
-import mix from "@/api/mixin";
 import * as method from "@/api/method";
 import subCapTable from "../../capTable/subCapTable"
+import mix from "@/api/mixin"
 export default {
     name:"invest",
     mixins:[mix],
@@ -360,7 +357,6 @@ export default {
         invesDropList(){
             var obj={dictArray:"DDL_InvestType,FUNDFAMILY,DDL_SecurityType,CURRENCY,FUND"};
             axioss.invesDropList(obj).then(res=>{
-                //console.log(res)
                 this.investTypeList=res.data.data[0].baseInfoList;
                 this.fundFamilyList=res.data.data[1].baseInfoList;
                 this.fundCurrencyList=res.data.data[3].baseInfoList;
@@ -377,20 +373,17 @@ export default {
         reqinvestList(id){
             var portfolioid=id||this.portfolioid;
             axioss.reqinvestList(portfolioid).then(res=>{
-                //console.log(res.data.data)
                 this.investData=this.formatTime(res.data.data);
             })
         },
         reqLoanToEquity(fundfamillyname,portfolioid){
             var obj={fundfamillyname:fundfamillyname,portfolioid:portfolioid}
             axioss.reqLoanToEquity(obj).then(res=>{
-                //console.log(res.data.data)
                 this.loanToEquityData=this.formatTime(res.data.data);
             })
         },
         querySingalData(id){
             axioss.querySingalData(id).then(res=>{
-                //console.log(res);
                 var newdata=JSON.stringify(res.data.data);
                 var data=JSON.parse(newdata);
                 this.dataObj.portfolioid=data.portfolioid;
@@ -405,7 +398,6 @@ export default {
                 this.investForm=this.translateEdit(data,this.translateObj);
                 this.loanToEquityData=this.formatTime(res.data.data.portfolioloantoequityList);
                 this.loanToEquityData=this.translateShareType(this.loanToEquityData,this.translateObj);
-                //console.log(this.loanToEquityData)
                 this.captelDetailData=data.portfoliocaptablevaluedetailList;
                 this.$store.dispatch('saveCapTabel',data.portfoliocaptablevaluedetailList);
                 this.whichShow(data.investtype);
@@ -414,18 +406,15 @@ export default {
         submitForm(formName,type){
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    //console.log(this.investForm);
                     var obj=this.translateSubmit(this.investForm,this.translateObj)
                     obj.portfoliocaptablevaluedetailList=this.capFormList;
                     if(this.isTableShow=='LoanToEquity1'){
                         obj.portfolioloantoequityList=this.toMs(this.loanToEquityData);
                         obj.portfolioloantoequityList=this.translateShareTypeSubmit(obj.portfolioloantoequityList,this.translateObj);
                     }
-                    //console.log(obj)
                     if(type=="add"){
                         obj.portfolioid=this.portfolioid;
                         axioss.addInvest(obj).then(res=>{
-                            //console.log(res);
                             if(res.data.code=="SUCCESS"){
                                 this.$message({
                                     type:'success',
@@ -443,7 +432,6 @@ export default {
                         })
                     }else{
                         axioss.updateInvest(obj).then(res=>{
-                            //console.log(res);
                             if(res.data.code=="SUCCESS"){
                                 this.$message({
                                     type:'success',
@@ -483,13 +471,11 @@ export default {
             this.investVisible=true;
             this.buttonShow='eidt';
             this.investForm.investtype=data.investtype;
-            //更新时,去查询单条记录。
-            //console.log(data.eiid);
             this.querySingalData(data.eiid);
         },
         handleDelet(index,data){
             var id=data.eiid;
-            this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+            this.$confirm("此操作将永久删除该文件, 是否继续?","提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
