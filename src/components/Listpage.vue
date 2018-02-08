@@ -12,17 +12,17 @@
                 <table class="table table-hover table-bordered table-condensed" style="table-layout:fixed;">
                     <thead>
                         <tr>
-                        <th scope="col">Programe Name    
+                        <th scope="col">Portfolio Name
                             <el-input placeholder="请输入Programe Name" v-model="abbnameval" @input.native="searchData('abbname',abbnameval)"></el-input>
                         </th>
-                        <th scope="col">项目名称    
+                        <th scope="col">项目名称
                             <el-input class="search" placeholder="请输入Programe Name" v-model="abbnamechival" @input.native="searchData('abbnamechi',abbnamechival)"></el-input>
                         </th>
                         <th scope="col">companyname
-                            <el-input class="search" placeholder="请输入Programe Name" v-model="fullnameval" @input.native="searchData('fullname',fullnameval)"></el-input>                           
+                            <el-input class="search" placeholder="请输入Programe Name" v-model="fullnameval" @input.native="searchData('fullname',fullnameval)"></el-input>
                         </th>
                         <th scope="col">公司名称
-                            <el-input class="search" placeholder="请输入Programe Name" v-model="fullnamechival" @input.native="searchData('fullnamechi',fullnamechival)"></el-input>                            
+                            <el-input class="search" placeholder="请输入Programe Name" v-model="fullnamechival" @input.native="searchData('fullnamechi',fullnamechival)"></el-input>
                         </th>
                         <th scope="col">projectmanager
                             <el-select placeholder="请选择" v-model="projectmanagerval"  clearable filterable @change="selectchange('projectmanager', projectmanagerval)">
@@ -31,7 +31,7 @@
                                 :key="item.baseId"
                                 :label="item.baseName"
                                 :value="item.baseId">
-                            </el-option>    
+                            </el-option>
                             </el-select>
                         </th>
                         <th scope="col">portfoliostatus
@@ -41,9 +41,9 @@
                                 :key="item.baseId"
                                 :label="item.baseName"
                                 :value="item.baseId">
-                            </el-option>    
+                            </el-option>
                             </el-select>
-                        </th>                       
+                        </th>
                         <th scope="col">idgonboardflag
                             <el-select v-model="idgonboardflagval" placeholder="请选择" @change="selectchange('idgonboardflag',idgonboardflagval)"  clearable>
                             <el-option
@@ -51,7 +51,7 @@
                                 :key="item.value"
                                 :label="item.label"
                                 :value="item.value">
-                            </el-option>    
+                            </el-option>
                             </el-select>
                         </th>
                         <th scope="col">heldbyspvflag
@@ -61,7 +61,7 @@
                                 :key="item.value"
                                 :label="item.label"
                                 :value="item.value">
-                            </el-option>    
+                            </el-option>
                             </el-select>
                         </th>
                         <th scope="col">操作</th>
@@ -78,15 +78,15 @@
                             <td>{{item.idgonboardflag}}</td>
                             <td>{{item.heldbyspvflag}}</td>
                             <td>
-                                <i class="el-icon-info" @click="linkto('details',item.portfolioid)"></i>                            
+                                <i class="el-icon-info" @click="linkto('details',item.portfolioid)"></i>
                                 <i @click="linkto('editor',item.portfolioid)" class="el-icon-edit"></i>
                                 <i class="el-icon-delete" @click="ifdeletproject(item.portfolioid)"></i>
                             </td>
-                        </tr>   
+                        </tr>
                     </tbody>
                 </table>
                 <div class="pagination-container">
-                    <el-pagination background layout="prev, pager, next,jumper,total" :total="allcount" :current-page.sync="pageCurrent" @current-change="handleCurrentChange" style="position:absolute;left:50%;bottom:25px;transform: translate(-50%);"></el-pagination>    
+                    <el-pagination background layout="prev, pager, next,jumper,total" :total="allcount" :current-page.sync="pageCurrent" @current-change="handleCurrentChange" style="position:absolute;left:50%;bottom:25px;transform: translate(-50%);"></el-pagination>
                 </div>
             </div>
             </div>
@@ -202,7 +202,7 @@ export default {
           console.log(err);
         });
     },
-    selectchange(key, value) {  
+    selectchange(key, value) {
       var that = this;
       var objsearch = {};
       objsearch[key] = value;
@@ -305,7 +305,7 @@ export default {
 .pagination-container{
     width:100%;
     height:50px;
-    
+
 }
 .position-container{
     width:95%;margin:0 auto;
@@ -313,7 +313,7 @@ export default {
 }
 .el-button--primary {
   margin: 10px 0;
-  
+
   background-image: linear-gradient(#54b4eb, #2fa4e7 60%, #1d9ce5);
 }
 

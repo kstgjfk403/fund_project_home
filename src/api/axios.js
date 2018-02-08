@@ -385,7 +385,40 @@ export default {
   /**Appendix 2  capitalfund*/
   capitalfundAppendix_2(obj){
     return axios.post("/api/admin/proj/managereport/capitalfund", obj)
-  }
-
+  },
+  //warrant
+ reqWrrantList(portfolioid){
+    return axios.get('/api/admin/proj/invest/warrant/list/' + portfolioid)
+ },
+ addWarrant(obj){
+    return axios.post("/api/admin/proj/invest/warrant/add", obj)
+ },
+ deleteWarrant(id){
+    return axios.post("/api/admin/proj/invest/warrant/delete/"+id, {warrantid:id})
+ },
+ updateWarrant(obj){
+    return axios.post("/api/admin/proj/invest/warrant/update", obj)
+ },
+ querySingalWarrant(warrantid){
+    return axios.get("/api/admin/proj/invest/warrant/entity/"+warrantid)
+ },
+ //director
+ modifyDirectorNum(obj){
+    return axios.post("/api/admin/proj/director/num/update", obj)
+ },
+ querySingalDirector(directorid){
+    return axios.get("/api/admin/proj/director/entity/"+directorid)
+ },
+ reqDirectorList(portfolioid){
+    return axios.get("/api/admin/proj/director/list/"+portfolioid)
+ },
+ updateDirector(obj){
+    return axios.post("/api/admin/proj/director/update", obj)
+ },
+ deleteDirector(id){
+    return axios.post("/api/admin/proj/director/delete/"+id, {directorid:id})
+ },
+ addDirector(obj){
+    return axios.post("/api/admin/proj/director/add",obj)
+ }
 }
-

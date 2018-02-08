@@ -67,7 +67,7 @@
                     <li><span>Found of Found：</span><span>{{detaildata.fundoffund}}</span></li>
                 </ul>
                 <ul>
-                <li><span>Primary Business：</span><span>{{detaildata.auditconfaddress}}</span></li>
+                <li><span>Primary Business：</span><span>{{detaildata.primarybusiness}}</span></li>
                 <li><span>Product：</span><span>{{detaildata.product}}</span></li>
                 </ul>
             </div>
@@ -84,15 +84,15 @@
                 <li><span>Liquidation preference：</span><span>{{detaildata.liquidationpreference}}</span></li>
                 </ul>
                 <ul>
-                <li><span>Year Of Incorporation：</span><span>{{detaildata.auditconfaddress}}</span></li>
-                <li><span>Incorporated In：</span><span>{{detaildata.product}}</span></li>
+                <li><span>Year Of Incorporation：</span><span>{{detaildata.foundeddate}}</span></li>
+                <li><span>Incorporated In：</span><span>{{detaildata.locationid}}</span></li>
                 </ul>
                 <ul>
-                <li><span>Company Register No.：</span><span>{{detaildata.auditconfaddress}}</span></li>
-                <li><span>Investment Legal form：</span><span>{{detaildata.product}}</span></li>
+                <li><span>Company Register No.：</span><span>{{detaildata.registerno}}</span></li>
+                <li><span>Investment Legal form：</span><span>{{detaildata.formid}}</span></li>
                 </ul>
                 <ul>
-                <li><span>Total Boardseat NO.：</span><span>{{detaildata.auditconfaddress}}</span></li>
+                <li><span>Total Boardseat NO.：</span><span>{{detaildata.totalboardseatno}}</span></li>
                 </ul>
             </div>
         </div>
@@ -130,11 +130,11 @@
                 </ul>
                 <ul>
                 <li><span> Effective Date：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
-                <li><span>Financial YTD：</span><span>{{detaildata.stockexchangeidstr}}</span></li>
+                <li><span>Financial YTD：</span><span>{{detaildata.ytd}}</span></li>
                 </ul>
                 <ul>
                 <li><span> IPO Date：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
-                <li><span>Stock Code：</span><span>{{detaildata.stockexchangeidstr}}</span></li>
+                <li><span>Stock Code：</span><span>{{detaildata.stockcode}}</span></li>
                 </ul>
             </div>
         </div>

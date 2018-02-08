@@ -1,4 +1,4 @@
-import {toThousands} from './method'
+import {toThousands,toLocalString} from './method'
 export default {
     data(){
         return {
@@ -6,16 +6,16 @@ export default {
         }
     },
     methods:{
-        showToast(status,type,succMes,failMes){
+        showToast(status,succMes,failMes){
             if(status.toLocaleLowerCase()=='success'){
                 this.$message({
-                    type: type,
+                    type: 'success',
                     message: succMes
                 });
                 return true;
             } else {
                 this.$message({
-                    type: type,
+                    type: 'warning',
                     message: failMes
                 });
                 return false;
@@ -39,6 +39,19 @@ export default {
                 },0)
                 obj.style.height=this.heightObj+"px"
             }
+        },
+        numberFormat: function (row, column) {
+            var num = row[column.property];
+            if (num == undefined) {
+            return "";
+            }
+            return toThousands(num);
+        },
+        formatDate(r,c,time){
+            if (time == null || time == ''){
+                return '';
+            }
+            return toLocalString(time);
         }
     },
     filters:{

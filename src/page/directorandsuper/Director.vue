@@ -4,18 +4,18 @@
     <div class="loan-table-container">
         <h3>Director</h3>
         <div class="number">
-            <label style="font-size:14px;margin-left:15px;">董事会成员总数:</label>
-            <el-input v-model="form.name" placeholder="请输入数量" style="margin-left:15px;"></el-input>
-            <el-button size="mini" type="primary" style="margin-left:15px;">Save</el-button>
+            <label style="font-size:14px;margin-left:15px;">Total Board Representative No.:</label>
+            <el-input v-model="totalboard" placeholder="请输入数量" style="margin-left:15px;"></el-input>
+            <el-button size="mini" type="primary" style="margin-left:15px;" @click="submitNumForm">Save</el-button>
         </div>
-        <el-table :data="tableData" border style="width:auto;">
-        <el-table-column prop="date" label="Type" width="140">
+        <el-table :data="directorData" border style="width:auto;">
+        <el-table-column prop="directortype" label="Type" width="140">
         </el-table-column>
-        <el-table-column prop="address" label="Director/Supervistor" width="220">
+        <el-table-column prop="staffidstr" label="Director/Observor" width="220">
         </el-table-column>
-        <el-table-column prop="name" label="Start Date" width="140">
+        <el-table-column prop="directorstartdate" label="Start Date" width="140" :formatter='formatDate'>
         </el-table-column>
-        <el-table-column prop="name" label="End Date" width="140">
+        <el-table-column prop="directorenddate" label="End Date" width="140" :formatter='formatDate'>
         </el-table-column>
         <el-table-column label="操作" width="60" v-if="isDetail!='false'">
             <template slot-scope="scope">
@@ -28,77 +28,84 @@
             <i class="el-icon-circle-plus" @click="handleAdd"></i>
         </div>
     </div>
-    <el-dialog title="Financial Information" :visible.sync="financialVisible">
+    <el-dialog title="Financial Information" :visible.sync="directorVisible">
         <div class="select-container">
-        <el-form :model="form" ref="financialForm">
+        <el-form :model="directorForm" ref="directorForm" :rules='rules'>
             <div class="select-fixed">
-                <el-form-item label="Currency">
-                <el-select v-model="form.region" placeholder="请选择活动区域">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
+                <el-form-item label="Type">
+                <el-select v-model="directorForm.directortype" placeholder="请选择">
+                    <el-option v-for="item in directorDropList.DIRECTOR_TYPE" :key="item.baseId"
+                    :label="item.baseName" :value="item.baseId"></el-option>
                 </el-select>
                 </el-form-item>
-                <el-form-item label="Currency">
-                <el-select v-model="form.region" placeholder="请选择活动区域">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
+                <el-form-item label="Staff">
+                <el-select v-model="directorForm.staffid" placeholder="请选择" filterable>
+                    <el-option v-for="item in directorDropList.IDG_Staff" :key="item.baseId"
+                    :label="item.baseName" :value="item.baseId"></el-option>
                 </el-select>
                 </el-form-item>
                 <el-form-item label="Start Date">
-                    <el-input v-model="form.name" auto-complete="off"></el-input>
+                    <el-date-picker v-model="directorForm.directorstartdate" type="date" placeholder="选择日期">
+                    </el-date-picker>
                 </el-form-item>
-                <el-form-item label="End Date">
-                    <el-input v-model="form.name"></el-input>
+                <el-form-item label="End Date" prop='directorenddate'>
+                    <el-date-picker v-model="directorForm.directorenddate" type="date" placeholder="选择日期">
+                    </el-date-picker>
                 </el-form-item>
             </div>
         </el-form>
         </div>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="financialVisible = false" size="mini">Cancel</el-button>
-            <el-button type="primary" @click="submitFinancialForm" size="mini" v-if="buttonShow=='Add'">Add</el-button>
-            <el-button type="primary" @click="submitFinancialForm" size="mini" v-else>Update</el-button>
+            <el-button @click="directorVisible = false" size="mini">Cancel</el-button>
+            <el-button type="primary" @click="submitForm('directorForm','add')" size="mini" v-if="buttonShow=='Add'">Add</el-button>
+            <el-button type="primary" @click="submitForm('directorForm','update')" size="mini" v-else>Update</el-button>
         </div>
     </el-dialog>  
 </div>
 </template>
 <script>
 import axioss from '@/api/axios';
-import bus from '@/api/eventbus'
-import mix from "@/api/mixin"
+import bus from '@/api/eventbus';
+import mix from "@/api/mixin";
+import * as method from "@/api/method";
 export default {
     name:"director",
     mixins:[mix],
     data(){
+        var compareDate=(rules, value, callback)=>{
+            if(value<this.directorForm.directorstartdate){
+                callback(new Error('不能小于Start Date'))
+            }
+        }
         return {
+            totalboard1:'',
             heightObj:'',
-            financialVisible:false,
+            directorVisible:false,
             buttonShow:'Add',
-            tableData: [{
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                date: '2016-05-01',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1516 弄'
-            }],
-            form: {
-                name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
+            directorData: [],
+            directorForm: {
+                directorid: '',
+                staffid: "",
+                staffidstr: "",
+                portfolioid: "",
+                directortype: "",
+                directorstartdate: '',
+                directorenddate: ''
+            },
+            directorFormEmpty: {
+                directorid: '',
+                staffid: "",
+                staffidstr: "",
+                portfolioid: "",
+                directortype: "",
+                directorstartdate: '',
+                directorenddate: ''
+            },
+            directorDropList:{},
+            rules:{
+                directorenddate:[
+                  {validator: compareDate,trigger:'change'} 
+                ]
             }
         }
     },
@@ -109,12 +116,60 @@ export default {
         bus.$on('toScorll',(ace)=>{
            this.scrolltoview(ace,'Director');
         });
+        this.reqSelectList();
+        this.reqDirectorList();
     },
     methods:{
-        submitFinancialForm(formName,type){
+        reqSelectList(){
+            var obj={dictArray:"DIRECTOR_TYPE,IDG_Staff"};
+            axioss.reqSelectList(obj).then(res=>{
+                this.directorDropList=method.translateFormat(res.data.data);
+            })
+        },
+        reqDirectorList(){
+            axioss.reqDirectorList(this.portfolioid).then(res=>{
+                console.log(res)
+                this.directorData=res.data.data;
+            })
+        },
+        querySingalDirector(id){
+            axioss.querySingalDirector(id).then(res=>{
+                this.directorForm=res.data.data;
+            })
+        },
+        submitNumForm(){
+            var obj={portfolioid:this.portfolioid,totalboardseatno:this.totalboard1}
+            axioss.modifyDirectorNum(obj).then(res=>{
+            })
+        },
+        submitForm(formName,type){
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    
+                    var obj=this.directorForm;
+                    if(type=='update'){
+                        axioss.updateDirector(obj).then(res=>{
+                            console.log(res);
+                            let status=res.data.code,succMes='更新成功',failMes='更新失败';
+                            let stateCode=this.showToast(status,succMes,failMes);
+                            if(stateCode){
+                                this.directorVisible=false;
+                                Object.assign(this.directorForm,this.directorFormEmpty);
+                                this.reqDirectorList();
+                            }
+                        })
+                    }else{
+                        obj.portfolioid=this.portfolioid;
+                        axioss.addDirector(obj).then(res=>{
+                            console.log(res);
+                            let status=res.data.code,succMes='创建成功',failMes='创建失败';
+                            let stateCode=this.showToast(status,succMes,failMes);
+                            if(stateCode){
+                                this.directorVisible=false;
+                                Object.assign(this.directorForm,this.directorFormEmpty);
+                                this.reqDirectorList();
+                            }
+                        })
+                    }
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -122,43 +177,52 @@ export default {
             });
         },
         handleAdd(){
-            this.financialVisible=true;
+            this.directorVisible=true;
             this.buttonShow='Add';
         },
         handleEdit(index,data){
-            this.financialVisible=true;
+            this.directorVisible=true;
             this.buttonShow='Update';
+            this.querySingalDirector(data.directorid)
         },
         handleDelet(index,data){
-            var id=data.eiid;
+            var id=data.directorid;
             this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
             }).then(() => {
-                axioss.deletInvest(id).then(res => {
-                    var status = res.data.code;
-                    if (status.toLocaleLowerCase() == "success") {
-                    this.$message({
-                        type: "success",
-                        message: "删除成功!"
-                    });
-                    } else {
-                    this.$message({
-                        type: "error",
-                        message: "删除失败!"
-                    });
+                axioss.deleteDirector(id).then(res => {
+                    console.log(res)
+                    let status=res.data.code,succMes='删除成功',failMes='删除失败';
+                    let stateCode=this.showToast(status,succMes,failMes);
+                    if(stateCode){
+                        this.reqDirectorList();
                     }
                 });
             })
         }
     },
     computed:{
+        portfolioid(){
+            if(this.$store.state.portfolioid==''){
+                this.$store.dispatch('updateData');
+            }
+            return this.$store.state.portfolioid;
+        },
         isDetail(){
             if(this.$store.state.isDetail==''){
                 this.$store.dispatch('updateIsDetail');
             }
             return this.$store.state.isDetail;
+        },
+        totalboard:{
+            get: function () {
+                return this.$store.state.storetotalboardseatno
+            },
+            set: function (newValue) {
+                this.totalboard1=newValue;
+            }
         }
     }
 }

@@ -30,13 +30,13 @@
  import Valuation from "@/components/Valuation"
  import ValuationReportOpm from "@/components/subValuation/ValuationReportOpm"
  import ValuationReport from "@/components/subValuation/ValuationReport"
- import CaptableReport from "@/page/capTable/capTableReport/captablereport"
+ import RealizedGainsLosses from "@/Reports/RealizedGainsLosses"
 
  /* 20180202 添加新表单 */
- import Appendix_2 from "@/page/capTable/capTableReport/appendix_2"
- import Main_Schedule from "@/page/capTable/capTableReport/main_Schedule"
+ import Appendix_2 from "@/Reports/appendix_2"
+ import Main_Schedule from "@/Reports/main_Schedule"
 
- import InvestDetail from "@/page/capTable/capTableReport/InvestDetail"
+ import InvestDetail from "@/Reports/InvestDetail"
  export default new Router({
    routes: [
     {path: '/',redirect:"/listpage"},//portfolio
@@ -73,7 +73,7 @@
     {path:'/valuationreportopm',name:'valuationreportopm',component:ValuationReportOpm},
     {path:'/valuationreport',name:'valuationreport',component:ValuationReport},
 
-    {path:'/captablereport',name:'captablereport',component:CaptableReport},
+    {path:'/RealizedGainsLosses',name:'captablereport',component:RealizedGainsLosses},
     {path:'/appendix_2',name:'appendix_2',component:Appendix_2},/* Appendix II */
     {path:'/main_Schedule',name:'main_Schedule',component:Main_Schedule},/* main_Schedule */
     {path:'/InvestDetail',name:'InvestDetail',component:InvestDetail}

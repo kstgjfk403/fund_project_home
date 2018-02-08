@@ -360,8 +360,8 @@ a{
     margin-bottom:13px;
 }
 .el-select-dropdown__item:hover{
-    background:#00a1e9;
-    color:white!important;
+    background:#00a1e9 !important;
+    color:white !important;
 }
 .valuation .el-form-item{
     margin-bottom:10px;
@@ -431,6 +431,14 @@ a{
 .director .has-gutter th:nth-last-of-type(2){
     border-right:1px solid #ddd;
 }
+.director{
+    .el-dialog{
+        width:60%;
+    }
+    .select-container .select-fixed .el-form-item{
+        width:49%;
+    }
+} 
 /*appendix2样式*/
 .mytable.el-table th.is-leaf{
     text-align: center;

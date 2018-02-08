@@ -41,7 +41,7 @@
                 </el-form-item>
                 <el-form-item label="Payment Date">
                     <el-date-picker v-model="investForm.closedate" type="date" placeholder="选择日期" :disabled="isDisable">
-                </el-date-picker>
+                    </el-date-picker>
                 </el-form-item>
                 <el-form-item label="Share Type">
                     <el-select v-model="investForm.securitytypeid" placeholder="请选择">

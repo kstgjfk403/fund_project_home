@@ -20,6 +20,9 @@ const actions = {
     updateIsDetail({commit}){
         var isDetail=localStorage.isDetail;
         commit('updateIsDetail',isDetail);
+    },
+    storetotalboardseatno({commit},data){
+        commit('storetotalboardseatno',data)
     }
 }
 
