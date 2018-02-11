@@ -402,6 +402,9 @@ export default {
  querySingalWarrant(warrantid){
     return axios.get("/api/admin/proj/invest/warrant/entity/"+warrantid)
  },
+ reqWrrantSelectList(id){
+    return axios.post("/api/admin/proj/invest/warrantremain/list",{portfolioid:id})
+ },
  //director
  modifyDirectorNum(obj){
     return axios.post("/api/admin/proj/director/num/update", obj)
@@ -413,12 +416,22 @@ export default {
     return axios.get("/api/admin/proj/director/list/"+portfolioid)
  },
  updateDirector(obj){
-    return axios.post("/api/admin/proj/director/update", obj)
+    return axios.post("/api/admin/proj/director/update",obj)
  },
  deleteDirector(id){
     return axios.post("/api/admin/proj/director/delete/"+id, {directorid:id})
  },
  addDirector(obj){
     return axios.post("/api/admin/proj/director/add",obj)
+ },
+ //bonus
+ reqDividEndList(portfolioid){
+    return axios.get("/api/admin/proj/dividend/list/"+portfolioid)
+ },
+ addBonus(obj){
+    return axios.post("/api/admin/proj/dividendbonus/add",obj)
+ },
+ reqBonusList(portfolioid){
+    return axios.get("/api/admin/proj/bonus/list/"+portfolioid)
  }
 }

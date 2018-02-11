@@ -4,7 +4,7 @@
         <h3 class="h3">Invest History</h3>
         <el-table :data="investData" border>
             <el-table-column fixed prop="eiid" label="EIID" width="70"></el-table-column>
-           <el-table-column prop="termsigndate" label="Term Sign Date" width="130"></el-table-column>
+            <el-table-column prop="termsigndate" label="Term Sign Date" width="130"></el-table-column>
             <el-table-column prop="fundname" label="Fund" width="130"></el-table-column>
             <el-table-column prop="investtype" label="Invest Type" width="150"></el-table-column>
             <el-table-column prop="securitytypeidstr" label="Share Type" width="150"></el-table-column>
@@ -15,8 +15,8 @@
             <el-table-column prop="otherfees" label="Fees" width="80" :formatter="numberFormat"></el-table-column>
             <el-table-column prop="taxlotdate" label="Tax Lot Date" width="150"></el-table-column>
             <el-table-column prop="vouncher" label="vouncher" width="150"></el-table-column>
-          <el-table-column prop="conversionratio" label="Rate" width="70"></el-table-column>
-          <el-table-column prop="convertamount" label="convert amount" width="150" :formatter="numberFormat"></el-table-column>
+            <el-table-column prop="conversionratio" label="Rate" width="70"></el-table-column>
+            <el-table-column prop="convertamount" label="convert amount" width="150" :formatter="numberFormat"></el-table-column>
             <el-table-column label="操作" width="60" fixed='right' v-if="isDetail!='false'">
                 <template slot-scope="scope">
                     <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
@@ -24,8 +24,8 @@
                 </template>
             </el-table-column>
         </el-table>
-        <div class="table-foot">
-            <i class="el-icon-circle-plus" @click="handleAdd" v-if="isDetail!='false'"></i>
+        <div class="table-foot"  v-if="isDetail!='false'">
+            <i class="el-icon-circle-plus" @click="handleAdd"></i>
         </div>
     </div>
     <el-dialog title="Invest Edit" :visible.sync="investVisible">
@@ -43,7 +43,7 @@
                 </el-date-picker>
                 </el-form-item>
                 <el-form-item label="Fund Family" v-if="buttonShow=='add'">
-                    <el-select v-model="investForm.fundfamillyname" placeholder="请选择" @change="showTable" :disabled="isDisable" filterable>
+                    <el-select v-model="investForm.fundfamillyname" placeholder="请选择" @change="showTable" :disabled="isDisable||isShareSplitDisable" filterable>
                         <el-option v-for="item in fundFamilyList" :key="item.baseId"
                         :label="item.baseName" :value="item.baseName"></el-option>
                     </el-select>
@@ -137,70 +137,17 @@
                 </el-form-item>
             </div>
             <div v-else-if="investType=='Convert To Equity Interest'">
-                <el-form-item label="Share Type">
-                    <el-select v-model="investForm.securitytypeid" placeholder="请选择">
-                        <el-option label='Equity Interest' value='Equity Interest' key="6"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="Converted Amount">
-                    <el-input v-model="investForm.cost"></el-input>
-                </el-form-item>
                 <el-form-item label="Round">
                     <el-input v-model="investForm.round"></el-input>
-                </el-form-item>
-                <el-form-item label="Registered Capital">
-                    <el-input v-model="investForm.shareownedno"></el-input>
-                </el-form-item>
-                <el-form-item label="Other Fees">
-                    <el-input v-model="investForm.otherFees"></el-input>
-                </el-form-item>
-                <el-form-item label="Currency">
-                    <el-select v-model="investForm.currency" placeholder="请选择">
-                        <el-option v-for="item in fundCurrencyList" :key="item.baseId"
-                        :label="item.baseName" :value="item.baseId"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="Tax Lot Date">
-                    <el-date-picker v-model="investForm.taxlotdate" type="date" placeholder="选择日期">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item label="Remarks">
-                    <el-input v-model="investForm.remarks"></el-input>
-                </el-form-item>
-                <el-form-item label="Voucher">
-                    <el-input v-model="investForm.vouncher"></el-input>
                 </el-form-item>
             </div>
             <div v-else-if="investType=='Convert To Equity Investment'">
-                <el-form-item label="Share Type">
-                    <el-select v-model="investForm.securitytypeid" placeholder="请选择">
-                        <el-option label='Common' value='Common' key="2"></el-option>
-                        <el-option label='Preferred' value='Preferred' key="3"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="Converted Amount">
-                    <el-input v-model="investForm.cost"></el-input>
-                </el-form-item>
+                
                 <el-form-item label="Round">
                     <el-input v-model="investForm.round"></el-input>
                 </el-form-item>
-                <el-form-item label="Acquired Shares">
-                    <el-input v-model="investForm.shareownedno"></el-input>
-                </el-form-item>
-                <el-form-item label="Other Fees">
-                    <el-input v-model="investForm.otherfees"></el-input>
-                </el-form-item>
-                <el-form-item label="Currency">
-                    <el-select v-model="investForm.currency" placeholder="请选择">
-                        <el-option v-for="item in fundCurrencyList" :key="item.baseId"
-                        :label="item.baseName" :value="item.baseId"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="Remarks">
-                    <el-input v-model="investForm.remarks"></el-input>
-                </el-form-item>
             </div>
-            <div v-else-if="investType=='ShareReclassification'">
+            <div v-else-if="investType=='Share Reclassification'">
                 <el-form-item label="Share Type">
                     <el-select v-model="investForm.securitytypeid" placeholder="请选择">
                         <el-option label='Common' value='Common' key="2"></el-option>
@@ -217,14 +164,76 @@
                     <el-input v-model="investForm.remarks"></el-input>
                 </el-form-item>
             </div>
+            <div v-else-if="investType=='Shares Split'">
+                <el-form-item label="Share Split Rate(1:x):">
+                    <el-input v-model="investForm.sharesplitrate"></el-input>
+                </el-form-item>
+                <el-form-item label="Remarks:">
+                    <el-input type="textarea" autosize placeholder="请输入内容" v-model="investForm.comment">
+                    </el-input>
+                </el-form-item>
+            </div>
+            <div v-else-if="investType=='Equity Interest(Loan To Equity)'">
+                <el-form-item label="Round">
+                    <el-input v-model="investForm.round"></el-input>
+                </el-form-item>
+                <el-form-item label="Currency">
+                    <el-select v-model="investForm.currency" placeholder="请选择">
+                        <el-option v-for="item in fundCurrencyList" :key="item.baseId"
+                        :label="item.baseName" :value="item.baseId"></el-option>
+                    </el-select>
+                </el-form-item>
+            </div>
+            <div v-else-if="investType=='Equity Investment(Loan To Equity)'">
+                <el-form-item label="Round">
+                    <el-input v-model="investForm.round"></el-input>
+                </el-form-item>
+                <el-form-item label="Currency">
+                    <el-select v-model="investForm.currency" placeholder="请选择">
+                        <el-option v-for="item in fundCurrencyList" :key="item.baseId"
+                        :label="item.baseName" :value="item.baseId"></el-option>
+                    </el-select>
+                </el-form-item>
+            </div>
+            <div v-else-if="investType=='Warrant Exercise'">
+                <el-form-item label="Warrant">
+                    <el-select v-model="investForm.convertfromwarrantid" placeholder="请选择">
+                        <el-option v-for="item in wrrantSelectList" :key="item.baseId"
+                        :label="item.baseName" :value="item.baseId"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="Share Type">
+                    <el-select v-model="investForm.securitytypeid" placeholder="请选择">
+                        <el-option label='Equity Interest' value='Equity Interest' key='6'></el-option>
+                        <el-option label='Common' value='Common' key="2"></el-option>
+                        <el-option label='Preferred' value='Preferred' key="3"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="Round">
+                    <el-input v-model="investForm.round"></el-input>
+                </el-form-item>
+                <el-form-item label="Acquired Shares">
+                    <el-input v-model="investForm.shareownedno"></el-input>
+                </el-form-item>
+                <el-form-item label="Cost">
+                    <el-input v-model="investForm.cost"></el-input>
+                </el-form-item>
+                <el-form-item label="Other Fees">
+                    <el-input v-model="investForm.otherfees"></el-input>
+                </el-form-item>
+                <el-form-item label="Conversion Rate">
+                    <el-input v-model="investForm.conversionratio"></el-input>
+                </el-form-item>
+            </div>
             <div v-show="isTableShow=='LoanToEquity1'">
                 <table class="table table-hover table-bordered table-condensed" style="table-layout:fixed;">
                     <thead>
                         <tr>
                             <th scope="col">Time</th>
-                            <th scope="col">Fund Family</th>
+                            <th scope="col">Fund Name</th>
                             <th scope="col">loanAmount</th>
                             <th scope="col">other Fees</th>
+                            <th scope="col">Additional cost</th>
                             <th scope="col">convertAmount</th>
                             <th scope="col">Capitalized Interest</th>
                             <th scope="col">Acquired Shares</th>
@@ -235,9 +244,10 @@
                     <tbody>
                         <tr v-for="item in loanToEquityData">
                             <td scope="row">{{item.closedate}}</td>
-                            <td>{{item.fundfamillyname}}</td>
+                            <td>{{item.fundname}}</td>
                             <td>{{item.remainderamount | transformNum}}</td>
-                            <td><el-input v-model="item.otherfees" v-isedit class="inputnone"></el-input></td>
+                            <td>{{item.otherfees}}</td>
+                            <td><el-input v-model="item.additionalcost" v-isedit class="inputnone"></el-input></td>
                             <td><el-input v-model="item.convertamount" v-isedit class="inputnone"></el-input></td>
                             <td><el-input v-model="item.proceeds" v-isedit class="inputnone"></el-input></td>
                             <td><el-input v-model="item.shareownedno" v-isedit class="inputnone"></el-input></td>
@@ -267,6 +277,7 @@ import axioss from '@/api/axios';
 import * as method from "@/api/method";
 import subCapTable from "../../capTable/subCapTable"
 import mix from "@/api/mixin"
+import bus from "@/api/eventbus";
 export default {
     name:"invest",
     mixins:[mix],
@@ -274,6 +285,7 @@ export default {
         return {
             subCapTableShow:true,
             isDisable:false,
+            isShareSplitDisable:false,
             investVisible:false,
             isReqLoanToEquity:false,
             investType:'',
@@ -306,6 +318,7 @@ export default {
             investTypeList:'',
             fundFamilyList:'',
             fundCurrencyList:[],
+            wrrantSelectList:[],
             investForm:{
                 investtype:'',
                 closedate:'',
@@ -325,7 +338,9 @@ export default {
                 proceeds:'',
                 costrelization: 0,
                 termsigndate:'',
-                fundname:''
+                fundname:'',
+                convertfromwarrantid:'',
+                sharesplitrate:''
             },
             emptyInvestForm:{
                 investtype:'',closedate:'',fundfamillyname:'',
@@ -334,7 +349,7 @@ export default {
                 otherfees:'',currency:'USD',remarks:'',
                 taxlotdate:'',vouncher:'',otherproceeds:'',
                 additionalcost:'',proceeds:'',costrelization: 0,
-                termsigndate:''
+                termsigndate:'',convertfromwarrantid:'',sharesplitrate:''
             },
             capTabelList:[],
             captelDetailData:[],
@@ -361,6 +376,11 @@ export default {
                 this.fundFamilyList=res.data.data[1].baseInfoList;
                 this.fundCurrencyList=res.data.data[3].baseInfoList;
                 this.fundList=res.data.data[4].baseInfoList;
+            })
+        },
+        reqWrrantSelectList(){
+            axioss.reqWrrantSelectList(this.portfolioid).then(res=>{
+                this.wrrantSelectList=res.data.data;
             })
         },
       numberFormat: function (row, column) {
@@ -440,6 +460,7 @@ export default {
                                 this.investVisible=false;
                                 this.reqinvestList(this.portfolioid);//请求invest数据
                                 Object.assign(this.investForm,this.emptyInvestForm);
+                                bus.$emit('updateCaptable');
                             }else{
                                 this.$message({
                                     type:'warning',
@@ -472,6 +493,7 @@ export default {
             this.buttonShow='eidt';
             this.investForm.investtype=data.investtype;
             this.querySingalData(data.eiid);
+            bus.$emit('clearSubCaptable');
         },
         handleDelet(index,data){
             var id=data.eiid;
@@ -499,7 +521,14 @@ export default {
         },
         whichShow(val){
             this.investType=val;
-            if(val!='Equity Investment&Loan To Equity'&&val!='Loan To Equity'){
+            this.isShareSplitDisable=false;
+            if(val=='Warrant Exercise'){
+                this.reqWrrantSelectList();
+            }
+            if(val=='Shares Split'){
+                this.isShareSplitDisable=true;
+            }
+            if(val!='Equity Interest(Loan To Equity)'&&val!='Equity Investment(Loan To Equity)'&&val!='Loan To Equity'){
                 this.isTableShow=''
             }else{
                 if(this.investForm.fundfamillyname){
@@ -512,7 +541,7 @@ export default {
         },
         showTable(val){
             if(val){
-                if(this.investType=='Equity Investment&Loan To Equity'||this.investType=='Loan To Equity')
+                if(this.investType=='Equity Interest(Loan To Equity)'||this.investType=='Equity Investment(Loan To Equity)'||this.investType=='Loan To Equity')
                     this.isTableShow='LoanToEquity1'
                     if(this.isReqLoanToEquity){
                         this.reqLoanToEquity(val,this.portfolioid);

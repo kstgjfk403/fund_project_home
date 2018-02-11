@@ -207,12 +207,5 @@ export default {
     .select-container{
         width:100%;
     }
-    .title{
-        padding:10px;
-        box-sizing: border-box;
-        font-size: 20px;
-        color:white;
-        font-weight:bold;
-        background:#00a1e9;
-    }
+    
 </style>

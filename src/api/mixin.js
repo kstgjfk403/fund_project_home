@@ -27,7 +27,7 @@ export default {
                 this.heightObj=this.$refs[message].offsetHeight
             }
             if(!obj){
-                this.$refs[message].style.height=50+"px";
+                this.$refs[message].style.height=43+"px";
                 this.$refs[message].style.overflow='hidden';
             }
             if(obj){

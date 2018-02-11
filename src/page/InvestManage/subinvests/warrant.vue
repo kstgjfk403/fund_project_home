@@ -206,12 +206,14 @@ export default {
             });
         },
         handleAdd(){
+            this.subCapTableShow=false;
             this.famillyShow=true;
             this.fundShow=false;
             this.warrantVisible=true;
             this.buttonShow=true;
         },
         handleEdit(index,data){
+            this.subCapTableShow=true;
             this.famillyShow=false;
             this.fundShow=true;
             this.warrantVisible=true;
@@ -249,6 +251,9 @@ export default {
                 this.$store.dispatch('updateIsDetail');
             }
             return this.$store.state.isDetail;
+        },
+        capFormList(){
+            return this.$store.state.capTabelData;
         },
         warrantNameShow(){
             var isShow;

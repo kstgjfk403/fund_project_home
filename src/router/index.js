@@ -38,6 +38,7 @@
 
  import InvestDetail from "@/Reports/InvestDetail"
  export default new Router({
+    mode: 'history',
    routes: [
     {path: '/',redirect:"/listpage"},//portfolio
     {path: '*',redirect:"/listpage"},

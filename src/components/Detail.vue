@@ -143,7 +143,8 @@
     <CapTable></CapTable>
     <FinancialInfo></FinancialInfo>
     <Director></Director>
-    <Bonus></Bonus>
+    <MainBonus></MainBonus>
+    <Business/>
     <Navlist v-on:toscorll="scrolltoview" :isactive="isActive"></Navlist>
 </div>
 </template>
@@ -156,7 +157,8 @@ import Ivestment from '@/page/InvestManage/investmanager';
 import CapTable from "@/page/capTable/capTable";
 import FinancialInfo from "@/page/financial/FinancialInformation";
 import Director from "@/page/directorandsuper/Director";
-import Bonus from "@/page/bonus/Bonus";
+import MainBonus from "@/page/bonus/MainBonus";
+import Business from "@/page/business/Business";
 export default {
     name:"Detail",
     data:function(){
@@ -170,7 +172,8 @@ export default {
                 CapTable:false,
                 Financial:false,
                 Director:false,
-                Bonus:false
+                Bonus:false,
+                Business:false
             }
         }
     },
@@ -234,7 +237,8 @@ export default {
         CapTable,
         FinancialInfo,
         Director,
-        Bonus
+        MainBonus,
+        Business
     }
 }
 </script>

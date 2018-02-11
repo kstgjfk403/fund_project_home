@@ -4,22 +4,23 @@
         <div class="loan-table-container">
             <h3 class="h3">CapTable History</h3>
             <div class="table-content">
-            <el-table :data="item.baseName" style="width: 100%" v-for="(item,index) in firstContentList" :key="index+1">
+            <el-table :data="item.baseName" style="width: 100%" v-for="(item,index) in firstContentList" :key='index*(-1)'>
                 <el-table-column label="股东信息" width="150">
                     <el-table-column prop="sharetype" label="股东类型" width="130"></el-table-column>
                     <el-table-column prop="securitytypeidstr" label="ShareType" width="130"></el-table-column>
+                    <el-table-column prop="shareowner" label="名称" width="130"></el-table-column>
                 </el-table-column>
                 <el-table-column :label="item.baseId">
-                    <el-table-column prop="cost" label="认缴注册资本" width="130" :formatter="numberFormat"></el-table-column>
-                    <el-table-column prop="shareownedno" label="认缴投资额" width="130" :formatter="numberFormat"></el-table-column>
+                    <el-table-column prop="shareownedno" label="认缴注册资本" width="130" :formatter="numberFormat"></el-table-column>
+                    <el-table-column prop="cost" label="认缴投资额" width="130" :formatter="numberFormat"></el-table-column>
                     <el-table-column prop="proper" label="股比(%)" width="130" :formatter="properFormat"></el-table-column>
                     <el-table-column prop="properwithoutesop" label="withoutESOP(%)" width="130" :formatter="properFormat"></el-table-column>
                 </el-table-column>
             </el-table>
-            <el-table :data="item.baseName" style="width: 100%" v-for="(item,index) in otherContentList" :key="index">
+            <el-table :data="item.baseName" style="width: 100%" v-for="(item,index) in otherContentList" :key='index+1'>
                 <el-table-column :label="item.baseId">
-                    <el-table-column prop="cost" label="认缴注册资本" width="130" :formatter="numberFormat"></el-table-column>
-                    <el-table-column prop="shareownedno" label="认缴投资额" width="130" :formatter="numberFormat"></el-table-column>
+                    <el-table-column prop="shareownedno" label="认缴注册资本" width="130" :formatter="numberFormat"></el-table-column>
+                    <el-table-column prop="cost" label="认缴投资额" width="130" :formatter="numberFormat"></el-table-column>
                     <el-table-column prop="proper" label="股比(%)" width="130" :formatter="properFormat"></el-table-column>
                     <el-table-column prop="properwithoutesop" label="withoutESOP(%)" width="130" :formatter="properFormat"></el-table-column>
                 </el-table-column>
@@ -55,6 +56,10 @@ export default {
        });
        this.reqTableHead();
        this.reqTableContent();
+       bus.$on('updateCaptable',()=>{
+           this.reqTableHead();
+            this.reqTableContent();
+       })
     },
     methods:{
         reqdroplist(){
@@ -181,14 +186,6 @@ export default {
     .capTable{
         margin-top:20px;
         border:1px solid #ddd;
-    }
-    .title{
-        padding:10px;
-        box-sizing: border-box;
-        font-size: 20px;
-        color:white;
-        font-weight:bold;
-        background:#00a1e9;
     }
     .loan-table-container .table-content{
         white-space: nowrap;

@@ -79,7 +79,7 @@ time, mark, audio, video {
     zoom:1;
 }
 .title{
-    padding:10px;
+    padding:5px;
     box-sizing: border-box;
     font-size: 20px;
     color:white;
@@ -182,7 +182,7 @@ a{
     width:50%;
 }
 .add-project .el-form-item.oneline .el-textarea__inner{
-    min-height:100px!important;
+    min-height:100px !important;
     width:220%;
 }
 
@@ -402,6 +402,7 @@ a{
 .capTable .table-content .el-table{
     display: inline-block;
     width:auto!important;
+    vertical-align: top;
 }
 .capTable .table-content .el-table:nth-child(1){
     float:left;

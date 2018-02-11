@@ -7,9 +7,10 @@
             <el-table-column prop="exitmode" label="exitMode"></el-table-column>
             <el-table-column prop="costrelization" label="costRelization" width="130" :formatter="numberFormat"></el-table-column>
             <el-table-column prop="round" label="round"></el-table-column>
-            <el-table-column prop="shareexit" label="shares" :formatter="numberFormat" ></el-table-column>
+            <el-table-column prop="shareexit" label="shares" :formatter="numberFormat"></el-table-column>
             <el-table-column prop="fundfamillyname" label="Fund Family"></el-table-column>
-            <el-table-column prop="closedate" label="closeDate" width='130'></el-table-column>
+            <el-table-column prop="closedate" label="closeDate" width='130' :formatter="formatDate"></el-table-column>
+            <el-table-column prop="termsigndate" label="termsigndate" width='130' :formatter="formatDate"></el-table-column>
             <el-table-column prop="currency" label="currency"></el-table-column>
             <el-table-column prop="shareremain" label="shareremain" :formatter="numberFormat"></el-table-column>
             <el-table-column prop="vouncher" label="操作" v-if="isDetail!='false'">
@@ -41,6 +42,10 @@
                     </el-form-item>
                     <el-form-item label="Payment Date">
                         <el-date-picker v-model="exitForm.closedate" type="date" placeholder="选择日期">
+                        </el-date-picker>
+                    </el-form-item>
+                    <el-form-item label="Termsign Date">
+                        <el-date-picker v-model="exitForm.termsigndate" type="date" placeholder="选择日期">
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item label="Fund Family">
@@ -93,11 +98,13 @@
 import axioss from '@/api/axios';
 import * as method from "@/api/method";
 import subCapTable from "../../capTable/subCapTable"
+import mix from "@/api/mixin"
 export default {
     name:"Exit",
+    mixins:[mix],
     data(){
         return {
-            dataObj:'',
+            dataObj:{},
             subCapTableShow:true,
             exitId:'',
             isDisabled:false,
@@ -119,19 +126,22 @@ export default {
                 fundfamillyname:"",
                 portfolioid:"",
                 closedate:'',
+                termsigndate:'',
                 currency:"USD",
                 costrelization:'',
                 proceeds:'',
                 shareexit:'',
                 shareremain:'',
                 securitytypeid:'',
-                round:""
+                round:"",
+                portfoliocaptablevaluedetailList:[]
             },
             exitFormEmpty:{
                 exitmode:'',exittype:'',fundfamillyname:"",
                 portfolioid:"",closedate:'',currency:"USD",
                 costrelization:'',proceeds:'',shareexit:'',
-                shareremain:'',securitytypeid:'',round:""
+                shareremain:'',securitytypeid:'',round:"",
+                portfoliocaptablevaluedetailList:[]
             }
         }
     },
@@ -168,13 +178,17 @@ export default {
         reqExitList(id){
             var portfolioid=id||this.portfolioid;
             axioss.reqExitList(portfolioid).then(res=>{
-                console.log(res);
                 this.exitData=this.formatTime(res.data.data);//gai
             })
         },
         querySingal(id){
             axioss.querySingal(id).then(res=>{
                 this.exitForm=res.data.data;
+                this.$store.dispatch('saveCapTabel',res.data.data.portfoliocaptablevaluedetailList);
+                this.dataObj.termsigndate=res.data.data.termsigndate;
+                this.dataObj.portfolioid=this.portfolioid;
+                this.dataObj.closedate=this.exitForm.closedate;
+                this.dataObj.round='exit';
             })
         },
         submitAdd(formName,type){
@@ -184,7 +198,6 @@ export default {
                     if(type=='add'){
                         obj.portfolioid=this.portfolioid;
                         axioss.addExit(obj).then(res=>{
-                            console.log(res);
                             if(res.data.code=="SUCCESS"){
                                 this.$message({
                                     type:'success',
@@ -201,8 +214,8 @@ export default {
                             }
                         })
                     }else{
+                        obj.portfoliocaptablevaluedetailList=this.capFormList;
                         axioss.updateExit(obj).then(res=>{
-                            console.log(res);
                             if(res.data.code=="SUCCESS"){
                                 this.$message({
                                     type:'success',
@@ -226,11 +239,13 @@ export default {
             });
         },
         handleAdd(){
+            this.subCapTableShow=false;
             this.isDisabled=false;
             this.ExitVisible=true;
             this.buttonShow=true;
         },
         handleEdit(index,data){
+            this.subCapTableShow=true;
             this.isDisabled=true;
             this.ExitVisible=true;
             this.buttonShow=false;
@@ -243,7 +258,6 @@ export default {
                 type: "warning"
             }).then(() => {
                 axioss.deleteExit(data.id).then(res=>{
-                    console.log(res);
                     var status = res.data.code;
                     if (status.toLocaleLowerCase() == "success") {
                     this.reqExitList(this.portfolioid);
@@ -303,12 +317,15 @@ export default {
             }
             return this.$store.state.portfolioid;
         },
+        capFormList(){
+            return this.$store.state.capTabelData;
+        },
         isDetail(){
             if(this.$store.state.isDetail==''){
                 this.$store.dispatch('updateIsDetail');
             }
             return this.$store.state.isDetail;
-        }
+        },
     },
     components:{
         subCapTable

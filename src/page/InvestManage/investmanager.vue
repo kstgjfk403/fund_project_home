@@ -13,9 +13,11 @@ import Invest from "./subinvests/invest";
 import Exit from "./subinvests/exit";
 import Warran from "./subinvests/warrant";
 import bus from "@/api/eventbus";
+import mix from "@/api/mixin"
 export default {
     name:"investmanger",
     props:['id'],
+    mixins:[mix],
     data(){  
         return {
             a:1,
@@ -25,30 +27,11 @@ export default {
     created(){
     },
     mounted(){
-        bus.$on('toScorll',(ace,arr)=>{
-           this.scrolltoview(ace,arr);
+        bus.$on('toScorll',(ace)=>{
+           this.scrolltoview(ace,'Invest');
        });
     },
     methods:{
-        scrolltoview(eletoview,arr){
-            var obj=this.$refs[eletoview];
-            if(!this.heightObj){
-                this.heightObj=this.$refs["Invest"].offsetHeight
-            }
-            if(!obj){
-                this.$refs["Invest"].style.height=50+"px";
-                this.$refs["Invest"].style.overflow='hidden';
-            }
-            if(obj){
-                var scrolly=window.scrollY
-                var _top;
-                setTimeout(function(){
-                    _top=obj.getBoundingClientRect().top;
-                    document.documentElement.scrollTop=_top;
-                },0)
-                obj.style.height=this.heightObj+"px"
-            }
-        }
     },
     components:{
         Loan,
@@ -63,12 +46,5 @@ export default {
         margin-top:20px;
         border:1px solid #ddd;
     }
-    .title{
-        padding:10px;
-        box-sizing: border-box;
-        font-size: 20px;
-        color:white;
-        font-weight:bold;
-        background:#00a1e9;
-    }
+    
 </style>

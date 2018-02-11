@@ -8,7 +8,7 @@
             <el-input v-model="totalboard" placeholder="请输入数量" style="margin-left:15px;"></el-input>
             <el-button size="mini" type="primary" style="margin-left:15px;" @click="submitNumForm">Save</el-button>
         </div>
-        <el-table :data="directorData" border style="width:auto;">
+        <el-table :data="directorData" border style="float:left;width:auto;">
         <el-table-column prop="directortype" label="Type" width="140">
         </el-table-column>
         <el-table-column prop="staffidstr" label="Director/Observor" width="220">
@@ -24,11 +24,11 @@
             </template>
         </el-table-column>
         </el-table>
-        <div class="table-foot" v-if="isDetail!='false'">
-            <i class="el-icon-circle-plus" @click="handleAdd"></i>
+        <div class="table-foot">
+            <i class="el-icon-circle-plus" @click="handleAdd" v-if="isDetail!='false'"></i>
         </div>
     </div>
-    <el-dialog title="Financial Information" :visible.sync="directorVisible">
+    <el-dialog title="Director Information" :visible.sync="directorVisible">
         <div class="select-container">
         <el-form :model="directorForm" ref="directorForm" :rules='rules'>
             <div class="select-fixed">
@@ -39,10 +39,10 @@
                 </el-select>
                 </el-form-item>
                 <el-form-item label="Staff">
-                <el-select v-model="directorForm.staffid" placeholder="请选择" filterable>
-                    <el-option v-for="item in directorDropList.IDG_Staff" :key="item.baseId"
-                    :label="item.baseName" :value="item.baseId"></el-option>
-                </el-select>
+                    <el-select v-model="directorForm.staffid" placeholder="请选择" filterable>
+                        <el-option v-for="item in directorDropList.IDG_Staff" :key="item.baseId"
+                        :label="item.baseName" :value="item.baseId"></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="Start Date">
                     <el-date-picker v-model="directorForm.directorstartdate" type="date" placeholder="选择日期">
@@ -73,8 +73,12 @@ export default {
     mixins:[mix],
     data(){
         var compareDate=(rules, value, callback)=>{
-            if(value<this.directorForm.directorstartdate){
+            if(value==''){
+                callback();
+            }else if(value<this.directorForm.directorstartdate){
                 callback(new Error('不能小于Start Date'))
+            }else{
+                callback();
             }
         }
         return {
@@ -104,7 +108,7 @@ export default {
             directorDropList:{},
             rules:{
                 directorenddate:[
-                  {validator: compareDate,trigger:'change'} 
+                  {validator:compareDate,trigger:'change'} 
                 ]
             }
         }
@@ -140,6 +144,8 @@ export default {
         submitNumForm(){
             var obj={portfolioid:this.portfolioid,totalboardseatno:this.totalboard1}
             axioss.modifyDirectorNum(obj).then(res=>{
+                let status=res.data.code,succMes='保存成功',failMes='保存失败';
+                let stateCode=this.showToast(status,succMes,failMes);
             })
         },
         submitForm(formName,type){
@@ -244,17 +250,10 @@ export default {
         background:#eee;
         padding:5px 0;
         padding-left:10px;
+        clear:both;
     }
     .select-container{
         width:100%;
-    }
-    .title{
-        padding:10px;
-        box-sizing: border-box;
-        font-size: 20px;
-        color:white;
-        font-weight:bold;
-        background:#00a1e9;
     }
     .number{
         padding:10px 0;

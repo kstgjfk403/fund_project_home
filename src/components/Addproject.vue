@@ -253,7 +253,7 @@
     <CapTable></CapTable>
     <FinancialInfo></FinancialInfo>
     <Director :totalboardseatno='formData.totalboardseatno'></Director>
-    <Bonus></Bonus>
+    <MainBonus></MainBonus>
     <Business></Business>
     <Navlist v-on:toscorll="scrolltoview" :isactive='isActive'></Navlist>
 </div>
@@ -264,7 +264,7 @@ import Header from "./common/Header";
 import CapTable from "@/page/capTable/capTable";
 import FinancialInfo from "@/page/financial/FinancialInformation";
 import Director from "@/page/directorandsuper/Director";
-import Bonus from "@/page/bonus/Bonus";
+import MainBonus from "@/page/bonus/MainBonus";
 import Business from "@/page/business/Business";
 import * as method from "../api/method";
 import axioss from '../api/axios';
@@ -530,7 +530,7 @@ export default {
                 this.heightObj=this.$refs["BasicInfo"].offsetHeight
             }
             if(!obj){
-                this.$refs["BasicInfo"].style.height=50+"px";
+                this.$refs["BasicInfo"].style.height=43+"px";
                 this.$refs["BasicInfo"].style.overflow='hidden';
             }
             if(obj){
@@ -549,7 +549,7 @@ export default {
         CapTable,
         FinancialInfo,
         Director,
-        Bonus,
+        MainBonus,
         Business
     }
 }
@@ -595,12 +595,5 @@ export default {
     .add-project .el-form-item label,.add-project .el-form-item .el-form-item__content{
         width:50%;
     }
-    .title{
-        padding:10px;
-        box-sizing: border-box;
-        font-size: 20px;
-        color:white;
-        font-weight:bold;
-        background:#00a1e9;
-    }
+    
 </style>
