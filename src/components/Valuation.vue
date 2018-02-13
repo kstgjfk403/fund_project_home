@@ -80,6 +80,15 @@
             <el-form-item label="OwnerShip">
               <el-input v-model="valuationForm.prop" placeholder="请输入内容"></el-input>
             </el-form-item>
+            <el-form-item label="Loan">
+              <el-input v-model="valuationForm.loan" placeholder="请输入内容"></el-input>
+            </el-form-item>
+            <el-form-item label="Cash" v-show="isEvShow">
+              <el-input v-model="valuationForm.cashassets" placeholder="请输入内容"></el-input>
+            </el-form-item>
+            <el-form-item label="Debt" v-show="isEvShow">
+              <el-input v-model="valuationForm.debt" placeholder="请输入内容"></el-input>
+            </el-form-item>
             <el-form-item label="Valuation">
               <el-input :value="isComp?valuation:valuationForm.valuation" :disabled="isComp"
                         @input.native="compValuation($event)" placeholder="请输入内容" ref="valuation"></el-input>
@@ -154,6 +163,7 @@
       return {
         isEdit: false,
         isShow: false,
+        isEvShow:false,
         currentPage: 1,
         allcount: 0,
         checkList: '',
@@ -201,7 +211,10 @@
           valuation: '',
           rating: '',
           multiple: '',
-          netvaluation: ''
+          netvaluation: '',
+          loan:0,
+          debt:'',
+          cashassets:''
         },
         valuationFormEmpty: {
           valuationid:'',
@@ -217,7 +230,10 @@
           valuation: '',
           rating: '',
           multiple: '',
-          netvaluation: ''
+          netvaluation: '',
+          loan:0,
+          debt:'',
+          cashassets:''
         },
         valuationTableData: [],
         radio2: ''
@@ -295,9 +311,8 @@
         obj.fundid = this.valuationForm.fundid;
         console.log(obj);
         if (this.valuationForm.portfolioid && this.valuationForm.valuationdate) {
-          axioss.reqIndiction(obj).then(res => {
+            axioss.reqIndiction(obj).then(res => {
             //如果是空的时候提示没有获得估值数据.//
-
             Object.assign(this.valuationForm, res.data.data);
             console.log(this.valuationForm);
             if (obj.valuationmethod == 'PE')
@@ -466,11 +481,12 @@
             this.netvaluation = this.valuationForm.netvaluation;
             this.multiple = this.valuationForm.multiple;
 
-            this.reqIndiction();
+            
 
             if(res.data.data.valuationmethod == 'PE'||res.data.data.valuationmethod =='PS'||res.data.data.valuationmethod=='PB'){
               this.valuationTableData =  res.data.data.portfoliocomparables;
               this.isShow = true;
+              this.reqIndiction();
             }
 
             this.valuationVisible = true;
@@ -507,12 +523,16 @@
       },
       whichShow(val){
         this.isShow = false;
+        this.isEvShow=false;
         if (val == 'PE' || val == "PS" || val == "PB") {
           this.isShow = true;
           this.reqIndiction();
           this.reqCompareList(this.reqcompanyobj);
         } else if (val == "LASTROUND") {
           this.queryLastLRound();
+        }
+        if(val=='EV'){
+            this.isEvShow=true;
         }
       },
       calculateMultiple(){
@@ -542,7 +562,7 @@
     },
     watch: {
       multiple: function (newdata, olddata) {
-        this.multiple =  newdata.toFixed(2);
+        //this.multiple =  newdata.toFixed(2);
         this.fairvalue = (newdata * this.baseValue).toFixed(2);
       },
       baseValue: function (newdata, olddata) {
@@ -564,10 +584,10 @@
           var tem = this.valuationForm.valuationmethod, val = '';
           var fairvalue = this.fairvalue, ownerShip = this.valuationForm.prop,
             discount = this.valuationForm.discount, additional = this.valuationForm.additional,
-            fin48tax = this.valuationForm.fin48tax, multiple = this.valuationForm.multiple;
-
-          val = (this.valuationForm.valuation * 1 + parseInt(additional) * 1 ) * (1 - discount / 100) - fin48tax * 1;
-          return val.toFixed(2);
+            fin48tax = this.valuationForm.fin48tax, multiple = this.valuationForm.multiple,
+            loan=this.valuationForm.loan;
+            val = (this.valuationForm.valuation * 1 + parseInt(additional) * 1 ) * (1 - discount / 100) - fin48tax * 1 + loan*1;
+            return val.toFixed(2);
         },
         set: function () {
         }
@@ -591,7 +611,7 @@
           return parseInt(val);
         },
         set: function (newValue) {
-          return newValue;
+            return newValue;
         }
 
       },

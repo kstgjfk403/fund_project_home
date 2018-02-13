@@ -14,7 +14,8 @@
  import FundCapitalCallDetailPage from '../FundCapitalCall/CapitalCallDetailPage'
  import FundFinListPage from '@/page/fundFin/FundFinListPage'
  import FundFinAddPage from '@/page/fundFin/FundFinAddPage'
-
+ import FundDistribution from '@/page/fundDistribution/FundDistribution'
+ 
  import FundIrrStasticPage from '../FundCapitalCall/FundIrrStasticPage'
  import FundInvestmentOverview from '../FundCapitalCall/FundInvestmentOverview'
  import FundTrackRecord from '../FundCapitalCall/FundTrackRecord'
@@ -38,7 +39,6 @@
 
  import InvestDetail from "@/Reports/InvestDetail"
  export default new Router({
-    mode: 'history',
    routes: [
     {path: '/',redirect:"/listpage"},//portfolio
     {path: '*',redirect:"/listpage"},
@@ -60,7 +60,7 @@
     {path:'/fundinvestoverviewpage',name:'fundinvestoverviewpage',component: FundInvestmentOverview},//
     {path:'/fundtrackrecordpage',name:'fundtrackrecordpage',component: FundTrackRecord},//
     {path:'/fundgrosscfspage',name:'fundgrosscfspage',component: FundGrossCfs},
-
+    {path:'/funddistribution',name:'funddistribution',component:FundDistribution},
 
 
 

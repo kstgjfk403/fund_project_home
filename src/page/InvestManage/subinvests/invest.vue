@@ -39,17 +39,17 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Payment Date">
-                    <el-date-picker v-model="investForm.closedate" type="date" placeholder="选择日期" :disabled="isDisable">
+                    <el-date-picker v-model="investForm.closedate" type="date" placeholder="选择日期" :disabled="isDisable||isParticipatDisable">
                 </el-date-picker>
                 </el-form-item>
                 <el-form-item label="Fund Family" v-if="buttonShow=='add'">
-                    <el-select v-model="investForm.fundfamillyname" placeholder="请选择" @change="showTable" :disabled="isDisable||isShareSplitDisable" filterable>
+                    <el-select v-model="investForm.fundfamillyname" placeholder="请选择" @change="showTable" :disabled="isDisable||isShareSplitDisable||isParticipatDisable" filterable>
                         <el-option v-for="item in fundFamilyList" :key="item.baseId"
                         :label="item.baseName" :value="item.baseName"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Fund" v-else>
-                    <el-select v-model="investForm.fundname" placeholder="请选择" @change="showTable" :disabled="isDisable" filterable>
+                    <el-select v-model="investForm.fundname" placeholder="请选择" @change="showTable" :disabled="isDisable||isParticipatDisable" filterable>
                         <el-option v-for="item in fundList" :key="item.baseId"
                         :label="item.baseName" :value="item.baseName"></el-option>
                     </el-select>
@@ -107,11 +107,12 @@
                     <el-input v-model="investForm.vouncher"></el-input>
                 </el-form-item>
             </div>
-            <div v-else-if="investType=='Equity Investment'||investType=='Equity Investment&Loan To Equity'">
+            <div v-else-if="investType=='Equity Investment'||investType=='Equity Investment&Loan To Equity'||investType=='Bond'">
                 <el-form-item label="Share Type">
                     <el-select v-model="investForm.securitytypeid" placeholder="请选择">
                         <el-option label='Common' value='Common' key='2'></el-option>
                         <el-option label='Preferred' value='Preferred' key='3'></el-option>
+                        <el-option label='Bond' value='Bond' key='20'></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Round">
@@ -154,8 +155,14 @@
                         <el-option label='Preferred' value='Preferred' key="3"></el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item  label="shares">
+                    <el-select v-model="investForm.fromeiid">
+                        <el-option v-for="item in shareList" :key="item.baseId"
+                        :label="item.baseName" :value="item.baseId"></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="Converted Shares">
-                    <el-input v-model="investForm.value5"></el-input>
+                    <el-input v-model="investForm.convertamount"></el-input>
                 </el-form-item>
                 <el-form-item label="Round">
                     <el-input v-model="investForm.round"></el-input>
@@ -225,6 +232,11 @@
                     <el-input v-model="investForm.conversionratio"></el-input>
                 </el-form-item>
             </div>
+            <div v-else-if="investType=='None Participated In'">
+                <el-form-item label="Round">
+                    <el-input v-model="investForm.round"></el-input>
+                </el-form-item>
+            </div>
             <div v-show="isTableShow=='LoanToEquity1'">
                 <table class="table table-hover table-bordered table-condensed" style="table-layout:fixed;">
                     <thead>
@@ -275,8 +287,8 @@
 <script>
 import axioss from '@/api/axios';
 import * as method from "@/api/method";
-import subCapTable from "../../capTable/subCapTable"
-import mix from "@/api/mixin"
+import subCapTable from "../../capTable/subCapTable";
+import mix from "@/api/mixin";
 import bus from "@/api/eventbus";
 export default {
     name:"invest",
@@ -286,6 +298,7 @@ export default {
             subCapTableShow:true,
             isDisable:false,
             isShareSplitDisable:false,
+            isParticipatDisable:false,
             investVisible:false,
             isReqLoanToEquity:false,
             investType:'',
@@ -313,8 +326,10 @@ export default {
                 Preferred:3,
                 'Equity Interest':6,
                  Distribution:15,
-                'Capital Call':14
+                'Capital Call':14,
+                'Bond':20
             },
+            shareList:[],
             investTypeList:'',
             fundFamilyList:'',
             fundCurrencyList:[],
@@ -340,7 +355,9 @@ export default {
                 termsigndate:'',
                 fundname:'',
                 convertfromwarrantid:'',
-                sharesplitrate:''
+                sharesplitrate:'',
+                convertamount:'',
+                fromeiid:''
             },
             emptyInvestForm:{
                 investtype:'',closedate:'',fundfamillyname:'',
@@ -349,7 +366,8 @@ export default {
                 otherfees:'',currency:'USD',remarks:'',
                 taxlotdate:'',vouncher:'',otherproceeds:'',
                 additionalcost:'',proceeds:'',costrelization: 0,
-                termsigndate:'',convertfromwarrantid:'',sharesplitrate:''
+                termsigndate:'',convertfromwarrantid:'',sharesplitrate:'',
+                convertamount:'',fromeiid:''
             },
             capTabelList:[],
             captelDetailData:[],
@@ -402,6 +420,13 @@ export default {
                 this.loanToEquityData=this.formatTime(res.data.data);
             })
         },
+        reqReclassList(fundfamillyname){
+            var obj={portfolioid:this.portfolioid,fundfamillyname:fundfamillyname}
+            axioss.reqReclassList(obj).then(res=>{
+                console.log(res);
+                this.shareList=res.data.data;
+            })
+        },
         querySingalData(id){
             axioss.querySingalData(id).then(res=>{
                 var newdata=JSON.stringify(res.data.data);
@@ -434,6 +459,7 @@ export default {
                     }
                     if(type=="add"){
                         obj.portfolioid=this.portfolioid;
+                        console.log(obj)
                         axioss.addInvest(obj).then(res=>{
                             if(res.data.code=="SUCCESS"){
                                 this.$message({
@@ -521,13 +547,14 @@ export default {
         },
         whichShow(val){
             this.investType=val;
-            this.isShareSplitDisable=false;
             if(val=='Warrant Exercise'){
                 this.reqWrrantSelectList();
             }
-            if(val=='Shares Split'){
-                this.isShareSplitDisable=true;
+            if(val=='Bond'){
+                this.investForm.securitytypeid='Bond'
             }
+            this.isShareSplitDisable=val=='Shares Split'?true:false;
+            this.isParticipatDisable=val=='None Participated In'?true:false;
             if(val!='Equity Interest(Loan To Equity)'&&val!='Equity Investment(Loan To Equity)'&&val!='Loan To Equity'){
                 this.isTableShow=''
             }else{
@@ -541,14 +568,19 @@ export default {
         },
         showTable(val){
             if(val){
-                if(this.investType=='Equity Interest(Loan To Equity)'||this.investType=='Equity Investment(Loan To Equity)'||this.investType=='Loan To Equity')
+                if(this.investType=='Equity Interest(Loan To Equity)'||this.investType=='Equity Investment(Loan To Equity)'||this.investType=='Loan To Equity'){
                     this.isTableShow='LoanToEquity1'
                     if(this.isReqLoanToEquity){
                         this.reqLoanToEquity(val,this.portfolioid);
                     }
+                }
+                if(this.investType=='Share Reclassification'){
+                    this.reqReclassList(val);
+                }
             }else{
                 this.isTableShow=''
             }
+            
         },
         translateSubmit(data,obj){
             var val=data.securitytypeid;

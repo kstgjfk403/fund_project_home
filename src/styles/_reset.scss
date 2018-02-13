@@ -79,7 +79,7 @@ time, mark, audio, video {
     zoom:1;
 }
 .title{
-    padding:5px;
+    padding:1px 5px;
     box-sizing: border-box;
     font-size: 20px;
     color:white;
@@ -440,6 +440,41 @@ a{
         width:49%;
     }
 } 
+
+.funddistribution {
+    .el-dialog{
+        width:65%;
+    }
+}
+.funddistribution .el-input{
+    width:auto;
+}
+.funddistribution .select-container .el-form-item{
+    width:33%;
+    float:left;
+}
+.funddistribution .select-container{
+    overflow:hidden;
+    .el-select{
+        .el-input{
+            width:100%;
+        }
+        width:49%;
+    }
+    .el-input{
+        width:49%;
+    }
+    .el-textarea{
+        width:49%;
+    }
+    .el-form-item__label{
+        width:40%;
+    }
+    .el-table td, .el-table th{
+        padding:2px 0;
+    }
+}
+
 /*appendix2样式*/
 .mytable.el-table th.is-leaf{
     text-align: center;

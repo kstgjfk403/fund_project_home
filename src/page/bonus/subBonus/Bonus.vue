@@ -3,20 +3,18 @@
     <div class="loan-table-container">
         <h3 class="h3">Bonus Shares</h3>
         <el-table :data="BonusData" border>
-            <el-table-column fixed prop="eiid" label="EIID" width="70"></el-table-column>
-            <el-table-column prop="termsigndate" label="Term Sign Date" width="130"></el-table-column>
-            <el-table-column prop="fundname" label="Fund" width="130"></el-table-column>
+            <el-table-column fixed prop="dbid" label="DBID" width="70" v-if="false"></el-table-column>
             <el-table-column prop="investtype" label="Invest Type" width="150"></el-table-column>
+            <el-table-column prop="fundname" label="Fund" width="130"></el-table-column>
+            <el-table-column prop="fundfamillyname" label="Fund Family" width="130"></el-table-column>
             <el-table-column prop="securitytypeidstr" label="Share Type" width="150"></el-table-column>
-            <el-table-column prop="closedate" label="Payment Date" width="150"></el-table-column>
+            <el-table-column prop="closedate" label="Payment Date" width="150" :formatter="formatDate"></el-table-column>
             <el-table-column prop="round" label="Round" width="110"></el-table-column>
             <el-table-column prop="shareownedno" label="Shares Acquired" width="150" :formatter="numberFormat" ></el-table-column>
             <el-table-column prop="cost" label="Cost" width="100" :formatter="numberFormat"></el-table-column>
-            <el-table-column prop="otherfees" label="Fees" width="80" :formatter="numberFormat"></el-table-column>
-            <el-table-column prop="taxlotdate" label="Tax Lot Date" width="150"></el-table-column>
-            <el-table-column prop="vouncher" label="vouncher" width="150"></el-table-column>
-          <el-table-column prop="conversionratio" label="Rate" width="70"></el-table-column>
-          <el-table-column prop="convertamount" label="convert amount" width="150"></el-table-column>
+            <el-table-column prop="conversionratio" label="Rate" width="70"></el-table-column>
+            <el-table-column prop="convertamount" label="convert amount" width="150" :formatter="numberFormat"></el-table-column>
+            <el-table-column prop="taxlotdate" label="Capital Call Date" width="150" :formatter="formatDate"></el-table-column>
             <el-table-column label="操作" width="60" fixed='right' v-if="isDetail!='false'">
                 <template slot-scope="scope">
                     <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
@@ -32,7 +30,7 @@
     <div class="select-container">
         <el-form :model="BonusForm" :label-position='labelPosition' ref="BonusForm">
             <div class="select-fixed">
-                <el-form-item label="Bonus Shares">
+                <el-form-item label="Invest Type">
                     <el-select v-model="BonusForm.investtype" placeholder="请选择" disabled>
                         <el-option v-for="item in investTypeList" :key="item.baseId"
                         :label="item.baseName" :value="item.baseId"></el-option>
@@ -49,7 +47,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Fund">
-                    <el-select v-model="BonusForm.fundname" placeholder="请选择" :disabled="isDisable" filterable>
+                    <el-select v-model="BonusForm.fundid" placeholder="请选择" :disabled="isDisable" filterable>
                         <el-option v-for="item in fundList" :key="item.baseId"
                         :label="item.baseName" :value="item.baseId" @click.native='acqFundName'></el-option>
                     </el-select>
@@ -72,7 +70,7 @@
                         :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="Conversion Rate">
+                <el-form-item label="Conversion Rate(x:1):">
                     <el-input v-model="BonusForm.conversionratio"></el-input>
                 </el-form-item>
                 <el-form-item label="Comment:">
@@ -151,9 +149,11 @@ export default {
                 fundname:'',fundid:'',financialdate:''
             },
             shareTypeList:[
-                {baseId:'2',baseName:'Common'},
-                {baseId:'3',baseName:'Preferred'},
-                {baseId:'6',baseName:'Equity Interest'}
+                {baseId:2,baseName:'Common'},
+                {baseId:3,baseName:'Preferred'},
+                {baseId:6,baseName:'Equity Interest'},
+                {baseId:9,baseName:'ESOP'},
+                {baseId:10,baseName:'Dividends'},	
             ]
         }
     },
@@ -162,7 +162,7 @@ export default {
     },
     mounted(){
         this.invesDropList();
-        this.reqBonusList()
+        this.reqBonusList();
     },
     methods:{
         invesDropList(){
@@ -186,8 +186,8 @@ export default {
                 this.loanToEquityData=this.formatTime(res.data.data);
             })
         },
-        querySingalData(id){
-            axioss.querySingalData(id).then(res=>{
+        querySingalBonusData(id){
+            axioss.querySingalBonusData(id).then(res=>{
                 this.BonusForm=res.data.data;
                 this.$store.dispatch('saveCapTabel',res.data.data.portfoliocaptablevaluedetailList);
                 this.dataObj.termsigndate=res.data.data.termsigndate;
@@ -201,6 +201,7 @@ export default {
                 if (valid) {
                     var obj=this.BonusForm;
                     if(type=="add"){
+                        obj.portfolioid=this.portfolioid;
                         console.log(obj)
                         axioss.addBonus(obj).then(res=>{
                             console.log(res)
@@ -214,20 +215,13 @@ export default {
                         })
                     }else{
                         obj.portfoliocaptablevaluedetailList=this.capFormList;
-                        axioss.updateInvest(obj).then(res=>{
-                            if(res.data.code=="SUCCESS"){
-                                this.$message({
-                                    type:'success',
-                                    message: '更新成功'
-                                })
+                        axioss.updateBonus(obj).then(res=>{
+                            let status=res.data.code,succMes='更新成功',failMes='更新失败';
+                            let stateCode=this.showToast(status,succMes,failMes);
+                            if(stateCode){
                                 this.BonusVisible=false;
-                                this.reqBonusList(this.portfolioid);//请求invest数据
                                 Object.assign(this.BonusForm,this.emptyBonusForm);
-                            }else{
-                                this.$message({
-                                    type:'warning',
-                                    message: '更新失败'
-                                })
+                                this.reqBonusList();
                             }
                         })
                     }
@@ -249,7 +243,8 @@ export default {
             this.isDisable=true;
             this.BonusVisible=true;
             this.buttonShow='eidt';
-            this.querySingalData(data.eiid);
+            console.log(data.dbid);
+            this.querySingalBonusData(data.dbid);
         },
         acqFundName(e){
             this.BonusForm.fundname=e.target.textContent
@@ -277,60 +272,6 @@ export default {
                     }
                 });
             })
-        },
-        translateSubmit(data,obj){
-            var val=data.securitytypeid;
-            if(!val){
-                return data;
-            }else{
-                data.securitytypeid=obj[val]
-                return data
-            }
-        },
-        translateEdit(data,obj){
-            var val=data.securitytypeid;
-            if(!val){
-                return data;
-            }else{
-                for(var i in obj){
-                    if(obj[i]==val){
-                        data.securitytypeid=i
-                    }
-                }
-            }
-            return data;
-        },
-        translateShareType(data,obj){
-            if(data&&data!=null&&data!=[]){
-                for(var i=0;i<data.length;i++){
-                    data[i]=this.translateEdit(data[i],obj);
-                }
-            }
-            return data;
-        },
-        translateShareTypeSubmit(data,obj){
-            for(var i=0;i<data.length;i++){
-                data[i]=this.translateSubmit(data[i],obj)
-            }
-            return data;
-        },
-        formatTime(data){
-            if(data&&data!=null&&data!=[]){
-                for(var i=0;i<data.length;i++){
-                    data[i].closedate = method.toLocalString(data[i].closedate);
-                    data[i].termsigndate = method.toLocalString(data[i].termsigndate)
-                    data[i].taxlotdate = method.toLocalString(data[i].taxlotdate)
-                }
-            }
-            return data
-        },
-        toMs(data){
-            if(data.constructor==Array&&data!=[]){
-                for(var i=0;i<data.length;i++){
-                    data[i].closedate=method.toMs(data[i].closedate)
-                }
-            }
-            return data
         }
     },
     computed:{

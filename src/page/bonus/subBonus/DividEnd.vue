@@ -3,20 +3,17 @@
     <div class="loan-table-container">
         <h3 class="h3">Dividends</h3>
         <el-table :data="dividEndData" border>
-            <el-table-column fixed prop="eiid" label="EIID" width="70"></el-table-column>
-            <el-table-column prop="termsigndate" label="Term Sign Date" width="130"></el-table-column>
+            <el-table-column prop="dbid" label="dbid" width="150"></el-table-column>
+            <el-table-column prop="closedate" label="Payment Date" width="150" :formatter="formatDate"></el-table-column>
             <el-table-column prop="fundname" label="Fund" width="130"></el-table-column>
             <el-table-column prop="investtype" label="Invest Type" width="150"></el-table-column>
-            <el-table-column prop="securitytypeidstr" label="Share Type" width="150"></el-table-column>
-            <el-table-column prop="closedate" label="Payment Date" width="150"></el-table-column>
-            <el-table-column prop="round" label="Round" width="110"></el-table-column>
-            <el-table-column prop="shareownedno" label="Shares Acquired" width="150" :formatter="numberFormat" ></el-table-column>
-            <el-table-column prop="cost" label="Cost" width="100" :formatter="numberFormat"></el-table-column>
-            <el-table-column prop="otherfees" label="Fees" width="80" :formatter="numberFormat"></el-table-column>
-            <el-table-column prop="taxlotdate" label="Tax Lot Date" width="150"></el-table-column>
-            <el-table-column prop="vouncher" label="vouncher" width="150"></el-table-column>
-            <el-table-column prop="conversionratio" label="Rate" width="70"></el-table-column>
-            <el-table-column prop="convertamount" label="convert amount" width="150"></el-table-column>
+            <el-table-column prop="securitytypestr" label="Share Type" width="150"></el-table-column>
+            <el-table-column prop="shareownedno" label="Shares Acquired" width="150" :formatter="numberFormat"></el-table-column>
+            <el-table-column prop="costrelization" label="Realised Cost" width="70" :formatter="numberFormat"></el-table-column>
+            <el-table-column prop="financialdate" label="Capital Call Date" width="150" :formatter="formatDate"></el-table-column>
+            <el-table-column prop="remarks" label="Comment:" width="150"></el-table-column>
+            <el-table-column prop="proceeds" label="Gross Proceed:" width="150"></el-table-column>
+            <el-table-column prop="currency" label="Currency" width="150"></el-table-column>
             <el-table-column label="操作" width="60" fixed='right' v-if="isDetail!='false'">
                 <template slot-scope="scope">
                     <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
@@ -32,7 +29,7 @@
     <div class="select-container">
         <el-form :model="dividEndForm" :label-position='labelPosition' ref="dividEndForm">
             <div class="select-fixed">
-                <el-form-item label="Dividends">
+                <el-form-item label="Invest Type">
                     <el-select v-model="dividEndForm.investtype" placeholder="请选择" disabled>
                         <el-option v-for="item in investTypeList" :key="item.baseId"
                         :label="item.baseName" :value="item.baseId"></el-option>
@@ -158,7 +155,9 @@ export default {
             shareTypeList:[
                 {baseId:'2',baseName:'Common'},
                 {baseId:'3',baseName:'Preferred'},
-                {baseId:'6',baseName:'Equity Interest'}
+                {baseId:'6',baseName:'Equity Interest'},
+                {baseId:'9',baseName:'ESOP'},
+                {baseId:'10',baseName:'Dividends'},
             ]
         }
     },
@@ -167,13 +166,13 @@ export default {
     },
     mounted(){
         this.invesDropList();
-        this.reqDividEndList()
+        this.reqDividEndList();
     },
     methods:{
         invesDropList(){
             var obj={dictArray:"FUNDFAMILY,DDL_SecurityType,CURRENCY,FUND"};
             axioss.invesDropList(obj).then(res=>{
-                console.log(res)
+                //console.log(res)
                 this.fundFamilyList=res.data.data[0].baseInfoList;
                 this.fundCurrencyList=res.data.data[2].baseInfoList;
                 this.fundList=res.data.data[3].baseInfoList;
@@ -182,26 +181,14 @@ export default {
         reqDividEndList(id){
             var portfolioid=id||this.portfolioid;
             axioss.reqDividEndList(portfolioid).then(res=>{
+                console.log(res)
                 this.dividEndData=res.data.data;
             })
         },
-        querySingalData(id){
-            axioss.querySingalData(id).then(res=>{
-                var newdata=JSON.stringify(res.data.data);
-                var data=JSON.parse(newdata);
-                this.dataObj.portfolioid=data.portfolioid;
-                this.dataObj.termsigndate=data.termsigndate;
-                this.dataObj.closedate=data.closedate;
-                this.dataObj.round=data.round;
-                this.dataObj.securitytypeid=data.securitytypeid;
-                this.dataObj.eiid=data.eiid;
-                this.dataObj.maxclosedate=data.maxclosedate;
-                this.dataObj.investtype=data.investtype;
-                this.maxclosedate=data.maxclosedate;
-                this.dividEndForm=this.translateEdit(data,this.translateObj);
-                this.loanToEquityData=this.formatTime(res.data.data.portfolioloantoequityList);
-                this.loanToEquityData=this.translateShareType(this.loanToEquityData,this.translateObj);
-                this.$store.dispatch('saveCapTabel',data.portfoliocaptablevaluedetailList);
+        querySingalBonusData(id){
+            axioss.querySingalBonusData(id).then(res=>{
+                console.log(res)
+                this.dividEndForm=res.data.data;
             })
         },
         submitForm(formName,type){
@@ -209,6 +196,7 @@ export default {
                 if (valid) {
                     var obj=this.dividEndForm;
                     if(type=="add"){
+                        obj.portfolioid=this.portfolioid;
                         console.log(obj)
                         axioss.addBonus(obj).then(res=>{
                             console.log(res)
@@ -221,21 +209,14 @@ export default {
                             }
                         })
                     }else{
-                        axioss.updateInvest(obj).then(res=>{
-                            if(res.data.code=="SUCCESS"){
-                                this.$message({
-                                    type:'success',
-                                    message: '更新成功'
-                                })
+                        axioss.updateBonus(obj).then(res=>{
+                            let status=res.data.code,succMes='更新成功',failMes='更新失败';
+                            let stateCode=this.showToast(status,succMes,failMes);
+                            if(stateCode){
                                 this.dividEndVisible=false;
-                                this.reqinvestList(this.portfolioid);//请求invest数据
                                 Object.assign(this.dividEndForm,this.emptydividEndForm);
-                            }else{
-                                this.$message({
-                                    type:'warning',
-                                    message: '更新失败'
-                                })
-                            }
+                                this.reqDividEndList();
+                            }    
                         })
                     }
                 } else {
@@ -259,7 +240,7 @@ export default {
             this.dividEndVisible=true;
             this.buttonShow='eidt';
             this.dividEndForm.investtype=data.investtype;
-            this.querySingalData(data.eiid);
+            this.querySingalBonusData(data.dbid);
         },
         acqFundName(e){
             this.dividEndForm.fundname=e.target.textContent
@@ -324,5 +305,5 @@ export default {
     .select-container{
         width:100%;
     }
-    
+
 </style>

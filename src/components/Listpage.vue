@@ -7,7 +7,6 @@
                 <el-button type="primary" @click="linkto('addproject')" size="mini">New</el-button>
             </div>
             <div class="position-container">
-            <!-- <div style="position:relative;margin-top:5px;overflow-x:auto;width:82%;margin:0 auto;"> -->
                 <div class="table-responsive">
                 <table class="table table-hover table-bordered table-condensed" style="table-layout:fixed;">
                     <thead>

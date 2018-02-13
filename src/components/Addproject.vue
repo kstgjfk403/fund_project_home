@@ -256,6 +256,7 @@
     <MainBonus></MainBonus>
     <Business></Business>
     <Navlist v-on:toscorll="scrolltoview" :isactive='isActive'></Navlist>
+
 </div>
 </template>
 <script>
@@ -289,7 +290,7 @@ export default {
             Financial:false,
             Director:false,
             Bonus:false,
-            Business:false
+            Business:false,
         },
         formData: {
           abbname: '',
@@ -427,7 +428,7 @@ export default {
         var way=this.$route.query.path;
         this.classOperation(way,portfolioid);
         this.$store.dispatch('storedata',portfolioid);
-        
+
     },
     methods:{
        requserlist(){
@@ -595,5 +596,5 @@ export default {
     .add-project .el-form-item label,.add-project .el-form-item .el-form-item__content{
         width:50%;
     }
-    
+
 </style>

@@ -1,7 +1,6 @@
 <template>
 <div class="idgaccelchinareport">
     <Header/>
-    <div class="title"> </div>
     <div class="search">
         <el-form :inline="true" :model="searchForm" ref="searchForm">
             <el-form-item label="Fund">

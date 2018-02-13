@@ -16,7 +16,7 @@ import './styles/iconfont.css';
 Vue.config.productionTip = false;
 Vue.use(ElementUI)
 //axios.defaults.baseURL='http://192.168.106.79:8080';
-axios.defaults.baseURL='http://localhost:8080';
+//axios.defaults.baseURL='http://localhost:8080';
 // axios.defaults.baseURL = 'http://192.168.106.135:8080';
 /* eslint-disable no-new */
 new Vue({
