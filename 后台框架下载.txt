@@ -18,7 +18,9 @@ Unicode 字符编码百科                             https://unicode-table.com/cn/#c
 
 h5 FormData在表单异步提交中的应用。              https://www.cnblogs.com/lyr1213/p/6238026.html     
 
-vs code 使用技巧                                 https://zhuanlan.zhihu.com/p/22880087              
+vs code 使用技巧                                 https://zhuanlan.zhihu.com/p/22880087   
+
+react 路由传参的几种方式                         https://www.cnblogs.com/waterFowl/p/8012096.html           
 
 mvn --projects backend spring-boot:run 
 
