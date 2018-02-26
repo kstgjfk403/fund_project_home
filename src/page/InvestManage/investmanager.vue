@@ -16,7 +16,6 @@ import bus from "@/api/eventbus";
 import mix from "@/api/mixin"
 export default {
     name:"investmanger",
-    props:['id'],
     mixins:[mix],
     data(){  
         return {

@@ -109,7 +109,7 @@ export default {
     mixins:[mix],
     data(){
         return {
-            dataObj:'',
+            dataObj:{},
             subCapTableShow:true,
             famillyShow:'',
             fundShow:'',
@@ -170,8 +170,15 @@ export default {
         },
         querySingalWarrant(id){
             axioss.querySingalWarrant(id).then(res=>{
-                this.$store.dispatch('saveCapTabel',res.data.data.portfoliocaptablevaluedetailList);
                 this.warrantForm=res.data.data;
+                this.$store.dispatch('saveCapTabel',this.warrantForm.portfoliocaptablevaluedetailList);
+                this.dataObj.termsigndate=res.data.data.termsigndate;
+                this.dataObj.portfolioid=this.portfolioid;
+                this.dataObj.closedate=this.warrantForm.closedate;
+                this.dataObj.round=this.warrantForm.round;
+                this.dataObj.bizid=this.warrantForm.eiid;
+                this.dataObj.investtype=res.data.data.investtype;
+
             })
         },
         submitForm(formName,type){
@@ -190,6 +197,7 @@ export default {
                             }
                         })
                     }else{
+                        obj.portfoliocaptablevaluedetailList=this.capFormList;
                         axioss.updateWarrant(obj).then(res=>{
                             let status=res.data.code,succMes='更新成功',failMes='更新失败';
                             let stateCode=this.showToast(status,succMes,failMes);

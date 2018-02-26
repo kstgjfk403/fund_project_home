@@ -69,7 +69,7 @@
                   <el-date-picker v-model="loanForm.feedate" type="date" placeholder="选择日期">
                   </el-date-picker>
                 </el-form-item>
-                <el-form-item label="Other Fees">
+                <el-form-item label="Other Fees" prop="noteotherfee">
                     <el-input v-model="loanForm.noteotherfee"></el-input>
                 </el-form-item>
                 <el-form-item label="Interest Rate(%)">
@@ -106,8 +106,10 @@
 <script>
 import axioss from '@/api/axios';
 import * as method from "@/api/method";
+import mix from "@/api/mixin";
 export default {
     name:"Loan",
+    mixins:[mix],
     data(){
         return {
             loanVisible:false,
@@ -155,16 +157,19 @@ export default {
             },
             rules: {
                 notenum: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },
+                    { required: true, message: 'The input box is required', trigger: 'blur' },
                 ],
                 notetype: [
-                    { required: true, message: 'pls choose', trigger: 'change' }
+                    { required: true, message: 'The input box is required', trigger: 'change' }
                 ],
                 fundfamillyname: [
-                    { required: true, message: 'pls choose', trigger: 'change' }
+                    { required: true, message: 'The input box is required', trigger: 'change' }
                 ],
                 closedate: [
-                    {required: true, message: 'pls choose time', trigger: 'change' }
+                    {required: true, message: 'The input box is required', trigger: 'change' }
+                ],
+                noteotherfee: [
+                    {required: true, message: 'The input box is required', trigger: 'change' }
                 ]
             },
             options:[
@@ -262,22 +267,24 @@ export default {
         },
         deletLoan(index,data){
             var id=data.noteid;
-            console.log(id)
-            axioss.deletLoan(id).then(res=>{
-                console.log(res)
-                if(res.data.code=="SUCCESS"){
-                    this.$message({
-                        type:'success',
-                        message: '删除成功'
-                    })
-                    this.reqloanlist(this.portfolioid);
-                }else{
-                    this.$message({
-                        type:'warning',
-                        message: '删除失败'
-                    })
-                }
+            this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning"
+            }).then(()=>{
+                axioss.deletLoan(id).then(res=>{
+                    let status=res.data.code,succMes='删除成功',failMes='删除失败';
+                    let stateCode=this.showToast(status,succMes,failMes);
+                    if(stateCode){
+                        this.reqloanlist(this.portfolioid);
+                    }
+                })
             })
+            
+        },
+        
+        formatBoolean(row,cloumn,cellvalue){
+            return cellvalue+''
         },
         handleEdit(index,data){
             var id=data.noteid;

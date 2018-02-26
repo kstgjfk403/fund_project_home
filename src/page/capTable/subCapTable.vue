@@ -103,6 +103,7 @@ export default {
         }
     },
     updated(){
+        console.log('subCapTable Updated');
         this.$nextTick(function(){
             method.mc('capTable',0,0,0);
         })

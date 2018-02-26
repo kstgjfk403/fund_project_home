@@ -12,7 +12,7 @@
                 <el-button type="primary" size="small" icon="el-icon-printer" style="float:right;margin-right:10px;background:#31b0d5;color:white;"></el-button>
             </li>
             <li><span>Project Manager：</span><span>{{detaildata.projectmanagerstr}}</span></li>
-            <li><span>Compony Lagel Name：</span><span>{{detaildata.fullname}}</span></li>
+            <li><span>Company Legal Name：</span><span>{{detaildata.fullname}}</span></li>
         </ul>
         <div class="primary-img">
           <img src="../../static/images/head-img.png">
@@ -32,11 +32,11 @@
             <div class="base-info-content" style="margin-top:15px;">
                 <ul>
                 <li><span>Project Name：</span><span>{{detaildata.abbname}}</span></li>
-                <li><span>Project Name(chinese)：</span><span>{{detaildata.abbnamechi}}</span></li>
+                <li><span>Project Name(Chinese)：</span><span>{{detaildata.abbnamechi}}</span></li>
                 </ul>
                 <ul>
-                <li><span>Compony Lagel Name：</span><span>{{detaildata.fullname}}</span></li>
-                <li><span>Compony Lagel Name(chinese)：</span><span>{{detaildata.fullnamechi}}</span></li>
+                <li><span>Company Legal Name：</span><span>{{detaildata.fullname}}</span></li>
+                <li><span>Company Legal Name(Chinese)：</span><span>{{detaildata.fullnamechi}}</span></li>
                 </ul>
                 <ul>
                 <li><span>Report Name：</span><span>{{detaildata.reportname}}</span></li>
@@ -55,8 +55,8 @@
                 <li><span>Project Buddy(2nd manager)：</span><span>{{detaildata.projectbuddystr}}</span></li>
                 </ul>
                 <ul>
-                <li><span>Inistial Stage：</span><span>{{detaildata.stageidstr}}</span></li>
-                <li><span>Inistial Series(participated)：</span><span>暂无</span></li>
+                <li><span>Initial Stage：</span><span>{{detaildata.stageidstr}}</span></li>
+                <li><span>Initial Series(participated)：</span><span>暂无</span></li>
                 </ul>
                 <ul>
                 <li><span>Sub-Sector：</span><span>{{detaildata.subsectoridstr}}</span></li>

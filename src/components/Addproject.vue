@@ -115,9 +115,7 @@
                         v-for="item in subsectorlist"></el-option>
                     </el-select>
                 </el-form-item>
-                <!-- <el-form-item label="Total Board Representative No.">
-                    <el-input v-model="formData.totalboardseatno"></el-input>
-                </el-form-item> -->
+               
                 <el-form-item label="Fund of Fund" prop="fundoffund">
                     <el-checkbox-group v-model="formData.fundoffund">
                         <el-checkbox label="" value="true" name="type"></el-checkbox>
@@ -159,14 +157,7 @@
                         v-for="item in dictarraylist.IDG_Staff"></el-option>
                     </el-select>
                 </el-form-item>
-                <!-- <el-form-item label="IDG Board Representative">
-                    <el-select v-model="formData.idgboardrepresentative" multiple filterable>
-                        <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.IDG_Staff"></el-option>
-                    </el-select>
-                </el-form-item> -->
+                
             </div>
             <div class="baseinfo-right">
                 <el-form-item label="IDG Inhouse Counsel">
@@ -177,14 +168,7 @@
                         v-for="item in dictarraylist.IDG_Staff"></el-option>
                     </el-select>
                 </el-form-item>
-                <!-- <el-form-item label="Observer" prop="observer">
-                    <el-select v-model="formData.observer" multiple filterable>
-                        <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.IDG_Staff"></el-option>
-                    </el-select>
-                </el-form-item> -->
+                
                 <el-form-item label="Comment(Memo)">
                     <el-input type="textarea" v-model="formData.memo"></el-input>
                 </el-form-item>
@@ -324,7 +308,6 @@ export default {
           formid:'',
           foundeddate:'',
           fundoffund:'',
-          //idgfirstinvestment:[],//有问题，没有对应项;
           stageid:'',
           portfoliostatus:'',
           portfoliostatusdate:'',
@@ -335,10 +318,10 @@ export default {
           memo:'',
           projectbuddy:'',
           firstinvestid:'',
-          logo: "../docs/logos/qiutan(qiuba).jpg",//从这里开始新增字段，前端界面没有对应的显示；
+          logo: "../docs/logos/qiutan(qiuba).jpg",
           onelinedeschi: null,
           addresschi: "广州市天河区科韵路24-26号测绘大厦809室",
-          privateorpublic: "Realized",//不确定是否增加，后期做了修改；
+          privateorpublic: "Realized",
           adrratio: "",
           lockupperiod: "",
           lockupexpireddate: -2209017600000,
@@ -443,6 +426,7 @@ export default {
        },
        linktodetail(){
            var id=this.formData.portfolioid;
+           this.$store.dispatch('isDetail',{isDetail:false})
            this.$router.push({ path: "detail", query: { portfolioid: id } })
        },
        linktolist(){
