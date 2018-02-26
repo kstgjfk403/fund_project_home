@@ -32,6 +32,7 @@ export default {
        });
     },
     methods:{
+        
     },
     components:{
         Loan,

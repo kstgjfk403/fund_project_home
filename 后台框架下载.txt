@@ -13,6 +13,9 @@ Unicode 字符编码百科   https://unicode-table.com/cn/#control-character
 
 百度云服务器使用说明：https://www.cnblogs.com/ZhongChunPei/p/8127690.html
 
+ 
+https://www.cnblogs.com/lyr1213/p/6238026.html     h5 FormData在表单异步提交中的应用。
+
 
 mvn --projects backend spring-boot:run 
 

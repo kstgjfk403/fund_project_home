@@ -115,9 +115,9 @@
                         v-for="item in subsectorlist"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="Total Board Representative No.">
+                <!-- <el-form-item label="Total Board Representative No.">
                     <el-input v-model="formData.totalboardseatno"></el-input>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="Fund of Fund" prop="fundoffund">
                     <el-checkbox-group v-model="formData.fundoffund">
                         <el-checkbox label="" value="true" name="type"></el-checkbox>
@@ -159,14 +159,14 @@
                         v-for="item in dictarraylist.IDG_Staff"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="IDG Board Representative">
+                <!-- <el-form-item label="IDG Board Representative">
                     <el-select v-model="formData.idgboardrepresentative" multiple filterable>
                         <el-option :key="item.baseId"
                         :label="item.baseName"
                         :value="item.baseId"
                         v-for="item in dictarraylist.IDG_Staff"></el-option>
                     </el-select>
-                </el-form-item>
+                </el-form-item> -->
             </div>
             <div class="baseinfo-right">
                 <el-form-item label="IDG Inhouse Counsel">
@@ -177,14 +177,14 @@
                         v-for="item in dictarraylist.IDG_Staff"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="Observer" prop="observer">
+                <!-- <el-form-item label="Observer" prop="observer">
                     <el-select v-model="formData.observer" multiple filterable>
                         <el-option :key="item.baseId"
                         :label="item.baseName"
                         :value="item.baseId"
                         v-for="item in dictarraylist.IDG_Staff"></el-option>
                     </el-select>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="Comment(Memo)">
                     <el-input type="textarea" v-model="formData.memo"></el-input>
                 </el-form-item>
@@ -231,7 +231,6 @@
                 <el-form-item label="Audit Conf Address" prop="auditconfaddress">
                     <el-input v-model="formData.auditconfaddress"></el-input>
                 </el-form-item>
-
             </div>
             <el-form-item label="One line Description" class="oneline">
                 <el-input type="textarea" v-model="formData.onelinedesc"></el-input>
@@ -252,9 +251,11 @@
     <Ivestment></Ivestment>
     <CapTable></CapTable>
     <FinancialInfo></FinancialInfo>
-    <Director></Director>
-    <Bonus></Bonus>
+    <Director :totalboardseatno='formData.totalboardseatno'></Director>
+    <MainBonus></MainBonus>
+    <Business></Business>
     <Navlist v-on:toscorll="scrolltoview" :isactive='isActive'></Navlist>
+
 </div>
 </template>
 <script>
@@ -263,7 +264,8 @@ import Header from "./common/Header";
 import CapTable from "@/page/capTable/capTable";
 import FinancialInfo from "@/page/financial/FinancialInformation";
 import Director from "@/page/directorandsuper/Director";
-import Bonus from "@/page/bonus/Bonus";
+import MainBonus from "@/page/bonus/MainBonus";
+import Business from "@/page/business/Business";
 import * as method from "../api/method";
 import axioss from '../api/axios';
 import Navlist from '@/components/common/Nav';
@@ -272,6 +274,7 @@ export default {
     name:"AddProject",
     data:function(){
       return {
+        totalboardseatno:'',
         labelposition:"right",
         dictarraylist:'',
         subsectorlist:[],
@@ -285,7 +288,8 @@ export default {
             CapTable:false,
             Financial:false,
             Director:false,
-            Bonus:false
+            Bonus:false,
+            Business:false,
         },
         formData: {
           abbname: '',
@@ -346,7 +350,6 @@ export default {
           iceforceid: null,
           idgonboardflag: true,
         },
-
         rules: {
           abbname: [
             { message: 'required', trigger: 'blur' }
@@ -418,18 +421,13 @@ export default {
         }
       }
     },
-    created(){
-        var way=this.$route.query.path;
-        var portfolioid=this.$route.query.portfolioid;
-        this.classOperation(way,portfolioid);
-    },
-    updated(){
-         var portfolioid=this.$route.query.portfolioid;
-         this.$store.dispatch('storedata',portfolioid);
-    },
     mounted:function(){
         this.requserlist();
         var portfolioid=this.$route.query.portfolioid;
+        var way=this.$route.query.path;
+        this.classOperation(way,portfolioid);
+        this.$store.dispatch('storedata',portfolioid);
+
     },
     methods:{
        requserlist(){
@@ -441,7 +439,6 @@ export default {
                 this.subsectorlist=this.dictarraylist.DDL_SubSector;
                 this.extraarr=this.dictarraylist.DDL_SubSector.slice();
               }).catch(res=>{
-                console.log(res);
               })
        },
        linktodetail(){
@@ -469,7 +466,6 @@ export default {
                       })
                   }
               }).catch(res => {
-                  console.log(res)
               })
           } else {
             this.$message({
@@ -483,12 +479,9 @@ export default {
       submitForm2(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-              //console.log(this.formData)
               axioss.modifyinfo(this.formData).then(res=>{
-                  //console.log(res)
                   this.linktodetail();
               }).catch(res => {
-                  //console.log(res)
               })
           } else {
             this.$message({
@@ -515,10 +508,8 @@ export default {
             this.opreationType=way;
             axioss.reqdetails(portfolioid).then((res)=>{
                 var detailobj=res.data.data;
-                //console.log(detailobj);
                 var newobjdetail=method.deleteattr(detailobj);
                 var obj=method.nulltostr(newobjdetail);
-                //console.log(obj);
                 obj.projectmanager=obj.projectmanager==''?[]:obj.projectmanager.split(",");
                 obj.projectbuddy=obj.projectbuddy==''?[]:obj.projectbuddy.split(",");
                 obj.idgboardrepresentative=obj.idgboardrepresentative==''?[]:obj.idgboardrepresentative.split(",");
@@ -528,8 +519,8 @@ export default {
                 delete obj.heldbyspvflag;
                 delete obj.heldbyspv;
                 this.formData=obj;
+                this.$store.dispatch('storetotalboardseatno',obj.totalboardseatno)
             }).catch((res)=>{
-                console.log(res);
             })
           }
       },
@@ -539,7 +530,7 @@ export default {
                 this.heightObj=this.$refs["BasicInfo"].offsetHeight
             }
             if(!obj){
-                this.$refs["BasicInfo"].style.height=50+"px";
+                this.$refs["BasicInfo"].style.height=43+"px";
                 this.$refs["BasicInfo"].style.overflow='hidden';
             }
             if(obj){
@@ -558,7 +549,8 @@ export default {
         CapTable,
         FinancialInfo,
         Director,
-        Bonus
+        MainBonus,
+        Business
     }
 }
 </script>
@@ -603,12 +595,5 @@ export default {
     .add-project .el-form-item label,.add-project .el-form-item .el-form-item__content{
         width:50%;
     }
-    .title{
-        padding:10px;
-        box-sizing: border-box;
-        font-size: 20px;
-        color:white;
-        font-weight:bold;
-        background:#00a1e9;
-    }
+
 </style>

@@ -15,7 +15,7 @@
  import FundFinListPage from '@/page/fundFin/FundFinListPage'
  import FundFinAddPage from '@/page/fundFin/FundFinAddPage'
  import FundDistribution from '@/page/fundDistribution/FundDistribution'
- 
+
  import FundIrrStasticPage from '../FundCapitalCall/FundIrrStasticPage'
  import FundInvestmentOverview from '../FundCapitalCall/FundInvestmentOverview'
  import FundTrackRecord from '../FundCapitalCall/FundTrackRecord'
@@ -30,6 +30,7 @@
 
  import Valuation from "@/components/Valuation"
  import ValuationReportOpm from "@/components/subValuation/ValuationReportOpm"
+ import ValuationReportEV from "@/components/subValuation/ValuationReportEV"
  import ValuationReport from "@/components/subValuation/ValuationReport"
  import RealizedGainsLosses from "@/Reports/RealizedGainsLosses"
 
@@ -72,6 +73,7 @@
     {path:'/financialinfo',name:'financialinfo',component:FinancialInfo},
     {path:'/valuation',name:'valuation',component:Valuation},//valuation
     {path:'/valuationreportopm',name:'valuationreportopm',component:ValuationReportOpm},
+     {path:'/valuationreportev',name:'valuationreportev',component:ValuationReportEV},
     {path:'/valuationreport',name:'valuationreport',component:ValuationReport},
 
     {path:'/RealizedGainsLosses',name:'captablereport',component:RealizedGainsLosses},

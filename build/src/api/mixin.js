@@ -1,3 +1,4 @@
+import {toThousands,toLocalString} from './method'
 export default {
     data(){
         return {
@@ -5,16 +6,16 @@ export default {
         }
     },
     methods:{
-        showToast(status,type,succMes,failMes){
+        showToast(status,succMes,failMes){
             if(status.toLocaleLowerCase()=='success'){
                 this.$message({
-                    type: type,
+                    type: 'success',
                     message: succMes
                 });
                 return true;
             } else {
                 this.$message({
-                    type: type,
+                    type: 'warning',
                     message: failMes
                 });
                 return false;
@@ -26,7 +27,7 @@ export default {
                 this.heightObj=this.$refs[message].offsetHeight
             }
             if(!obj){
-                this.$refs[message].style.height=50+"px";
+                this.$refs[message].style.height=43+"px";
                 this.$refs[message].style.overflow='hidden';
             }
             if(obj){
@@ -38,6 +39,27 @@ export default {
                 },0)
                 obj.style.height=this.heightObj+"px"
             }
+        },
+        numberFormat: function (row, column) {
+            var num = row[column.property];
+            if (num == undefined) {
+            return "";
+            }
+            return toThousands(num);
+        },
+        formatDate(r,c,time){
+            if (time == null || time == ''){
+                return '';
+            }
+            return toLocalString(time);
         }
-    }
+    },
+    filters:{
+        transformNum(num){
+            if(typeof num != 'number'){
+                return ''
+            }
+            return toThousands(num);
+        }
+    },
 }

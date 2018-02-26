@@ -20,11 +20,9 @@
               </th>
               <th scope="col">Fund Abbr. Name
                 <el-input class="search" v-model="capitalCallData.fundname" @input.native="searchData"></el-input>
-                <!-- <input @input="searchData"> -->
               </th>
               <th scope="col">Fund Full Name
                 <el-input class="search" placeholder="请输入Fund Full Name" v-model="capitalCallData.fundfullnameeng" @input.native="searchData"></el-input>
-                <!-- <input @input="searchData"> -->
               </th>
               <th scope="col">基金全名
                 <el-input class="search" placeholder="请输入基金全名" v-model="capitalCallData.fundfullnamechi" @input.native="searchData"></el-input>
@@ -35,21 +33,6 @@
               <th scope="col">Called Pecentage</th>
               <th scope="col">Called Purpose</th>
               <th scope="col">Due Date</th>
-
-            <!--  <th scope="col" style="width:185px;">LP+GP Commitment
-                &lt;!&ndash; <el-input class="search" placeholder="请输入Programe Name" v-model="capitalCallData.totalcommitmentnum" @input.native="searchData"></el-input>&ndash;&gt;
-              </th>
-
-              <th scope="col" style="width:240px;">Management Fee Structure
-                <el-input class="search" placeholder="请输入Management Fee Structure" v-model="capitalCallData.managfeedesc" @input.native="searchData"></el-input>
-              </th>
-              <th scope="col" style="width:240px;">Capital Allocations Desc
-                <el-input class="search" placeholder="请输入Management Fee Structure" v-model="capitalCallData.capitalallocationsdesc" @input.native="searchData"></el-input>
-              </th>
-
-              <th scope="col">GP Name
-                <el-input class="search" placeholder="请输入Management Fee Structure" v-model="capitalCallData.gpname" @input.native="searchData"></el-input>
-              </th>-->
               <th scope="col">操作</th>
             </tr>
             </thead>
@@ -60,17 +43,12 @@
               <td>{{item.fundName}}</td>
               <td>{{item.fundFullNameEng}}</td>
               <td>{{item.fundFullNameChi}}</td>
-
               <td>{{item.callID}}</td>
               <td>{{item.callOrder}}</td>
               <td>{{item.calledDate}}</td>
               <td>{{item.calledPecentage}}</td>
               <td>{{item.calledPurpose}}</td>
               <td>{{item.dueDate}}</td>
-              <!--<td>{{item.totalcommitmentnum}}</td>
-              <td>{{item.managfeedesc}}</td>
-              <td>{{item.capitalallocationsdesc}}</td>
-              <td>{{item.gpname}}</td>-->
               <td>
                 <i class="el-icon-info" @click="showdetail(item.callID)"></i>
                 <i class="el-icon-edit" @click="linkto('editor',item.callID)"></i>
@@ -83,9 +61,7 @@
             <el-pagination background layout="prev, pager, next,jumper,total" :total="allcount" :current-page.sync="pageCurrent" @current-change="handleCurrentChange" style="position:absolute;left:50%;bottom:25px;transform: translate(-50%);"></el-pagination>
           </div>
         </div>
-
         <div class="table-responsive">
-
           <el-table :data="allDetailData" border style="width: 100%" maxHeight="850">
             <el-table-column  prop="LPLegalFullName" label="LP(GP) LegalFullName" width="180" >
             </el-table-column>
@@ -120,8 +96,42 @@
             <el-table-column  prop="totalCommentNum" label="Total Comment Num" width="166">
             </el-table-column>
           </el-table>
-
-
+        </div>
+        <div class="table-responsive">
+          <el-table :data="allDetailData" border style="width: 100%" maxHeight="850">
+            <el-table-column  prop="LPLegalFullName" label="LP(GP) LegalFullName" width="180" >
+            </el-table-column>
+            <el-table-column  prop="callDetailId" label="Call Detail ID" width="400"  v-if="showColumn">
+            </el-table-column>
+            <el-table-column  prop="calledNum" label="Called Num" width="100">
+            </el-table-column>
+            <el-table-column  prop="receiveNum" label="Receive Num" width="120">
+            </el-table-column>
+            <el-table-column  prop="emailSendStr" label="Email Send" width="100">
+            </el-table-column>
+            <el-table-column  prop="emailSendDateTimeStr" label="Email Send Date Time" width="180">
+            </el-table-column>
+            <el-table-column  prop="receiveDate" label="Receive Date" width="120">
+            </el-table-column>
+            <el-table-column  prop="erisaStr" label="ERISA" width="60">
+            </el-table-column>
+            <el-table-column  prop="emailTo" label="Email To" width="150">
+            </el-table-column>
+            <el-table-column  prop="emailBC" label="Email BC" width="120">
+            </el-table-column>
+            <el-table-column  prop="emailCC" label="Email CC" width="220" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column  prop="subject" label="Subject" width="150">
+            </el-table-column>
+            <el-table-column  prop="emailContent" label="Email Content" width="150" v-if="showColumn">
+            </el-table-column>
+            <el-table-column  prop="attachment" label="ttachment" width="150" v-if="showColumn">
+            </el-table-column>
+            <el-table-column  prop="emailReviewedStr" label="Email Reviewed" width="120">
+            </el-table-column>
+            <el-table-column  prop="totalCommentNum" label="Total Comment Num" width="166">
+            </el-table-column>
+          </el-table>
         </div>
       </div>
     </div>
@@ -149,12 +159,9 @@
           fundfullnamechi:'',
           calleddatestart:'',
           calleddateend:'',
-
         },
         capitalCallLpSearchData:{
           callid:'',
-
-
         },
 
         allDetailData:[],
@@ -215,7 +222,7 @@
         axioss.reqmemberlistcapitalcalllp(this.capitalCallLpSearchData)
           .then(res => {
             var trans=res.data.data;
-            console.log("临");
+
             console.log(res.data);
             this.allDetailData = trans;
             console.log(trans);
@@ -244,17 +251,6 @@
           .catch((err) => {
           });
       },
-      // fetchperStatus() {
-      //     var that=this;
-      //     axioss.reqdroplist({dictArray:"IDG_Staff,DDL_PortfolioStatus"})
-      //     .then((res)=>{
-      //         this.staffs=res.data.data[0].baseInfoList;
-      //         this.portfoliostatus=res.data.data[1].baseInfoList;
-      //     })
-      //     .catch(function(err) {
-      //         console.log(err);
-      //     });
-      // },
       ifdeletecapitalcall(callid) {
         this.$confirm("Confirm to delete this Call, continue?", "Warning", {
           confirmButtonText: "confirm",
@@ -287,7 +283,6 @@
     }
   };
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .top {
     margin-top: 50px;

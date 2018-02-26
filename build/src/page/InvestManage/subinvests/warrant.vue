@@ -1,26 +1,24 @@
 <template>
 <div class="warran loan">
     <div class="loan-table-container">
-        <h3 class="h3">Warraning</h3>
+        <h3 class="h3">Warranting</h3>
         <el-table ref="singleTable" :data="warrantData" border style="width:100%;">
-            <el-table-column prop="exittype" label="WarrantID"></el-table-column>
-            <el-table-column prop="exitmode" label="Type"></el-table-column>
-            <el-table-column prop="costrelization" label="Owner Name" width="130" :formatter="numberFormat"></el-table-column>
-            <el-table-column prop="round" label="Fund Family"></el-table-column>
-            <el-table-column prop="shareexit" label="Fund" :formatter="numberFormat" ></el-table-column>
-            <el-table-column prop="fundfamillyname" label="Issue Date"></el-table-column>
-            <el-table-column prop="closedate" label="Due Date" width='130'></el-table-column>
-            <el-table-column prop="currency" label="No. of Shares"></el-table-column>
-            <el-table-column prop="shareremain" label="Cost" :formatter="numberFormat"></el-table-column>
-            <el-table-column prop="shareremain" label="Price" :formatter="numberFormat"></el-table-column>
-            <el-table-column prop="shareremain" label="Round" :formatter="numberFormat"></el-table-column>
-            <el-table-column prop="shareremain" label="Share Type" :formatter="numberFormat"></el-table-column>
-            <el-table-column prop="shareremain" label="Cur." :formatter="numberFormat"></el-table-column>
-            <el-table-column prop="shareremain" label="Valid" :formatter="numberFormat"></el-table-column>
+            <el-table-column prop="warrantid" label="WarrantID" width="130"></el-table-column>
+            <el-table-column prop="ownertype" label="Type" width="130"></el-table-column>
+            <el-table-column prop="warrantownername" label="Owner Name" width="130"></el-table-column>
+            <el-table-column prop="fundid" label="Fund" width="130"></el-table-column>
+            <el-table-column prop="issuedate" label="Issue Date" width="130" :formatter="formatDate"></el-table-column>
+            <el-table-column prop="duedate" label="Due Date" width='130' :formatter="formatDate"></el-table-column>
+            <el-table-column prop="sharesno" label="No. of Shares" width="130" :formatter="numberFormat"></el-table-column>
+            <el-table-column prop="warrantprice" label="Price" width="130"></el-table-column>
+            <el-table-column prop="round" label="Round" width="130"></el-table-column>
+            <el-table-column prop="securitytypeidstr" label="Share Type" width="130"></el-table-column>
+            <el-table-column prop="currency" label="Cur." width="130"></el-table-column>
+            <el-table-column prop="valid" label="Valid" width="130" :formatter="formatBoolean"></el-table-column>
             <el-table-column prop="vouncher" label="操作" v-if="isDetail!='false'" fixed='right'>
                 <template slot-scope="scope">
                     <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
-                    <i class="el-icon-delete" @click="deleteExit(scope.$index, scope.row)"></i>
+                    <i class="el-icon-delete" @click="deleteWarrant(scope.$index, scope.row)"></i>
                 </template>
             </el-table-column>
         </el-table>
@@ -30,64 +28,64 @@
     </div>
     <el-dialog title="Warrant Edit" :visible.sync="warrantVisible">
         <div class="select-container">
-            <el-form :model="warrantForm" ref="exitForm" :label-position='labelPosition'>
+            <el-form :model="warrantForm" ref="warrantForm" :label-position='labelPosition'>
                 <div class="select-fixed">
-                    <el-form-item label="Warrant Owner Type:">
-                        <el-select v-model="warrantForm.exittype" placeholder="请选择" @change="togetherChange">
-                            <el-option v-for="item in exitDropList.DDL_ExitType" :key="item.baseId"
+                    <el-form-item label="Portfolio Warrant:">
+                        <el-select v-model="warrantForm.ownertype" placeholder="请选择" :disabled='!buttonShow'>
+                            <el-option v-for="item in wrrantDropList.WARRANT_TYPE" :key="item.baseId"
                             :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="Warrant OwnerName:">
-                        <el-input v-model="warrantForm.name" auto-complete="off"></el-input>
+                    <el-form-item label="Warrant OwnerName:" v-if='warrantNameShow'>
+                        <el-input v-model="warrantForm.warrantownername"></el-input>
                     </el-form-item>
-                    <el-form-item label="Fund Family:">
-                        <el-select v-model="warrantForm.exitmode" placeholder="请选择">
-                            <el-option v-for="item in ExitModeDataList" :key="item.baseId"
+                    <el-form-item label="Fund Family:" v-if="famillyShow">
+                        <el-select v-model="warrantForm.fundfamillyname" placeholder="请选择" filterable>
+                            <el-option v-for="item in wrrantDropList.FUNDFAMILY" :key="item.baseId"
                             :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="Fund:">
-                        <el-select v-model="warrantForm.exitmode" placeholder="请选择">
-                            <el-option v-for="item in ExitModeDataList" :key="item.baseId"
+                    <el-form-item label="Fund:" v-if="fundShow">
+                        <el-select v-model="warrantForm.fundid" placeholder="请选择" filterable>
+                            <el-option v-for="item in wrrantDropList.FUND" :key="item.baseId"
                             :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="Issue Date:">
-                        <el-date-picker v-model="warrantForm.closedate" type="date" placeholder="选择日期">
+                        <el-date-picker v-model="warrantForm.issuedate" type="date" placeholder="选择日期">
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item label="Due Date:">
-                        <el-date-picker v-model="warrantForm.closedate" type="date" placeholder="选择日期">
+                        <el-date-picker v-model="warrantForm.duedate" type="date" placeholder="选择日期">
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item label="Cost:">
-                        <el-input v-model="warrantForm.name"></el-input>
+                        <el-input v-model="warrantForm.warrantamount"></el-input>
                     </el-form-item>
                     <el-form-item label="Currency">
                         <el-select v-model="warrantForm.currency" placeholder="请选择">
-                            <el-option v-for="item in exitDropList.CURRENCY" :key="item.baseId"
+                            <el-option v-for="item in wrrantDropList.CURRENCY" :key="item.baseId"
                             :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="Share Type:">
-                        <el-select v-model="warrantForm.currency" placeholder="请选择">
-                            <el-option v-for="item in exitDropList.CURRENCY" :key="item.baseId"
+                        <el-select v-model="warrantForm.securitytypeid" placeholder="请选择">
+                            <el-option v-for="item in wrrantDropList.DDL_WarrantSecurityType" :key="item.baseId"
                             :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="Round:">
-                        <el-input v-model="warrantForm.name"></el-input>
+                        <el-input v-model="warrantForm.round"></el-input>
                     </el-form-item>
                     <el-form-item label="No. of Shares:">
-                        <el-input v-model="warrantForm.name"></el-input>
+                        <el-input v-model="warrantForm.sharesno"></el-input>
                     </el-form-item>
-                    <!-- <el-form-item label="Valid:">
-                        <el-input v-model="warrantForm.name"></el-input>
-                    </el-form-item> -->
                     <el-form-item label="Comments:">
-                        <el-input type="textarea" autosize placeholder="请输入内容" v-model="warrantForm.name">
+                        <el-input type="textarea" autosize placeholder="请输入内容" v-model="warrantForm.comment">
                         </el-input>
+                    </el-form-item>
+                    <el-form-item label="Valid:">
+                        <el-checkbox v-model="warrantForm.valid"></el-checkbox>
                     </el-form-item>
                 </div>
             </el-form>
@@ -95,8 +93,8 @@
         <subCapTable :dataObj='dataObj' :investForm='warrantForm' :buttonShow='buttonShow' v-show="subCapTableShow"></subCapTable>
         <div slot="footer" class="dialog-footer">
             <el-button @click="warrantVisible = false" size='mini'>取 消</el-button>
-            <el-button type="primary" size='mini' @click="submitAdd('exitForm','add')" v-if="buttonShow">新建</el-button>
-            <el-button type="primary" size='mini' @click="submitAdd('exitForm','update')" v-else>更新</el-button>
+            <el-button type="primary" size='mini' @click="submitForm('warrantForm','add')" v-if="buttonShow">新建</el-button>
+            <el-button type="primary" size='mini' @click="submitForm('warrantForm','update')" v-else>更新</el-button>
         </div>
     </el-dialog>
 </div>
@@ -104,46 +102,49 @@
 <script>
 import axioss from '@/api/axios';
 import * as method from "@/api/method";
-import subCapTable from "../../capTable/subCapTable"
+import subCapTable from "../../capTable/subCapTable";
+import mix from "@/api/mixin" 
 export default {
     name:"warraning",
+    mixins:[mix],
     data(){
         return {
             dataObj:'',
             subCapTableShow:true,
-            exitId:'',
-            isDisabled:false,
+            famillyShow:'',
+            fundShow:'',
             shareList:[],
             warrantVisible:false,
             buttonShow:true,
             warrantData:[],
             labelPosition:'right',
-            ExitModeDataList:[],
-            sharelistData:[],
-            exitType:'',
-            exitMode:'',
-            exitDropList:'',
-            selectlist:{},
-            loanData: [],
+            wrrantDropList:'',
             warrantForm:{
-                exitmode:'',
-                exittype:'',
-                fundfamillyname:"",
-                portfolioid:"",
-                closedate:'',
-                currency:"USD",
-                costrelization:'',
-                proceeds:'',
-                shareexit:'',
-                shareremain:'',
-                securitytypeid:'',
-                round:""
+                warrantid: '',
+                portfolioid: '',
+                fundid: '',
+                issuedate: '',
+                duedate: '',
+                warrantamount:'',
+                warrantprice:'',
+                round: '',
+                sharesno:'',
+                securitytypeid: '',
+                securitytypeidstr: '',
+                currency: "USD",
+                ownertype: '',
+                warrantownername: '',
+                valid: '',
+                comment: '',
+                fundfamillyname: ''
             },
             warrantFormEmpty:{
-                exitmode:'',exittype:'',fundfamillyname:"",
-                portfolioid:"",closedate:'',currency:"USD",
-                costrelization:'',proceeds:'',shareexit:'',
-                shareremain:'',securitytypeid:'',round:""
+                warrantid: '',portfolioid: '',fundid: '',
+                issuedate: '',duedate: '', warrantamount:'',
+                warrantprice:'',round: '',sharesno:'',
+                securitytypeid: '',securitytypeidstr: '',currency: "USD",
+                ownertype: '',warrantownername: '',valid: '',
+                comment: '',fundfamillyname: ''
             }
         }
     },
@@ -152,82 +153,50 @@ export default {
     },
     mounted(){
         this.reqSelectList();
-        this.reqExitList(this.portfolioid);
+        this.reqWrrantList(this.portfolioid);
     },
     methods:{
         reqSelectList(){
-            var obj={dictArray:"DDL_ExitType,DDL_ExitModeType,FUNDFAMILY,CURRENCY"};
+            var obj={dictArray:"DDL_WarrantSecurityType,WARRANT_TYPE,FUNDFAMILY,CURRENCY,FUND"};
             axioss.reqSelectList(obj).then(res=>{
-                this.exitDropList=method.translateFormat(res.data.data);
+                this.wrrantDropList=method.translateFormat(res.data.data);
             })
         },
-      numberFormat: function (row, column) {
-        var num = row[column.property];
-        if (num == undefined) {
-          return "";
-        }
-        return method.toThousands(num);
-      },
-        reqExitShareList(obj){
-            axioss.reqExitShareList(obj).then(res=>{
-                this.sharelistData=res.data.data;
-                var data=res.data.data;
-                var tem=JSON.stringify(data);
-                var newdata=JSON.parse(tem);
-                this.shareList=method.ConcatStr(newdata)
-            })
-        },
-        reqExitList(id){
+        reqWrrantList(id){
             var portfolioid=id||this.portfolioid;
-            axioss.reqExitList(portfolioid).then(res=>{
-                console.log(res);
-                this.warrantData=this.formatTime(res.data.data);//gai
+            axioss.reqWrrantList(portfolioid).then(res=>{
+                this.warrantData=res.data.data;
             })
         },
-        querySingal(id){
-            axioss.querySingal(id).then(res=>{
+        querySingalWarrant(id){
+            axioss.querySingalWarrant(id).then(res=>{
+                this.$store.dispatch('saveCapTabel',res.data.data.portfoliocaptablevaluedetailList);
                 this.warrantForm=res.data.data;
             })
         },
-        submitAdd(formName,type){
+        submitForm(formName,type){
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    var obj=this.exitForm;
+                    var obj=this.warrantForm;
                     if(type=='add'){
                         obj.portfolioid=this.portfolioid;
-                        axioss.addExit(obj).then(res=>{
-                            console.log(res);
-                            if(res.data.code=="SUCCESS"){
-                                this.$message({
-                                    type:'success',
-                                    message: '创建成功'
-                                })
+                        axioss.addWarrant(obj).then(res=>{
+                            let status=res.data.code,succMes='创建成功',failMes='创建失败';
+                            let stateCode=this.showToast(status,succMes,failMes);
+                            if(stateCode){
                                 this.warrantVisible=false;
-                                this.reqExitList(this.portfolioid);
-                                Object.assign(this.warrantForm,this.warrantFormEmpty)
-                            }else{
-                                this.$message({
-                                    type:'warning',
-                                    message: '创建失败'
-                                })
+                                Object.assign(this.warrantForm,this.warrantFormEmpty);
+                                this.reqWrrantList();
                             }
                         })
                     }else{
-                        axioss.updateExit(obj).then(res=>{
-                            console.log(res);
-                            if(res.data.code=="SUCCESS"){
-                                this.$message({
-                                    type:'success',
-                                    message: '更新成功'
-                                })
+                        axioss.updateWarrant(obj).then(res=>{
+                            let status=res.data.code,succMes='更新成功',failMes='更新失败';
+                            let stateCode=this.showToast(status,succMes,failMes);
+                            if(stateCode){
                                 this.warrantVisible=false;
-                                this.reqExitList(this.portfolioid);
-                                Object.assign(this.warrantForm,this.warrantFormEmpty)
-                            }else{
-                                this.$message({
-                                    type:'warning',
-                                    message: '更新失败'
-                                })
+                                Object.assign(this.warrantForm,this.warrantFormEmpty);
+                                this.reqWrrantList();
                             }
                         })
                     }
@@ -238,78 +207,42 @@ export default {
             });
         },
         handleAdd(){
-            this.isDisabled=false;
+            Object.assign(this.warrantForm,this.warrantFormEmpty);
+            this.subCapTableShow=false;
+            this.famillyShow=true;
+            this.fundShow=false;
             this.warrantVisible=true;
             this.buttonShow=true;
         },
         handleEdit(index,data){
-            this.isDisabled=true;
+            this.subCapTableShow=true;
+            this.famillyShow=false;
+            this.fundShow=true;
             this.warrantVisible=true;
             this.buttonShow=false;
-            this.querySingal(data.id);
+            this.querySingalWarrant(data.warrantid);
         },
-        deleteExit(index,data){
+        deleteWarrant(index,data){
             this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
             }).then(() => {
-                axioss.deleteExit(data.id).then(res=>{
-                    console.log(res);
-                    var status = res.data.code;
-                    if (status.toLocaleLowerCase() == "success") {
-                    this.reqExitList(this.portfolioid);
-                    this.$message({
-                        type: "success",
-                        message: "删除成功!"
-                    });
-                    } else {
-                    this.$message({
-                        type: "error",
-                        message: "删除失败!"
-                    });
+                axioss.deleteWarrant(data.warrantid).then(res=>{
+                    let status=res.data.code,succMes='删除成功',failMes='删除失败';
+                    let stateCode=this.showToast(status,succMes,failMes);
+                    if(stateCode){
+                        this.reqWrrantList();
                     }
                 })
             })
         },
-        creatShareList(val){
-            var obj={fundfamillyname:val,portfolioid:this.portfolioid}
-            this.reqExitShareList(obj);
-        },
-        fetchData(val){
-            var len=this.sharelistData.length;
-            var data=this.sharelistData;
-            for(var i=0;i<len;i++){
-                if(val==data[i].baseId){
-                    this.warrantForm.securitytypeid=data[i].baseName.securitytypeid;
-                    this.warrantForm.round=data[i].baseName.round;
-                    this.warrantForm.shareremain=data[i].baseName.shareremain;
-                    this.warrantForm.fundfamillyname=data[i].baseName.fundfamillyname;
-                }
-            }
-        },
-        togetherChange(val){
-            this.exitForm.exitmode='';
-            var ExitMode=this.exitDropList.DDL_ExitModeType;
-            var empty=[];
-            for(var i=0;i<ExitMode.length;i++){
-                if(ExitMode[i].bizType==val){
-                    empty.push(ExitMode[i])
-                }
-            }
-            this.ExitModeDataList=empty;
-        },
-        formatTime(data){
-            if(data&&data!=null&&data!=[]){
-                for(var i=0;i<data.length;i++){
-                    data[i].closedate=method.toLocalString(data[i].closedate);
-                }
-            }
-            return data
+        formatBoolean(row,cloumn,cellvalue){
+            return cellvalue+''
         }
     },
     computed:{
-        portfolioid:function(){
+        portfolioid(){
             if(this.$store.state.portfolioid==''){
                 this.$store.dispatch('updateData');
             }
@@ -320,6 +253,22 @@ export default {
                 this.$store.dispatch('updateIsDetail');
             }
             return this.$store.state.isDetail;
+        },
+        capFormList(){
+            return this.$store.state.capTabelData;
+        },
+        warrantNameShow(){
+            var isShow;
+            if(this.buttonShow){
+                if(this.warrantForm.ownertype=='Investor(except IDG)'){
+                    isShow=true;
+                    this.famillyShow=false;
+                }else{
+                    isShow=false;
+                    this.famillyShow=true;
+                }
+                return isShow;
+            } 
         }
     },
     components:{

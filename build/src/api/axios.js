@@ -20,7 +20,6 @@ export default {
   //添加项目信息
   submitinfo(obj){
     var newobj = method.switchStr(obj)
-    console.log(newobj);
     return axios.post("/api/admin/proj/add", newobj);
   },
   //修改项目信息
@@ -83,8 +82,6 @@ export default {
     //var objj=method.switchStr(obj)
     return axios.post('/api/admin/fundcapitalcall/update', obj);
   },
-
-
   //获取capitalcalllp列表2
   reqmemberlistcapitalcalllp(obj){
     return axios.post('/api/admin/fundcapitalcalllp/list', obj)
@@ -134,8 +131,6 @@ export default {
     return axios.post('/api/admin/fundcapitalcall/grosscfs', obj);
   },
 
-
-
   //查询reqfundfin
   reqmemberlistfundfin(obj){
     return axios.post('/api/admin/fundfin/list', obj);
@@ -167,8 +162,6 @@ export default {
     reqMain_Schedule(obj){
         return axios.post("/api/admin/proj/managereport/mainschedule",obj)
     },
-
-
 
   //获取spv树形列表;
   reqSpvList(){
@@ -257,6 +250,9 @@ export default {
   //删除 invest
   deletInvest(id){
     return axios.post("/api/admin/proj/invest/equity/delete/" + id, {eiid: id})
+  },
+  reqReclassList(obj){
+    return axios.post('/api/admin/proj/invest/reclassification/list', obj)
   },
   //获取loantoequity列表
   reqLoanToEquity(obj){
@@ -385,7 +381,110 @@ export default {
   /**Appendix 2  capitalfund*/
   capitalfundAppendix_2(obj){
     return axios.post("/api/admin/proj/managereport/capitalfund", obj)
-  }
+  },
+  //warrant
+ reqWrrantList(portfolioid){
+    return axios.get('/api/admin/proj/invest/warrant/list/' + portfolioid)
+ },
+ addWarrant(obj){
+    return axios.post("/api/admin/proj/invest/warrant/add", obj)
+ },
+ deleteWarrant(id){
+    return axios.post("/api/admin/proj/invest/warrant/delete/"+id, {warrantid:id})
+ },
+ updateWarrant(obj){
+    return axios.post("/api/admin/proj/invest/warrant/update", obj)
+ },
+ querySingalWarrant(warrantid){
+    return axios.get("/api/admin/proj/invest/warrant/entity/"+warrantid)
+ },
+ reqWrrantSelectList(id){
+    return axios.post("/api/admin/proj/invest/warrantremain/list",{portfolioid:id})
+ },
+ //director
+ modifyDirectorNum(obj){
+    return axios.post("/api/admin/proj/director/num/update", obj)
+ },
+ querySingalDirector(directorid){
+    return axios.get("/api/admin/proj/director/entity/"+directorid)
+ },
+ reqDirectorList(portfolioid){
+    return axios.get("/api/admin/proj/director/list/"+portfolioid)
+ },
+ updateDirector(obj){
+    return axios.post("/api/admin/proj/director/update",obj)
+ },
+ deleteDirector(id){
+    return axios.post("/api/admin/proj/director/delete/"+id, {directorid:id})
+ },
+ addDirector(obj){
+    return axios.post("/api/admin/proj/director/add",obj)
+ },
+ //bonus
+ reqDividEndList(portfolioid){
+    return axios.get("/api/admin/proj/dividend/list/"+portfolioid)
+ },
+ addBonus(obj){
+    return axios.post("/api/admin/proj/dividendbonus/add",obj)
+ },
+ querySingalBonusData(dbid){
+    return axios.get("/api/admin/proj/dividend/entity/"+dbid)
+ },
+ updateBonus(obj){
+    return axios.post("/api/admin/proj/dividendbonus/update",obj)
+ },
+ reqBonusList(portfolioid){
+    return axios.get("/api/admin/proj/bonus/list/"+portfolioid)
+ },
+ //financial
 
+ reqFinList(obj){
+    return axios.post("/api/admin/proj/fin/list",obj)
+ },
+ reqCurrencyList(){
+    return axios.get("/api/admin/currencies")
+ },
+ addFin(obj){
+    return axios.post("/api/admin/proj/fin/add",obj)
+ },
+ updateFin(obj){
+    return axios.post("/api/admin/proj/fin/update",obj)
+ },
+ queryFin(id){
+    return axios.get("/api/admin/proj/fin/query/"+id)
+ },
+ deleteFin(id){
+     return axios.post("/api/admin/proj/fin/del",{portfoliofinanciallot:id})
+ },
+//portfolio Bov
+  reqPortfolioBovList(portfolioid){
+    return axios.get("/api/admin/proj/bov/list/"+portfolioid)
+  },
+
+  queryPortfolioBovsData(bovid){
+    return axios.get("/api/admin/proj/bov/entity/"+bovid)
+  },
+  addPortfolioBov(obj){
+    return axios.post("/api/admin/proj/bov/add",obj)
+  },
+  updatePortfolioBov(obj){
+    return axios.post("/api/admin/proj/bov/update",obj)
+  },
+
+  deletPortfolioBov(id){
+    return axios.post("/api/admin/proj/bov/delete/"+id, {bovid:id})
+  },
+  //funddistribution
+  reqDistriList(obj){
+    return axios.post("/api/admin/distributable/list",obj)
+ },
+ reqFundDistriList(obj){
+    return axios.post("/api/admin/funddistribution/list",obj)
+ },
+ addFundDistri(obj){//第二张表
+    return axios.post("/api/admin/funddistribution/add",obj)
+ },
+ updateLpDistri(obj){//第三张表
+    return axios.post("/api/admin/lpdistributiondetail/update",obj)
+ }
 }
-

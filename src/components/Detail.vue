@@ -191,6 +191,7 @@ export default {
           })
         },
         linktoeditor(id){
+            this.$store.dispatch('isDetail',{isDetail:true})
             this.$router.push({ path: "addproject", query:{portfolioid:id,path:'editor'}})
         },
         handleAvatarSuccess(res, file) {

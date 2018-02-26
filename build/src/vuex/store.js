@@ -7,7 +7,8 @@ const state={
     portfolioid:'',
     capTabelData:[],
     capTabelList:[],
-    isDetail:''
+    isDetail:'',
+    storetotalboardseatno:''
 }
 
 const getters={
@@ -32,6 +33,9 @@ const mutations={
     },
     updateIsDetail(state,data){
         state.isDetail=data;
+    },
+    storetotalboardseatno(state,data){
+        state.storetotalboardseatno=data;
     }
 }
 

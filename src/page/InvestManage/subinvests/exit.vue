@@ -8,11 +8,11 @@
             <el-table-column prop="costrelization" label="costRelization" width="130" :formatter="numberFormat"></el-table-column>
             <el-table-column prop="round" label="round"></el-table-column>
             <el-table-column prop="shareexit" label="shares" :formatter="numberFormat"></el-table-column>
-            <el-table-column prop="fundfamillyname" label="Fund Family"></el-table-column>
+            <el-table-column prop="fundfamillyname" label="Fund Family" width='110'></el-table-column>
             <el-table-column prop="closedate" label="closeDate" width='130' :formatter="formatDate"></el-table-column>
             <el-table-column prop="termsigndate" label="termsigndate" width='130' :formatter="formatDate"></el-table-column>
             <el-table-column prop="currency" label="currency"></el-table-column>
-            <el-table-column prop="shareremain" label="shareremain" :formatter="numberFormat"></el-table-column>
+            <el-table-column prop="shareremain" label="shareremain" :formatter="numberFormat" width='110'></el-table-column>
             <el-table-column prop="vouncher" label="操作" v-if="isDetail!='false'">
                 <template slot-scope="scope">
                     <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
@@ -123,7 +123,7 @@ export default {
             exitForm:{
                 exitmode:'',
                 exittype:'',
-                fundfamillyname:"",
+                fundfamillyname:"", 
                 portfolioid:"",
                 closedate:'',
                 termsigndate:'',
@@ -141,7 +141,7 @@ export default {
                 portfolioid:"",closedate:'',currency:"USD",
                 costrelization:'',proceeds:'',shareexit:'',
                 shareremain:'',securitytypeid:'',round:"",
-                portfoliocaptablevaluedetailList:[]
+                portfoliocaptablevaluedetailList:[],termsigndate:''
             }
         }
     },
@@ -153,6 +153,7 @@ export default {
         this.reqExitList(this.portfolioid);
     },
     methods:{
+        
         reqSelectList(){
             var obj={dictArray:"DDL_ExitType,DDL_ExitModeType,FUNDFAMILY,CURRENCY"};
             axioss.reqSelectList(obj).then(res=>{
@@ -239,6 +240,7 @@ export default {
             });
         },
         handleAdd(){
+            Object.assign(this.exitForm,this.exitFormEmpty)
             this.subCapTableShow=false;
             this.isDisabled=false;
             this.ExitVisible=true;

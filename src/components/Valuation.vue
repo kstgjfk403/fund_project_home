@@ -6,6 +6,17 @@
         <el-form-item label="Fund Family:">
           <el-radio-group v-model="fundFamilyId" @change="reqFundFamilyName">
             <el-radio :key="item.baseId" :label="item.baseId" v-for="item in fundfamilyList">{{item.baseName}}
+
+
+
+
+
+
+
+
+
+
+
             </el-radio>
           </el-radio-group>
         </el-form-item>
@@ -71,24 +82,34 @@
             <el-form-item label="BaseValue" v-show="isShow">
               <el-input v-model="baseValue" placeholder="请输入内容"></el-input>
             </el-form-item>
+
             <el-form-item label="Multiple" v-show='isShow'>
               <el-input v-model="multiple" placeholder="请输入内容"></el-input>
             </el-form-item>
-            <el-form-item label="FairValue">
-              <el-input v-model="fairvalue" placeholder="请输入内容" :disabled="isShow"></el-input>
-            </el-form-item>
-            <el-form-item label="OwnerShip">
-              <el-input v-model="valuationForm.prop" placeholder="请输入内容"></el-input>
-            </el-form-item>
-            <el-form-item label="Loan">
-              <el-input v-model="valuationForm.loan" placeholder="请输入内容"></el-input>
-            </el-form-item>
+
+
             <el-form-item label="Cash" v-show="isEvShow">
               <el-input v-model="valuationForm.cashassets" placeholder="请输入内容"></el-input>
             </el-form-item>
             <el-form-item label="Debt" v-show="isEvShow">
               <el-input v-model="valuationForm.debt" placeholder="请输入内容"></el-input>
             </el-form-item>
+            
+            <el-form-item label="Option Proceed" v-show="isEvShow">
+              <el-input v-model="optionproceed" placeholder="请输入内容"></el-input>
+            </el-form-item>
+            <el-form-item label="Prefer Stock Preference" v-show="isEvShow">
+              <el-input v-model="preferstockprefer" placeholder="请输入内容"></el-input>
+            </el-form-item>
+
+
+            <el-form-item label="FairValue">
+              <el-input v-model="fairvalue" placeholder="请输入内容" :disabled="isShow"></el-input>
+            </el-form-item>
+            <el-form-item label="OwnerShip">
+              <el-input v-model="valuationForm.prop" placeholder="请输入内容"></el-input>
+            </el-form-item>
+
             <el-form-item label="Valuation">
               <el-input :value="isComp?valuation:valuationForm.valuation" :disabled="isComp"
                         @input.native="compValuation($event)" placeholder="请输入内容" ref="valuation"></el-input>
@@ -105,8 +126,13 @@
               <el-input v-model="valuationForm.fin48tax" placeholder="请输入内容"></el-input>
             </el-form-item>
 
+            <el-form-item label="Loan">
+              <el-input v-model="valuationForm.loan" placeholder="请输入内容"></el-input>
+            </el-form-item>
+
+
             <el-form-item label="NetValuation">
-              <el-input v-model="netvaluation" placeholder="请输入内容" ></el-input>
+              <el-input v-model="netvaluation" placeholder="请输入内容"></el-input>
             </el-form-item>
           </el-form>
         </div>
@@ -163,7 +189,7 @@
       return {
         isEdit: false,
         isShow: false,
-        isEvShow:false,
+        isEvShow: false,
         currentPage: 1,
         allcount: 0,
         checkList: '',
@@ -178,6 +204,8 @@
         baseValue: '',
         fairvalue: '',
         multiple: '',
+        optionproceed:'',
+        preferstockprefer:'',
         valuationFormData: {
           fundIds: '',
           VALUEDATE: ''
@@ -198,7 +226,7 @@
         },
 
         valuationForm: {
-          valuationid:'',
+          valuationid: '',
           fundid: '',
           portfolioid: "",
           valuationmethod: '',
@@ -212,12 +240,14 @@
           rating: '',
           multiple: '',
           netvaluation: '',
-          loan:0,
-          debt:'',
-          cashassets:''
+          loan: 0,
+          debt: 0,
+          cashassets: 0,
+          optionproceed: 0,
+          preferstockprefer: 0
         },
         valuationFormEmpty: {
-          valuationid:'',
+          valuationid: '',
           fundid: '',
           portfolioid: "",
           valuationmethod: '',
@@ -231,9 +261,9 @@
           rating: '',
           multiple: '',
           netvaluation: '',
-          loan:0,
-          debt:'',
-          cashassets:''
+          loan: 0,
+          debt: 0,
+          cashassets: 0
         },
         valuationTableData: [],
         radio2: ''
@@ -311,7 +341,7 @@
         obj.fundid = this.valuationForm.fundid;
         console.log(obj);
         if (this.valuationForm.portfolioid && this.valuationForm.valuationdate) {
-            axioss.reqIndiction(obj).then(res => {
+          axioss.reqIndiction(obj).then(res => {
             //如果是空的时候提示没有获得估值数据.//
             Object.assign(this.valuationForm, res.data.data);
             console.log(this.valuationForm);
@@ -321,6 +351,9 @@
               this.baseValue = this.valuationForm.Revenue;
             if (obj.valuationmethod == 'PB')
               this.baseValue = this.valuationForm.NetAsset;
+            if (obj.valuationmethod == 'EV') {
+              this.baseValue = this.valuationForm.Revenue;
+            }
           })
         }
         if (!this.valuationVisible) {
@@ -382,9 +415,12 @@
             this.valuationForm.netvaluation = this.netvaluation;
             this.valuationForm.fairvalue = this.fairvalue;
             this.valuationForm.multiple = this.multiple;
+            this.valuationForm.optionproceed = this.optionproceed;
+            this.valuationForm.multiple = this.multiple;
+            this.valuationForm.preferstockprefer = this.preferstockprefer;
 
-            if(this.isEdit){
-              console.log(this.valuationForm);
+            if (this.isEdit) {
+
               axioss.updateValuation(this.valuationForm).then(res => {
                 if (res.data.code == "SUCCESS") {
                   this.$refs[formName].resetFields();
@@ -406,7 +442,7 @@
                   })
                 }
               });
-            }else {
+            } else {
 
               axioss.addvaluation(this.valuationForm).then(res => {
                 if (res.data.code == "SUCCESS") {
@@ -481,11 +517,15 @@
             this.netvaluation = this.valuationForm.netvaluation;
             this.multiple = this.valuationForm.multiple;
 
-            
 
-            if(res.data.data.valuationmethod == 'PE'||res.data.data.valuationmethod =='PS'||res.data.data.valuationmethod=='PB'){
-              this.valuationTableData =  res.data.data.portfoliocomparables;
+            if (res.data.data.valuationmethod == 'PE' || res.data.data.valuationmethod == 'PS' || res.data.data.valuationmethod == 'PB') {
+              this.valuationTableData = res.data.data.portfoliocomparables;
               this.isShow = true;
+              this.reqIndiction();
+            } else if (res.data.data.valuationmethod == 'EV') {
+              this.valuationTableData = res.data.data.portfoliocomparables;
+              this.isShow = true;
+              this.isEvShow = true;
               this.reqIndiction();
             }
 
@@ -523,7 +563,7 @@
       },
       whichShow(val){
         this.isShow = false;
-        this.isEvShow=false;
+        this.isEvShow = false;
         if (val == 'PE' || val == "PS" || val == "PB") {
           this.isShow = true;
           this.reqIndiction();
@@ -531,8 +571,11 @@
         } else if (val == "LASTROUND") {
           this.queryLastLRound();
         }
-        if(val=='EV'){
-            this.isEvShow=true;
+        if (val == 'EV') {
+          this.isShow = true;
+          this.isEvShow = true;
+          this.reqIndiction();
+          this.reqCompareList(this.reqcompanyobj);
         }
       },
       calculateMultiple(){
@@ -546,10 +589,13 @@
       linkto(index, data){
         var method = data.valuationmethod;
         if (method == 'OPM') {
-          window.open(window.location. origin + '/#/valuationreportopm?valuationid='+data.valuationid)
+          window.open(window.location.origin + '/#/valuationreportopm?valuationid=' + data.valuationid)
           //this.$router.push({path: 'valuationreportopm', query: {valuationid: data.valuationid}});
         } else if (method == 'PS' || method == 'PE' || method == 'PB') {
-          window.open(window.location. origin + '/#/valuationreport?valuationid='+data.valuationid)
+          window.open(window.location.origin + '/#/valuationreport?valuationid=' + data.valuationid)
+          //this.$router.push({path: 'valuationreport', query: {valuationid: data.valuationid}});
+        } else if (method == 'EV') {
+          window.open(window.location.origin + '/#/valuationreportev?valuationid=' + data.valuationid)
           //this.$router.push({path: 'valuationreport', query: {valuationid: data.valuationid}});
         } else {
           this.$message({
@@ -563,10 +609,34 @@
     watch: {
       multiple: function (newdata, olddata) {
         //this.multiple =  newdata.toFixed(2);
-        this.fairvalue = (newdata * this.baseValue).toFixed(2);
+        var method = this.valuationForm.valuationmethod;
+        if (method == 'EV') {
+          this.fairvalue = (newdata * this.baseValue + this.valuationForm.cashassets * 1 - this.valuationForm.debt * 1 + this.optionproceed * 1 - this.preferstockprefer).toFixed(2);
+        } else {
+          this.fairvalue = (newdata * this.baseValue).toFixed(2);
+        }
+      },
+      optionproceed: function (newdata, olddata) {
+        //this.multiple =  newdata.toFixed(2);
+        var method = this.valuationForm.valuationmethod;
+        if (method == 'EV') {
+          this.fairvalue = (this.multiple * this.baseValue + this.valuationForm.cashassets * 1 - this.valuationForm.debt * 1 + newdata * 1 - this.preferstockprefer * 1).toFixed(2);
+        }
+      },
+      preferstockprefer: function (newdata, olddata) {
+        //this.multiple =  newdata.toFixed(2);
+        var method = this.valuationForm.valuationmethod;
+        if (method == 'EV') {
+          this.fairvalue = (this.multiple * this.baseValue + this.valuationForm.cashassets * 1 - this.valuationForm.debt * 1 + this.optionproceed * 1 - newdata * 1).toFixed(2);
+        }
       },
       baseValue: function (newdata, olddata) {
-        this.fairvalue = (this.multiple * newdata).toFixed(2);
+        var method = this.valuationForm.valuationmethod;
+        if (method == 'EV') {
+          this.fairvalue = (newdata * this.multiple + this.valuationForm.cashassets * 1 - this.valuationForm.debt * 1 + this.optionproceed * 1 - this.preferstockprefer * 1).toFixed(2);
+        } else {
+          this.fairvalue = (newdata * this.multiple).toFixed(2);
+        }
       },
       valuationVisible: function () {/* 有没有弹窗时都自动清空表单 */
 
@@ -585,16 +655,17 @@
           var fairvalue = this.fairvalue, ownerShip = this.valuationForm.prop,
             discount = this.valuationForm.discount, additional = this.valuationForm.additional,
             fin48tax = this.valuationForm.fin48tax, multiple = this.valuationForm.multiple,
-            loan=this.valuationForm.loan;
-            val = (this.valuationForm.valuation * 1 + parseInt(additional) * 1 ) * (1 - discount / 100) - fin48tax * 1 + loan*1;
-            return val.toFixed(2);
+            loan = this.valuationForm.loan;
+          val = (this.valuationForm.valuation * 1 + parseInt(additional) * 1 ) * (1 - discount / 100) - fin48tax * 1 + loan * 1;
+
+          return val.toFixed(2);
         },
         set: function () {
         }
       },
       isComp(){
         var tem = this.valuationForm.valuationmethod;
-        if (tem == 'PE' || tem == "PS" || tem == "PB") {
+        if (tem == 'PE' || tem == "PS" || tem == "PB" || tem == 'EV' || tem == 'LASTROUND' || tem == 'COST') {
           return true;
         } else {
           return false;
@@ -604,14 +675,16 @@
       valuation: {
         get: function () {
           let val = "0";
-          var tem = this.valuationForm.valuationmethod
-          if (tem == 'PE' || tem == "PS" || tem == "PB") {
+          var tem = this.valuationForm.valuationmethod;
+
+          if (tem == 'PE' || tem == "PS" || tem == "PB" || tem == 'EV' || tem == 'LASTROUND' || tem == 'COST') {
+            console.log('method:' + tem);
             this.valuationForm.valuation = val = this.fairvalue * this.valuationForm.prop;
           }
           return parseInt(val);
         },
         set: function (newValue) {
-            return newValue;
+          return newValue;
         }
 
       },

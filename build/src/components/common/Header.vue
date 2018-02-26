@@ -21,10 +21,7 @@
                         <router-link to='fundlistpage' class="invest-fund">Fund</router-link>
                         <router-link to='capitalcalllistpage' class="invest-fund">Capital Call</router-link>
                         <router-link to='fundFinListPage' class="invest-fund">Fund Financial Info</router-link>
-                        <!--<router-link to='fundirrstasticpage' class="invest-fund">Fund IRR</router-link>
-                        <router-link to='fundinvestoverviewpage' class="invest-fund">Fund Investment Overview</router-link>
-                        <router-link to='fundtrackrecordpage' class="invest-fund">Fund Track Record</router-link>
-                        <router-link to='fundgrosscfspage' class="invest-fund">Fund Gross CFs</router-link>-->
+                        <router-link to='funddistribution' class="invest-fund">Fund Distri</router-link>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -48,7 +45,7 @@
                                 <router-link to='fundgrosscfspage' class="invest-fund">Fund Gross CFs</router-link>
                             </div>
                         </a>
-                        <router-link class="invest-fund" to='captablereport'>Realized Gains Losses</router-link>
+                        <router-link class="invest-fund" to='RealizedGainsLosses'>Realized Gains Losses</router-link>
                         <router-link class="invest-fund" to='InvestDetail'>Investment Details</router-link>
                         <router-link class="invest-fund" to='appendix_2'>Appendix II</router-link>
                         <router-link class="invest-fund" to='main_Schedule'>main_Schedule</router-link>

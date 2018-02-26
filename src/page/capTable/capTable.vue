@@ -19,17 +19,17 @@
                             <el-table-column prop="shareowner" label="名称" width="130"></el-table-column>
                         </el-table-column>
                     </el-table>
-                    <!-- <el-table :data="item.baseName" style="width: 100%" v-for="(item,index) in firstContentList" :key='index*(-1)'>
+                    <el-table :data="item.baseName" style="width: 100%" v-for="(item,index) in firstContentList" :key='index*(-1)'>
                         <el-table-column :label="item.baseId">
-                            <el-table-column prop="shareownedno" label="认缴注册资本" width="130" :formatter="numberFormat"></el-table-column>
+                            <el-table-column prop="shareownedno" :label="item.investType=='Equity Interest'||item.investType=='Convert To Equity Interest'?'认缴注册资本':'持股数'" width="130" :formatter="numberFormat"></el-table-column>
                             <el-table-column prop="cost" label="认缴投资额" width="130" :formatter="numberFormat"></el-table-column>
                             <el-table-column prop="proper" label="股比(%)" width="130" :formatter="properFormat"></el-table-column>
                             <el-table-column prop="properwithoutesop" label="withoutESOP(%)" width="130" :formatter="properFormat"></el-table-column>
                         </el-table-column>
-                    </el-table> -->
+                    </el-table>
                     <el-table :data="item.baseName" style="width: 100%" v-for="(item,index) in otherContentList" :key='index+1'>
                         <el-table-column :label="item.baseId">
-                            <el-table-column prop="shareownedno" label="认缴注册资本" width="130" :formatter="numberFormat"></el-table-column>
+                            <el-table-column prop="shareownedno" :label="item.investType=='Equity Interest'||item.investType=='Convert To Equity Interest'?'认缴注册资本':'持股数'" width="130" :formatter="numberFormat"></el-table-column>
                             <el-table-column prop="cost" label="认缴投资额" width="130" :formatter="numberFormat"></el-table-column>
                             <el-table-column prop="proper" label="股比(%)" width="130" :formatter="properFormat"></el-table-column>
                             <el-table-column prop="properwithoutesop" label="withoutESOP(%)" width="130" :formatter="properFormat"></el-table-column>
@@ -65,13 +65,11 @@ export default {
     mounted(){
         bus.$on('toScorll',(ace)=>{
            this.scrolltoview(ace,'CapTable');
-       });
-       this.reqTableHead();
-       this.reqTableContent();
-       bus.$on('updateCaptable',()=>{
-           this.reqTableHead();
+        });
+        this.reqTableContent();
+        bus.$on('updateCaptable',()=>{
             this.reqTableContent();
-       })
+        })
     },
     methods:{
         reqdroplist(){
@@ -83,15 +81,6 @@ export default {
         handleAdd(){
             this.reqdroplist();//获取新建时的下拉列表数据。
             this.capVisible=true;
-        },
-        reqTableHead(){
-            var portfolioid=this.portfolioid;
-            axioss.reqTableHead(portfolioid).then(res=>{
-                console.log(res);
-                this.capTableHeadList=res.data.data;
-                this.capTableHeadList=this.toHeader(res.data.data);
-                console.log(this.capTableHeadList);
-            })
         },
         reqTableContent(){
             axioss.reqTableContent(this.portfolioid).then(res=>{
@@ -139,6 +128,9 @@ export default {
                 this.$store.dispatch('updateData');
             }
             return this.$store.state.portfolioid;
+        },
+        thContent(){
+
         }
     },
     directives:{
@@ -157,16 +149,14 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-
-        .loan-table-container h3{
-            font-size:16px;
-            padding:5px 0;
-            padding-left:10px;
-            background:#eee;
-            margin: 0;
-            border-bottom: 1px solid #ebeef5;
-        }
-
+    .loan-table-container h3{
+        font-size:16px;
+        padding:5px 0;
+        padding-left:10px;
+        background:#eee;
+        margin: 0;
+        border-bottom: 1px solid #ebeef5;
+    }
     .loan-table-container .table-foot{
         background:#eee;
         padding:5px 0;

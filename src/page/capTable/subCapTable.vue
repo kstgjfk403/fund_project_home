@@ -62,6 +62,7 @@ import bus from "@/api/eventbus";
 export default {
     name:"subCapTable",
     props:['dataObj','investForm','buttonShow'],
+    timer:null,
     data(){
         return {
             heightObj:'',
@@ -93,17 +94,27 @@ export default {
                     { required: true, message: 'required', trigger: 'change' }
                 ],
                 shareowner: [
-                    { required: true, message: 'required', trigger: 'blur' },  
+                    { required: true, message: 'required', trigger: 'blur' }  
                 ],
                 securitytypeid: [
-                    { required: true, message: 'required', trigger: 'change' },  
+                    { required: true, message: 'required', trigger: 'change' }  
                 ]
             }
         }
     },
+    updated(){
+        this.$nextTick(function(){
+            method.mc('capTable',0,0,0);
+        })
+    },
     mounted(){
         this.reqdroplist();
-        this.spanCell('capTable');
+        
+        //this.spanCell('capTable');
+        // bus.$on('spanCellMethod',()=>{
+        //     alert('run spancell when open')
+        //     this.spanCell('capTable');
+        // })
         bus.$on('clearSubCaptable',()=>{
             Object.assign(this.capInputForm,this.capInputFormEmpty);
         })
@@ -168,27 +179,29 @@ export default {
                 return data;
             }
         },
-        spanCell(ele){
-            var tab=document.getElementById(ele);
-            var rows=tab.rows;
-            var rowlen=rows.length;
-            var collen=rows[0].cells.length;
-            var rowStart=0;
-            for(var i=0;i<rowlen-1;i++){
-                for(var j=i+1;j<rowlen;j++){
-                    if(tab.rows[j].cells[0].innerHTML==tab.rows[i].cells[0].innerHTML){
-                        tab.rows[j].removeChild(tab.rows[j].cells[0]);
-                        if(j>=rowlen-1){
-                            tab.rows[i].cells[0].rowSpan=j-i+1+"";
-                        }
-                    }else{
-                        tab.rows[i].cells[0].rowSpan=j-i+"";
-                        i=j-1;
-                        break;
-                    }
-                }
-            }
-        },
+        // spanCell(ele){
+        //     this.timer=setTimeout(function(){
+        //         var tab=document.getElementById(ele);
+        //         var rows=tab.rows;
+        //         var rowlen=rows.length;
+        //         var collen=rows[0].cells.length;
+        //         var rowStart=0;
+        //         for(var i=0;i<rowlen-1;i++){
+        //             for(var j=i+1;j<rowlen;j++){
+        //                 if(tab.rows[j].cells[0].innerHTML==tab.rows[i].cells[0].innerHTML){
+        //                     tab.rows[j].removeChild(tab.rows[j].cells[0]);
+        //                     if(j>=rowlen-1){
+        //                         tab.rows[i].cells[0].rowSpan=j-i+1+"";
+        //                     }
+        //                 }else{
+        //                     tab.rows[i].cells[0].rowSpan=j-i+"";
+        //                     i=j-1;
+        //                     break;
+        //                 }
+        //             }
+        //         }
+        //     },3000)
+        // },
         properFormat: function (num) {
             if (num == undefined) {
             return "";

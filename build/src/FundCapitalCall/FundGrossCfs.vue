@@ -76,7 +76,7 @@
             </el-table-column>
             <el-table-column  prop="company" label="Company" width="220">
             </el-table-column>
-            <el-table-column  prop="cashDate" label="Date" width="120">
+            <el-table-column  prop="cashDate" label="Date"  width="120">
             </el-table-column>
             <el-table-column  prop="security" label="Security" width="120">
             </el-table-column>

@@ -4,7 +4,7 @@
     <div class="loan-table-container">
         <h3>Bov</h3>
         <el-table :data="businessTableData" border style="width:100%;">
-          <el-table-column prop="updatedate" label="Update Date"   width="140">
+          <el-table-column prop="updatedate" label="Update Date" width="140" :formatter='formatDate'>
           </el-table-column>
           <el-table-column prop="headcount" label="Head Count" width="140">
           </el-table-column>
@@ -161,9 +161,9 @@ export default {
 
     },
     mounted(){
-        /*bus.$on('toScorll',(ace)=>{
+        bus.$on('toScorll',(ace)=>{
            this.scrolltoview(ace,'Business');
-        });*/
+        });
       this.invesDropList();
       this.reqPortfolioBovList();
     },

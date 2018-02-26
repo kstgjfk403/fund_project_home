@@ -264,10 +264,6 @@ export default {
             message: "已取消删除"
           });
         });
-    },
-    beforeRouteLeave (to, from, next) {
-        alert()
-        //console.log(this.$route.query.portfolioid);
     }
   }
 };

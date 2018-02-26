@@ -22,7 +22,7 @@
             </el-table-column>
             <el-table-column prop="grossprofits" label="Gross profits" width="140">
             </el-table-column>
-            <el-table-column prop="debt" label="Bank Loan/Debt" width="140">
+            <el-table-column prop="debt" label="Bank Loan/Debt" width="140" :formatter="numberFormat">
             </el-table-column>
             <el-table-column prop="currency" label="Currency" width="140">
             </el-table-column>

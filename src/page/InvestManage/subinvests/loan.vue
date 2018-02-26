@@ -9,7 +9,7 @@
             <el-table-column prop="closedate" label="Payment Date" width="120"></el-table-column>
             <el-table-column prop="duedate" label="Due Date" width="90"></el-table-column>
             <el-table-column prop="feedate" label="Fee Date" width="90"></el-table-column>
-            <el-table-column prop="notenum" label="Loan Amount" width="150"></el-table-column
+            <el-table-column prop="notenum" label="Loan Amount" width="150"></el-table-column>
             <el-table-column prop="noteotherfee" label="Other Fees" width="100"></el-table-column>
             <el-table-column prop="currency" label="Currency" width="100"></el-table-column>
             <el-table-column prop="interestrate" label="Rate(%)" width="100"></el-table-column>
@@ -29,7 +29,7 @@
             <i class="el-icon-circle-plus" @click="handleAdd" v-if="isDetail!='false'"></i>
         </div>
     </div>
-    <el-dialog title="Loan Edit" :visible.sync="loanVisible">
+    <el-dialog title="Loan Edit" :visible.sync="loanVisible" @close="resetForm('loanForm')">
     <div class="select-container">
         <el-form :model="loanForm" ref="loanForm" :label-position='labelPosition' :rules="rules">
             <div class="select-fixed">
@@ -256,6 +256,9 @@ export default {
                     return false;
                 }
             });
+        },
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
         },
         deletLoan(index,data){
             var id=data.noteid;

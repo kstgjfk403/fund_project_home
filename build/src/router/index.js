@@ -14,6 +14,7 @@
  import FundCapitalCallDetailPage from '../FundCapitalCall/CapitalCallDetailPage'
  import FundFinListPage from '@/page/fundFin/FundFinListPage'
  import FundFinAddPage from '@/page/fundFin/FundFinAddPage'
+ import FundDistribution from '@/page/fundDistribution/FundDistribution'
 
  import FundIrrStasticPage from '../FundCapitalCall/FundIrrStasticPage'
  import FundInvestmentOverview from '../FundCapitalCall/FundInvestmentOverview'
@@ -29,14 +30,15 @@
 
  import Valuation from "@/components/Valuation"
  import ValuationReportOpm from "@/components/subValuation/ValuationReportOpm"
+ import ValuationReportEV from "@/components/subValuation/ValuationReportEV"
  import ValuationReport from "@/components/subValuation/ValuationReport"
- import CaptableReport from "@/page/capTable/capTableReport/captablereport"
+ import RealizedGainsLosses from "@/Reports/RealizedGainsLosses"
 
  /* 20180202 添加新表单 */
- import Appendix_2 from "@/page/capTable/capTableReport/appendix_2"
- import Main_Schedule from "@/page/capTable/capTableReport/main_Schedule"
+ import Appendix_2 from "@/Reports/appendix_2"
+ import Main_Schedule from "@/Reports/main_Schedule"
 
- import InvestDetail from "@/page/capTable/capTableReport/InvestDetail"
+ import InvestDetail from "@/Reports/InvestDetail"
  export default new Router({
    routes: [
     {path: '/',redirect:"/listpage"},//portfolio
@@ -59,7 +61,7 @@
     {path:'/fundinvestoverviewpage',name:'fundinvestoverviewpage',component: FundInvestmentOverview},//
     {path:'/fundtrackrecordpage',name:'fundtrackrecordpage',component: FundTrackRecord},//
     {path:'/fundgrosscfspage',name:'fundgrosscfspage',component: FundGrossCfs},
-
+    {path:'/funddistribution',name:'funddistribution',component:FundDistribution},
 
 
 
@@ -71,9 +73,10 @@
     {path:'/financialinfo',name:'financialinfo',component:FinancialInfo},
     {path:'/valuation',name:'valuation',component:Valuation},//valuation
     {path:'/valuationreportopm',name:'valuationreportopm',component:ValuationReportOpm},
+     {path:'/valuationreportev',name:'valuationreportev',component:ValuationReportEV},
     {path:'/valuationreport',name:'valuationreport',component:ValuationReport},
 
-    {path:'/captablereport',name:'captablereport',component:CaptableReport},
+    {path:'/RealizedGainsLosses',name:'captablereport',component:RealizedGainsLosses},
     {path:'/appendix_2',name:'appendix_2',component:Appendix_2},/* Appendix II */
     {path:'/main_Schedule',name:'main_Schedule',component:Main_Schedule},/* main_Schedule */
     {path:'/InvestDetail',name:'InvestDetail',component:InvestDetail}

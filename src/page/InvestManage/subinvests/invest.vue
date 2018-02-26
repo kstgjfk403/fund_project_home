@@ -28,17 +28,17 @@
             <i class="el-icon-circle-plus" @click="handleAdd"></i>
         </div>
     </div>
-    <el-dialog title="Invest Edit" :visible.sync="investVisible">
+    <el-dialog title="Invest Edit" :visible.sync="investVisible" @close="resetForm('investForm')">
     <div class="select-container">
-        <el-form :model="investForm" :label-position='labelPosition' ref="investForm">
+        <el-form :model="investForm" :label-position='labelPosition' ref="investForm" :rules="rules">
             <div class="select-fixed">
-                <el-form-item label="Invest Type">
+                <el-form-item label="Invest Type" prop='investtype'>
                     <el-select v-model="investForm.investtype" placeholder="请选择" @change="whichShow" :disabled="isDisable">
                         <el-option v-for="item in investTypeList" :key="item.baseId"
                         :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="Payment Date">
+                <el-form-item label="Payment Date" prop='closedate'>
                     <el-date-picker v-model="investForm.closedate" type="date" placeholder="选择日期" :disabled="isDisable||isParticipatDisable">
                 </el-date-picker>
                 </el-form-item>
@@ -54,7 +54,7 @@
                         :label="item.baseName" :value="item.baseName"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="Termsign Date">
+                <el-form-item label="Termsign Date" prop='termsigndate'>
                     <el-date-picker v-model="investForm.termsigndate" type="date" placeholder="选择日期" :disabled="isDisable">
                     </el-date-picker>
                 </el-form-item>
@@ -294,6 +294,15 @@ export default {
     name:"invest",
     mixins:[mix],
     data(){
+        var paymentDateValidate = function(rule, value, callback){
+            if(this.isDisable || this.isParticipatDisable){
+                callback();
+            }else if(!value){
+                callback(new Error('require'));   
+            }else{
+                callback();
+            }
+        }
         return {
             subCapTableShow:true,
             isDisable:false,
@@ -376,7 +385,18 @@ export default {
                 value: 'USD',
                 label: 'USD'
                 }
-            ]
+            ],
+            rules: {
+                investtype: [
+                    { required: true, message: 'required', trigger: 'change' }
+                ],
+                closedate: [
+                    { validator: paymentDateValidate, trigger: 'change' }  
+                ],
+                termsigndate: [
+                    { required: true, message: 'required', trigger: 'change' }  
+                ]
+            }
         }
     },
     updated(){
@@ -429,6 +449,7 @@ export default {
         },
         querySingalData(id){
             axioss.querySingalData(id).then(res=>{
+                console.log(res)
                 var newdata=JSON.stringify(res.data.data);
                 var data=JSON.parse(newdata);
                 this.dataObj.portfolioid=data.portfolioid;
@@ -436,7 +457,7 @@ export default {
                 this.dataObj.closedate=data.closedate;
                 this.dataObj.round=data.round;
                 this.dataObj.securitytypeid=data.securitytypeid;
-                this.dataObj.eiid=data.eiid;
+                this.dataObj.bizid=data.eiid;
                 this.dataObj.maxclosedate=data.maxclosedate;
                 this.dataObj.investtype=data.investtype;
                 this.maxclosedate=data.maxclosedate;
@@ -500,6 +521,9 @@ export default {
                     return false;
                 }
             });
+        },
+        resetForm(formName) {
+            this.$refs[formName].resetFields();
         },
         handleAdd(){
             this.subCapTableShow=false;

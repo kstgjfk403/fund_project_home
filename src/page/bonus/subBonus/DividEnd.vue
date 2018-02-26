@@ -9,7 +9,7 @@
             <el-table-column prop="investtype" label="Invest Type" width="150"></el-table-column>
             <el-table-column prop="securitytypestr" label="Share Type" width="150"></el-table-column>
             <el-table-column prop="shareownedno" label="Shares Acquired" width="150" :formatter="numberFormat"></el-table-column>
-            <el-table-column prop="costrelization" label="Realised Cost" width="70" :formatter="numberFormat"></el-table-column>
+            <el-table-column prop="costrelization" label="Realised Cost" width="110" :formatter="numberFormat"></el-table-column>
             <el-table-column prop="financialdate" label="Capital Call Date" width="150" :formatter="formatDate"></el-table-column>
             <el-table-column prop="remarks" label="Comment:" width="150"></el-table-column>
             <el-table-column prop="proceeds" label="Gross Proceed:" width="150"></el-table-column>

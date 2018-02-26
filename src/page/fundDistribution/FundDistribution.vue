@@ -194,12 +194,12 @@ export default {
         };
     },
     mounted: function() {
-        this.reqdFundList();
-        this.reqDistriList(this.searchForm)
+        this.reqFundList();
+        this.reqDistriList(this.searchForm);
         this.reqFundDistriList(this.searchForm)
     },
     methods: {
-        reqdFundList(){
+        reqFundList(){
             var obj={dictArray:"FUND"};
             axioss.reqdroplist(obj).then(res=>{
                 this.fundList=res.data.data[0].baseInfoList;
@@ -263,8 +263,7 @@ export default {
         },
         handleCurrentChange(){
             this.searchForm.pageIndex=this.pageCurrent;
-            this.reqFundDistriList(this.searchFrom);
-            console.log(this.searchForm)
+            this.reqFundDistriList(this.searchForm);
         },
         handleAdd(){
             this.distributionVisible=true;

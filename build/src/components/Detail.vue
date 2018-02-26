@@ -8,8 +8,8 @@
             <li>
                 <span>Project Name：</span><span>{{detaildata.abbname}}</span>
                 <router-link to="listpage"><el-button type="primary" size="small" style="float:right;background:#31b0d5;">return</el-button></router-link>
-                <el-button type="primary" size="small" icon="el-icon-edit" style="float:right;margin-right:10px;background:#31b0d5;" @click="linktoeditor(detaildata.portfolioid)"></el-button>
-                <el-button type="primary" size="small" icon="el-icon-printer" style="float:right;margin-right:10px;background:#31b0d5;"></el-button>
+                <el-button type="primary" size="small" icon="el-icon-edit" style="float:right;margin-right:10px;background:#31b0d5;color:white;" @click="linktoeditor(detaildata.portfolioid)"></el-button>
+                <el-button type="primary" size="small" icon="el-icon-printer" style="float:right;margin-right:10px;background:#31b0d5;color:white;"></el-button>
             </li>
             <li><span>Project Manager：</span><span>{{detaildata.projectmanagerstr}}</span></li>
             <li><span>Compony Lagel Name：</span><span>{{detaildata.fullname}}</span></li>
@@ -67,7 +67,7 @@
                     <li><span>Found of Found：</span><span>{{detaildata.fundoffund}}</span></li>
                 </ul>
                 <ul>
-                <li><span>Primary Business：</span><span>{{detaildata.auditconfaddress}}</span></li>
+                <li><span>Primary Business：</span><span>{{detaildata.primarybusiness}}</span></li>
                 <li><span>Product：</span><span>{{detaildata.product}}</span></li>
                 </ul>
             </div>
@@ -84,15 +84,15 @@
                 <li><span>Liquidation preference：</span><span>{{detaildata.liquidationpreference}}</span></li>
                 </ul>
                 <ul>
-                <li><span>Year Of Incorporation：</span><span>{{detaildata.auditconfaddress}}</span></li>
-                <li><span>Incorporated In：</span><span>{{detaildata.product}}</span></li>
+                <li><span>Year Of Incorporation：</span><span>{{detaildata.foundeddate}}</span></li>
+                <li><span>Incorporated In：</span><span>{{detaildata.locationid}}</span></li>
                 </ul>
                 <ul>
-                <li><span>Company Register No.：</span><span>{{detaildata.auditconfaddress}}</span></li>
-                <li><span>Investment Legal form：</span><span>{{detaildata.product}}</span></li>
+                <li><span>Company Register No.：</span><span>{{detaildata.registerno}}</span></li>
+                <li><span>Investment Legal form：</span><span>{{detaildata.formid}}</span></li>
                 </ul>
                 <ul>
-                <li><span>Total Boardseat NO.：</span><span>{{detaildata.auditconfaddress}}</span></li>
+                <li><span>Total Boardseat NO.：</span><span>{{detaildata.totalboardseatno}}</span></li>
                 </ul>
             </div>
         </div>
@@ -130,11 +130,11 @@
                 </ul>
                 <ul>
                 <li><span> Effective Date：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
-                <li><span>Financial YTD：</span><span>{{detaildata.stockexchangeidstr}}</span></li>
+                <li><span>Financial YTD：</span><span>{{detaildata.ytd}}</span></li>
                 </ul>
                 <ul>
                 <li><span> IPO Date：</span><span>{{detaildata.portfoliostatusdate}}</span></li>
-                <li><span>Stock Code：</span><span>{{detaildata.stockexchangeidstr}}</span></li>
+                <li><span>Stock Code：</span><span>{{detaildata.stockcode}}</span></li>
                 </ul>
             </div>
         </div>
@@ -143,6 +143,8 @@
     <CapTable></CapTable>
     <FinancialInfo></FinancialInfo>
     <Director></Director>
+    <MainBonus></MainBonus>
+    <Business/>
     <Navlist v-on:toscorll="scrolltoview" :isactive="isActive"></Navlist>
 </div>
 </template>
@@ -155,6 +157,8 @@ import Ivestment from '@/page/InvestManage/investmanager';
 import CapTable from "@/page/capTable/capTable";
 import FinancialInfo from "@/page/financial/FinancialInformation";
 import Director from "@/page/directorandsuper/Director";
+import MainBonus from "@/page/bonus/MainBonus";
+import Business from "@/page/business/Business";
 export default {
     name:"Detail",
     data:function(){
@@ -167,13 +171,14 @@ export default {
                 Invest:false,
                 CapTable:false,
                 Financial:false,
-                Director:false
+                Director:false,
+                Bonus:false,
+                Business:false
             }
         }
     },
     mounted:function(){
         this.requestdetails(this.$route.query.portfolioid);
-        //console.log(this.detaildata.portfolioid);
     },
     methods:{
         requestdetails(portfolioid){
@@ -182,18 +187,15 @@ export default {
                 obj.portfoliostatusdate=method.toLocalString(obj.portfoliostatusdate)
                 obj.lockupexpireddate=method.toLocalString(obj.lockupexpireddate)
                 this.detaildata=obj;
-                //console.log(res);
           }).catch((res)=>{
-              console.log(res);
           })
         },
         linktoeditor(id){
+            this.$store.dispatch('isDetail',{isDetail:true})
             this.$router.push({ path: "addproject", query:{portfolioid:id,path:'editor'}})
         },
         handleAvatarSuccess(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
-            console.log(res)
-            console.log(file)
         },
         beforeAvatarUpload(file) {
             const isJpeg = file.type === 'image/jpeg';
@@ -202,7 +204,6 @@ export default {
             const isPng = file.type === "image/png";
             const isBmp = file.type === "image/bmp";
             const isLt2M = file.size / 1024 / 1024 < 2;
-            console.log(file.type);
             if ((!isJPG)&&(!isJpeg)&&(!isGif)&&(!isPng)&&(!isBmp)) {
                 this.$message.error('上传头像图片格式不正确!');
                 return false;
@@ -236,7 +237,9 @@ export default {
         Ivestment,
         CapTable,
         FinancialInfo,
-        Director
+        Director,
+        MainBonus,
+        Business
     }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
 <div class="warran loan">
     <div class="loan-table-container">
-        <h3 class="h3">Warraning</h3>
+        <h3 class="h3">Warranting</h3>
         <el-table ref="singleTable" :data="warrantData" border style="width:100%;">
             <el-table-column prop="warrantid" label="WarrantID" width="130"></el-table-column>
             <el-table-column prop="ownertype" label="Type" width="130"></el-table-column>
@@ -85,7 +85,7 @@
                         </el-input>
                     </el-form-item>
                     <el-form-item label="Valid:">
-                        <el-checkbox v-model="warrantForm.valid" ></el-checkbox>
+                        <el-checkbox v-model="warrantForm.valid"></el-checkbox>
                     </el-form-item>
                 </div>
             </el-form>
@@ -170,6 +170,7 @@ export default {
         },
         querySingalWarrant(id){
             axioss.querySingalWarrant(id).then(res=>{
+                this.$store.dispatch('saveCapTabel',res.data.data.portfoliocaptablevaluedetailList);
                 this.warrantForm=res.data.data;
             })
         },
@@ -206,6 +207,7 @@ export default {
             });
         },
         handleAdd(){
+            Object.assign(this.warrantForm,this.warrantFormEmpty);
             this.subCapTableShow=false;
             this.famillyShow=true;
             this.fundShow=false;
