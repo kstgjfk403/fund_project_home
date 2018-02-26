@@ -1,21 +1,24 @@
-http://blog.csdn.net/zhangfeng1133/article/details/51841605
-Bcore     http://www.laozuo.org/5886.html
-bootswitch          https://bootswatch.com/cerulean/
-10款基于bootstrap 的后台管理框架    http://www.laozuo.org/5886.html
+                                                 http://blog.csdn.net/zhangfeng1133/article/details/51841605
 
-metro   https://www.js-css.cn/divcss/admin/metro/index.html
+Bcore                                            http://www.laozuo.org/5886.html
 
-git 获取远程指定分支上的代码 https://www.cnblogs.com/phpper/p/7136048.html
+bootswitch                                       https://bootswatch.com/cerulean/
 
-DOM事件的监听  https://davidwalsh.name/dom-events-javascript
+10款基于bootstrap 的后台管理框架                 http://www.laozuo.org/5886.html
 
-Unicode 字符编码百科   https://unicode-table.com/cn/#control-character
+metro                                            https://www.js-css.cn/divcss/admin/metro/index.html
 
-百度云服务器使用说明：https://www.cnblogs.com/ZhongChunPei/p/8127690.html
+git 获取远程指定分支上的代码                     https://www.cnblogs.com/phpper/p/7136048.html     
 
- 
-https://www.cnblogs.com/lyr1213/p/6238026.html     h5 FormData在表单异步提交中的应用。
+DOM事件的监听                                    https://davidwalsh.name/dom-events-javascript
 
+Unicode 字符编码百科                             https://unicode-table.com/cn/#control-character
+
+百度云服务器使用说明：                           https://www.cnblogs.com/ZhongChunPei/p/8127690.html
+
+h5 FormData在表单异步提交中的应用。              https://www.cnblogs.com/lyr1213/p/6238026.html     
+
+vs code 使用技巧                                 https://zhuanlan.zhihu.com/p/22880087              
 
 mvn --projects backend spring-boot:run 
 
