@@ -304,7 +304,7 @@ a{
         width:49%;
     }
     .el-input{
-        width:100%;
+        // width:100%;
     }
     .el-form-item__label{
         width:40%;
@@ -474,7 +474,22 @@ a{
         padding:2px 0;
     }
 }
+.lpinfo .table thead tr th .el-input__inner{
+  height: 30px;
+}
+//capitalcalllistpage
 
+.capitalcall .select-container .el-form-item{
+  width:33%;
+  float:left;
+}
+.capitalcall .select-container .el-form-item .el-input{
+  width:auto;
+}
+
+.capitalcall .select-container .el-form-item .el-date-editor{
+  width:48%;
+}
 /*appendix2样式*/
 .mytable.el-table th.is-leaf{
     text-align: center;

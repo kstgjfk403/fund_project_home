@@ -1,5 +1,6 @@
  import Vue from 'vue'
  import Router from 'vue-router'
+ import store from '@/vuex/store'
  Vue.use(Router)
  import Listpage from '../components/Listpage'
  import Detail from '../components/Detail'
@@ -15,6 +16,7 @@
  import FundFinListPage from '@/page/fundFin/FundFinListPage'
  import FundFinAddPage from '@/page/fundFin/FundFinAddPage'
  import FundDistribution from '@/page/fundDistribution/FundDistribution'
+ import LPinformation from '@/page/lpinformation/LPinformation'
 
  import FundIrrStasticPage from '../FundCapitalCall/FundIrrStasticPage'
  import FundInvestmentOverview from '../FundCapitalCall/FundInvestmentOverview'
@@ -39,7 +41,7 @@
  import Main_Schedule from "@/Reports/main_Schedule"
 
  import InvestDetail from "@/Reports/InvestDetail"
- export default new Router({
+  var router = new Router({
    routes: [
     {path: '/',redirect:"/listpage"},//portfolio
     {path: '*',redirect:"/listpage"},
@@ -62,7 +64,7 @@
     {path:'/fundtrackrecordpage',name:'fundtrackrecordpage',component: FundTrackRecord},//
     {path:'/fundgrosscfspage',name:'fundgrosscfspage',component: FundGrossCfs},
     {path:'/funddistribution',name:'funddistribution',component:FundDistribution},
-
+    {path:'/lpinformation',name:'lpinformation',component:LPinformation},
 
 
     //invest
@@ -73,7 +75,7 @@
     {path:'/financialinfo',name:'financialinfo',component:FinancialInfo},
     {path:'/valuation',name:'valuation',component:Valuation},//valuation
     {path:'/valuationreportopm',name:'valuationreportopm',component:ValuationReportOpm},
-     {path:'/valuationreportev',name:'valuationreportev',component:ValuationReportEV},
+    {path:'/valuationreportev',name:'valuationreportev',component:ValuationReportEV},
     {path:'/valuationreport',name:'valuationreport',component:ValuationReport},
 
     {path:'/RealizedGainsLosses',name:'captablereport',component:RealizedGainsLosses},
@@ -82,3 +84,16 @@
     {path:'/InvestDetail',name:'InvestDetail',component:InvestDetail}
    ]
  })
+
+
+//  router.beforeEach((to, from, next) => {
+//   console.log(to)
+//   if( !store.state.isLogin ){
+    
+//   }else{
+    
+//   }
+//   next()
+// })
+
+export default router

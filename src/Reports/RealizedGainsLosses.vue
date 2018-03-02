@@ -2,37 +2,37 @@
 <div class="captableReport">
     <Header/>
     <div class="search">
-        <el-form :inline="true" :model="searchForm" ref="searchForm">
-            <el-form-item label="Fund">
-                <el-select v-model="searchForm.fundid" placeholder="" filterable>
-                <el-option :label="item.baseName" :value="item.baseId" :key="item.baseId" v-for="item in fundList"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="Close Date">
-                <el-date-picker v-model="searchForm.closedate" type="date" placeholder="选择日期">
-                </el-date-picker>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" size="mini" @click="searchSubmit('searchForm')">查询</el-button>
-            </el-form-item>
-        </el-form>
+      <el-form :inline="true" :model="searchForm" ref="searchForm">
+        <el-form-item label="Fund">
+          <el-select v-model="searchForm.fundid" placeholder="" filterable>
+          <el-option :label="item.baseName" :value="item.baseId" :key="item.baseId" v-for="item in fundList"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Close Date">
+          <el-date-picker v-model="searchForm.closedate" type="date" placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" size="mini" @click="searchSubmit('searchForm')">查询</el-button>
+        </el-form-item>
+      </el-form>
     </div>
     <div class="table-container2" style="width:80%;">
-        <table class="table font14 table-condensed">
-            <thead>
-                <tr class="textcenter"><td scope="row">{{title.fundFullName}}</td></tr>
-                <tr class="textcenter"><td scope="row">History of Realized Gains and Losses by Portfolio Company</td></tr>
-                <tr class="textcenter"><td scope="row">{{title.quarter}}</td></tr>
-            </thead>
-        </table>
+      <table class="table font14 table-condensed">
+        <thead>
+          <tr class="textcenter"><td scope="row">{{title.fundFullName}}</td></tr>
+          <tr class="textcenter"><td scope="row">History of Realized Gains and Losses by Portfolio Company</td></tr>
+          <tr class="textcenter"><td scope="row">{{title.quarter}}</td></tr>
+        </thead>
+      </table>
         <table class="table font12 table-condensed">
             <thead>
-                <tr>
-                    <td scope="row"></td><td></td>
-                    <td>Date</td><td>Date</td>
-                    <td>Sales</td><td>Cost</td>
-                    <td>Realized</td>   <td></td>
-                </tr>
+              <tr>
+                <td scope="row"></td><td></td>
+                <td>Date</td><td>Date</td>
+                <td>Sales</td><td>Cost</td>
+                <td>Realized</td>   <td></td>
+              </tr>
             </thead>
             <tbody>
                 <tr><td scope="row">Company</td><td scope="row">Shares</td>
