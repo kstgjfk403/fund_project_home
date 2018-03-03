@@ -86,14 +86,21 @@
  })
 
 
-//  router.beforeEach((to, from, next) => {
-//   console.log(to)
-//   if( !store.state.isLogin ){
-    
-//   }else{
-    
-//   }
-//   next()
-// })
+ router.beforeEach((to, from, next) => {
+  
+  const nextRoute = [ 'listpage', 'addproject', 'fundlistpage'];
+  
+  if(nextRoute.indexOf(to.name)>=0) {
+    if( !store.state.isLogin ){
+        router.push({name: 'detail'})
+    }
+  }
+  if(to.name=='detail'){
+    if(store.state.isLogin){
+      router.push({name:'listpage'})
+    }
+  }
+  next()
+})
 
 export default router
