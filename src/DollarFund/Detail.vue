@@ -6,13 +6,13 @@
   <div class="detail-background">
     <ul class="droid">
       <li>
-          <span>Fund Type(Abbr)：</span><span>{{detaildata.fundtypeid}}</span>
+          <span>Fund Type(Abbr):</span><span>{{detaildata.fundtypeid}}</span>
           <router-link to="fundlistpage"><el-button type="primary" size="small" style="float:right;background:#31b0d5;">return</el-button></router-link>
           <el-button type="primary" size="small" icon="el-icon-edit" style="float:right;margin-right:10px;background:#31b0d5;" @click="linktoeditor(detaildata.fundid)"></el-button>
           <el-button type="primary" size="small" icon="el-icon-printer" style="float:right;margin-right:10px;background:#31b0d5;"></el-button>
       </li>
-      <li><span>Fund Abbr.name：</span><span>{{detaildata.fundname}}</span></li>
-      <li><span>Fund Full Name：</span><span>{{detaildata.fundfullnameeng}}</span></li>  
+      <li><span>Fund Abbr.name:</span><span>{{detaildata.fundname}}</span></li>
+      <li><span>Fund Full Name:</span><span>{{detaildata.fundfullnameeng}}</span></li>  
     </ul>
     <div class="primary-img">
       <img src="../../static/images/head-img.png">
@@ -30,44 +30,44 @@
   <div class="base-info base-info-first" style="margin-top:0;border-top:none;">
     <div class="base-info-content" ref="bacinfo" style="margin-top:15px;">
       <ul>
-        <li><span>Fund Type(Abbr)：</span><span>{{detaildata.fundtypeid}}</span></li>
-        <li><span>Fund Abbr.name：</span><span>{{detaildata.fundname}}</span></li>
+        <li><span>Fund Type(Abbr):</span><span>{{detaildata.fundtypeid}}</span></li>
+        <li><span>Fund Abbr.name:</span><span>{{detaildata.fundname}}</span></li>
       </ul>
       <ul>
         <li><span>Fund Family Name:</span><span>{{detaildata.fundfamillyname}}</span></li>
         <li><span>基金全名:</span><span>{{detaildata.fundfullnamechi}}</span></li>
       </ul>
       <ul>
-        <li><span>Fund Full Name</span><span>{{detaildata.fundfullnameeng}}</span></li>
-        <li><span>Registered Address：</span><span>{{detaildata.regaddress}}</span></li>
+        <li><span>Fund Full Name:</span><span>{{detaildata.fundfullnameeng}}</span></li>
+        <li><span>Registered Address:</span><span>{{detaildata.regaddress}}</span></li>
       </ul>
       <ul>
         <li><span>Industry Focus:</span><span>{{detaildata.mainindustry}}</span></li>
-        <li><span>Financial Year End：</span><span>{{detaildata.yearend}}</span></li>
+        <li><span>Financial Year End:</span><span>{{detaildata.yearend}}</span></li>
       </ul>
       <ul>
-        <li><span>Incorporation In</span><span>{{detaildata.incorplocation}}</span></li>
-        <li><span>Formation Date One Line Description：</span><span>{{detaildata.formationdate}}</span></li>
+        <li><span>Incorporation In:</span><span>{{detaildata.incorplocation}}</span></li>
+        <li><span>Formation Date One Line Description:</span><span>{{detaildata.formationdate}}</span></li>
       </ul>
       <ul>
-        <li><span>Fund Close Date：</span><span>{{detaildata.closedate}}</span></li>
-        <li><span>Total GP Commitment：</span><span>{{detaildata.totalgpcommitnum}}</span></li>
+        <li><span>Fund Close Date:</span><span>{{detaildata.closedate}}</span></li>
+        <li><span>Total GP Commitment:</span><span>{{detaildata.totalgpcommitnum}}</span></li>
       </ul>
       <ul>
-        <li><span>Total LP Commitment：</span><span>{{detaildata.totallpcommitnum}}</span></li>
-        <li><span>LP+GP Commitment(Fund Size)：</span><span>{{detaildata.totalcommitmentnum}}</span></li>
+        <li><span>Total LP Commitment:</span><span>{{detaildata.totallpcommitnum}}</span></li>
+        <li><span>LP+GP Commitment(Fund Size):</span><span>{{detaildata.totalcommitmentnum}}</span></li>
       </ul>
       <ul>
-        <li><span>Fund Currency：</span><span>{{detaildata.totalcommitmentcur}}</span></li>
-        <li><span>Bank Address：</span><span>{{detaildata.bankaddress}}</span></li>
+        <li><span>Fund Currency:</span><span>{{detaildata.totalcommitmentcur}}</span></li>
+        <li><span>Bank Address:</span><span>{{detaildata.bankaddress}}</span></li>
       </ul> 
       <ul>
-          <li><span>Swift Code：</span><span>{{detaildata.swiftcode}}</span></li>
-          <li><span>GAAP：</span><span>{{detaildata.gaap}}</span></li>
+          <li><span>Swift Code:</span><span>{{detaildata.swiftcode}}</span></li>
+          <li><span>GAAP:</span><span>{{detaildata.gaap}}</span></li>
       </ul>
       <ul>
-          <li><span>Auditor：</span><span>{{detaildata.auditor}}</span></li>
-          <li><span>Tax Representative：</span><span>{{detaildata.taxrepresentative}}</span></li>
+          <li><span>Auditor:</span><span>{{detaildata.auditor}}</span></li>
+          <li><span>Tax Representative:</span><span>{{detaildata.taxrepresentative}}</span></li>
       </ul>
     </div>
   </div>
@@ -75,32 +75,32 @@
     <h4><span class="droid">LEGAL DATA</span></h4>
     <div class="base-info-content">
       <ul>
-        <li><span>Bank Name：</span><span>{{detaildata.bankname}}</span></li>
-        <li><span>Bank Account No：</span><span>{{detaildata.bankaccount}}</span></li>
+        <li><span>Bank Name:</span><span>{{detaildata.bankname}}</span></li>
+        <li><span>Bank Account No:</span><span>{{detaildata.bankaccount}}</span></li>
       </ul>
       <ul>
-        <li><span>ABA：</span><span>{{detaildata.aba}}</span></li>
-        <li><span>Attn：</span><span>{{detaildata.attn}}</span></li>
+        <li><span>ABA:</span><span>{{detaildata.aba}}</span></li>
+        <li><span>Attn:</span><span>{{detaildata.attn}}</span></li>
       </ul>
       <ul>
-        <li><span>Legal Advisor：</span><span>{{detaildata.legaladvisor}}</span></li>
-        <li><span>FATCA：</span><span>{{detaildata.fatca}}</span></li>
+        <li><span>Legal Advisor:</span><span>{{detaildata.legaladvisor}}</span></li>
+        <li><span>FATCA:</span><span>{{detaildata.fatca}}</span></li>
       </ul>
       <ul>
-        <li><span>FATCA Type：</span><span>{{detaildata.fatcatype}}</span></li>
-        <li><span>GP Name：</span><span>{{detaildata.gpname}}</span></li>
+        <li><span>FATCA Type:</span><span>{{detaildata.fatcatype}}</span></li>
+        <li><span>GP Name:</span><span>{{detaildata.gpname}}</span></li>
       </ul>
       <ul>
-        <li><span>FATCA officer：</span><span>{{detaildata.fatcaofficer}}</span></li>
-        <li><span>Managerment Company：</span><span>{{detaildata.magtcompany}}</span></li>
+        <li><span>FATCA officer:</span><span>{{detaildata.fatcaofficer}}</span></li>
+        <li><span>Managerment Company:</span><span>{{detaildata.magtcompany}}</span></li>
       </ul>
       <ul>
-        <li><span>MGMT Incorporate In：</span><span>{{detaildata.magtcomincorporated}}</span></li>
-        <li><span>Tax ID：</span><span>{{detaildata.taxID}}</span></li>
+        <li><span>MGMT Incorporate In:</span><span>{{detaildata.magtcomincorporated}}</span></li>
+        <li><span>Tax ID:</span><span>{{detaildata.taxID}}</span></li>
       </ul>
       <ul>
-        <li><span>GIIN No：</span><span>{{detaildata.GIIN_No}}</span></li>
-        <li><span>Managerment Fee Structure：</span><span>{{detaildata.managfeedesc}}</span></li>
+        <li><span>GIIN No:</span><span>{{detaildata.GIIN_No}}</span></li>
+        <li><span>Managerment Fee Structure:</span><span>{{detaildata.managfeedesc}}</span></li>
       </ul>
     </div>
   </div>
@@ -108,15 +108,15 @@
     <h4><span class="droid">CONTACT INFORMATION</span></h4>
     <div class="base-info-content">
       <ul>
-          <li><span>Capital Allocations Desc：</span><span>{{detaildata.capitalallocationsdesc}}</span></li>
-          <li><span>Fund Manager Email：</span><span>{{detaildata.fundmanageremail}}</span></li>
+          <li><span>Capital Allocations Desc:</span><span>{{detaildata.capitalallocationsdesc}}</span></li>
+          <li><span>Fund Manager Email:</span><span>{{detaildata.fundmanageremail}}</span></li>
       </ul>
       <ul>
-          <li><span>Fund Manager Name：</span><span>{{detaildata.fundmanager}}</span></li>
-          <li><span>Finance Manager Name：</span><span>{{detaildata.financemanager}}</span></li>
+          <li><span>Fund Manager Name:</span><span>{{detaildata.fundmanager}}</span></li>
+          <li><span>Finance Manager Name:</span><span>{{detaildata.financemanager}}</span></li>
       </ul>
       <ul>
-          <li><span>Finance Manager Email：</span><span>{{detaildata.financemanageremail}}</span></li>
+          <li><span>Finance Manager Email:</span><span>{{detaildata.financemanageremail}}</span></li>
       </ul>
     </div>
   </div> 

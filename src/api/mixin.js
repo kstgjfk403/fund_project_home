@@ -23,6 +23,9 @@ export default {
         },
         scrolltoview(eletoview,message){
             var obj=this.$refs[eletoview];
+            if(!this.$refs[message]){
+              return;
+            }
             if(!this.heightObj){
                 this.heightObj=this.$refs[message].offsetHeight
             }

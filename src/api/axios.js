@@ -191,7 +191,7 @@ export default {
   reqShareList(id){
     return axios.get('/api/admin/spv/investor/list/' + id)
   },
-  //更新股东认缴信息
+  //Update股东认缴信息
   updateShare(obj){
     return axios.post('/api/admin/spv/investor/update', obj)
   },
@@ -215,7 +215,7 @@ export default {
   queryLoanSingal(id){
     return axios.get('/api/admin/proj/invest/note/entity/' + id)
   },
-  //新建借款
+  //Create借款
   addLoan(obj){
     return axios.post('/api/admin/proj/invest/note/add/', obj)
   },
@@ -239,7 +239,7 @@ export default {
   reqinvestList(id){
     return axios.get('/api/admin/proj/invest/equity/list/' + id)
   },
-  //新建invest
+  //Createinvest
   addInvest(obj){
     return axios.post('/api/admin/proj/invest/equity/add/', obj)
   },
@@ -286,7 +286,7 @@ export default {
   reqExitShareList(obj){
     return axios.post('/api/admin/proj/exit/share/list', obj)
   },
-  //新建exit;
+  //Createexit;
   addExit(obj){
     return axios.post('/api/admin/proj/exit/add', obj)
   },
@@ -381,6 +381,10 @@ export default {
   /**Appendix 2  capitalfund*/
   capitalfundAppendix_2(obj){
     return axios.post("/api/admin/proj/managereport/capitalfund", obj)
+  },
+  /* financial_Report */
+  reqFinancial_Report(obj){
+    return axios.post("/api/admin/proj/fin/report", obj);
   },
   //warrant
  reqWrrantList(portfolioid){
@@ -486,5 +490,43 @@ export default {
  },
  updateLpDistri(obj){//第三张表
     return axios.post("/api/admin/lpdistributiondetail/update",obj)
+ },
+
+ //capitalcalllp
+ updateCapitalCallLp(obj){
+    return axios.post('/api/admin/fundcapitalcalllp/update',obj)
+ },
+ //LP information
+ reqLPinfomationList(obj){
+  return axios.post('/api/admin/fund/lp/list',obj)
+ },
+ 
+ reqListTransfer(obj){
+  return axios.post('/api/admin/fund/capitalcommitment/listfortransfer',obj)
+ },
+
+ addLpTransfer(obj){
+  return axios.post('/api/admin/fund/capitalcommitment/addtransfer',obj)
+ },
+ //commitment
+
+ reqCommitmentList(obj){
+  return axios.post('/api/admin/fund/capitalcommitment/list',obj)
+ },
+ addCommitment(obj){
+  return axios.post('/api/admin/fund/capitalcommitment/add',obj)
+ },
+ queryCommitment(id){
+  return axios.get('/api/admin/fund/capitalcommitment/entity/'+id)
+ },
+ updateCommitment(obj){
+  return axios.post('/api/admin/fund/capitalcommitment/update',obj)
+ },
+ deleteCommitment(id){
+  return axios.get('/api/admin/fund/capitalcommitment/delete/'+id)
+ },
+ reqCommitSelectList(){
+  return axios.get('/api/admin/fund/lp/listwithoutpage')
  }
 }
+

@@ -16,7 +16,7 @@
           </el-select>
           <p style="font-size:14px">as of {{resultData.dateStr}}; in US$ unless otherwise stated </p>
       </div>-->
-      <div style="margin-top:20px">
+      <div style="margin-top:20px;margin-bottom:20px">
         <b style="font-size:18px">NET CASHFLOW FOR </b>
         <!--   <el-form-item label="NET CASHFLOW FOR" >-->
         <el-select v-model="searchData.fundid" placeholder="pls select fund name" style="width:300px" @change="changeFund()">
@@ -40,170 +40,116 @@
                      v-for="item in yearList"></el-option>
         </el-select>
         <b style="font-size:13px">; in US$ unless otherwise stated </b>
+        <!-- 导出excel -->
+        <el-button type="primary" size="mini" id="but" @click="exportTab" style="margin-left:20px;">导出Excel</el-button>
         <!-- </el-form-item>-->
       </div>
+      
+      <!-- 需要导出的表格内容区域 -->
+      <div id="excel">
+        
+        <el-table :data="resultTableData" border style="width: 70%" class="small_table">
+          <el-table-column  prop="statisticsName" label=""  width="200" class-name="firstrow">
+          </el-table-column>
+          <el-table-column  prop="lpStatisticsValue" label="LP Statistics" width="298" class-name="secondrow">
+          </el-table-column>
+          <el-table-column  prop="lpGpStatisticsValue" label="LP&GP Statistics" width="298">
+          </el-table-column>
+          
+        </el-table>
 
 
+        
+        <div style="margin-top:15px">
+        </div>
+        <div class="position-container">
+          <div class="table-responsive">
+            <h3 style="margin-left:-10px">LP Net Cashflow : </h3>
+            <table class="table table-hover table-bordered table-condensed" style="table-layout:fixed;" title="LP Net Cashflow">
+              <thead>
 
-      <el-table :data="resultTableData" border style="width: 70%" > <!--style="width: 80%"-->
-        <el-table-column  prop="statisticsName" label=""  width="200" >
-        </el-table-column>
-        <el-table-column  prop="lpStatisticsValue" label="LP Statistics" width="298">
-        </el-table-column>
-        <el-table-column  prop="lpGpStatisticsValue" label="LP&GP Statistics" width="298">
-        </el-table-column>
+              <tr>
+                <th scope="col" >Date
+                </th>
+                <th scope="col" >Capital Called
+                </th>
+                <th scope="col">Distribution
+                </th>
+                <th scope="col">GP Carry
+                </th>
+                <th scope="col">Fund NAV
+                </th>
+                <th scope="col">Net Cashflows
+                </th>
+                <th scope="col">Description</th>
 
-      </el-table>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="item in lplistData">
+                <td scope="row" >{{item.date}}</td>
+                <td>{{item.capitalCalledStr.toString()}}</td>
+                <td>{{item.distribution}}</td>
+                <td>{{item.gpCarry}}</td>
+                <td>{{item.fundNav}}</td>
+                <td>{{item.netCashFlowsStr}}</td>
 
-
-      <!--<div class="big-base-container">
-        <div class="base-info-container">
-          <div class="baseinfo-left">
-            <h3 style="margin-left:100px">LP Statistics </h3>
-            <el-form-item label="IRR" >
-              <el-input type="text" step="0.01" v-model="resultData.irrLpStr"></el-input>
-            </el-form-item>
-            <el-form-item label="MOC" >
-              <el-input type="number" step="0.01" v-model="resultData.mocLpStr"></el-input>
-            </el-form-item>
-
-            <el-form-item label="DPI" >
-              <el-input type="number" step="1" v-model="resultData.dpiLpStr"></el-input>
-            </el-form-item>
-
-            <el-form-item label="Total Capital Calls" >
-              <el-input type="number" step="1" v-model="resultData.totalCapitalCallsLpStr"></el-input>
-            </el-form-item>
-
-            <el-form-item label="Total Distributions" >
-              <el-input type="number" step="1" v-model="resultData.totalDistributionsLp"></el-input>
-            </el-form-item>
-
-            <el-form-item label="Fund NAV" >
-              <el-input type="number" step="1" v-model="resultData.lpNetAssets"></el-input>
-            </el-form-item>
-
-            <el-form-item label="GP Carry" >
-              <el-input type="number" step="1" v-model="resultData.totalGpCarry"></el-input>
-            </el-form-item>
-          </div>
-
-          <div class="baseinfo-right">
-            <h3 style="margin-left:120px">LP&GP Statistics </h3>
-            <el-form-item label="IRR" >
-              <el-input type="text" step="0.01" v-model="resultData.irrLpAndGpStr"></el-input>
-            </el-form-item>
-            <el-form-item label="MOC" >
-              <el-input type="number" step="0.01" v-model="resultData.mocLpAndGpStr"></el-input>
-            </el-form-item>
-
-            <el-form-item label="DPI" >
-              <el-input type="number" step="1" v-model="resultData.dpiLpAndGpStr"></el-input>
-            </el-form-item>
-
-            <el-form-item label="Total Capital Calls" >
-              <el-input type="number" step="1" v-model="resultData.totalCapitalCallsLpAndGpStr"></el-input>
-            </el-form-item>
-
-            <el-form-item label="Total Distributions" >
-              <el-input type="number" step="1" v-model="resultData.totalDistributionsLpAndGp"></el-input>
-            </el-form-item>
-
-            <el-form-item label="Fund NAV" >
-              <el-input type="number" step="1" v-model="resultData.netAssets"></el-input>
-            </el-form-item>
+                <td>{{item.description}}</td>
+              </tr>
+              </tbody>
+            </table>
+            <!--<div class="pagination-container">
+              <el-pagination background layout="prev, pager, next,jumper,total" :total="allcount" :current-page.sync="pageCurrent" @current-change="handleCurrentChange" style="position:absolute;left:50%;bottom:25px;transform: translate(-50%);"></el-pagination>
+            </div>-->
           </div>
         </div>
-      </div>-->
-      <div style="margin-top:15px">
-      </div>
-      <div class="position-container">
-        <div class="table-responsive">
-          <h3 style="margin-left:-10px">LP Net Cashflow : </h3>
-          <table class="table table-hover table-bordered table-condensed" style="table-layout:fixed;" title="LP Net Cashflow">
-            <thead>
 
-            <tr>
-              <th scope="col">Date
-              </th>
-              <th scope="col">Capital Called
-              </th>
-              <th scope="col">Distribution
-              </th>
-              <th scope="col">GP Carry
-              </th>
-              <th scope="col">Fund NAV
-              </th>
-              <th scope="col">Net Cashflows
-              </th>
-              <th scope="col">Description</th>
+        <div class="position-container">
+          <div class="table-responsive">
+            <h3 style="margin-left:-10px">LP&GP Net Cashflow : </h3>
+            <table class="table table-hover table-bordered table-condensed" style="table-layout:fixed;">
+              <thead>
+              <tr>
+                <th scope="col" style="text-align:left">Date
+                </th>
+                <th scope="col">Capital Called
+                </th>
+                <th scope="col">Distribution
+                </th>
+                <th scope="col">GP Carry
+                </th>
+                <th scope="col">Fund NAV
+                </th>
+                <th scope="col">Net Cashflows
+                </th>
+                <th scope="col">Description</th>
 
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="item in lplistData">
-              <td scope="row" >{{item.date}}</td>
-              <td>{{item.capitalCalledStr}}</td>
-              <td>{{item.distribution}}</td>
-              <td>{{item.gpCarry}}</td>
-              <td>{{item.fundNav}}</td>
-              <td>{{item.netCashFlowsStr}}</td>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="item in lpandgplistData">
+                <td scope="row" >{{item.date}}</td>
+                <td>{{item.capitalCalledStr}}</td>
+                <td>{{item.distribution}}</td>
+                <td>{{item.gpCarry}}</td>
+                <td>{{item.fundNav}}</td>
+                <td>{{item.netCashFlowsStr}}</td>
 
-              <td>{{item.description}}</td>
-            </tr>
-            </tbody>
-          </table>
-          <!--<div class="pagination-container">
-            <el-pagination background layout="prev, pager, next,jumper,total" :total="allcount" :current-page.sync="pageCurrent" @current-change="handleCurrentChange" style="position:absolute;left:50%;bottom:25px;transform: translate(-50%);"></el-pagination>
-          </div>-->
+                <td>{{item.description}}</td>
+              </tr>
+              </tbody>
+            </table>
+            <!--<div class="pagination-container">
+              <el-pagination background layout="prev, pager, next,jumper,total" :total="allcount" :current-page.sync="pageCurrent" @current-change="handleCurrentChange" style="position:absolute;left:50%;bottom:25px;transform: translate(-50%);"></el-pagination>
+            </div>-->
+          </div>
         </div>
       </div>
-
-      <div class="position-container">
-        <div class="table-responsive">
-          <h3 style="margin-left:-10px">LP&GP Net Cashflow : </h3>
-          <table class="table table-hover table-bordered table-condensed" style="table-layout:fixed;">
-            <thead>
-            <tr>
-              <th scope="col">Date
-              </th>
-              <th scope="col">Capital Called
-              </th>
-              <th scope="col">Distribution
-              </th>
-              <th scope="col">GP Carry
-              </th>
-              <th scope="col">Fund NAV
-              </th>
-              <th scope="col">Net Cashflows
-              </th>
-              <th scope="col">Description</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="item in lpandgplistData">
-              <td scope="row" >{{item.date}}</td>
-              <td>{{item.capitalCalledStr}}</td>
-              <td>{{item.distribution}}</td>
-              <td>{{item.gpCarry}}</td>
-              <td>{{item.fundNav}}</td>
-              <td>{{item.netCashFlowsStr}}</td>
-
-              <td>{{item.description}}</td>
-            </tr>
-            </tbody>
-          </table>
-          <!--<div class="pagination-container">
-            <el-pagination background layout="prev, pager, next,jumper,total" :total="allcount" :current-page.sync="pageCurrent" @current-change="handleCurrentChange" style="position:absolute;left:50%;bottom:25px;transform: translate(-50%);"></el-pagination>
-          </div>-->
-        </div>
-      </div>
-
     </el-form>
   </div>
 </template>
 <script>
+  
   import Header from "../components/common/Header";
   import * as method from "../api/method";
   import axioss from '../api/axios';
@@ -325,7 +271,79 @@
       this.submitpage(this.searchData);
     },
     methods:{
+      exportTab(){
+        //var oHtml = document.getElementsByClassName('tableA')[0].outerHTML;
+        var oHtml = document.getElementById('excel').outerHTML;
+        //console.log(oHtml);        
+        var excelHtml = `
+          <html>
+          <head>
+          <meta charset='utf-8' />
+          <style>          
+          /* #excel .el-table__header-wrapper .el-table__header thead tr th{
+            background:#5f87a0;
+            color:#FFF;
+            height:40px;
+            text-align:right;
+          } */
+          h3{
+            color:#2FA4E9;
+          }
+          table{
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+          }
+          .small_table table{
+            width:1000px;
+          }
+          table tr td,table tr th{
+            border:0.5px solid #ddd;
+            text-align:left;
+            padding-left:3em;
+          }
+          table tr td{            
+            height:30px;
+            width:30%;
+          }
+          table tr .firstrow .cell{
+            width:50px;
+            color:red;
+          }
+          
+          table tr th{
+            height:40px; 
+            background:#5f87a0;
+            color:#FFF;
+            height:40px;
+          }         
+          
+          
+          #excel .position-container .table-responsive h3{
+            color:##2FA4E7;
+          }
+          #excel .el-table__header-wrapper .el-table__header thead tr th.gutter{
+            border:0;
+            background:#fff;
+          }
+          </style>    
+          </head>
+          <body>
+          ${oHtml}
+          </body>
+          </html>
+          `;
 
+        var excelBlob = new Blob([excelHtml], {type: 'application/vnd.ms-excel'})
+        // Create一个a标签
+        var oA = document.createElement('a');
+        // 利用URL.createObjectURL()方法为a元素生成blob URL
+        oA.href = URL.createObjectURL(excelBlob);
+        // 给文件命名
+        oA.download = `FundIrrStasticPage${(new Date()).toLocaleString()}.xls`;
+        // 模拟点击
+        oA.click();
+        // 移除
+        oA.remove();
+      },
       reqfundlist(){
         /*var enterobj={
          dictArray:'DDL_IncorpLocation,YTD,CURRENCY'

@@ -21,24 +21,24 @@
                 <el-input class="search" v-model="fundData.fundname" @input.native="searchData"></el-input>
               </th>
               <th scope="col">Fund Full Name
-                <el-input class="search" placeholder="pls Fund Full Name" v-model="fundData.fundfullnameeng" @input.native="searchData"></el-input>
+                <el-input class="search" v-model="fundData.fundfullnameeng" @input.native="searchData"></el-input>
               </th>
               <th scope="col">基金全名
-                <el-input class="search" placeholder="请输入基金全名" v-model="fundData.fundfullnamechi" @input.native="searchData"></el-input>
+                <el-input class="search" v-model="fundData.fundfullnamechi" @input.native="searchData"></el-input>
               </th>
               <th scope="col" style="width:185px;">
                 LP+GP Commitment
               </th>
               <th scope="col" style="width:240px;">Management Fee Structure
-                <el-input class="search" placeholder="pls enter Management Fee Structure" v-model="fundData.managfeedesc" @input.native="searchData"></el-input>
+                <el-input class="search" v-model="fundData.managfeedesc" @input.native="searchData"></el-input>
               </th>                            
               <th scope="col" style="width:240px;">Capital Allocations Desc
-                <el-input class="search" placeholder="pls enter Management Fee Structure" v-model="fundData.capitalallocationsdesc" @input.native="searchData"></el-input>                        
+                <el-input class="search" v-model="fundData.capitalallocationsdesc" @input.native="searchData"></el-input>                        
               </th> 
               <th scope="col">GP Name
-                <el-input class="search" placeholder="pls Management Fee Structure" v-model="fundData.gpname" @input.native="searchData"></el-input>                        
+                <el-input class="search" v-model="fundData.gpname" @input.native="searchData"></el-input>                        
               </th>
-              <th scope="col">操作</th>
+              <th scope="col">Opt</th>
               </tr>
             </thead>
             <tbody>
@@ -164,23 +164,23 @@ export default {
         });
     },
     ifdeletproject(fundid) {
-        this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+        this.$confirm("此Opt将永久删除该文件, 是否继续?", "提示", {
+          confirmButtonText: "OK",
+          cancelButtonText: "Cancel",
           type: "warning"
         }).then(() => {
           axioss.reqdelet2(fundid).then(res => {
             var status = res.data.code;
             if (status.toLocaleLowerCase() == "success") {
-              this.handleCurrentChange();//更新列表,页码
+              this.handleCurrentChange();//Update列表,页码
               this.$message({
                 type: "success",
-                message: "删除成功!"
+                message: " Delete success!"
               });
             } else {
               this.$message({
                 type: "error",
-                message: "删除失败!"
+                message: "Delete failure!"
               });
             }
           });
@@ -188,7 +188,7 @@ export default {
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "Cancel deleting"
           });
         });
     }

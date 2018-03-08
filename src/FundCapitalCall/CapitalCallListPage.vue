@@ -21,10 +21,10 @@
                 <el-input class="search" v-model="capitalCallData.fundname" @input.native="searchData"></el-input>
               </th>
               <th scope="col">Fund Full Name
-                <el-input class="search" placeholder="请输入Fund Full Name" v-model="capitalCallData.fundfullnameeng" @input.native="searchData"></el-input>
+                <el-input class="search" placeholder=" Fund Full Name" v-model="capitalCallData.fundfullnameeng" @input.native="searchData"></el-input>
               </th>
               <th scope="col">基金全名
-                <el-input class="search" placeholder="请输入基金全名" v-model="capitalCallData.fundfullnamechi" @input.native="searchData"></el-input>
+                <el-input class="search" placeholder="  " v-model="capitalCallData.fundfullnamechi" @input.native="searchData"></el-input>
               </th>
               <th scope="col">Capital Call ID</th>
               <th scope="col">Call Order</th>
@@ -32,34 +32,36 @@
               <th scope="col">Called Pecentage</th>
               <th scope="col">Called Purpose</th>
               <th scope="col">Due Date</th>
-              <th scope="col">操作</th>
+              <th scope="col">Edit</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in alllistData">
-              <td scope="row" style="display:none">{{item.fundtypeid}}</td>
-              <td>{{item.fundFamillyName}}</td>
-              <td>{{item.fundName}}</td>
-              <td>{{item.fundFullNameEng}}</td>
-              <td>{{item.fundFullNameChi}}</td>
-              <td>{{item.callID}}</td>
-              <td>{{item.callOrder}}</td>
-              <td>{{item.calledDate}}</td>
-              <td>{{item.calledPecentage}}</td>
-              <td>{{item.calledPurpose}}</td>
-              <td>{{item.dueDate}}</td>
-              <td>
-                <i class="el-icon-info" @click="showdetail(item.callID)"></i>
-                <i class="el-icon-edit" @click="linkto('editor',item.callID)"></i>
-                <i class="el-icon-delete" @click="ifdeletecapitalcall(item.callID)"></i>
-              </td>
-            </tr>
+              <tr v-for="item in alllistData">
+                <td scope="row" style="display:none">{{item.fundtypeid}}</td>
+                <td>{{item.fundFamillyName}}</td>
+                <td>{{item.fundName}}</td>
+                <td>{{item.fundFullNameEng}}</td>
+                <td>{{item.fundFullNameChi}}</td>
+                <td>{{item.callID}}</td>
+                <td>{{item.callOrder}}</td>
+                <td>{{item.calledDate}}</td>
+                <td>{{item.calledPecentage}}</td>
+                <td>{{item.calledPurpose}}</td>
+                <td>{{item.dueDate}}</td>
+                <td>
+                  <i class="el-icon-info" @click="showdetail(item.callID)"></i>
+                  <i class="el-icon-edit" @click="linkto('editor',item.callID)"></i>
+                  <i class="el-icon-delete" @click="ifdeletecapitalcall(item.callID)"></i>
+                </td>
+              </tr>
             </tbody>
           </table>
           <div class="pagination-container">
             <el-pagination background layout="prev, pager, next,jumper,total" :total="allcount" :current-page.sync="pageCurrent" @current-change="handleCurrentChange" style="position:absolute;left:50%;bottom:25px;transform: translate(-50%);"></el-pagination>
           </div>
         </div>
+      </div>
+      <div class="position-container">
         <div class="table-responsive">
           <el-table :data="allDetailData" border style="width: 100%" maxHeight="850">
             <el-table-column  prop="LPLegalFullName" label="LP(GP) LegalFullName" width="180" >
@@ -94,7 +96,7 @@
             </el-table-column>
             <el-table-column  prop="totalCommentNum" label="Total Comment Num" width="166">
             </el-table-column>
-            <el-table-column label="操作" width="70" fixed='right'>
+            <el-table-column label="Edit" width="70" fixed='right'>
               <template slot-scope="scope">
                 <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
                 <i class="el-icon-delete" @click="handleDelet(scope.$index, scope.row)"></i>
@@ -102,67 +104,96 @@
             </el-table-column>
           </el-table>
         </div>
-        <el-dialog title="capitalCall Information" :visible.sync="capitalCallVisible">
-          <div class="select-container">
-          <el-form :model="capitalCallForm" ref="capitalCallForm">
-            <div class="select-fixed">
-              <!-- <el-form-item label="Investor:">
-              <el-select v-model="capitalCallForm.directortype" placeholder="请选择">
-                <el-option v-for="item in 5" :key="item.baseId"
-                :label="item.baseName" :value="item.baseId"></el-option>
-              </el-select>
-              </el-form-item> -->
-              <el-form-item label="LegalFullName:">
-                <el-input v-model="capitalCallForm.LPLegalFullName"></el-input>
-              </el-form-item>
-              <el-form-item label="ttachment:">
-                <el-input v-model="capitalCallForm.ttachment"></el-input>
-              </el-form-item>
-              <el-form-item label="Called Num:">
-                <el-input v-model="capitalCallForm.calledNum"></el-input>
-              </el-form-item>
-              <el-form-item label="Receive Num:">
-                <el-input v-model="capitalCallForm.receiveNum"></el-input>
-              </el-form-item>
-              <el-form-item label="Email Send:">
-                <el-input v-model="capitalCallForm.emailSendStr"></el-input>
-              </el-form-item>
-              <el-form-item label="Email Send Date:">
-                <el-date-picker v-model="capitalCallForm.emailSendDateTimeStr" type="date" placeholder="选择日期">
-                </el-date-picker>
-              </el-form-item>
-              <el-form-item label="ERISA:">
-                <el-input v-model="capitalCallForm.erisaStr"></el-input>
-              </el-form-item>
-              <el-form-item label="Subject:">
-                <el-input v-model="capitalCallForm.subject"></el-input>
-              </el-form-item>
-              <el-form-item label="Receive Date:">
-                <el-date-picker v-model="capitalCallForm.receiveDate" type="date" placeholder="选择日期">
-                </el-date-picker>
-              </el-form-item>
-              <el-form-item label="Total Comment:">
-                <el-input v-model="capitalCallForm.totalCommentNum"></el-input>
-              </el-form-item>
-            </div>
-          </el-form>
-          </div>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="capitalCallVisible = false" size="mini">Cancel</el-button>
-            <el-button type="primary" @click="submitForm('capitalCallForm','add')" size="mini" v-if="buttonShow=='Add'">Add</el-button>
-            <el-button type="primary" @click="submitForm('capitalCallForm','update')" size="mini" v-else>Update</el-button>
-          </div>
-        </el-dialog>
       </div>
     </div>
+    <el-dialog title="capitalCall Information" :visible.sync="capitalCallVisible">
+      <div class="select-container">
+      <el-form :model="capitalCallForm" ref="capitalCallForm">
+        <div class="select-fixed">
+          <!-- <el-form-item label="Investor:">
+          <el-select v-model="capitalCallForm.directortype" placeholder="  ">
+            <el-option v-for="item in 5" :key="item.baseId"
+            :label="item.baseName" :value="item.baseId"></el-option>
+          </el-select>
+          </el-form-item> -->
+          <el-form-item label="LegalFullName:">
+            <el-input v-model="capitalCallForm.lpLegalFullName"></el-input>
+          </el-form-item>
+          <el-form-item label="Called Num:">
+            <el-input v-model="capitalCallForm.callednum"></el-input>
+          </el-form-item>
+          <el-form-item label="Receive Amount:">
+            <el-input v-model="capitalCallForm.receivenum"></el-input>
+          </el-form-item>
+          <el-form-item label="Email Send:">
+            <el-select v-model="capitalCallForm.emailsend" placeholder="  ">
+              <el-option v-for="item in options" :key="item.value"
+              :label="item.label" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="emailto:">
+            <el-input v-model="capitalCallForm.emailto"></el-input>
+          </el-form-item>
+          <el-form-item label="emailbc:">
+            <el-input v-model="capitalCallForm.emailbc"></el-input>
+          </el-form-item>
+          <el-form-item label="emailcc:">
+            <el-input v-model="capitalCallForm.emailcc"></el-input>
+          </el-form-item>
+          <el-form-item label="emailcontent:">
+            <el-input v-model="capitalCallForm.emailcontent"></el-input>
+          </el-form-item>
+          <el-form-item label="emailreviewed:">
+            <el-select v-model="capitalCallForm.emailreviewed" placeholder="  ">
+              <el-option v-for="item in options" :key="item.value"
+              :label="item.label" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="Email Send Date:">
+            <el-date-picker v-model="capitalCallForm.emailsenddatetime" type="date" placeholder="select Date">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="ERISA:">
+            <el-select v-model="capitalCallForm.erisa" placeholder="  ">
+              <el-option v-for="item in options" :key="item.value"
+              :label="item.label" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="moneyreceived:">
+            <el-select v-model="capitalCallForm.moneyreceived" placeholder="  ">
+              <el-option v-for="item in options" :key="item.value"
+              :label="item.label" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="Subject:">
+            <el-input v-model="capitalCallForm.subject"></el-input>
+          </el-form-item>
+          <el-form-item label="Receive Date:">
+            <el-date-picker v-model="capitalCallForm.receivedate" type="date" placeholder="select Date">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="Total Comment:">
+            <el-input v-model="capitalCallForm.totalcommentnum"></el-input>
+          </el-form-item>
+        </div>
+      </el-form>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="capitalCallVisible = false" size="mini">Cancel</el-button>
+        <el-button type="primary" @click="submitForm('capitalCallForm','add')" size="mini" v-if="buttonShow=='Add'">Add</el-button>
+        <el-button type="primary" @click="submitForm('capitalCallForm','update')" size="mini" v-else>Update</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
   import axioss from "../api/axios";
   import Header from "../components/common/Header";
   import * as method from '@/api/method';
+  import mix from '@/api/mixin';
   export default {
     name: "capitalcalllistpage",
+    mixins:[mix],
     data: function() {
       return {
         buttonShow:'',
@@ -175,35 +206,45 @@
         alllistData:'',
         capitalCallVisible:false,
         capitalCallForm:{
-          LPLegalFullName:'',
-          calledNum:'',
-          receiveNum:'',
-          emailSendStr:'',
-          emailSendDateTimeStr:'',
-          receiveDate:'',
-          erisaStr:'',
-          emailTo:'',
-          emailBC:'',
-          emailCC:'',
+          lpLegalFullName:'',
+          callednum:'',
+          emailbc:'',
+          emailcc:'',
+          emailcontent:'',
+          emailreviewed:'',
+          emailsend:'',
+          emailsenddatetime:'',
+          emailto:'',
+          erisa:'',
+          moneyreceived:'',
+          receivedate:'',
+          receivenum:'',
           subject:'',
-          emailContent:'',
-          attachment:'',
-          emailReviewedStr:'',
-          totalCommentNum:''
+          totalcommentnum:''
         },
         capitalCallFormEmpty:{
-
+          
         },
         capitalCallData:{
-          fundfamillyname:'',
-          fundname:'',
-          fundfullnameeng:'',
-          fundfullnamechi:'',
-          calleddatestart:'',
-          calleddateend:'',
+          lpLegalFullName:'',
+          callednum:'',
+          emailbc:'',
+          emailcc:'',
+          emailcontent:'',
+          emailreviewed:'',
+          emailsend:'',
+          emailsenddatetime:'',
+          emailto:'',
+          erisa:'',
+          moneyreceived:'',
+          receivedate:'',
+          receivenum:'',
+          subject:'',
+          totalcommentnum:''
         },
         capitalCallLpSearchData:{
           callid:'',
+          callDetailId:'',
         },
 
         allDetailData:[],
@@ -242,7 +283,6 @@
             that.alllistData = trans;
             this.allcount=res.data.count;
 
-
           })
           .catch(err => {
           });
@@ -264,10 +304,7 @@
         axioss.reqmemberlistcapitalcalllp(this.capitalCallLpSearchData)
           .then(res => {
             var trans=res.data.data;
-
-            console.log(res.data);
             this.allDetailData = trans;
-            console.log(trans);
           })
           .catch(err => {
           });
@@ -302,22 +339,22 @@
           axioss.reqdeletcapitalcall(callid).then(res => {
             var status = res.data.code;
             if (status.toLocaleLowerCase() == "success") {
-              this.handleCurrentChange();//更新列表,页码
+              this.handleCurrentChange();//Update列表,页码
               this.$message({
                 type: "success",
-                message: "删除成功!"
+                message: "Delete success!"
               });
             } else {
               this.$message({
                 type: "error",
-                message: "删除失败!"
+                message: "Delete Failure!"
               });
             }
           });
           }).catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "Cancel Delete"
           });
         });
       },
@@ -326,24 +363,24 @@
           if (valid) {
             var obj=this.capitalCallForm;
             if(type=='update'){
-              axioss.updateDirector(obj).then(res=>{
-                let status=res.data.code,succMes='更新成功',failMes='更新失败';
+              axioss.updateCapitalCallLp(obj).then(res=>{
+                let status=res.data.code,succMes='Update success',failMes='Update failure';
                 let stateCode=this.showToast(status,succMes,failMes);
                 if(stateCode){
                   this.capitalCallVisible=false;
                   Object.assign(this.capitalCallForm,this.capitalCallFormEmpty);
-                  this.reqDirectorList();
+                  this.showdetail(this.capitalCallLpSearchData.callid);
                 }
               })
             }else{
               obj.portfolioid=this.portfolioid;
               axioss.addDirector(obj).then(res=>{
-                let status=res.data.code,succMes='创建成功',failMes='创建失败';
+                let status=res.data.code,succMes='Create success',failMes='Create failure';
                 let stateCode=this.showToast(status,succMes,failMes);
                 if(stateCode){
                   this.capitalCallVisible=false;
                   Object.assign(this.capitalCallForm,this.capitalCallFormEmpty);
-                  this.reqDirectorList();
+                  
                 }
               })
             }
@@ -353,9 +390,21 @@
           }
         });
       },
-      handleEdit(){
+      handleEdit(index, row){
+
         this.capitalCallVisible=true;
         this.buttonShow='';
+        //this.capitalCallLpSearchData.callDetailId = row.callDetailId;
+        console.log(row);
+        axioss.reqdetailscapitalcalllp(row.callDetailID)
+          .then(res => {
+            var trans=res.data.data;
+            console.log(res.data);
+            this.capitalCallForm = trans;
+            console.log(trans);
+          })
+          .catch(err => {
+          });
       },
       handleDelet(){
 

@@ -1,44 +1,46 @@
 <template>
-    <div class="capTable loan" ref="CapTable">
-        <div class="title">CapTable History</div>
-        <div class="loan-table-container">
-            <h3 class="h3">CapTable History</h3>
-            <div class="position-content">
-                <div class="table-content">
-                    <el-table :data="firstContentListBase.baseName" style="width: 100%;">
-                        <el-table-column label="股东信息" width="150">
-                            <el-table-column prop="sharetype" label="股东类型" width="130"></el-table-column>
-                            <el-table-column prop="securitytypeidstr" label="ShareType" width="130"></el-table-column>
-                            <el-table-column prop="shareowner" label="名称" width="130"></el-table-column>
-                        </el-table-column>
-                    </el-table>
-                    <el-table :data="firstContentListBase.baseName" style="width: 100%;position:absolute;top:0;left:0;z-index:10;">
-                        <el-table-column label="股东信息" width="150">
-                            <el-table-column prop="sharetype" label="股东类型" width="130"></el-table-column>
-                            <el-table-column prop="securitytypeidstr" label="ShareType" width="130"></el-table-column>
-                            <el-table-column prop="shareowner" label="名称" width="130"></el-table-column>
-                        </el-table-column>
-                    </el-table>
-                    <el-table :data="item.baseName" style="width: 100%" v-for="(item,index) in firstContentList" :key='index*(-1)'>
-                        <el-table-column :label="item.baseId">
-                            <el-table-column prop="shareownedno" :label="item.investType=='Equity Interest'||item.investType=='Convert To Equity Interest'?'认缴注册资本':'持股数'" width="130" :formatter="numberFormat"></el-table-column>
-                            <el-table-column prop="cost" label="认缴投资额" width="130" :formatter="numberFormat"></el-table-column>
-                            <el-table-column prop="proper" label="股比(%)" width="130" :formatter="properFormat"></el-table-column>
-                            <el-table-column prop="properwithoutesop" label="withoutESOP(%)" width="130" :formatter="properFormat"></el-table-column>
-                        </el-table-column>
-                    </el-table>
-                    <el-table :data="item.baseName" style="width: 100%" v-for="(item,index) in otherContentList" :key='index+1'>
-                        <el-table-column :label="item.baseId">
-                            <el-table-column prop="shareownedno" :label="item.investType=='Equity Interest'||item.investType=='Convert To Equity Interest'?'认缴注册资本':'持股数'" width="130" :formatter="numberFormat"></el-table-column>
-                            <el-table-column prop="cost" label="认缴投资额" width="130" :formatter="numberFormat"></el-table-column>
-                            <el-table-column prop="proper" label="股比(%)" width="130" :formatter="properFormat"></el-table-column>
-                            <el-table-column prop="properwithoutesop" label="withoutESOP(%)" width="130" :formatter="properFormat"></el-table-column>
-                        </el-table-column>
-                    </el-table>
-                </div>
-            </div>
+  <div class="capTable loan" ref="CapTable">
+    <div class="title">CapTable History</div>
+    <div class="loan-table-container">
+      <h3 class="h3">CapTable History</h3>
+      <div class="position-content">
+        <div class="table-content">
+          <el-table :data="firstContentListBase.baseName" style="width: 100%;" show-summary :summary-method="getSummaries1">
+            <el-table-column label="Stockholder Information" width="160">
+              <el-table-column prop="sharetype" label="Stockholder Type" width="150"></el-table-column>
+              <el-table-column prop="securitytypeidstr" label="ShareType" width="130"></el-table-column>
+              <el-table-column prop="shareowner" label="Name" width='130'></el-table-column>
+            </el-table-column>
+          </el-table>
+          <el-table :data="firstContentListBase.baseName" style="width: 100%;position:absolute;top:0;left:0;z-index:10;" show-summary :summary-method="getSummaries1">
+            <el-table-column label="Stockholder Information" width="160">
+              <el-table-column prop="sharetype" label="Stockholder Type" width="150"></el-table-column>
+              <el-table-column prop="securitytypeidstr" label="Share Type" width="130"></el-table-column>
+              <el-table-column prop="shareowner" label="Name" width='130'></el-table-column>
+            </el-table-column>
+          </el-table>
+          <el-table :data="item.baseName" style="width:592px;overflow:hidden;display: inline-block;vertical-align: top;" v-for="(item,index) in firstContentList" :key='index*(-1)' show-summary :summary-method="getSummaries">
+            <el-table-column :label="item.baseId">
+              <el-table-column align='right' prop="shareownedno" :label="item.investType=='Equity Interest'||item.investType=='Convert To Equity Interest'?'Registered Capital':'Shares Number'" width="150" :formatter="numberFormat"></el-table-column>
+              <el-table-column align='right' prop="cost" label="Subscribed investment" width="180" :formatter="numberFormat"></el-table-column>
+              <el-table-column align='right' prop="proper" label="Share ratio(%)" width="130" :formatter="properFormat"></el-table-column>
+              <el-table-column align='right' prop="properwithoutesop" label="withoutESOP(%)" width="130" :formatter="properFormat"></el-table-column>
+              <el-table-column prop="shareowner" label="Name" width='130'></el-table-column>
+            </el-table-column>
+          </el-table>
+          <el-table :data="item.baseName" style="width:592px;overflow:hidden;display:inline-block;vertical-align: top;" v-for="(item,index) in otherContentList" :key='index+1' show-summary :summary-method="getSummaries">
+            <el-table-column :label="item.baseId">
+              <el-table-column align='right' prop="shareownedno" :label="item.investType=='Equity Interest'||item.investType=='Convert To Equity Interest'?'Registered Capital':'Shares Number'" width="150" :formatter="numberFormat"></el-table-column>
+              <el-table-column align='right' prop="cost" label="Subscribed investment" width="180" :formatter="numberFormat"></el-table-column>
+              <el-table-column align='right' prop="proper" label="Share ratio(%)" width="130" :formatter="properFormat"></el-table-column>
+              <el-table-column align='right' prop="properwithoutesop" label="withoutESOP(%)" width="130" :formatter="properFormat"></el-table-column>
+              <el-table-column prop="shareowner" label="Name" width='130'></el-table-column>
+            </el-table-column>
+          </el-table>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 <script>
 import axioss from '@/api/axios';
@@ -79,12 +81,12 @@ export default {
             })
         },
         handleAdd(){
-            this.reqdroplist();//获取新建时的下拉列表数据。
+            this.reqdroplist();//获取Create时的下拉列表数据。
             this.capVisible=true;
         },
         reqTableContent(){
             axioss.reqTableContent(this.portfolioid).then(res=>{
-                console.log(res);
+                
                 this.capTableContentList=res.data.data;
                 if(res.data.data&&res.data.data.length){
                     this.firstContentListBase=res.data.data.slice(0,1)[0];
@@ -96,11 +98,11 @@ export default {
         toHeader(data){
             var len=data.length;
             for(var i=0;i<len;i++){
-                for(var j in data[i]){
-                    if(/[0-9]/.test(j)){
-                        data[i].header=(data[i])[j];
-                    }
+              for(var j in data[i]){
+                if(/[0-9]/.test(j)){
+                  data[i].header=(data[i])[j];
                 }
+              }
             }
             return data;
         },
@@ -110,14 +112,65 @@ export default {
             return "";
           }
           return method.toThousands(num);
-      },
-      properFormat: function (row, column) {
-        var num = row[column.property];
-        if (num == undefined) {
-          return "";
+        },
+        properFormat: function (row, column) {
+          var num = row[column.property];
+          if (num == undefined) {
+            return "";
+          }
+          return (num*100).toFixed(2);
+        },
+        getSummaries(param) {
+        const { columns, data } = param;
+        const sums = [];
+        columns.forEach((column, index) => {
+          const values = data.map(item => Number(item[column.property]));
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index] += '';
+          } else {
+            sums[index] = 'N/A';
+          }
+        });
+        sums[0]=method.toThousands((sums[0]*1).toFixed(2));
+        sums[1]=method.toThousands((sums[1]*1).toFixed(2));
+        sums[3]=sums[3]*100;
+        sums[2]=sums[2]*100;
+        return sums;
+        },
+        getSummaries1(param) {
+        const { columns, data } = param;
+        const sums = [];
+        columns.forEach((column, index) => {
+          if (index === 0) {
+            sums[index] = 'Total';
+            return;
+          }
+          const values = data.map(item => Number(item[column.property]));
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index] += '';
+          } else {
+            sums[index] = '';
+          }
+        });
+
+        return sums;
         }
-        return (num*100).toFixed(2);
-      },
     },
     computed:{
         capTabelList(){

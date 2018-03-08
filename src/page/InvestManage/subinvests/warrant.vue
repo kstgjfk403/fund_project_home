@@ -15,7 +15,7 @@
             <el-table-column prop="securitytypeidstr" label="Share Type" width="130"></el-table-column>
             <el-table-column prop="currency" label="Cur." width="130"></el-table-column>
             <el-table-column prop="valid" label="Valid" width="130" :formatter="formatBoolean"></el-table-column>
-            <el-table-column prop="vouncher" label="操作" v-if="isDetail!='false'" fixed='right'>
+            <el-table-column prop="vouncher" label="Opt" v-if="isDetail!='false'" fixed='right'>
                 <template slot-scope="scope">
                     <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
                     <i class="el-icon-delete" @click="deleteWarrant(scope.$index, scope.row)"></i>
@@ -31,7 +31,7 @@
             <el-form :model="warrantForm" ref="warrantForm" :label-position='labelPosition'>
                 <div class="select-fixed">
                     <el-form-item label="Portfolio Warrant:">
-                        <el-select v-model="warrantForm.ownertype" placeholder="请选择" :disabled='!buttonShow'>
+                        <el-select v-model="warrantForm.ownertype" placeholder="  " :disabled='!buttonShow'>
                             <el-option v-for="item in wrrantDropList.WARRANT_TYPE" :key="item.baseId"
                             :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
@@ -40,36 +40,36 @@
                         <el-input v-model="warrantForm.warrantownername"></el-input>
                     </el-form-item>
                     <el-form-item label="Fund Family:" v-if="famillyShow">
-                        <el-select v-model="warrantForm.fundfamillyname" placeholder="请选择" filterable>
+                        <el-select v-model="warrantForm.fundfamillyname" placeholder="  " filterable>
                             <el-option v-for="item in wrrantDropList.FUNDFAMILY" :key="item.baseId"
                             :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="Fund:" v-if="fundShow">
-                        <el-select v-model="warrantForm.fundid" placeholder="请选择" filterable>
+                        <el-select v-model="warrantForm.fundid" placeholder="  " filterable>
                             <el-option v-for="item in wrrantDropList.FUND" :key="item.baseId"
                             :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="Issue Date:">
-                        <el-date-picker v-model="warrantForm.issuedate" type="date" placeholder="选择日期">
+                        <el-date-picker v-model="warrantForm.issuedate" type="date" placeholder=" ">
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item label="Due Date:">
-                        <el-date-picker v-model="warrantForm.duedate" type="date" placeholder="选择日期">
+                        <el-date-picker v-model="warrantForm.duedate" type="date" placeholder=" ">
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item label="Cost:">
                         <el-input v-model="warrantForm.warrantamount"></el-input>
                     </el-form-item>
                     <el-form-item label="Currency">
-                        <el-select v-model="warrantForm.currency" placeholder="请选择">
+                        <el-select v-model="warrantForm.currency" placeholder="  ">
                             <el-option v-for="item in wrrantDropList.CURRENCY" :key="item.baseId"
                             :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="Share Type:">
-                        <el-select v-model="warrantForm.securitytypeid" placeholder="请选择">
+                        <el-select v-model="warrantForm.securitytypeid" placeholder="  ">
                             <el-option v-for="item in wrrantDropList.DDL_WarrantSecurityType" :key="item.baseId"
                             :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
@@ -81,7 +81,7 @@
                         <el-input v-model="warrantForm.sharesno"></el-input>
                     </el-form-item>
                     <el-form-item label="Comments:">
-                        <el-input type="textarea" autosize placeholder="请输入内容" v-model="warrantForm.comment">
+                        <el-input type="textarea" autosize placeholder="  " v-model="warrantForm.comment">
                         </el-input>
                     </el-form-item>
                     <el-form-item label="Valid:">
@@ -92,9 +92,9 @@
         </div>
         <subCapTable :dataObj='dataObj' :investForm='warrantForm' :buttonShow='buttonShow' v-show="subCapTableShow"></subCapTable>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="warrantVisible = false" size='mini'>取 消</el-button>
-            <el-button type="primary" size='mini' @click="submitForm('warrantForm','add')" v-if="buttonShow">新建</el-button>
-            <el-button type="primary" size='mini' @click="submitForm('warrantForm','update')" v-else>更新</el-button>
+            <el-button @click="warrantVisible = false" size='mini'>Cancel</el-button>
+            <el-button type="primary" size='mini' @click="submitForm('warrantForm','add')" v-if="buttonShow">Create</el-button>
+            <el-button type="primary" size='mini' @click="submitForm('warrantForm','update')" v-else>Update</el-button>
         </div>
     </el-dialog>
 </div>
@@ -187,7 +187,7 @@ export default {
                     if(type=='add'){
                         obj.portfolioid=this.portfolioid;
                         axioss.addWarrant(obj).then(res=>{
-                            let status=res.data.code,succMes='创建成功',failMes='创建失败';
+                            let status=res.data.code,succMes='Create success',failMes='Create failure';
                             let stateCode=this.showToast(status,succMes,failMes);
                             if(stateCode){
                                 this.warrantVisible=false;
@@ -198,7 +198,7 @@ export default {
                     }else{
                         obj.portfoliocaptablevaluedetailList=this.capFormList;
                         axioss.updateWarrant(obj).then(res=>{
-                            let status=res.data.code,succMes='更新成功',failMes='更新失败';
+                            let status=res.data.code,succMes='Update success',failMes='Update failure';
                             let stateCode=this.showToast(status,succMes,failMes);
                             if(stateCode){
                                 this.warrantVisible=false;
@@ -230,13 +230,13 @@ export default {
             this.querySingalWarrant(data.warrantid);
         },
         deleteWarrant(index,data){
-            this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm("This Opt will permanently delete the file, whether it will continue?", "Notice", {
+                confirmButtonText: "OK",
+                cancelButtonText: "Cancel",
                 type: "warning"
             }).then(() => {
                 axioss.deleteWarrant(data.warrantid).then(res=>{
-                    let status=res.data.code,succMes='删除成功',failMes='删除失败';
+                    let status=res.data.code,succMes='Delete success',failMes='Delete failure';
                     let stateCode=this.showToast(status,succMes,failMes);
                     if(stateCode){
                         this.reqWrrantList();

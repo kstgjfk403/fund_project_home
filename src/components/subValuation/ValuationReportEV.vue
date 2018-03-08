@@ -75,8 +75,8 @@
 
         <tr>
           <th scope="row">Debt</th>
-          <td>{{lastfinancialinfo.debt | formatNumber }}</td>
-          <td>{{portfoliofinancialinfo.debt | formatNumber }}</td>
+          <td>{{lastfinancialinfo.cashlevel | formatNumber }}</td>
+          <td>{{portfoliofinancialinfo.cashlevel | formatNumber }}</td>
         </tr>
 
         <tr class="empty">
@@ -114,7 +114,7 @@
         </tr>
         <tr>
           <td scope="row">- Debt</td>
-          <td align="right">{{portfoliofinancialinfo.debt | formatNumber }}</td>
+          <td align="right">{{portfoliofinancialinfo.cashlevel | formatNumber }}</td>
         </tr>
         <tr>
           <td scope="row">+ Option Proceeds</td>
@@ -341,7 +341,7 @@
 
 
           this.ev = res.data.data.multiple * this.portfoliofinancialinfo.revenue;
-          this.eqv = this.ev + this.portfoliofinancialinfo.cashassets * 1 - this.portfoliofinancialinfo.debt * 1 + this.portfoliovaluation.optionproceed*1;
+          this.eqv = this.ev + this.portfoliofinancialinfo.cashassets * 1 - this.portfoliofinancialinfo.cashlevel * 1 + this.portfoliovaluation.optionproceed*1;
 
 
           this.comparables = res.data.data.portfoliocomparables;

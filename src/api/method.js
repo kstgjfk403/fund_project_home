@@ -10,7 +10,7 @@ export function switchStr(obj) {
   }
   return dataobj;
 }
-//新建人员信息对象格式转换。
+//Create人员信息对象格式转换。
 export function translateFormat(arr) {
   var newobj = {};
   var len = arr.length;
@@ -114,23 +114,25 @@ export function toThousands(num) {
 //合并单元格
 export function mc(tableId, startRow, endRow, col) {
   var tb = document.getElementById(tableId);
-  if (col >= tb.rows[0].cells.length) {
-    return;
-  }
-  if (col == 0) {
-    endRow = tb.rows.length - 1;
-  }
-  for (var i = startRow; i < endRow; i++) {
-    if (tb.rows[startRow].cells[col].textContent) {
-      if (tb.rows[startRow].cells[col].textContent == tb.rows[i + 1].cells[0].textContent) {
-        tb.rows[i + 1].removeChild(tb.rows[i + 1].cells[0]);
-        tb.rows[startRow].cells[col].rowSpan = (tb.rows[startRow].cells[col].rowSpan | 0) + 1;
-        if (i == endRow - 1 && startRow != endRow) {
-          mc(tableId, startRow, endRow, col + 1);
+  if(tb){
+    if (col >= tb.rows[0].cells.length) {
+      return;
+    }
+    if (col == 0) {
+      endRow = tb.rows.length - 1;
+    }
+    for (var i = startRow; i < endRow; i++) {
+      if (tb.rows[startRow].cells[col].textContent) {
+        if (tb.rows[startRow].cells[col].textContent == tb.rows[i + 1].cells[0].textContent) {
+          tb.rows[i + 1].removeChild(tb.rows[i + 1].cells[0]);
+          tb.rows[startRow].cells[col].rowSpan = (tb.rows[startRow].cells[col].rowSpan | 0) + 1;
+          if (i == endRow - 1 && startRow != endRow) {
+            mc(tableId, startRow, endRow, col + 1);
+          }
+        } else {
+          mc(tableId, startRow, i + 0, col + 1);
+          startRow = i + 1;
         }
-      } else {
-        mc(tableId, startRow, i + 0, col + 1);
-        startRow = i + 1;
       }
     }
   }

@@ -39,6 +39,15 @@
  /* 20180202 添加新表单 */
  import Appendix_2 from "@/Reports/appendix_2"
  import Main_Schedule from "@/Reports/main_Schedule"
+ import Main_Schedule_Report from "@/Reports/main_Schedule_Report"
+ /* 20180226 添加表单 */
+ import Main_Business from "@/Reports/main_Business"
+ import Investment_Schedule from "@/Reports/investment_Schedule"
+ import Valuation_Committee_Report from "@/Reports/valuation_Committee_Report"
+ import White_Book from "@/Reports/white_Book"
+ 
+ /* 2018/3/8 添加表单 */
+ import Financial_Report from "@/Reports/Financial_Report"
 
  import InvestDetail from "@/Reports/InvestDetail"
   var router = new Router({
@@ -81,26 +90,17 @@
     {path:'/RealizedGainsLosses',name:'captablereport',component:RealizedGainsLosses},
     {path:'/appendix_2',name:'appendix_2',component:Appendix_2},/* Appendix II */
     {path:'/main_Schedule',name:'main_Schedule',component:Main_Schedule},/* main_Schedule */
-    {path:'/InvestDetail',name:'InvestDetail',component:InvestDetail}
+    {path:'/main_Schedule_Report',name:'main_Schedule_Report',component:Main_Schedule_Report},/* main_Schedule_Report */
+    {path:'/main_Business',name:'main_Business',component:Main_Business},/* main_Business */
+    {path:'/investment_Schedule',name:'investment_Schedule',component:Investment_Schedule},/* investment_Schedule */
+    {path:'/valuation_Committee_Report',name:'valuation_Committee_Report',component:Valuation_Committee_Report},/* valuation_Committee_Report */
+    {path:'/white_Book',name:'white_Book',component:White_Book},/* white_Book */
+    {path:'/financial_Report',name:'financial_Report',component:Financial_Report},/* Financial_Report */
+    
+
+
+    {path:'/InvestDetail',name:'InvestDetail',component:InvestDetail},
    ]
  })
-
-
- router.beforeEach((to, from, next) => {
-  
-  const nextRoute = [ 'listpage', 'addproject', 'fundlistpage'];
-  
-  if(nextRoute.indexOf(to.name)>=0) {
-    if( !store.state.isLogin ){
-        router.push({name: 'detail'})
-    }
-  }
-  if(to.name=='detail'){
-    if(store.state.isLogin){
-      router.push({name:'listpage'})
-    }
-  }
-  next()
-})
 
 export default router

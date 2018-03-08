@@ -75,6 +75,9 @@ time, mark, audio, video {
 .floatleft{
     float:left;
 }
+.clearFix:after{
+    display:block;clear:both;content:"";visibility:hidden;height:0    
+}
 .clearFix{
     zoom:1;
 }
@@ -250,10 +253,10 @@ a{
 }
 // .spv-member-list
 
-.spv-member-list .el-table__body-wrapper .el-table__body{
-    width:auto!important;
+.spv-member-list .el-table__body-wrapper{
+  overflow:hidden;
 }
-//spv 弹框的样式调整...包括里面嵌套的表格
+//spv 
 .inputnone{
     .el-input__inner{
         border-color:transparent;
@@ -303,9 +306,7 @@ a{
         }
         width:49%;
     }
-    .el-input{
-        // width:100%;
-    }
+    
     .el-form-item__label{
         width:40%;
     }
@@ -399,13 +400,29 @@ a{
 .el-table tr th.is-leaf{
     border-color:#ddd;
 }
-.capTable .table-content .el-table{
+.capTable .table-content .el-table:nth-child(1){
     display: inline-block;
-    width:auto!important;
+    width:auto !important;
+    overflow:hidden;
     vertical-align: top;
 }
+.capTable .table-content .el-table:nth-child(2){
+  display: inline-block;
+  width:auto !important;
+  overflow:hidden;
+  vertical-align: top;
+}
+// .capTable .table-content .el-table:nth-child(3){
+//   display: inline-block;
+//   width:720 !important;
+//   overflow:hidden;
+//   vertical-align: top;
+// }
 .capTable .table-content .el-table:nth-child(1){
     float:left;
+}
+.capTable .el-table__body-wrapper{
+  overflow:hidden;
 }
 //报表部分样式
 .idgaccelchinareport .el-table{
@@ -477,6 +494,19 @@ a{
 .lpinfo .table thead tr th .el-input__inner{
   height: 30px;
 }
+
+.lpinfo .el-textarea{
+  width:49%;
+}
+.lpinfo .el-form-item{
+  .el-date-editor{
+    width:49%;
+  }
+  height:41px;
+}
+.lpinfo .el-pagination__editor.el-input{
+  width:50px;
+}
 //capitalcalllistpage
 
 .capitalcall .select-container .el-form-item{
@@ -490,6 +520,7 @@ a{
 .capitalcall .select-container .el-form-item .el-date-editor{
   width:48%;
 }
+
 /*appendix2样式*/
 .mytable.el-table th.is-leaf{
     text-align: center;

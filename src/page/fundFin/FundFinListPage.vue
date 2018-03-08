@@ -79,18 +79,18 @@
 
 
             <!--  <th scope="col" style="width:185px;">LP+GP Commitment
-                &lt;!&ndash; <el-input class="search" placeholder="请输入Programe Name" v-model="capitalCallData.totalcommitmentnum" @input.native="searchData"></el-input>&ndash;&gt;
+                &lt;!&ndash; <el-input class="search" placeholder=" Programe Name" v-model="capitalCallData.totalcommitmentnum" @input.native="searchData"></el-input>&ndash;&gt;
               </th>
 
               <th scope="col" style="width:240px;">Management Fee Structure
-                <el-input class="search" placeholder="请输入Management Fee Structure" v-model="capitalCallData.managfeedesc" @input.native="searchData"></el-input>
+                <el-input class="search" placeholder=" Management Fee Structure" v-model="capitalCallData.managfeedesc" @input.native="searchData"></el-input>
               </th>
               <th scope="col" style="width:240px;">Capital Allocations Desc
-                <el-input class="search" placeholder="请输入Management Fee Structure" v-model="capitalCallData.capitalallocationsdesc" @input.native="searchData"></el-input>
+                <el-input class="search" placeholder=" Management Fee Structure" v-model="capitalCallData.capitalallocationsdesc" @input.native="searchData"></el-input>
               </th>
 
               <th scope="col">GP Name
-                <el-input class="search" placeholder="请输入Management Fee Structure" v-model="capitalCallData.gpname" @input.native="searchData"></el-input>
+                <el-input class="search" placeholder=" Management Fee Structure" v-model="capitalCallData.gpname" @input.native="searchData"></el-input>
               </th>-->
 
             </tr>
@@ -337,15 +337,15 @@
           axioss.reqdeletefundfin(finid).then(res => {
             var status = res.data.code;
             if (status.toLocaleLowerCase() == "success") {
-              this.handleCurrentChange();//更新列表,页码
+              this.handleCurrentChange();//Update列表,页码
               this.$message({
                 type: "success",
-                message: "删除成功!"
+                message: "Delete success!"
               });
             } else {
               this.$message({
                 type: "error",
-                message: "删除失败!"
+                message: "Delete failure!"
               });
             }
           });
@@ -353,7 +353,7 @@
           .catch(() => {
             this.$message({
               type: "info",
-              message: "已取消删除"
+              message: "Cancel Delete"
             });
           });
       }

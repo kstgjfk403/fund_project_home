@@ -75,8 +75,8 @@
 
         <tr>
           <th scope="row">Debt</th>
-          <td>{{lastfinancialinfo.debt | formatNumber }}</td>
-          <td>{{portfoliofinancialinfo.debt | formatNumber }}</td>
+          <td><!--{{lastfinancialinfo.cashlevel | formatNumber }}--></td>
+          <td><!--{{portfoliofinancialinfo.cashlevel | formatNumber }}--></td>
         </tr>
 
         <tr class="empty">

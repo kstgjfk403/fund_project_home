@@ -46,6 +46,12 @@
                                 <router-link to='fundgrosscfspage' class="invest-fund">Fund Gross CFs</router-link>
                             </div>
                         </a>
+                        <a class="invest-fund" href="javascript:;">Portofolio
+                            <div class="subNav">
+                                <router-link to='financial_Report' class="invest-fund">Financial Report</router-link>
+                                
+                            </div>
+                        </a>
                         <router-link class="invest-fund" to='RealizedGainsLosses'>Realized Gains Losses</router-link>
                         <router-link class="invest-fund" to='InvestDetail'>Investment Details</router-link>
                         <router-link class="invest-fund" to='appendix_2'>Appendix II</router-link>

@@ -31,14 +31,18 @@
                      v-for="item in yearList"></el-option>
         </el-select>
         <b style="font-size:13px">; in US$ unless otherwise stated </b>
+        <!-- 导出excel -->
+        <el-button type="primary" size="mini" id="but" @click="exportTab" style="margin-left:20px;">导出Excel</el-button>
         <!-- </el-form-item>-->
       </div>
 
 
-      <div style="margin-top:15px">
+      <div style="margin-top:15px" >&nbsp;
       </div>
+      
+      <!-- 需要导出的表格内容区域 -->
       <div class="position-container">
-        <div class="table-responsive">
+        <div class="table-responsive excel1">
 
 
 
@@ -65,10 +69,10 @@
 
         </div>
       </div>
-      <div style="margin-top:15px">
+      <div style="margin-top:15px" class="space">&nbsp;&nbsp;&nbsp;&nbsp;
       </div>
       <div class="position-container">
-        <div class="table-responsive">
+        <div class="table-responsive excel2">
 
           <!--<el-table :data="portfolioInvestmentListData" :span-method="objectSpanMethod" border style="width: 100%" maxHeight="850">-->
           <el-table :data="portfolioInvestmentListData" :span-method="objectSpanMethod" border style="width: 100%" maxHeight="850">
@@ -216,7 +220,84 @@
       this.submitpage(this.searchData);
     },
     methods:{
+      exportTab(){
+        //var oHtml = document.getElementsByClassName('tableA')[0].outerHTML;
+        var oHtml1 = document.querySelector(".excel1 .el-table__fixed-header-wrapper").outerHTML;
+        var oHtml2 = document.querySelector(".excel1 .el-table__fixed-body-wrapper").outerHTML;
+        var oHtmlspace =  document.querySelector(".space").outerHTML;
+        var oHtml3 = document.querySelector(".excel2 .el-table__header-wrapper").outerHTML;
+        var oHtml4 = document.querySelector(".excel2 .el-table__body-wrapper").outerHTML;
+        var oHtml = oHtml1+oHtml2+oHtmlspace+oHtml3+oHtml4;
+        //console.log(oHtml);
+        
+        var excelHtml = `
+          <html>
+          <head>
+          <meta charset='utf-8' />
+          <style>          
+          /* #excel .el-table__header-wrapper .el-table__header thead tr th{
+            background:#5f87a0;
+            color:#FFF;
+            height:40px;
+            text-align:right;
+          } */
+          h3{
+            color:#2FA4E9;
+          }
+          .space{
+            font-size:30px;
+          }
+          table{
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+          }
+          table tr .firstrow{
+            text-align:left;
+          }
+          
+          table tr td{
+            border:0.5px solid #ddd;
+            height:30px;
+            padding:3em;
+          }
+          
+          table tr th{
+            border:0.5px solid #ddd;
+            text-align:center;
+            height:40px; 
+            background:#5f87a0;
+            color:#FFF;
+            height:40px;            
+          }
+          
+          
+          
+          #excel .position-container .table-responsive h3{
+            color:##2FA4E7;
+          }
+          #excel .el-table__header-wrapper .el-table__header thead tr th.gutter{
+            border:0;
+            background:#fff;
+          }
+          </style>    
+          </head>
+          <body>
+          ${oHtml}
+          </body>
+          </html>
+          `;
 
+        var excelBlob = new Blob([excelHtml], {type: 'application/vnd.ms-excel'})
+        // Create一个a标签
+        var oA = document.createElement('a');
+        // 利用URL.createObjectURL()方法为a元素生成blob URL
+        oA.href = URL.createObjectURL(excelBlob);
+        // 给文件命名
+        oA.download = `FundGrossCfs${(new Date()).toLocaleString()}.xls`;
+        // 模拟点击
+        oA.click();
+        // 移除
+        oA.remove();
+      },
       reqfundlist(){
         /*var enterobj={
          dictArray:'DDL_IncorpLocation,YTD,CURRENCY'

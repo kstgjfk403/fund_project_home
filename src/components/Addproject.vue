@@ -16,7 +16,7 @@
                 <el-form-item label="Report Name" prop="reportname">
                     <el-input v-model="formData.reportname"></el-input>
                 </el-form-item>
-                <el-form-item label="Portfolio Status">
+                <el-form-item label="Portfolio Status" prop="portfoliostatus">
                     <el-select v-model="formData.portfoliostatus">
                     <el-option :key="item.baseId"
                         :label="item.baseName"
@@ -57,7 +57,7 @@
                         v-for="item in dictarraylist.DDL_AntiDilution"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="Incorprated In">
+                <el-form-item label="Incorporated In">
                     <el-select v-model="formData.locationid">
                     <el-option :key="item.baseId"
                         :label="item.baseName"
@@ -79,17 +79,17 @@
                 </el-form-item>
             </div>
             <div class="baseinfo-right">
-                <el-form-item label="项目名称" prop="abbnamechi">
+                <el-form-item label="Portfolio Chinese Name" prop="abbnamechi">
                     <el-input v-model="formData.abbnamechi"></el-input>
                 </el-form-item>
-                <el-form-item label="公司名称" prop="fullnamechi">
+                <el-form-item label="Company Chinese Name" prop="fullnamechi">
                     <el-input v-model="formData.fullnamechi"></el-input>
                 </el-form-item>
                 <el-form-item label="CEO" prop="ceo">
                     <el-input v-model="formData.ceo"></el-input>
                 </el-form-item>
-                <el-form-item label="Portfolio Status Date">
-                    <el-date-picker v-model="formData.portfoliostatusdate" type="date" placeholder="选择日期"></el-date-picker>
+                <el-form-item label="Portfolio Status Date" prop='portfoliostatusdate'>
+                    <el-date-picker v-model="formData.portfoliostatusdate" type="date"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="Initial Stage">
                     <el-select v-model="formData.stageid">
@@ -115,7 +115,7 @@
                         v-for="item in subsectorlist"></el-option>
                     </el-select>
                 </el-form-item>
-               
+
                 <el-form-item label="Fund of Fund" prop="fundoffund">
                     <el-checkbox-group v-model="formData.fundoffund">
                         <el-checkbox label="" value="true" name="type"></el-checkbox>
@@ -123,9 +123,8 @@
                 </el-form-item>
                 <el-form-item label="Year of Incorpration">
                     <el-date-picker v-model="formData.foundeddate"
-                        align="right"
-                        type="year"
-                        placeholder="选择年" format='yyyy'>
+                      align="right"
+                      type="year" format="yyyy" value-format="yyyy-MM-dd">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="Investment structure legal form">
@@ -157,7 +156,7 @@
                         v-for="item in dictarraylist.IDG_Staff"></el-option>
                     </el-select>
                 </el-form-item>
-                
+
             </div>
             <div class="baseinfo-right">
                 <el-form-item label="IDG Inhouse Counsel">
@@ -168,7 +167,7 @@
                         v-for="item in dictarraylist.IDG_Staff"></el-option>
                     </el-select>
                 </el-form-item>
-                
+
                 <el-form-item label="Comment(Memo)">
                     <el-input type="textarea" v-model="formData.memo"></el-input>
                 </el-form-item>
@@ -176,49 +175,49 @@
         </div>
         <h3>Contact information </h3>
         <div class="base-info-container">
-            <div class="baseinfo-left">
-                <el-form-item label="Company Website" prop="website">
-                    <el-input v-model="formData.website"></el-input>
-                </el-form-item>
-                <el-form-item label="Fax" prop="fax">
-                    <el-input v-model="formData.fax"></el-input>
-                </el-form-item>
-                <el-form-item label="Business Address">
-                    <el-input type="textarea" v-model="formData.address" style="min-height:75px;"></el-input>
-                </el-form-item>
-                <el-form-item label="Primary Business">
-                    <el-input type="textarea" v-model="formData.primarybusiness" style="min-height:75px;"></el-input>
-                </el-form-item>
-                <el-form-item label="Line2" prop="auditconfaddress2">
-                    <el-input v-model="formData.auditconfaddress2"></el-input>
-                </el-form-item>
-                <el-form-item label="Line3">
-                    <el-input type="textarea" v-model="formData.auditconfaddress3"></el-input>
-                </el-form-item>
-            </div>
-            <div class="baseinfo-right">
-                <el-form-item label="	Tel." prop="telephone">
-                    <el-input v-model="formData.telephone"></el-input>
-                </el-form-item>
-                <el-form-item label="Product(White Book)" prop="product">
-                    <el-input v-model="formData.product"></el-input>
-                </el-form-item>
-                <el-form-item label="Comment" prop="remarkes">
-                    <el-input v-model="formData.remarkes"></el-input>
-                </el-form-item>
-                <el-form-item label="Company HeadCount" prop="headcount">
-                    <el-input v-model="formData.headcount"></el-input>
-                </el-form-item>
-                <el-form-item label="Nominee Name" prop="nomineename">
-                    <el-input v-model="formData.nomineename"></el-input>
-                </el-form-item>
-                <el-form-item label="Audit Conf Address" prop="auditconfaddress">
-                    <el-input v-model="formData.auditconfaddress"></el-input>
-                </el-form-item>
-            </div>
-            <el-form-item label="One line Description" class="oneline">
-                <el-input type="textarea" v-model="formData.onelinedesc"></el-input>
+          <div class="baseinfo-left">
+            <el-form-item label="Company Website" prop="website">
+              <el-input v-model="formData.website"></el-input>
             </el-form-item>
+            <el-form-item label="Fax" prop="fax">
+              <el-input v-model="formData.fax"></el-input>
+            </el-form-item>
+            <el-form-item label="Business Address">
+              <el-input type="textarea" v-model="formData.address" style="min-height:75px;"></el-input>
+            </el-form-item>
+            <el-form-item label="Primary Business">
+              <el-input type="textarea" v-model="formData.primarybusiness" style="min-height:75px;"></el-input>
+            </el-form-item>
+            <el-form-item label="Line2" prop="auditconfaddress2">
+              <el-input v-model="formData.auditconfaddress2"></el-input>
+            </el-form-item>
+            <el-form-item label="Line3">
+              <el-input type="textarea" v-model="formData.auditconfaddress3"></el-input>
+            </el-form-item>
+          </div>
+          <div class="baseinfo-right">
+            <el-form-item label="	Tel." prop="telephone">
+              <el-input v-model="formData.telephone"></el-input>
+            </el-form-item>
+            <el-form-item label="Product(White Book)" prop="product">
+              <el-input v-model="formData.product"></el-input>
+            </el-form-item>
+            <el-form-item label="Comment" prop="remarkes">
+              <el-input v-model="formData.remarkes"></el-input>
+            </el-form-item>
+            <el-form-item label="Company HeadCount" prop="headcount">
+              <el-input v-model="formData.headcount"></el-input>
+            </el-form-item>
+            <el-form-item label="Nominee Name" prop="nomineename">
+              <el-input v-model="formData.nomineename"></el-input>
+            </el-form-item>
+            <el-form-item label="Audit Conf Address" prop="auditconfaddress">
+              <el-input v-model="formData.auditconfaddress"></el-input>
+            </el-form-item>
+          </div>
+          <el-form-item label="One line Description" class="oneline">
+            <el-input type="textarea" v-model="formData.onelinedesc"></el-input>
+          </el-form-item>
         </div>
         <el-form-item class="addpro-button">
             <div v-if="opreationType=='creatuserform'">
@@ -239,7 +238,6 @@
     <MainBonus></MainBonus>
     <Business></Business>
     <Navlist v-on:toscorll="scrolltoview" :isactive='isActive'></Navlist>
-
 </div>
 </template>
 <script>
@@ -318,88 +316,32 @@ export default {
           memo:'',
           projectbuddy:'',
           firstinvestid:'',
-          logo: "../docs/logos/qiutan(qiuba).jpg",
-          onelinedeschi: null,
-          addresschi: "广州市天河区科韵路24-26号测绘大厦809室",
-          privateorpublic: "Realized",
+          // logo: "../docs/logos/qiutan(qiuba).jpg",
+          logo:"",
+          onelinedeschi: '',
+          addresschi:"",
+          addresschi:"",
+          privateorpublic:"",
           adrratio: "",
           lockupperiod: "",
-          lockupexpireddate: -2209017600000,
-          stockexchangeid: 0,
+          lockupexpireddate:'',
+          stockexchangeid:'',
           stockcode: "",
           spvjurisdition: "",
-          approved: false,
-          idgboardseatno: 1,
-          iceforceid: null,
-          idgonboardflag: true,
+          approved:'',
+          idgboardseatno:'',
+          iceforceid: '',
+          idgonboardflag:'',
         },
         rules: {
           abbname: [
-            { message: 'required', trigger: 'blur' }
+            {required: true, message: 'required', trigger: 'blur' }
           ],
-          abbnamechi: [
-            {message: '必填', trigger: 'blur' }
+          portfoliostatus:[
+            {required: true, type:"number" , message: 'required', trigger: 'change'}
           ],
-          fullname:[
-            { message: 'required', trigger: 'blur' }
-          ],
-          fullnamechi:[
-            { message: '必填', trigger: 'blur' }
-          ],
-          projectmanager:[
-            {type:'array',message: 'required', trigger: 'change' }
-          ],
-          projectbuddy:[
-            {type:'array', message: 'required', trigger: 'change' }
-          ],
-          sectorid:[
-              { type:'number', message: 'required', trigger: 'change'}
-          ],
-          subsectorid:[
-              { type:"number", message: 'required', trigger: 'change'}
-          ],
-           reportname: [
-            { message: 'required', trigger: 'blur' }
-          ],
-          ceo: [
-            { message: 'required', trigger: 'blur' }
-          ],
-          registerno: [
-            {  message: 'required', trigger: 'blur' }
-
-          ],
-          totalboardseatno: [
-            {message: 'required', trigger: 'blur' }
-          ],
-          headcount: [
-            { message: 'required', trigger: 'blur' }
-          ],
-          website: [
-            { message: 'required', trigger: 'blur' }
-          ],
-          fax: [
-            { message: 'required', trigger: 'blur' }
-          ],
-          telephone: [
-            { message: 'required', trigger: 'blur' }
-          ],
-          product:[
-            { message: 'required', trigger: 'blur' }
-          ],
-          remarkes:[
-            { message: 'required', trigger: 'blur' }
-          ],
-          nomineename:[
-            { message: 'required', trigger: 'blur' }
-          ],
-          auditconfaddress:[
-            { message: 'required', trigger: 'blur' }
-          ],
-          auditconfaddress2:[
-            { message: 'required', trigger: 'blur' }
-          ],
-          idgboard: [
-            { message: 'required', trigger: 'blur' }
+          portfoliostatusdate:[
+            {required: true, type:"date" , message: 'required', trigger: 'change'}
           ]
         }
       }
@@ -410,12 +352,11 @@ export default {
         var way=this.$route.query.path;
         this.classOperation(way,portfolioid);
         this.$store.dispatch('storedata',portfolioid);
-
     },
     methods:{
        requserlist(){
            var enterobj={
-               dictArray:'DDL_IDGRole,DDL_Stage,DDL_InitialRole,DDL_IDGFirstInvest,DDL_Sector,DDL_SubSector,DDL_AntiDilution,DDL_IncorpLocation,DDL_CompanyLegalForm,DDL_PortfolioStatus,DDL_StockExchange,IDG_Staff,YTD'
+              dictArray:'DDL_IDGRole,DDL_Stage,DDL_InitialRole,DDL_IDGFirstInvest,DDL_Sector,DDL_SubSector,DDL_AntiDilution,DDL_IncorpLocation,DDL_CompanyLegalForm,DDL_PortfolioStatus,DDL_StockExchange,IDG_Staff,YTD'
            }
            axioss.reqdroplist(enterobj).then(res=>{
                 this.dictarraylist=method.translateFormat(res.data.data);
@@ -440,13 +381,13 @@ export default {
                   if(flag){
                       this.$message({
                           type:'success',
-                          message:'创建成功'
+                          message:'Create success'
                       })
                       this.linktolist();
                   }else{
                       this.$message({
                           type:'warning',
-                          message:'创建失败'
+                          message:'Create failure'
                       })
                   }
               }).catch(res => {
@@ -454,7 +395,7 @@ export default {
           } else {
             this.$message({
                 type:"warning",
-                message:"输入内容格式不正确"
+                message:"Enter content format incorrectly"
             })
             return false;
           }
@@ -463,6 +404,7 @@ export default {
       submitForm2(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            console.log(this.formData)
               axioss.modifyinfo(this.formData).then(res=>{
                   this.linktodetail();
               }).catch(res => {
@@ -470,7 +412,7 @@ export default {
           } else {
             this.$message({
                 type:"warning",
-                message:"您输入的内容格式不正确"
+                message:"Enter content format incorrectly"
             })
             return false;
           }

@@ -2,28 +2,28 @@
   <div class="capTable loan">
     <div class="select-container">
       <div class="select-fixed">
-        <el-form :model="capInputForm" ref="capInputForm" style="overflow:hidden;width:90%;display:inline-block;" :rules="rules">
-          <el-form-item label="股东类型" prop="sharetype">
-            <el-select placeholder="请选择" v-model="capInputForm.sharetype" @change="hanleShareChange">
+        <el-form :model="capInputForm" ref="capInputForm" style="overflow:hidden;width:90%;display:inline-block;vertical-align:middle;" :rules="rules">
+          <el-form-item label="ShareholderType" prop="sharetype">
+            <el-select v-model="capInputForm.sharetype" @change="hanleShareChange">
               <el-option v-for="item in capSelectList" :label="item.baseName" :value="item.baseId" :key="item.baseId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="基金" v-if="idg=='IDG'" prop="shareowner">
-            <el-select placeholder="请选择" v-model="capInputForm.shareowner" filterable>
+          <el-form-item label="Fund" v-if="idg=='IDG'" prop="shareowner">
+            <el-select v-model="capInputForm.shareowner" filterable>
               <el-option v-for="item in fundList" :label="item.baseName" :value="item.baseId" :key="item.baseId"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="股东名称" v-else prop="shareowner">
-            <el-input placeholder="" v-model="capInputForm.shareowner"></el-input>
+          <el-form-item label="ShareholderName" v-else prop="shareowner">
+            <el-input v-model="capInputForm.shareowner"></el-input>
           </el-form-item>
           <el-form-item label="Share Type" prop="securitytypeid">
-            <el-select placeholder="请选择" v-model="capInputForm.securitytypeid">
+            <el-select v-model="capInputForm.securitytypeid">
               <el-option v-for="item in shareTypeList" :label="item.baseName" :value="item.baseId" :key="item.baseId"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
-        <div style="text-align:right;display:inline-block;margin-bottom: 13px;">   
-          <el-button type="primary" size="mini" @click="submitInputForm('capInputForm','add')">创建股东</el-button>
+        <div style="text-align:right;display:inline-block;margin-bottom: 13px;vertical-align:middle;">   
+          <el-button type="primary" size="mini" @click="submitInputForm('capInputForm','add')">Create</el-button>
         </div>
       </div>
     </div>
@@ -31,13 +31,13 @@
       <table class="table table-hover table-bordered table-condensed" style="table-layout:fixed;" id="capTable">
         <thead>
           <tr>
-            <th scope="col">股东类型</th>
-            <th scope="col">股东</th>
+            <th scope="col">Stockholder Type</th>
+            <th scope="col">Stockholder</th>
             <th scope="col">Share Type</th>
             <th scope="col">{{mycellname}}</th>
-            <th scope="col">新增投资额</th>
-            <th scope="col">股比</th>
-            <th scope="col">不含ESOP的股比</th>
+            <th scope="col">New investment</th>
+            <th scope="col">Share ratio</th> 
+            <th scope="col">No ESOP</th>
           </tr>
         </thead>
         <tbody>
@@ -145,13 +145,13 @@ export default {
               if(res.data.code=="SUCCESS"){
                 this.$message({
                   type:'success',
-                  message: '创建成功'
+                  message: 'Create success'
                 })
                 this.reqCaptableList(this.dataObj);
               }else{
                 this.$message({
                   type:'warning',
-                  message: '创建失败'
+                  message: 'Create failure'
                 })
               }
             })
@@ -194,9 +194,9 @@ export default {
       //let investType = this.dataObj.investtype.trim();
       let investType = this.dataObj.investtype;
       if(investType == 'Equity Interest'||investType == 'Convert To Equity Interest'){
-        this.cellName = '认缴注册资本'
+        this.cellName = 'Subscribed investment'
       }else {
-        this.cellName = '持股数'
+        this.cellName = 'Shares Number'
       }
       return this.cellName;
     }

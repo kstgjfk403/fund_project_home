@@ -26,7 +26,7 @@
             </el-table-column>
             <el-table-column prop="currency" label="Currency" width="140">
             </el-table-column>
-            <el-table-column label="操作" width="60" fixed='right' v-if="isDetail!='false'">
+            <el-table-column label="Opt" width="60" fixed='right' v-if="isDetail!='false'">
                 <template slot-scope="scope">
                     <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
                     <i class="el-icon-delete" @click="handleDelet(scope.$index, scope.row)"></i>
@@ -34,7 +34,7 @@
             </el-table-column>
         </el-table>
         <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next,jumper,total" :total="allcount" :page-size='5' :current-page.sync="pageIndex" @current-change="handleCurrentChange" style="position:absolute;left:50%;transform: translate(-50%);"></el-pagination>    
+            <el-pagination background layout="prev, pager, next,jumper,total" :total="allcount" :page-size='10' :current-page.sync="pageIndex" @current-change="handleCurrentChange" style="position:absolute;left:50%;transform: translate(-50%);"></el-pagination>    
         </div>
         <div class="table-foot">
             <i class="el-icon-circle-plus" @click="handleAdd" v-if="isDetail!='false'"></i>
@@ -45,15 +45,15 @@
         <el-form :model="finForm" ref="financialForm">
             <div class="select-fixed">
             <el-form-item label="Start Date">
-                <el-date-picker v-model="finForm.startdate" type="date" placeholder="选择日期">
+                <el-date-picker v-model="finForm.startdate" type="date" placeholder=" ">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="End Date">
-                <el-date-picker v-model="finForm.enddate" type="date" placeholder="选择日期">
+                <el-date-picker v-model="finForm.enddate" type="date" placeholder=" ">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="Currency">
-            <el-select v-model="finForm.currency" placeholder="请选择活动区域">
+            <el-select v-model="finForm.currency" placeholder="  ">
                 <el-option v-for='item in currencyList' :label="item" :value="item" :key='item'></el-option>
             </el-select>
             </el-form-item>
@@ -179,7 +179,7 @@ export default {
                     obj.portfolioid=this.portfolioid;
                     if(type=='add'){   
                         axioss.addFin(obj).then(res=>{
-                            let status=res.data.code,succMes='创建成功',failMes='创建失败';
+                            let status=res.data.code,succMes='Create success',failMes='Create failure';
                             let stateCode=this.showToast(status,succMes,failMes);
                             if(stateCode){
                                 this.financialVisible=false;
@@ -190,7 +190,7 @@ export default {
                     }else{
                         axioss.updateFin(obj).then(res=>{
 
-                            let status=res.data.code,succMes='更新成功',failMes='更新失败';
+                            let status=res.data.code,succMes='Update success',failMes='Update failure';
                             let stateCode=this.showToast(status,succMes,failMes);
                             if(stateCode){
                                 this.financialVisible=false;
@@ -221,14 +221,14 @@ export default {
         handleDelet(index,data){
             var id=data.portfoliofinanciallot;
             console.log(id)
-            this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm("This Opt will permanently delete the file, whether it will continue?", "Notice", {
+                confirmButtonText: "OK",
+                cancelButtonText: "Cancel",
                 type: "warning"
             }).then(() => {
                 axioss.deleteFin(id).then(res => {
                     console.log(res)   
-                    let status=res.data.code,succMes='删除成功!',failMes='删除失败!';
+                    let status=res.data.code,succMes='Delete success!',failMes='Delete failure!';
                     let stateCode=this.showToast(status,succMes,failMes);
                     if(stateCode){
                         this.reqFinList(this.pageIndex,this.pageCount);

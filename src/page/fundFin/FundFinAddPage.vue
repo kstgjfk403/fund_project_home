@@ -112,11 +112,11 @@
       </div>
       <el-form-item style="margin-top:15px;">
         <div v-if="opreationType=='creatuserform'">
-          <el-button type="primary" size="mini" @click="submitForm1('userform')">创建</el-button>
+          <el-button type="primary" size="mini" @click="submitForm1('userform')">Create</el-button>
           <router-link to="FundFinListPage" style="margin-left:10px"><el-button size="mini">返回</el-button></router-link>
         </div>
         <div v-else>
-          <el-button type="primary" size="mini" @click="submitForm2('userform')">更新</el-button>
+          <el-button type="primary" size="mini" @click="submitForm2('userform')">Update</el-button>
           <router-link to="FundFinListPage" style="margin-left:10px"><el-button size="mini">返回</el-button></router-link>
           <!--<el-button size="mini" type="primary" @click="linktodetail">返回</el-button>-->
         </div>
@@ -247,13 +247,13 @@
               if(flag){
                 this.$message({
                   type:'success',
-                  message:'创建成功'
+                  message:'Create success'
                 })
                 this.linktolist()
               }else{
                 this.$message({
                   type:'warning',
-                  message:'创建失败'
+                  message:'Create failure'
                 })
               }
             }).catch(res => {
@@ -262,7 +262,7 @@
           } else {
             this.$message({
               type:"warning",
-              message:"您输入的内容格式不正确"
+              message:"The content format is not correct"
             })
             return false;
           }
@@ -279,7 +279,7 @@
               if(flag){
                 this.$message({
                   type:'success',
-                  message:'更新成功'
+                  message:'Update success'
                 })
                 this.linktolist()
               }

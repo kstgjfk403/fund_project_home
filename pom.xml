@@ -56,16 +56,16 @@
           </execution>
 
           <!-- Install all project dependencies -->
-          <!--<execution>-->
-            <!--<id>npm install</id>-->
-            <!--<goals>-->
-              <!--<goal>npm</goal>-->
-            <!--</goals>-->
-            <!--<phase>generate-resources</phase>-->
-            <!--<configuration>-->
-              <!--<arguments>install</arguments>-->
-            <!--</configuration>-->
-          <!--</execution>-->
+         <!-- <execution>
+            <id>npm install</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <phase>generate-resources</phase>
+            <configuration>
+              <arguments>install</arguments>
+            </configuration>
+          </execution>-->
 
           <!-- Build and minify static files -->
           <execution>

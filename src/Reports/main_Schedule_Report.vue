@@ -2,7 +2,7 @@
 <div>
     <Header/>
     <div class="search">
-        <el-form :inline="true" :model="searchForm" ref="searchForm">
+        <el-form :inline="true" :model="searchForm" ref="searchForm" style="margin-top:10px;">
             <el-form-item label="Fund">
                 <el-select v-model="searchForm.fundid" placeholder=" ">
                 <el-option :label="item.baseName" :value="item.baseId" :key="item.baseId" v-for="item in fundList"></el-option>
@@ -14,8 +14,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" size="mini" @click="searchSubmit('searchForm')">查询</el-button>
-                <!-- 导出excel -->
-                <!-- <el-button type="primary" size="mini" id="but" @click="exportTab">导出Excel</el-button> -->
+                
             </el-form-item>
         </el-form>
     </div>
@@ -25,27 +24,25 @@
         <!-- public -->
         <table class="mytable">
             <tr>
-                <th style="text-align:right;color:#b93a3a;" colspan="10">{{tableInfoObj.fundFullName}}</th>                        
+                <th class="redline textRight" colspan="9">{{tableInfoObj.fundFullName}}</th>                        
             </tr>
             <tr>
-                <th style="text-align:right;" colspan="10">SCHEDULE OF INVESTMENTS</th>                        
-            </tr>
+                <th class="space20 textRight" colspan="9">SCHEDULE OF INVESTMENTS</th>                        
+            </tr>            
             <tr>
-                <th style="text-align:right;" colspan="10">&nbsp;</th>                        
-            </tr>
-            <tr>
-                <th style="text-align:left;" colspan="10">{{tableInfoObj.quarter}}</th>                        
+                <th style="padding-top:20px;" class="textLeft borderbtm" colspan="9">{{tableInfoObj.quarter}}</th>                        
             </tr>
             <tr>
                 <th>Purchase</th>
-                <th rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                 <th></th>
+                <th rowspan="2" style="border-bottom:4px solid #666;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                
                 <th>Shares</th>
                 <th>Fully Diluted</th>
-                <th rowspan="2"></th>
+                <th rowspan="2" style="border-bottom:4px solid #666;">&nbsp;&nbsp;</th>
                 <th></th>
-                <th rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                <th rowspan="2"></th>
+                <!-- <th rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> -->
+                <th rowspan="2" style="border-bottom:4px solid #666;"></th>
                 <th>Estimated</th>                       
             </tr>
             <tr>            
@@ -57,13 +54,13 @@
                 <th>Fair Value</th>                      
             </tr>
             <tr>
-                <th colspan="10" v-if="searchData[0]">&nbsp;</th>                        
+                <th colspan="9" v-if="searchData[0]">&nbsp;</th>                        
             </tr>
             <tr>
-                <th colspan="10" v-if="searchData[0]" style="text-align:left;">PUBLIC COMPANIES:</th>                        
+                <th colspan="9" v-if="searchData[0]" style="text-align:left;">PUBLIC COMPANIES:</th>                        
             </tr>
             <tr>
-                <th colspan="10" v-if="searchData[0]">&nbsp;</th>                        
+                <th colspan="9" v-if="searchData[0]">&nbsp;</th>                        
             </tr>
             <template v-for="(items,index) in searchData">
                 <tr v-if="isDifCompany(searchData,index)">
@@ -71,14 +68,13 @@
                 </tr>                
                 <tr>
                     <td>{{transTime(items.purchaseDate)}}</td>
-                    <td></td>
                     <td>{{items.security}}</td>
+                    <td>&nbsp;</td>
                     <td style="text-align:right">{{mytoThousands(items.sharesOwned)}}</td>
                     <td>{{items.FullyDiluted}}</td>
-                    <td>$</td>
-                    <td style="text-align:right">{{mytoThousands(items.Cost)}}</td>            
                     <td></td>
-                    <td>{{(items.Company=="")?"$":""}}</td>
+                    <td style="text-align:right">{{mytoThousands(items.Cost)}}</td>            
+                    <td></td>                    
                     <td style="text-align:right">{{mytoThousands(items.FairValue)}}</td>
                 </tr>
             </template>
@@ -257,8 +253,7 @@ import Header from "@/components/common/Header";
     mounted(){
         this.reportDropList();
     },
-    methods:{
-       
+    methods:{        
         /* 千分位 */
         mytoThousands(num,mysymbol){
             if(num=="-"){
@@ -336,26 +331,64 @@ import Header from "@/components/common/Header";
   }
 </script>
 <style scoped lang="scss">
-    .search{
-        margin-top:5px;        
-    }
     .mytable{
-        margin-left:10px;
-        margin-bottom:50px;                
-        width:90%;
-        border:1px solid #ebeef5;
+        margin:auto;                
+        width:80%;
+        /* border:1px solid #ebeef5; */
+        
         td,th{
-            box-sizing: border-box;
+            box-sizing: border-box;                      
+            padding:5px;
+            color:#666;           
+             
+        }
+        td{
+            font-size:14px;
+            line-height:14px;
+        }
+        th{            
             height:20px;
             line-height:20px;
-            padding:5px;            
-            border:1px solid #ebeef5; 
-        }
-        th{
+            font-weight:600; 
             text-align:center;
+        }
+        tr:nth-child(5) th{
+            border-bottom:4px solid #666
         }
         td:nth-of-type(5){
             text-align:center;
+        }
+        .redline{
+            color: rgb(185, 58, 58); 
+            font-size:18px; 
+            text-align:right;            
+            border-bottom:2px solid rgb(185, 58, 58);
+        }
+        .space20{
+            padding-bottom:20px;
+        }
+        .textRight{
+            text-align:right;
+        }
+        .textLeft{
+            text-align:left;
+        }
+        .borderbtm{
+            border-bottom:1px solid #666;
+        }
+        .doubleline{
+            border-top:1px solid #666;
+            border-bottom:1px solid #666;
+
+        }
+        .symbol:before{
+            content:"$";
+            display:inline-block;
+            position:absolute;
+            left:0px;
+        }
+        .positionRelative{
+            position: relative;
         }
     }
     

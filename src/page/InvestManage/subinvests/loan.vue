@@ -18,7 +18,7 @@
             <el-table-column prop="extensiondate" label="Extension Date" width="130"></el-table-column>
             <el-table-column prop="taxlotdate" label="Tax Lot Date" width="130"></el-table-column>
             <el-table-column prop="vouncher" label="Vouncher" width="90"></el-table-column>
-            <el-table-column prop="vouncher" label="操作" width="60" fixed='right' v-if="isDetail!='false'">
+            <el-table-column prop="vouncher" label="Opt" width="60" fixed='right' v-if="isDetail!='false'">
                 <template slot-scope="scope">
                     <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
                     <i class="el-icon-delete" @click="deletLoan(scope.$index, scope.row)"></i>
@@ -34,23 +34,23 @@
         <el-form :model="loanForm" ref="loanForm" :label-position='labelPosition' :rules="rules">
             <div class="select-fixed">
                 <el-form-item label="Loan Type" prop="notetype">
-                    <el-select v-model="loanForm.notetype" placeholder="请选择" :disabled="disable">
+                    <el-select v-model="loanForm.notetype" placeholder="  " :disabled="disable">
                         <el-option v-for="item in selectlist.DDL_NoteType" :key="item.baseId"
                         :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Payment Date" prop="closedate">
-                    <el-date-picker v-model="loanForm.closedate" type="date" placeholder="选择日期">
+                    <el-date-picker v-model="loanForm.closedate" type="date" placeholder=" ">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="Fund Family" prop="fundfamillyname">
-                    <el-select v-model="loanForm.fundfamillyname" placeholder="请选择" :disabled='disable' filterable>
+                    <el-select v-model="loanForm.fundfamillyname" placeholder="  " :disabled='disable' filterable>
                         <el-option v-for="item in selectlist.FUNDFAMILY" :key="item.baseId"
                         :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Currency">
-                    <el-select v-model="loanForm.currency" placeholder="请选择">
+                    <el-select v-model="loanForm.currency" placeholder="  ">
                         <el-option v-for="item in selectlist.CURRENCY" :key="item.baseId"
                         :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
@@ -61,12 +61,12 @@
                     <el-input v-model="loanForm.notenum"></el-input>
                 </el-form-item>
               <el-form-item label="Due Date">
-                <el-date-picker v-model="loanForm.duedate" type="date" placeholder="选择日期">
+                <el-date-picker v-model="loanForm.duedate" type="date" placeholder=" ">
                 </el-date-picker>
               </el-form-item>
                 <el-form-item label="Fees Date">
                     <!--<el-input v-model="loanForm.feedate"></el-input>-->
-                  <el-date-picker v-model="loanForm.feedate" type="date" placeholder="选择日期">
+                  <el-date-picker v-model="loanForm.feedate" type="date" placeholder=" ">
                   </el-date-picker>
                 </el-form-item>
                 <el-form-item label="Other Fees" prop="noteotherfee">
@@ -82,11 +82,11 @@
                     <el-checkbox label="Extension" name="type" v-model="loanForm.extension"></el-checkbox>
                 </el-form-item>
                 <el-form-item label="Extension Date">
-                    <el-date-picker v-model="loanForm.extensiondate" type="date" placeholder="选择日期">
+                    <el-date-picker v-model="loanForm.extensiondate" type="date" placeholder=" ">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="TaxLot Date">
-                    <el-date-picker v-model="loanForm.taxLotdate" type="date" placeholder="选择日期">
+                    <el-date-picker v-model="loanForm.taxLotdate" type="date" placeholder=" ">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="Voucher">
@@ -96,9 +96,9 @@
         </el-form>
     </div>
     <div slot="footer" class="dialog-footer">
-        <el-button @click="loanVisible = false" size='mini'>取 消</el-button>
-        <el-button type="primary" size='mini' @click="submitAdd('loanForm','add')" v-if="submitButton">新建</el-button>
-        <el-button type="primary" size='mini' @click="submitAdd('loanForm','update')" v-else>更新</el-button>
+        <el-button @click="loanVisible = false" size='mini'>Cancel</el-button>
+        <el-button type="primary" size='mini' @click="submitAdd('loanForm','add')" v-if="submitButton">Create</el-button>
+        <el-button type="primary" size='mini' @click="submitAdd('loanForm','update')" v-else>Update</el-button>
     </div>
     </el-dialog>
 </div>
@@ -171,19 +171,7 @@ export default {
                 noteotherfee: [
                     {required: true, message: 'The input box is required', trigger: 'change' }
                 ]
-            },
-            options:[
-               {
-                value: '选项1',
-                label: '黄金糕'
-                }, {
-                value: '选项2',
-                label: '双皮奶'
-                }, {
-                value: '选项3',
-                label: '蚵仔煎'
-                }
-            ]
+            }
         }
     },
     updated(){
@@ -226,14 +214,14 @@ export default {
                             if(res.data.code=="SUCCESS"){
                                 this.$message({
                                     type:'success',
-                                    message: '创建成功'
+                                    message: 'Create success'
                                 })
                                 this.loanVisible=false;
                                 this.reqloanlist(this.portfolioid);
                             }else{
                                 this.$message({
                                     type:'warning',
-                                    message: '创建失败'
+                                    message: 'Create failure'
                                 })
                             }
                         })
@@ -243,7 +231,7 @@ export default {
                             if(res.data.code=="SUCCESS"){
                                 this.$message({
                                     type:'success',
-                                    message: '更新成功'
+                                    message: 'Update success'
                                 })
                                 this.loanVisible=false;
                                 this.reqloanlist(this.portfolioid);
@@ -251,7 +239,7 @@ export default {
                             }else{
                                 this.$message({
                                     type:'warning',
-                                    message: '更新失败'
+                                    message: 'Update failure'
                                 })
                             }
                         })
@@ -267,13 +255,13 @@ export default {
         },
         deletLoan(index,data){
             var id=data.noteid;
-            this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm("This Opt will permanently delete the file, whether it will continue?", "Notice", {
+                confirmButtonText: "OK",
+                cancelButtonText: "Cancel",
                 type: "warning"
             }).then(()=>{
                 axioss.deletLoan(id).then(res=>{
-                    let status=res.data.code,succMes='删除成功',failMes='删除失败';
+                    let status=res.data.code,succMes='Delete success',failMes='Delete failure';
                     let stateCode=this.showToast(status,succMes,failMes);
                     if(stateCode){
                         this.reqloanlist(this.portfolioid);

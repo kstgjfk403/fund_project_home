@@ -17,7 +17,7 @@
       <el-table-column prop="vouncher" label="vouncher" width="150"></el-table-column>
       <el-table-column prop="conversionratio" label="Rate" width="70"></el-table-column>
       <el-table-column prop="convertamount" label="convert amount" width="150" :formatter="numberFormat"></el-table-column>
-      <el-table-column label="操作" width="60" fixed='right' v-if="isDetail!='false'">
+      <el-table-column label="Opt" width="60" fixed='right' v-if="isDetail!='false'">
         <template slot-scope="scope">
           <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
           <i class="el-icon-delete" @click="handleDelet(scope.$index, scope.row)"></i>
@@ -33,29 +33,29 @@
       <el-form :model="investForm" :label-position='labelPosition' ref="investForm" :rules="rules">
         <div class="select-fixed">
           <el-form-item label="Invest Type" prop='investtype'>
-            <el-select v-model="investForm.investtype" placeholder="请选择" @change="whichShow" :disabled="isDisable">
+            <el-select v-model="investForm.investtype" placeholder="  " @change="whichShow" :disabled="isDisable">
               <el-option v-for="item in investTypeList" :key="item.baseId"
               :label="item.baseName" :value="item.baseId"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="Payment Date" prop='closedate'>
-            <el-date-picker v-model="investForm.closedate" type="date" placeholder="选择日期" :disabled="isDisable||isParticipatDisable">
+            <el-date-picker v-model="investForm.closedate" type="date" placeholder=" " :disabled="isDisable||isParticipatDisable">
           </el-date-picker>
           </el-form-item>
           <el-form-item label="Fund Family" v-if="buttonShow=='add'">
-            <el-select v-model="investForm.fundfamillyname" placeholder="请选择" @change="showTable" :disabled="isDisable||isShareSplitDisable||isParticipatDisable" filterable>
+            <el-select v-model="investForm.fundfamillyname" placeholder="  " @change="showTable" :disabled="isDisable||isShareSplitDisable||isParticipatDisable" filterable>
               <el-option v-for="item in fundFamilyList" :key="item.baseId"
               :label="item.baseName" :value="item.baseName"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="Fund" v-else>
-            <el-select v-model="investForm.fundname" placeholder="请选择" @change="showTable" :disabled="isDisable||isParticipatDisable" filterable>
+            <el-select v-model="investForm.fundname" placeholder="  " @change="showTable" :disabled="isDisable||isParticipatDisable" filterable>
               <el-option v-for="item in fundList" :key="item.baseId"
               :label="item.baseName" :value="item.baseName"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="Termsign Date" prop='termsigndate'>
-            <el-date-picker v-model="investForm.termsigndate" type="date" placeholder="选择日期" :disabled="isDisable">
+            <el-date-picker v-model="investForm.termsigndate" type="date" placeholder=" " :disabled="isDisable">
             </el-date-picker>
           </el-form-item>
         </div>
@@ -64,7 +64,7 @@
             <el-input v-model="investForm.round"></el-input>
           </el-form-item>
           <el-form-item label="Currency">
-            <el-select v-model="investForm.currency" placeholder="请选择">
+            <el-select v-model="investForm.currency" placeholder="  ">
               <el-option v-for="item in fundCurrencyList" :key="item.baseId"
               :label="item.baseName" :value="item.baseId"></el-option>
             </el-select>
@@ -72,7 +72,7 @@
         </div>
         <div v-else-if="investType=='Equity Interest'">
           <el-form-item label="Share Type">
-            <el-select v-model="investForm.securitytypeid" placeholder="请选择">
+            <el-select v-model="investForm.securitytypeid" placeholder="  ">
               <el-option label='Equity Interest' value='Equity Interest' key='6'></el-option>
               <el-option label='Capital Call' value='Capital Call' key='14'></el-option>
               <el-option label='Distribution' value='Distribution' key='15'></el-option>
@@ -91,7 +91,7 @@
             <el-input v-model="investForm.otherfees"></el-input>
           </el-form-item>
           <el-form-item label="Currency">
-            <el-select v-model="investForm.currency" placeholder="请选择">
+            <el-select v-model="investForm.currency" placeholder="  ">
               <el-option v-for="item in fundCurrencyList" :key="item.baseId"
               :label="item.baseName" :value="item.baseId"></el-option>
             </el-select>
@@ -100,7 +100,7 @@
             <el-input v-model="investForm.remarks"></el-input>
           </el-form-item>
           <el-form-item label="Tax Lot Date">
-            <el-date-picker v-model="investForm.taxlotdate" type="date" placeholder="选择日期">
+            <el-date-picker v-model="investForm.taxlotdate" type="date" placeholder=" ">
             </el-date-picker>
           </el-form-item>
           <el-form-item label="Voucher">
@@ -109,7 +109,7 @@
         </div>
         <div v-else-if="investType=='Equity Investment'||investType=='Equity Investment&Loan To Equity'||investType=='Bond'">
             <el-form-item label="Share Type">
-                <el-select v-model="investForm.securitytypeid" placeholder="请选择">
+                <el-select v-model="investForm.securitytypeid" placeholder="  ">
                     <el-option label='Common' value='Common' key='2'></el-option>
                     <el-option label='Preferred' value='Preferred' key='3'></el-option>
                     <el-option label='Bond' value='Bond' key='20'></el-option>
@@ -128,7 +128,7 @@
                 <el-input v-model="investForm.otherfees"></el-input>
             </el-form-item>
             <el-form-item label="Currency">
-                <el-select v-model="investForm.currency" placeholder="请选择">
+                <el-select v-model="investForm.currency" placeholder="  ">
                     <el-option v-for="item in fundCurrencyList" :key="item.baseId"
                     :label="item.baseName" :value="item.baseId"></el-option>
                 </el-select>
@@ -143,14 +143,14 @@
             </el-form-item>
         </div>
         <div v-else-if="investType=='Convert To Equity Investment'">
-            
+
             <el-form-item label="Round" prop='round'>
                 <el-input v-model="investForm.round"></el-input>
             </el-form-item>
         </div>
         <div v-else-if="investType=='Share Reclassification'">
             <el-form-item label="Share Type">
-                <el-select v-model="investForm.securitytypeid" placeholder="请选择">
+                <el-select v-model="investForm.securitytypeid" placeholder="  ">
                     <el-option label='Common' value='Common' key="2"></el-option>
                     <el-option label='Preferred' value='Preferred' key="3"></el-option>
                 </el-select>
@@ -176,7 +176,7 @@
                 <el-input v-model="investForm.sharesplitrate"></el-input>
             </el-form-item>
             <el-form-item label="Remarks:">
-                <el-input type="textarea" autosize placeholder="请输入内容" v-model="investForm.comment">
+                <el-input type="textarea" autosize placeholder="  " v-model="investForm.comment">
                 </el-input>
             </el-form-item>
         </div>
@@ -185,7 +185,7 @@
             <el-input v-model="investForm.round"></el-input>
           </el-form-item>
           <el-form-item label="Currency">
-            <el-select v-model="investForm.currency" placeholder="请选择">
+            <el-select v-model="investForm.currency" placeholder="  ">
               <el-option v-for="item in fundCurrencyList" :key="item.baseId"
               :label="item.baseName" :value="item.baseId"></el-option>
             </el-select>
@@ -196,7 +196,7 @@
             <el-input v-model="investForm.round"></el-input>
           </el-form-item>
           <el-form-item label="Currency">
-            <el-select v-model="investForm.currency" placeholder="请选择">
+            <el-select v-model="investForm.currency" placeholder="  ">
               <el-option v-for="item in fundCurrencyList" :key="item.baseId"
               :label="item.baseName" :value="item.baseId"></el-option>
             </el-select>
@@ -204,13 +204,13 @@
         </div>
         <div v-else-if="investType=='Warrant Exercise'">
             <el-form-item label="Warrant">
-              <el-select v-model="investForm.convertfromwarrantid" placeholder="请选择">
+              <el-select v-model="investForm.convertfromwarrantid" placeholder="  ">
                 <el-option v-for="item in wrrantSelectList" :key="item.baseId"
                 :label="item.baseName" :value="item.baseId"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="Share Type">
-              <el-select v-model="investForm.securitytypeid" placeholder="请选择">
+              <el-select v-model="investForm.securitytypeid" placeholder="  ">
                 <el-option label='Equity Interest' value='Equity Interest' key='6'></el-option>
                 <el-option label='Common' value='Common' key="2"></el-option>
                 <el-option label='Preferred' value='Preferred' key="3"></el-option>
@@ -277,9 +277,9 @@
     </div>
     <subCapTable :dataObj='dataObj' :investForm='investForm' :buttonShow='buttonShow' :capTableData='captelDetailData' v-show="subCapTableShow"></subCapTable :key="new Date()">
     <div slot="footer" class="dialog-footer">
-      <el-button @click="investVisible = false" size='mini'>取消</el-button>
-      <el-button v-if="buttonShow=='add'" type="primary" size='mini' @click="submitForm('investForm','add')">创建</el-button>
-      <el-button v-else type="primary" size='mini' @click="submitForm('investForm','update')">更新</el-button>
+      <el-button @click="investVisible = false" size='mini'>Cancel</el-button>
+      <el-button v-if="buttonShow=='add'" type="primary" size='mini' @click="submitForm('investForm','add')">Create</el-button>
+      <el-button v-else type="primary" size='mini' @click="submitForm('investForm','update')">Update</el-button>
     </div>
     </el-dialog>
 </div>
@@ -493,8 +493,11 @@ export default {
     submitForm(formName, type) {
       this.$refs[formName].validate(valid => {
         if (valid) {
+          console.log(obj);
           var obj = this.translateSubmit(this.investForm, this.translateObj);
+          console.log(obj);
           obj.portfoliocaptablevaluedetailList = this.capFormList;
+          console.log(obj);
           if (this.isTableShow == "LoanToEquity1") {
             obj.portfolioloantoequityList = this.toMs(this.loanToEquityData);
             obj.portfolioloantoequityList = this.translateShareTypeSubmit(
@@ -502,13 +505,14 @@ export default {
               this.translateObj
             );
           }
+          console.log(obj);
           if (type == "add") {
             obj.portfolioid = this.portfolioid;
             axioss.addInvest(obj).then(res => {
               if (res.data.code == "SUCCESS") {
                 this.$message({
                   type: "success",
-                  message: "创建成功"
+                  message: "Create success"
                 });
                 this.investVisible = false;
                 this.reqinvestList(this.portfolioid);
@@ -517,7 +521,7 @@ export default {
               } else {
                 this.$message({
                   type: "warning",
-                  message: "创建失败"
+                  message: "Create failure"
                 });
               }
             });
@@ -526,7 +530,7 @@ export default {
               if (res.data.code == "SUCCESS") {
                 this.$message({
                   type: "success",
-                  message: "更新成功"
+                  message: "Update success"
                 });
                 this.investVisible = false;
                 this.reqinvestList(this.portfolioid); //请求invest数据
@@ -535,7 +539,7 @@ export default {
               } else {
                 this.$message({
                   type: "warning",
-                  message: "更新失败"
+                  message: "Update failure"
                 });
               }
             });
@@ -571,9 +575,9 @@ export default {
     },
     handleDelet(index, data) {
       var id = data.eiid;
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("This Opt will permanently delete the file, whether it will continue?", "Notice", {
+        confirmButtonText: "OK",
+        cancelButtonText: "Cancel",
         type: "warning"
       }).then(() => {
         axioss.deletInvest(id).then(res => {
@@ -582,13 +586,13 @@ export default {
             this.reqinvestList();
             this.$message({
               type: "success",
-              message: "删除成功!"
+              message: "Delete success!"
             });
             bus.$emit("updateCaptable");
           } else {
             this.$message({
               type: "error",
-              message: "删除失败!"
+              message: "Delete failure!"
             });
           }
         });

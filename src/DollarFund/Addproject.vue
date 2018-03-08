@@ -19,7 +19,7 @@
               </el-form-item>
               
               <el-form-item label="Financial Year End">
-                <el-select v-model="formData.yearend" placeholder="请选择活动区域">
+                <el-select v-model="formData.yearend" placeholder="">
                 <el-option :key="item.baseId" 
                   :label="item.baseName" 
                   :value="item.baseId" 
@@ -27,14 +27,14 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="Fund Closing Date" multiple>
-                <el-date-picker v-model="formData.closedate" type="date" placeholder="选择日期"></el-date-picker>
+                <el-date-picker v-model="formData.closedate" type="date" placeholder=""></el-date-picker>
               </el-form-item>
               <el-form-item label="Total GP Commitment">
-                <el-input v-model="formData.totalgpcommitnum" placeholder="多选+搜索select框" filterable  @change="togetherChange"></el-input>
+                <el-input v-model="formData.totalgpcommitnum" placeholder="" filterable  @change="togetherChange"></el-input>
               </el-form-item>
               
               <el-form-item label="Fund Currency">
-                <el-select v-model="formData.totalcommitmentcur" placeholder="请选择活动区域">
+                <el-select v-model="formData.totalcommitmentcur" placeholder="">
                 <el-option :key="item.baseId" 
                   :label="item.baseName" 
                   :value="item.baseId" 
@@ -42,7 +42,7 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="Incorprated In">
-                <el-select v-model="formData.incorplocation" placeholder="请选择活动区域">
+                <el-select v-model="formData.incorplocation" placeholder="">
                 <el-option :key="item.baseId" 
                   :label="item.baseName" 
                   :value="item.baseId" 
@@ -68,7 +68,7 @@
                 <el-input v-model="formData.gpname"></el-input>
               </el-form-item>
               <el-form-item label=" Mgmt Co. Incorporated In">
-                <el-select v-model="formData.magtcomincorporated" placeholder="请选择活动区域">
+                <el-select v-model="formData.magtcomincorporated" placeholder="">
                 <el-option :key="item.baseId" 
                   :label="item.baseName" 
                   :value="item.baseId" 
@@ -90,7 +90,7 @@
             </div>
             <div class="baseinfo-right">
               <el-form-item label="Fund Family Name" prop="fundfamillyname">
-                <el-input v-model="formData.fundfamillyname" placeholder="请输入项目名称"></el-input>
+                <el-input v-model="formData.fundfamillyname" placeholder=" 项目名称"></el-input>
               </el-form-item>
               <el-form-item label="Fund Full Name" prop="fundfullnameeng">
                 <el-input v-model="formData.fundfullnameeng"></el-input>
@@ -99,13 +99,13 @@
                 <el-input v-model="formData.regaddress"></el-input>
               </el-form-item>
               <el-form-item label="Formation Date" prop="formationdate">
-                <el-date-picker v-model="formData.formationdate" type="date" placeholder="选择日期"></el-date-picker>
+                <el-date-picker v-model="formData.formationdate" type="date" placeholder=" "></el-date-picker>
               </el-form-item>
               <el-form-item label="Total LP Commitment">
-                <el-input v-model="formData.totallpcommitnum" placeholder="请选择活动区域"></el-input>
+                <el-input v-model="formData.totallpcommitnum" placeholder="  "></el-input>
               </el-form-item>
               <el-form-item label="LP+GP Commitment">
-                <el-input v-model="formData.totalcommitmentnum" placeholder="请选择活动区域"></el-input>
+                <el-input v-model="formData.totalcommitmentnum" placeholder="  "></el-input>
               </el-form-item>
               <el-form-item label="Bank Name">
                 <el-input v-model="formData.bankname" placeholder="pls enter total border representative"></el-input>
@@ -156,11 +156,11 @@
         </div>
         <el-form-item class='addpro-button' style="border-top:1px solid #ddd;">
           <div v-if="opreationType=='creatuserform'">
-            <el-button type="primary" size="mini" @click="submitForm1('userform')">创建</el-button>
+            <el-button type="primary" size="mini" @click="submitForm1('userform')">Create</el-button>
             <router-link to="fundlistpage" style="margin-left:10px"><el-button size="mini">返回</el-button></router-link>
           </div>
           <div v-else>
-            <el-button type="primary" size="mini" @click="submitForm2('userform')">更新</el-button>
+            <el-button type="primary" size="mini" @click="submitForm2('userform')">Update</el-button>
             <el-button size="mini" type="primary" @click="linktodetail">返回</el-button>
           </div>
         </el-form-item> 
@@ -250,7 +250,7 @@ export default {
             {required: true, message: 'required', trigger: 'change' }
           ],
           fundfullnamechi:[
-              { required: true, message: '必填', trigger: 'change'}
+              { required: true, message: 'required', trigger: 'change'}
           ],
           subsectorid:[
               { type:"number", message: 'required', trigger: 'change'}
@@ -332,13 +332,13 @@ export default {
             if(flag){ 
               this.$message({
                 type:'success',
-                message:'创建成功'
+                message:'Create success'
               })
               this.linktolist()
             }else{
               this.$message({
                 type:'warning',
-                message:'创建失败'
+                message:'Create failure'
               })
             }
           }).catch(res => {
@@ -347,7 +347,7 @@ export default {
         } else {
           this.$message({
             type:"warning",
-            message:"您输入的内容格式不正确"
+            message:"The content format is not correct"
           })
           return false;
         }

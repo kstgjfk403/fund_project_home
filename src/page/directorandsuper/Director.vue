@@ -2,64 +2,64 @@
 <div class="director loan" ref="Director">
     <div class="title">Director</div>
     <div class="loan-table-container">
-        <h3>Director</h3>
-        <div class="number">
-            <label style="font-size:14px;margin-left:15px;">Total Board Representative No.:</label>
-            <el-input v-model="totalboard" placeholder="请输入数量" style="margin-left:15px;"></el-input>
-            <el-button size="mini" type="primary" style="margin-left:15px;" @click="submitNumForm">Save</el-button>
-        </div>
-        <el-table :data="directorData" border style="float:left;width:auto;">
-        <el-table-column prop="directortype" label="Type" width="140">
-        </el-table-column>
-        <el-table-column prop="staffidstr" label="Director/Observor" width="220">
-        </el-table-column>
-        <el-table-column prop="directorstartdate" label="Start Date" width="140" :formatter='formatDate'>
-        </el-table-column>
-        <el-table-column prop="directorenddate" label="End Date" width="140" :formatter='formatDate'>
-        </el-table-column>
-        <el-table-column label="操作" width="60" v-if="isDetail!='false'">
-            <template slot-scope="scope">
-                <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
-                <i class="el-icon-delete" @click="handleDelet(scope.$index, scope.row)"></i>
-            </template>
-        </el-table-column>
-        </el-table>
-        <div class="table-foot">
-            <i class="el-icon-circle-plus" @click="handleAdd" v-if="isDetail!='false'"></i>
-        </div>
+      <h3>Director</h3>
+      <div class="number">
+        <label style="font-size:14px;margin-left:15px;">Total Board Representative No.:</label>
+        <el-input v-model="totalboard" placeholder="  " style="margin-left:15px;"></el-input>
+        <el-button size="mini" type="primary" style="margin-left:15px;" @click="submitNumForm">Save</el-button>
+      </div>
+      <el-table :data="directorData" border style="float:left;width:auto;">
+      <el-table-column prop="directortype" label="Type" width="140">
+      </el-table-column>
+      <el-table-column prop="staffidstr" label="Director/Observor" width="220">
+      </el-table-column>
+      <el-table-column prop="directorstartdate" label="Start Date" width="140" :formatter='formatDate'>
+      </el-table-column>
+      <el-table-column prop="directorenddate" label="End Date" width="140" :formatter='formatDate'>
+      </el-table-column>
+      <el-table-column label="Opt" width="60" v-if="isDetail!='false'">
+        <template slot-scope="scope">
+          <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
+          <i class="el-icon-delete" @click="handleDelet(scope.$index, scope.row)"></i>
+        </template>
+      </el-table-column>
+      </el-table>
+      <div class="table-foot">
+        <i class="el-icon-circle-plus" @click="handleAdd" v-if="isDetail!='false'"></i>
+      </div>
     </div>
     <el-dialog title="Director Information" :visible.sync="directorVisible">
-        <div class="select-container">
-        <el-form :model="directorForm" ref="directorForm" :rules='rules'>
-            <div class="select-fixed">
-                <el-form-item label="Type">
-                <el-select v-model="directorForm.directortype" placeholder="请选择">
-                    <el-option v-for="item in directorDropList.DIRECTOR_TYPE" :key="item.baseId"
-                    :label="item.baseName" :value="item.baseId"></el-option>
-                </el-select>
-                </el-form-item>
-                <el-form-item label="Staff">
-                    <el-select v-model="directorForm.staffid" placeholder="请选择" filterable>
-                        <el-option v-for="item in directorDropList.IDG_Staff" :key="item.baseId"
-                        :label="item.baseName" :value="item.baseId"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="Start Date">
-                    <el-date-picker v-model="directorForm.directorstartdate" type="date" placeholder="选择日期">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item label="End Date" prop='directorenddate'>
-                    <el-date-picker v-model="directorForm.directorenddate" type="date" placeholder="选择日期">
-                    </el-date-picker>
-                </el-form-item>
-            </div>
-        </el-form>
+      <div class="select-container">
+      <el-form :model="directorForm" ref="directorForm" :rules='rules'>
+        <div class="select-fixed">
+          <el-form-item label="Type">
+          <el-select v-model="directorForm.directortype" placeholder="  ">
+            <el-option v-for="item in directorDropList.DIRECTOR_TYPE" :key="item.baseId"
+            :label="item.baseName" :value="item.baseId"></el-option>
+          </el-select>
+          </el-form-item>
+          <el-form-item label="Staff">
+            <el-select v-model="directorForm.staffid" placeholder="  " filterable>
+              <el-option v-for="item in directorDropList.IDG_Staff" :key="item.baseId"
+              :label="item.baseName" :value="item.baseId"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="Start Date">
+            <el-date-picker v-model="directorForm.directorstartdate" type="date" placeholder=" ">
+            </el-date-picker>
+          </el-form-item>
+          <el-form-item label="End Date" prop='directorenddate'>
+            <el-date-picker v-model="directorForm.directorenddate" type="date" placeholder=" ">
+            </el-date-picker>
+          </el-form-item>
         </div>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="directorVisible = false" size="mini">Cancel</el-button>
-            <el-button type="primary" @click="submitForm('directorForm','add')" size="mini" v-if="buttonShow=='Add'">Add</el-button>
-            <el-button type="primary" @click="submitForm('directorForm','update')" size="mini" v-else>Update</el-button>
-        </div>
+      </el-form>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="directorVisible = false" size="mini">Cancel</el-button>
+        <el-button type="primary" @click="submitForm('directorForm','add')" size="mini" v-if="buttonShow=='Add'">Add</el-button>
+        <el-button type="primary" @click="submitForm('directorForm','update')" size="mini" v-else>Update</el-button>
+      </div>
     </el-dialog>  
 </div>
 </template>
@@ -76,7 +76,7 @@ export default {
             if(value==''){
                 callback();
             }else if(value<this.directorForm.directorstartdate){
-                callback(new Error('不能小于Start Date'))
+                callback(new Error('Greater than Start Date'))
             }else{
                 callback();
             }
@@ -144,7 +144,7 @@ export default {
         submitNumForm(){
             var obj={portfolioid:this.portfolioid,totalboardseatno:this.totalboard1}
             axioss.modifyDirectorNum(obj).then(res=>{
-                let status=res.data.code,succMes='保存成功',failMes='保存失败';
+                let status=res.data.code,succMes='Save Success',failMes='Save failure';
                 let stateCode=this.showToast(status,succMes,failMes);
             })
         },
@@ -155,7 +155,7 @@ export default {
                     if(type=='update'){
                         axioss.updateDirector(obj).then(res=>{
                             console.log(res);
-                            let status=res.data.code,succMes='更新成功',failMes='更新失败';
+                            let status=res.data.code,succMes='Update success',failMes='Update failure';
                             let stateCode=this.showToast(status,succMes,failMes);
                             if(stateCode){
                                 this.directorVisible=false;
@@ -167,7 +167,7 @@ export default {
                         obj.portfolioid=this.portfolioid;
                         axioss.addDirector(obj).then(res=>{
                             console.log(res);
-                            let status=res.data.code,succMes='创建成功',failMes='创建失败';
+                            let status=res.data.code,succMes='Create success',failMes='Create failure';
                             let stateCode=this.showToast(status,succMes,failMes);
                             if(stateCode){
                                 this.directorVisible=false;
@@ -193,14 +193,14 @@ export default {
         },
         handleDelet(index,data){
             var id=data.directorid;
-            this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm("This Opt will permanently delete the file, whether it will continue?", "Notice", {
+                confirmButtonText: "OK",
+                cancelButtonText: "Cancel",
                 type: "warning"
             }).then(() => {
                 axioss.deleteDirector(id).then(res => {
                     console.log(res)
-                    let status=res.data.code,succMes='删除成功',failMes='删除失败';
+                    let status=res.data.code,succMes='Delete success',failMes='Delete failure';
                     let stateCode=this.showToast(status,succMes,failMes);
                     if(stateCode){
                         this.reqDirectorList();

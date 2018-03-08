@@ -26,7 +26,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="Time">
-          <el-date-picker v-model="valuationFormData.VALUEDATE" type="date" placeholder="选择日期"></el-date-picker>
+          <el-date-picker v-model="valuationFormData.VALUEDATE" type="date" placeholder="select date"></el-date-picker>
           <el-button size="mini" type="primary" @click="searchData">Search</el-button>
         </el-form-item>
       </el-form>
@@ -44,7 +44,7 @@
         <el-table-column prop="valuation" label="Valuation" :formatter="numberFormat"></el-table-column>
         <el-table-column prop="netvaluation" label="Net Valuation" :formatter="numberFormat"></el-table-column>
         <el-table-column prop="valuationnote" label="Note"></el-table-column>
-        <el-table-column label="操作" width="100">
+        <el-table-column label="Opt" width="100">
           <template slot-scope="scope">
             <i class="el-icon-edit" @click="editValuation(scope.$index,scope.row)"></i>
             <i class="el-icon-delete" @click="deleteValuation(scope.$index,scope.row)"></i>
@@ -62,77 +62,77 @@
         <div class="select-fixed" style="overflow:hidden">
           <el-form :model="valuationForm" ref="valuationForm" :label-position='labelPosition'>
             <el-form-item label="Fund">
-              <el-input v-model="fundname" placeholder="请输入内容" disabled></el-input>
+              <el-input v-model="fundname" placeholder=" " disabled></el-input>
             </el-form-item>
             <el-form-item label="Protfolio">
-              <el-select v-model="valuationForm.portfolioid" placeholder="请选择" filterable>
+              <el-select v-model="valuationForm.portfolioid" placeholder="  " filterable>
                 <el-option v-for="item in fundprolist" :key="item.portfolioID"
                            :label="item.abbName" :value="item.portfolioID"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="Valuation Date">
-              <el-date-picker v-model="valuationForm.valuationdate" type="date" placeholder="选择日期">
+              <el-date-picker v-model="valuationForm.valuationdate" type="date" placeholder="select date">
               </el-date-picker>
             </el-form-item>
             <el-form-item label="ValuationMethod">
-              <el-select v-model="valuationForm.valuationmethod" placeholder="请选择" filterable @change="whichShow">
+              <el-select v-model="valuationForm.valuationmethod" placeholder="  " filterable @change="whichShow">
                 <el-option v-for="(item,index) in valueMethod" :label="item" :value="item" :key="index"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="BaseValue" v-show="isShow">
-              <el-input v-model="baseValue" placeholder="请输入内容"></el-input>
+              <el-input v-model="baseValue" placeholder=" "></el-input>
             </el-form-item>
 
             <el-form-item label="Multiple" v-show='isShow'>
-              <el-input v-model="multiple" placeholder="请输入内容"></el-input>
+              <el-input v-model="multiple" placeholder=" "></el-input>
             </el-form-item>
 
 
             <el-form-item label="Cash" v-show="isEvShow">
-              <el-input v-model="valuationForm.cashassets" placeholder="请输入内容"></el-input>
+              <el-input v-model="valuationForm.cashassets" placeholder=" "></el-input>
             </el-form-item>
             <el-form-item label="Debt" v-show="isEvShow">
-              <el-input v-model="valuationForm.debt" placeholder="请输入内容"></el-input>
+              <el-input v-model="valuationForm.debt" placeholder=" "></el-input>
             </el-form-item>
             
             <el-form-item label="Option Proceed" v-show="isEvShow">
-              <el-input v-model="optionproceed" placeholder="请输入内容"></el-input>
+              <el-input v-model="optionproceed" placeholder=" "></el-input>
             </el-form-item>
             <el-form-item label="Prefer Stock Preference" v-show="isEvShow">
-              <el-input v-model="preferstockprefer" placeholder="请输入内容"></el-input>
+              <el-input v-model="preferstockprefer" placeholder=" "></el-input>
             </el-form-item>
 
 
             <el-form-item label="FairValue">
-              <el-input v-model="fairvalue" placeholder="请输入内容" :disabled="isShow"></el-input>
+              <el-input v-model="fairvalue" placeholder=" " :disabled="isShow"></el-input>
             </el-form-item>
             <el-form-item label="OwnerShip">
-              <el-input v-model="valuationForm.prop" placeholder="请输入内容"></el-input>
+              <el-input v-model="valuationForm.prop" placeholder=" "></el-input>
             </el-form-item>
 
             <el-form-item label="Valuation">
               <el-input :value="isComp?valuation:valuationForm.valuation" :disabled="isComp"
-                        @input.native="compValuation($event)" placeholder="请输入内容" ref="valuation"></el-input>
+                        @input.native="compValuation($event)" placeholder=" " ref="valuation"></el-input>
             </el-form-item>
 
             <el-form-item label="Additional">
-              <el-input v-model="valuationForm.additional" placeholder="请输入内容"></el-input>
+              <el-input v-model="valuationForm.additional" placeholder=" "></el-input>
             </el-form-item>
 
             <el-form-item label="DLOM(%)">
-              <el-input v-model="valuationForm.discount" placeholder="请输入内容"></el-input>
+              <el-input v-model="valuationForm.discount" placeholder=" "></el-input>
             </el-form-item>
             <el-form-item label="Fin48tax">
-              <el-input v-model="valuationForm.fin48tax" placeholder="请输入内容"></el-input>
+              <el-input v-model="valuationForm.fin48tax" placeholder=" "></el-input>
             </el-form-item>
 
             <el-form-item label="Loan">
-              <el-input v-model="valuationForm.loan" placeholder="请输入内容"></el-input>
+              <el-input v-model="valuationForm.loan" placeholder=" "></el-input>
             </el-form-item>
 
 
             <el-form-item label="NetValuation">
-              <el-input v-model="netvaluation" placeholder="请输入内容"></el-input>
+              <el-input v-model="netvaluation" placeholder=" "></el-input>
             </el-form-item>
           </el-form>
         </div>
@@ -159,7 +159,7 @@
             <th scope="col">Company name</th>
             <th scope="col">Multiple</th>
             <th scope="col">Weight</th>
-            <th scope="col">操作</th>
+            <th scope="col">Opt</th>
           </tr>
           </thead>
           <tbody>
@@ -173,8 +173,8 @@
         </table>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancel('valuationForm')" size='mini'>取 消</el-button>
-        <el-button type="primary" size='mini' @click="submitForm('valuationForm')">新建</el-button>
+        <el-button @click="cancel('valuationForm')" size='mini'>Cancel</el-button>
+        <el-button type="primary" size='mini' @click="submitForm('valuationForm')">Create</el-button>
       </div>
     </el-dialog>
   </div>
@@ -426,7 +426,7 @@
                   this.$refs[formName].resetFields();
                   this.$message({
                     type: 'success',
-                    message: '保存成功'
+                    message: 'Save Success'
                   });
                   this.searchData();
                   Object.assign(this.valuationForm, this.valuationFormEmpty);
@@ -438,7 +438,7 @@
                 } else {
                   this.$message({
                     type: 'warning',
-                    message: '保存失败'
+                    message: 'Save failure'
                   })
                 }
               });
@@ -449,7 +449,7 @@
                   this.$refs[formName].resetFields();
                   this.$message({
                     type: 'success',
-                    message: '创建成功'
+                    message: 'Create success'
                   });
                   this.searchData();
                   Object.assign(this.valuationForm, this.valuationFormEmpty);
@@ -461,7 +461,7 @@
                 } else {
                   this.$message({
                     type: 'warning',
-                    message: '创建失败'
+                    message: 'Create failure'
                   })
                 }
               });
@@ -483,7 +483,7 @@
           } else {
             this.$message({
               type: 'warning',
-              message: '删除失败'
+              message: 'Delete failure'
             })
           }
         })
@@ -496,7 +496,7 @@
           } else {
             this.$message({
               type: 'warning',
-              message: '删除失败'
+              message: 'Delete failure'
             })
           }
         })

@@ -13,7 +13,7 @@
             <el-table-column prop="termsigndate" label="termsigndate" width='130' :formatter="formatDate"></el-table-column>
             <el-table-column prop="currency" label="currency"></el-table-column>
             <el-table-column prop="shareremain" label="shareremain" :formatter="numberFormat" width='110'></el-table-column>
-            <el-table-column prop="vouncher" label="操作" v-if="isDetail!='false'">
+            <el-table-column prop="vouncher" label="Opt" v-if="isDetail!='false'">
                 <template slot-scope="scope">
                     <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
                     <i class="el-icon-delete" @click="deleteExit(scope.$index, scope.row)"></i>
@@ -29,33 +29,33 @@
             <el-form :model="exitForm" ref="exitForm" :label-position='labelPosition'>
                 <div class="select-fixed">
                     <el-form-item label="Exit Type">
-                        <el-select v-model="exitForm.exittype" placeholder="请选择" @change="togetherChange">
+                        <el-select v-model="exitForm.exittype" placeholder="  " @change="togetherChange">
                             <el-option v-for="item in exitDropList.DDL_ExitType" :key="item.baseId"
                             :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="Exit Mode">
-                        <el-select v-model="exitForm.exitmode" placeholder="请选择">
+                        <el-select v-model="exitForm.exitmode" placeholder="  ">
                             <el-option v-for="item in ExitModeDataList" :key="item.baseId"
                             :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="Payment Date">
-                        <el-date-picker v-model="exitForm.closedate" type="date" placeholder="选择日期">
+                        <el-date-picker v-model="exitForm.closedate" type="date" placeholder=" ">
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item label="Termsign Date">
-                        <el-date-picker v-model="exitForm.termsigndate" type="date" placeholder="选择日期">
+                        <el-date-picker v-model="exitForm.termsigndate" type="date" placeholder=" ">
                         </el-date-picker>
                     </el-form-item>
                     <el-form-item label="Fund Family">
-                        <el-select v-model="exitForm.fundfamillyname" placeholder="请选择" @change="creatShareList" filterable :disabled="isDisabled">
+                        <el-select v-model="exitForm.fundfamillyname" placeholder="  " @change="creatShareList" filterable :disabled="isDisabled">
                             <el-option v-for="item in exitDropList.FUNDFAMILY" :key="item.baseId"
                              :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="Currency">
-                        <el-select v-model="exitForm.currency" placeholder="请选择">
+                        <el-select v-model="exitForm.currency" placeholder="  ">
                             <el-option v-for="item in exitDropList.CURRENCY" :key="item.baseId"
                             :label="item.baseName" :value="item.baseId"></el-option>
                         </el-select>
@@ -87,9 +87,9 @@
         </div>
         <subCapTable :dataObj='dataObj' :investForm='exitForm' :buttonShow='buttonShow' v-show="subCapTableShow"></subCapTable>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="ExitVisible = false" size='mini'>取 消</el-button>
-            <el-button type="primary" size='mini' @click="submitAdd('exitForm','add')" v-if="buttonShow">新建</el-button>
-            <el-button type="primary" size='mini' @click="submitAdd('exitForm','update')" v-else>更新</el-button>
+            <el-button @click="ExitVisible = false" size='mini'>Cancel</el-button>
+            <el-button type="primary" size='mini' @click="submitAdd('exitForm','add')" v-if="buttonShow">Create</el-button>
+            <el-button type="primary" size='mini' @click="submitAdd('exitForm','update')" v-else>Update</el-button>
         </div>
     </el-dialog>
 </div>
@@ -199,7 +199,7 @@ export default {
               if(res.data.code=="SUCCESS"){
                 this.$message({
                   type:'success',
-                  message: '创建成功'
+                  message: 'Create success'
                 })
                 this.ExitVisible=false;
                 this.reqExitList(this.portfolioid);
@@ -208,7 +208,7 @@ export default {
               }else{
                 this.$message({
                   type:'warning',
-                  message: '创建失败'
+                  message: 'Create failure'
                 })
               }
             })
@@ -218,7 +218,7 @@ export default {
               if(res.data.code=="SUCCESS"){
                 this.$message({
                   type:'success',
-                  message: '更新成功'
+                  message: 'Update success'
                 })
                 this.ExitVisible=false;
                 this.reqExitList(this.portfolioid);
@@ -227,7 +227,7 @@ export default {
               }else{
                 this.$message({
                   type:'warning',
-                  message: '更新失败'
+                  message: 'Update failure'
                 })
               }
             })
@@ -253,9 +253,9 @@ export default {
       this.querySingal(data.id);
     },
     deleteExit(index,data){
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("This Opt will permanently delete the file, whether it will continue?", "Notice", {
+        confirmButtonText: "OK",
+        cancelButtonText: "Cancel",
         type: "warning"
       }).then(() => {
         axioss.deleteExit(data.id).then(res=>{
@@ -264,13 +264,13 @@ export default {
             this.reqExitList(this.portfolioid);
             this.$message({
               type: "success",
-              message: "删除成功!"
+              message: "Delete success!"
             });
             bus.$emit("updateCaptable");
           } else {
             this.$message({
               type: "error",
-              message: "删除失败!"
+              message: "Delete failure!"
             });
           }
         })

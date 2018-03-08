@@ -13,7 +13,7 @@ import Invest from "./subinvests/invest";
 import Exit from "./subinvests/exit";
 import Warran from "./subinvests/warrant";
 import bus from "@/api/eventbus";
-import mix from "@/api/mixin"
+import mix from "@/api/mixin";
 export default {
   name:"investmanger",
   mixins:[mix],

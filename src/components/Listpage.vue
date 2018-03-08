@@ -12,19 +12,19 @@
                     <thead>
                         <tr>
                         <th scope="col">Portfolio Name
-                            <el-input placeholder="请输入Programe Name" v-model="abbnameval" @input.native="searchData('abbname',abbnameval)"></el-input>
+                            <el-input v-model="abbnameval" @input.native="searchData('abbname',abbnameval)"></el-input>
                         </th>
-                        <th scope="col">项目名称
-                            <el-input class="search" placeholder="请输入Programe Name" v-model="abbnamechival" @input.native="searchData('abbnamechi',abbnamechival)"></el-input>
+                        <th scope="col" style="width:200px;">Portfolio Chinese Name
+                            <el-input class="search" v-model="abbnamechival" @input.native="searchData('abbnamechi',abbnamechival)"></el-input>
                         </th>
-                        <th scope="col">companyname
-                            <el-input class="search" placeholder="请输入Programe Name" v-model="fullnameval" @input.native="searchData('fullname',fullnameval)"></el-input>
+                        <th scope="col">Company Name
+                            <el-input class="search" v-model="fullnameval" @input.native="searchData('fullname',fullnameval)"></el-input>
                         </th>
-                        <th scope="col">公司名称
-                            <el-input class="search" placeholder="请输入Programe Name" v-model="fullnamechival" @input.native="searchData('fullnamechi',fullnamechival)"></el-input>
+                        <th scope="col" style="width:200px;">Company Chinese Name
+                            <el-input class="search" v-model="fullnamechival" @input.native="searchData('fullnamechi',fullnamechival)"></el-input>
                         </th>
-                        <th scope="col">projectmanager
-                            <el-select placeholder="请选择" v-model="projectmanagerval"  clearable filterable @change="selectchange('projectmanager', projectmanagerval)">
+                        <th scope="col">Project Manager
+                            <el-select v-model="projectmanagerval"  clearable filterable @change="selectchange('projectmanager', projectmanagerval)">
                             <el-option
                                 v-for="item in staffs"
                                 :key="item.baseId"
@@ -33,8 +33,8 @@
                             </el-option>
                             </el-select>
                         </th>
-                        <th scope="col">portfoliostatus
-                            <el-select placeholder="请选择" v-model='privatestatusval' clearable @change="selectchange('portfoliostatus', projectmanagerval)">
+                        <th scope="col">Portfolio Status
+                            <el-select v-model='privatestatusval' clearable @change="selectchange('portfoliostatus', projectmanagerval)">
                             <el-option
                                 v-for="item in portfoliostatus"
                                 :key="item.baseId"
@@ -43,8 +43,8 @@
                             </el-option>
                             </el-select>
                         </th>
-                        <th scope="col">idgonboardflag
-                            <el-select v-model="idgonboardflagval" placeholder="请选择" @change="selectchange('idgonboardflag',idgonboardflagval)"  clearable>
+                        <th scope="col">Idgonboard Flag
+                            <el-select v-model="idgonboardflagval" @change="selectchange('idgonboardflag',idgonboardflagval)"  clearable>
                             <el-option
                                 v-for="item in options"
                                 :key="item.value"
@@ -54,7 +54,7 @@
                             </el-select>
                         </th>
                         <th scope="col">heldbyspvflag
-                            <el-select v-model="heldbyspvflagval" placeholder="请选择" @change="selectchange('heldbyspvflag',heldbyspvflagval)"  clearable>
+                            <el-select v-model="heldbyspvflagval" @change="selectchange('heldbyspvflag',heldbyspvflagval)"  clearable>
                             <el-option
                                 v-for="item in options"
                                 :key="item.value"
@@ -63,7 +63,7 @@
                             </el-option>
                             </el-select>
                         </th>
-                        <th scope="col">操作</th>
+                        <th scope="col">Opt</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -235,9 +235,9 @@ export default {
         });
     },
     ifdeletproject(portfolioid) {
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("此Opt将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "OK",
+        cancelButtonText: "Cancel",
         type: "warning"
       })
         .then(() => {
@@ -247,12 +247,12 @@ export default {
               this.handleCurrentChange();
               this.$message({
                 type: "success",
-                message: "删除成功!"
+                message: "Delete success!"
               });
             } else {
               this.$message({
                 type: "error",
-                message: "删除失败!"
+                message: "Delete failure!"
               });
             }
           });
@@ -260,7 +260,7 @@ export default {
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "Canceled deleting"
           });
         });
     }

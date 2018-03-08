@@ -26,7 +26,7 @@
           </el-table-column>
           <el-table-column prop="updatebusiness" label="Update Business" width="140">
           </el-table-column>
-          <el-table-column label="操作" width="60" fixed='right' v-if="isDetail!='false'">
+          <el-table-column label="Opt" width="60" fixed='right' v-if="isDetail!='false'">
               <template slot-scope="scope">
                   <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
                   <i class="el-icon-delete" @click="handleDelet(scope.$index, scope.row)"></i>
@@ -49,7 +49,7 @@
             </el-form-item>
 
             <el-form-item label="Update Date:">
-                <el-date-picker v-model="businessFormData.updatedate" type="date" placeholder="选择日期">
+                <el-date-picker v-model="businessFormData.updatedate" type="date" placeholder=" ">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="White Book Status:">
@@ -206,7 +206,7 @@ export default {
               console.log(obj);
               axioss.addPortfolioBov(obj).then(res=>{
                 console.log(res)
-                let status=res.data.code,succMes='创建成功',failMes='创建失败';
+                let status=res.data.code,succMes='Create success',failMes='Create failure';
                 let stateCode=this.showToast(status,succMes,failMes);
                 if(stateCode){
                   this.businessVisible=false;
@@ -216,7 +216,7 @@ export default {
               })
             }else{
               axioss.updatePortfolioBov(obj).then(res=>{
-                let status=res.data.code,succMes='更新成功',failMes='更新失败';
+                let status=res.data.code,succMes='Update success',failMes='Update failure';
                 let stateCode=this.showToast(status,succMes,failMes);
                 if(stateCode){
                   this.businessVisible=false;
@@ -243,9 +243,9 @@ export default {
         },
         handleDelet(index,data){
             var id=data.bovid;
-            this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm("This Opt will permanently delete the file, whether it will continue?", "Notice", {
+                confirmButtonText: "OK",
+                cancelButtonText: "Cancel",
                 type: "warning"
             }).then(() => {
                 axioss.deletPortfolioBov(id).then(res => {
@@ -253,13 +253,13 @@ export default {
                     if (status.toLocaleLowerCase() == "success") {
                       this.$message({
                           type: "success",
-                          message: "删除成功!"
+                          message: "Delete success!"
                       });
                       this.reqPortfolioBovList();
                     } else {
                     this.$message({
                         type: "error",
-                        message: "删除失败!"
+                        message: "Delete failure!"
                     });
                     }
                 });

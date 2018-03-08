@@ -15,7 +15,7 @@
             <el-table-column prop="conversionratio" label="Rate" width="70"></el-table-column>
             <el-table-column prop="convertamount" label="convert amount" width="150" :formatter="numberFormat"></el-table-column>
             <el-table-column prop="taxlotdate" label="Capital Call Date" width="150" :formatter="formatDate"></el-table-column>
-            <el-table-column label="操作" width="60" fixed='right' v-if="isDetail!='false'">
+            <el-table-column label="Opt" width="60" fixed='right' v-if="isDetail!='false'">
                 <template slot-scope="scope">
                     <i class="el-icon-edit" @click="handleEdit(scope.$index, scope.row)"></i>
                     <i class="el-icon-delete" @click="handleDelet(scope.$index, scope.row)"></i>
@@ -31,29 +31,29 @@
         <el-form :model="BonusForm" :label-position='labelPosition' ref="BonusForm">
             <div class="select-fixed">
                 <el-form-item label="Invest Type">
-                    <el-select v-model="BonusForm.investtype" placeholder="请选择" disabled>
+                    <el-select v-model="BonusForm.investtype" placeholder="  " disabled>
                         <el-option v-for="item in investTypeList" :key="item.baseId"
                         :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Payment Date">
-                    <el-date-picker v-model="BonusForm.closedate" type="date" placeholder="选择日期" :disabled="isDisable">
+                    <el-date-picker v-model="BonusForm.closedate" type="date" placeholder=" " :disabled="isDisable">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="Share Type">
-                    <el-select v-model="BonusForm.securitytypeid" placeholder="请选择">
+                    <el-select v-model="BonusForm.securitytypeid" placeholder="  ">
                         <el-option v-for="item in shareTypeList" :key="item.baseId"
                         :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Fund">
-                    <el-select v-model="BonusForm.fundid" placeholder="请选择" :disabled="isDisable" filterable>
+                    <el-select v-model="BonusForm.fundid" placeholder="  " :disabled="isDisable" filterable>
                         <el-option v-for="item in fundList" :key="item.baseId"
                         :label="item.baseName" :value="item.baseId" @click.native='acqFundName'></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="Fund Family">
-                    <el-select v-model="BonusForm.fundfamillyname" placeholder="请选择" :disabled="isDisable" filterable>
+                    <el-select v-model="BonusForm.fundfamillyname" placeholder="  " :disabled="isDisable" filterable>
                         <el-option v-for="item in fundFamilyList" :key="item.baseId"
                         :label="item.baseName" :value="item.baseName"></el-option>
                     </el-select>
@@ -65,7 +65,7 @@
                     <el-input v-model="BonusForm.round"></el-input>
                 </el-form-item>
                 <el-form-item label="Currency">
-                    <el-select v-model="BonusForm.currency" placeholder="请选择">
+                    <el-select v-model="BonusForm.currency" placeholder="  ">
                         <el-option v-for="item in fundCurrencyList" :key="item.baseId"
                         :label="item.baseName" :value="item.baseId"></el-option>
                     </el-select>
@@ -74,11 +74,11 @@
                     <el-input v-model="BonusForm.conversionratio"></el-input>
                 </el-form-item>
                 <el-form-item label="Comment:">
-                    <el-input type="textarea" v-model="BonusForm.remarks" autosize placeholder="请输入内容">
+                    <el-input type="textarea" v-model="BonusForm.remarks" autosize placeholder="  ">
                     </el-input>
                 </el-form-item>
                 <el-form-item label="Capital Call Date">
-                    <el-date-picker v-model="BonusForm.taxlotdate" type="date" placeholder="选择日期">
+                    <el-date-picker v-model="BonusForm.taxlotdate" type="date" placeholder=" ">
                     </el-date-picker>
                 </el-form-item>
             </div>
@@ -86,9 +86,9 @@
     </div>
     <subCapTable :dataObj='dataObj' :buttonShow='buttonShow' v-show="subCapTableShow"></subCapTable>
     <div slot="footer" class="dialog-footer">
-        <el-button @click="BonusVisible = false" size='mini'>取消</el-button>
-        <el-button v-if="buttonShow=='add'" type="primary" size='mini' @click="submitForm('BonusForm','add')">创建</el-button>
-        <el-button v-else type="primary" size='mini' @click="submitForm('BonusForm','update')">更新</el-button>
+        <el-button @click="BonusVisible = false" size='mini'>Cancel</el-button>
+        <el-button v-if="buttonShow=='add'" type="primary" size='mini' @click="submitForm('BonusForm','add')">Create</el-button>
+        <el-button v-else type="primary" size='mini' @click="submitForm('BonusForm','update')">Update</el-button>
     </div>
     </el-dialog>
 </div>
@@ -205,7 +205,7 @@ export default {
                         console.log(obj)
                         axioss.addBonus(obj).then(res=>{
                             console.log(res)
-                            let status=res.data.code,succMes='创建成功',failMes='创建失败';
+                            let status=res.data.code,succMes='Create success',failMes='Create failure';
                             let stateCode=this.showToast(status,succMes,failMes);
                             if(stateCode){
                                 this.BonusVisible=false;
@@ -216,7 +216,7 @@ export default {
                     }else{
                         obj.portfoliocaptablevaluedetailList=this.capFormList;
                         axioss.updateBonus(obj).then(res=>{
-                            let status=res.data.code,succMes='更新成功',failMes='更新失败';
+                            let status=res.data.code,succMes='Update success',failMes='Update failure';
                             let stateCode=this.showToast(status,succMes,failMes);
                             if(stateCode){
                                 this.BonusVisible=false;
@@ -251,9 +251,9 @@ export default {
         },
         handleDelet(index,data){
             var id=data.eiid;
-            this.$confirm("此操作将永久删除该文件, 是否继续?","提示", {
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
+            this.$confirm("This Opt will permanently delete the file, whether it will continue?","Notice", {
+                confirmButtonText: "OK",
+                cancelButtonText: "Cancel",
                 type: "warning"
             }).then(() => {
                 axioss.deletInvest(id).then(res => {
@@ -262,12 +262,12 @@ export default {
                     this.reqinvestList();
                     this.$message({
                         type: "success",
-                        message: "删除成功!"
+                        message: "Delete success!"
                     });
                     } else {
                     this.$message({
                         type: "error",
-                        message: "删除失败!"
+                        message: "Delete failure!"
                     });
                     }
                 });

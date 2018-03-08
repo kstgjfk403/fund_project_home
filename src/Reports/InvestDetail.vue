@@ -9,15 +9,19 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="Close Date">
-                <el-date-picker v-model="searchForm.closedate" type="date" placeholder="选择日期">
+                <el-date-picker v-model="searchForm.closedate" type="date" placeholder=" ">
                 </el-date-picker>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" size="mini" @click="searchSubmit('searchForm')">查询</el-button>
+                <!-- 导出excel -->
+                <el-button type="primary" size="mini" id="but" @click="exportTab">导出Excel</el-button>
             </el-form-item>
         </el-form>
     </div>
-    <el-table :data="InvestdetailCaptal"  border style="width: 100%">
+    
+    <!-- 需要导出的表格内容区域 -->
+    <el-table :data="InvestdetailCaptal"  border style="width: 100%" id="excel">
         <el-table-column fixed prop="Company" label="Company" width="140"></el-table-column>
         <el-table-column fixed prop="TaxLotDate" label="Tax Lot Date" width="120"></el-table-column>
         <el-table-column prop="SecurityType" label="Security Type" width="150"></el-table-column>
@@ -58,6 +62,77 @@ export default {
       this.reportDropList();
   },
   methods:{
+        exportTab(){
+            
+            var oHtml1 = document.querySelector("#excel .el-table__fixed-header-wrapper").outerHTML;
+            var oHtml2 = document.querySelector("#excel .el-table__fixed-body-wrapper").outerHTML;
+            var oHtml = oHtml1+oHtml2;    
+            //console.log(oHtml);            
+            var excelHtml = `
+            <html>
+            <head>
+            <meta charset='utf-8' />
+            <style>          
+            /* #excel .el-table__header-wrapper .el-table__header thead tr th{
+                background:#5f87a0;
+                color:#FFF;
+                height:40px;
+                text-align:right;
+            } */
+            h3{
+                color:#2FA4E9;
+            }
+            table{
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            }
+            table tr .firstrow{
+                text-align:left;
+            }
+            
+            table tr td{
+                border:0.5px solid #ddd;
+                height:30px;
+                padding:3em;
+                text-align:left;
+            }
+            
+            table tr th{
+                border:0.5px solid #ddd;
+                text-align:left;
+                height:40px; 
+                background:#5f87a0;
+                color:#FFF;
+                height:40px;            
+            }            
+            
+            
+            #excel .position-container .table-responsive h3{
+                color:##2FA4E7;
+            }
+            #excel .el-table__header-wrapper .el-table__header thead tr th.gutter{
+                border:0;
+                background:#fff;
+            }
+            </style>    
+            </head>
+            <body>
+            ${oHtml}
+            </body>
+            </html>
+            `;
+
+            var excelBlob = new Blob([excelHtml], {type: 'application/vnd.ms-excel'})
+            // Create一个a标签
+            var oA = document.createElement('a');
+            // 利用URL.createObjectURL()方法为a元素生成blob URL
+            oA.href = URL.createObjectURL(excelBlob);
+            // 给文件命名
+            oA.download = `InvestDetail${(new Date()).toLocaleString()}.xls`;
+            // 模拟点击
+            oA.click();
+            // 移除
+            oA.remove();
+        },
         reportDropList(){
             var obj={dictArray:"FUND"};
             axioss.reqdroplist(obj).then(res=>{
