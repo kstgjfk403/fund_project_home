@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.ProjManageReportMapper" >
+
+  <select id="queryGainLossPortfolioIdByFund" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.lang.String" >
+    select distinct portfolioID from PortfolioExit   where fundID = #{fundid} and closeDate &lt;= #{closedate}
+  </select>
+
+  <select id="queryGainLossReport" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.util.HashMap" >
+   select p.abbName,a.exitMode,a.closeDate,a.portfolioID,a.fundID,a.currency,b.*,a.proceeds,a.costRelization,a.proceedsRelization from PortfolioExit a
+    left join
+    ( select d.exitId,sum(i.shareOwnedNo) shareOwnedNo,max(i.closeDate) maxPurchaseDate,min(i.closeDate) minPurchaseDate
+    from PortfolioExitDetail d,PortfolioEquityInvestment i where d.EIID = i.EIID
+    group by exitId) b on a.id = b.exitId
+    left join
+    PortfolioBasicInfo p on a.portfolioID = p.portfolioID where a.fundID = #{fundid}
+    and closeDate &lt;= #{closedate}
+    and a.portfolioID = #{portfolioid}
+    order by a.closeDate
+  </select>
+
+
+    <select id="queryGainLossYearByFund" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.lang.Integer" >
+        select distinct datepart(yy,closeDate) as year from PortfolioExit   where fundID = #{fundid}  and  closeDate &lt;= #{closedate}
+    </select>
+
+    <select id="queryGainLossReportSum" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.util.HashMap" >
+        select datepart(yy,closeDate) year,sum(proceeds) proceeds,sum(costRelization) costRelization,sum(proceedsRelization) proceedsRelization  from PortfolioExit a
+        left join
+        ( select d.exitId,sum(i.shareOwnedNo) shareOwnedNo,max(i.closeDate) maxPurchaseDate,min(i.closeDate) minPurchaseDate
+        from PortfolioExitDetail d,PortfolioEquityInvestment i where d.EIID = i.EIID
+        group by exitId) b on a.id = b.exitId
+        left join
+        PortfolioBasicInfo p on a.portfolioID = p.portfolioID where a.fundID = #{fundid}  and closeDate &lt;= #{closedate}
+        group by datepart(yy,closeDate)
+        order by  datepart(yy,closeDate)
+    </select>
+
+    <select id="queryCapitalFundPortfolioIdByFund" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.lang.String">
+	    select distinct i.portfolioID from PortfolioEquityInvestment i where fundID =  #{fundid} and closeDate &lt;= #{closedate}
+    </select>
+
+    <select id="queryCapitalFundPortfolioById" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.util.HashMap">
+
+        select a.portfolioID,a.abbName,a.oneLineDesc,a.IDGOnBoard,b.portfolioStatus,c.sector,c.subSector,d.firstFunding,d.round,d.securityTypeID,e.capitalInvested,e.totalFunding,f.salesProceeds,f.proceedsRelization,g.ownership,g.preMoney,g.postMoney from
+        (select portfolioID,abbName,oneLineDesc,IDGOnBoard from PortfolioBasicInfo where portfolioID = #{portfolioid}) a
+        left join
+        (select b1.portfolioID,b2.portfolioStatus from (select top 1 portfolioID,portfolioStatus from PortfolioStatusHistory  where
+        statusEffectiveDate =(select MAX(statusEffectiveDate) statusEffectiveDate from PortfolioStatusHistory where portfolioID = #{portfolioid}
+        and statusEffectiveDate &lt;= #{closedate}))b1 left join DDL_PortfolioStatus b2 on b1.portfolioStatus = b2.portfolioStatusID) b
+        on a.portfolioID = b.portfolioID
+        left join
+        (select p.portfolioID,s.sector,s.subSector from PortfolioBasicInfo  p
+        left join (select s1.sectorID,s2.subSectorID,s1.sector,s2.subSector from DDL_Sector s1 left join DDL_SubSector s2 on s1.sectorID = s2.sectorID) s
+        on p.sectorID = s.sectorID and p.subSectorID = s.subSectorID where p.portfolioID = #{portfolioid} ) c
+        on a.portfolioID = c.portfolioID
+        left join
+        (select top 1 portfolioID ,closeDate firstFunding,round,securityTypeID from PortfolioEquityInvestment
+        where closeDate = (select min(closeDate) closeDate from PortfolioEquityInvestment where  portfolioID = #{portfolioid} and fundId = #{fundid}) and portfolioID = #{portfolioid} and fundId = #{fundid}  ) d
+        on a.portfolioID = d.portfolioID
+        left join
+        (select portfolioID, sum(cost) capitalInvested ,sum(cost) totalFunding from PortfolioEquityInvestment
+        where portfolioID = #{portfolioid} and fundId = #{fundid}  and investType in('Equity Interest','Equity Investment','Equity Investment&amp;Loan To Equity') and closeDate &lt;= #{closedate} group by portfolioID) e
+        on a.portfolioID = e.portfolioID
+        left join
+        (select portfolioID,sum(proceeds) salesProceeds,sum(proceedsRelization) proceedsRelization from PortfolioExit  where portfolioID =  #{portfolioid} and fundId = #{fundid}  and closeDate  &lt;= #{closedate}
+        group by portfolioID) f
+        on a.portfolioID = f.portfolioID
+        left join
+        (select m.portfolioID,m.proper ownership,m.preMoney,m.postMoney from (select v.*,n.shareType,n.shareOwner from  PortfolioCapTableValue v left join PortfolioCapTableName n on v.shareOwnerId = n.shareOwnerId where n.shareType = 'IDG') m
+        where m.portfolioID =#{portfolioid} and m.shareOwner = #{fundid}  and m.termSignDate = (select max(termSignDate) from PortfolioCapTableValue where termSignDate &lt;= #{closedate} and  m.portfolioID =#{portfolioid} and shareOwner = #{fundid}) ) g
+        on a.portfolioID = g.portfolioID
+
+    </select>
+
+    <select id="queryPortfolioLeaderList" parameterType="java.lang.String" resultType="java.lang.String">
+         select firstNameEng+' '+lastNameEng leaderName  from portfolioMember m left join IDG_Staff s on m.staffID = s.staffID where portfolioID =  #{portfolioid} and memberType = 'PM';
+    </select>
+
+    <select id="queryPortfolioCostByQuarter" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.math.BigDecimal">
+        select sum(cost) cost from PortfolioEquityInvestment
+        where  investType in('Equity Interest','Equity Investment','Equity Investment&amp;Loan To Equity')
+        and portfolioID =  #{portfolioid}
+        and closeDate &lt;= #{quarterdate}
+        and fundid =  #{fundid}
+        group by portfolioID
+    </select>
+
+    <select id="queryPortfolioMarketValueByQuarter" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.math.BigDecimal">
+         select netvaluation from PortfolioValuation where portfolioID =#{portfolioid}  and valuationDate =  #{quarterdate} and fundid =  #{fundid}
+    </select>
+
+    <select id="queryPortfolioRemainByQuarter" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.lang.Long">
+        select sum(shareRemain) shareRemain from (
+        select i.EIID,i.portfolioID,i.fundID,i.investType,i.closeDate,i.round,i.securityTypeID, (i.shareOwnedNo - ISNULL(d.share,0)) shareRemain from PortfolioEquityInvestment i
+        left join (
+        select EIID,sum(shareExit) share,sum(costRelization) cost from
+        (select d.*,e.closeDate from (select * from PortfolioExit where closeDate &lt;= #{closedate}) e
+        left join
+        PortfolioExitDetail d on d.exitId = e.id) m
+        group by EIID
+        ) d on i.EIID = d.EIID
+        where i.fundID = #{fundid}
+        and i.portfolioID =#{portfolioid}
+        and closeDate &lt;= #{quarterdate}
+        and investType in('Equity Investment&amp;amp;Loan To Equity','Equity Investment')) a group by a.portfolioID
+    </select>
+
+
+    <select id="queryPortfolioOtherInvestorList" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.lang.String">
+        select distinct shareOwner from PortfolioCapTableValue v left join PortfolioCapTableName n on v.shareOwnerId = n.shareOwnerId where n.shareType != 'IDG' and v.termSignDate &lt;= #{closedate} and v.portfolioID =  #{portfolioid}
+    </select>
+
+    <select id="queryInvestDetailPortfolioIdByFund" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.lang.String">
+         select distinct i.portfolioID from PortfolioEquityInvestment i where fundID =  #{fundid} and closeDate &lt;= #{closedate}
+    </select>
+
+    <select id="queryInvestDetailById" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.util.HashMap">
+        select a.portfolioID,a.fullName,a.oneLineDesc,b.portfolioStatus,f.EIID,f.closeDate,f.securityTypeID,f.round,f.cost,f.shareOwnedNo,f.currency,f.costUnRelization,g.netvaluation from
+        (select portfolioID,fullName,oneLineDesc from PortfolioBasicInfo where portfolioID = #{portfolioid}) a
+        left join
+        (select b1.portfolioID,b2.portfolioStatus from (select top 1 portfolioID,portfolioStatus from PortfolioStatusHistory  where
+        statusEffectiveDate =(select MAX(statusEffectiveDate) statusEffectiveDate from PortfolioStatusHistory where portfolioID = #{portfolioid}
+        and statusEffectiveDate &lt;= #{closedate}))b1 left join DDL_PortfolioStatus b2 on b1.portfolioStatus = b2.portfolioStatusID) b
+        on a.portfolioID = b.portfolioID
+        left join
+        (select c.EIID,c.portfolioID,c.closeDate,c.securityTypeID,c.round,(c.cost - ISNULL(d.costRelization,0)) cost,c.shareOwnedNo,c.currency,(c.cost - ISNULL(d.costRelization,0)) costUnRelization from (
+        (select EIID, portfolioID,closeDate,securityTypeID,round,cost,shareOwnedNo,currency from PortfolioEquityInvestment where closeDate &lt;= #{closedate} and fundID = #{fundid}  and portfolioID = #{portfolioid} ) c
+        left join
+        (select d.EIID, e.closeDate,e.portfolioID,d.costRelization from PortfolioExit e left join  PortfolioExitDetail d on e.id = d.exitId where e.closeDate &lt;= #{closedate} and exitType='Equity' and fundID = #{fundid} ) d
+        on c.portfolioID = d.portfolioID and c.EIID = d.EIID)
+        )f on a.portfolioID = f.portfolioID
+        left join  (select portfolioID,netvaluation from PortfolioValuation where portfolioID =#{portfolioid} and valuationDate = #{closedate} and fundID = #{fundid}) g
+        on a.portfolioID = g.portfolioID
+        order by f.closeDate
+    </select>
+    <select id="queryRemainSharesByFundId" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.lang.String">
+
+    </select>
+    <select id="queryFundFullNameByFundId" parameterType="java.lang.String" resultType="java.lang.String">
+        select fundFullNameEng from FundBasicInfo where fundid = #{fundId}
+    </select>
+    <select id="queryOtherInvestorTotalShares" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.lang.Long">
+       select sum(v.shareOwnedNo) shareOwnedNo from PortfolioCapTableValueDetail v left join PortfolioCapTableName n on v.shareOwnerId = n.shareOwnerId
+	     where v.portfolioID = #{portfolioid} and
+	     closeDate =(select top 1 max(closedate) from PortfolioCapTableValueDetail where closedate &lt;= #{closedate} and portfolioID = #{portfolioid})   group by v.portfolioID
+    </select>
+
+    <select id="queryMainSchedulePortfolioIdByFund" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.util.HashMap">
+        select portfolioID, case when ISNULL(reportName, '') = '' then (case when ISNULL(fullName, '') = '' then abbName else fullName end) else reportName end as fullName,
+        fundOfFund, case when ISNULL(oneLineDesc, '') = '' then ISNULL(oneLineDesChi, '') else oneLineDesc end as oneLineDesc
+        from PortfolioBasicInfo
+        where portfolioID in (
+        select portfolioID from PortfolioEquityInvestment where fundID = #{fundid} and closeDate &lt;= #{closedate}
+        union
+        select portfolioID from PortfolioNote where fundID = #{fundid} and closeDate &lt;= #{closedate}
+        )
+        order by privateOrPublic desc, fullName
+    </select>
+    <select id="queryPrivateOrPublicByPortfolioId" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.lang.String">
+        select b2.portfolioStatus from (select top 1 portfolioID,portfolioStatus from PortfolioStatusHistory  where
+        statusEffectiveDate =(select MAX(statusEffectiveDate) statusEffectiveDate from PortfolioStatusHistory where portfolioID = #{portfolioid}
+        and statusEffectiveDate  &lt;= #{closedate} ))b1 left join DDL_PortfolioStatus b2 on b1.portfolioStatus = b2.portfolioStatusID
+    </select>
+    <select id="queryNoteMainScheduleByPortfolioId" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.util.HashMap">
+
+        select PortfolioNote.portfolioID, PortfolioNote.fundID,ISNULL(PortfolioNote.closeDate, '1900-01-01') closeDate,
+        noteType, (ROUND(ISNULL(noteNum, 0), 0) + ROUND(ISNULL(noteOtherFee, 0), 0) - ROUND(ISNULL(convertAmount, 0), 0) - ROUND(ISNULL(otherFees, 0), 0) - ROUND(ISNULL(PortfolioExitDetail.costRelization, 0), 0) - ROUND(ISNULL(PortfolioExitDetail.otherfeeRealization, 0), 0)) as noteNum,
+        ROUND(ISNULL(bondNum, 0), 0) as bondNum
+        from PortfolioNote inner join PortfolioBasicInfo on PortfolioBasicInfo.portfolioID = PortfolioNote.portfolioID
+        left outer join PortfolioLoanToEquity on PortfolioLoanToEquity.noteID = PortfolioNote.NoteID
+        left outer join PortfolioExitDetail on PortfolioExitDetail.noteID = PortfolioNote.NoteID
+        left outer join PortfolioExit on PortfolioExit.id = PortfolioExitDetail.exitId
+        where PortfolioNote.fundID = #{fundid} and PortfolioNote.closeDate &lt;= #{closedate}
+        and ISNULL(PortfolioLoanToEquity.closeDate, '1900-01-01') &lt;= #{closedate} and ISNULL(PortfolioExit.closeDate, '1900-01-01') &lt;= #{closedate}
+        and noteType not in ('Capitalized Interest', 'Interest', 'Loan Converted', 'Repayment') and PortfolioNote.portfolioID not in (
+        select distinct portfolioID from PortfolioExit where exitType = 'Loan' and exitMode = 'Write Off' and fundID = #{fundid} and closeDate &lt;= #{closedate}
+        ) and  PortfolioNote.portfolioid = #{portfolioid}
+    </select>
+
+    <select id="queryInvestMainScheduleByPortfolioId" parameterType="com.idgcapital.ufund.model.ProjReportInput" resultType="java.util.HashMap">
+       select a.portfolioID,a.EIID,a.fundID,ISNULL(a.closeDate, '1900-01-01') closeDate,a.investType,ISNULL(a.securityType, '') securityType,
+       a.round,a.shareOwnedNo,a.cost,a.otherFees,a.fromEIID,a.costRelization,b.netvaluation from (
+        select * from (
+        (select distinct PortfolioEquityInvestment.portfolioID, PortfolioEquityInvestment.EIID, PortfolioEquityInvestment.fundID,
+        case when PortfolioEquityInvestment.investType = 'Loan To Equity' then PortfolioNote.closeDate else PortfolioEquityInvestment.closeDate end as closeDate,
+        PortfolioEquityInvestment.investType, securityType, ISNULL(round, '') as round, (ISNULL(shareOwnedNo, 0) * CAST(ISNULL(conversionRatio, 1) as decimal(18, 0))) as shareOwnedNo,
+        ROUND(ISNULL(cost, 0), 0) as cost, ROUND(ISNULL(otherFees, 0), 0) as otherFees,
+        fromEIID, ROUND(ISNULL(PortfolioEquityInvestment.costRelization, 0), 0) as costRelization
+        from PortfolioEquityInvestment inner join PortfolioBasicInfo on PortfolioBasicInfo.portfolioID = PortfolioEquityInvestment .portfolioID
+        left outer join DDL_SecurityType on DDL_SecurityType.securityTypeID = PortfolioEquityInvestment.securityTypeID
+        left outer join PortfolioNote on PortfolioNote.noteID = PortfolioEquityInvestment.convertFromNoteID
+        where PortfolioEquityInvestment.fundID = #{fundid} and PortfolioEquityInvestment.closeDate &lt;= #{closedate} and PortfolioEquityInvestment.investType != 'Dividends')) m where m.portfolioID = #{portfolioid}) a
+        left join
+         (select portfolioID, netvaluation from PortfolioValuation where portfolioID = #{portfolioid}    and valuationDate =  #{closedate} and fundid = #{fundid} ) b
+         on a.portfolioID = b.portfolioID
+    </select>
+
+
+
+    <select id="selectPortfolioBusinessListOnlyEquity" parameterType="java.util.Map" resultType="map">
+
+
+
+
+        select * from (select FundBasicInfo.fundName, FundBasicInfo.fundFullNameEng, PortfolioBasicInfo.portfolioID, abbName, fullName, case when reportName is null or reportName = '' then fullName else reportName end as reportName,
+        logo, DDL_IDGRole.IDGRole, DDL_Stage.stage, DDL_InitialRole.InitialRole, DDL_Sector.sector, DDL_SubSector.subSector, oneLineDesc, website,
+        DDL_AntiDilution.antiDilution as anticipatedExit,
+        case when IDGBoardRepresentative is null or IDGBoardRepresentative = '' then 0
+        else (case when IDGBoardRepresentative like '% %' then 1
+        else (case when IDG_Staff.staffID is null or IDG_Staff.staffID = '' then 0 else 1 end)
+        end
+        ) end as IDGOnBoard,
+        case when privateOrPublic = 'Public' and portfolioStatusDate >= #{closeDate}  then 'Private' else privateOrPublic end as privateOrPublic,
+        stockCode, summaryReportNote, summaryReportIssueDate,
+        REPLACE(REPLACE(REPLACE(CAST(BusinessUpdate.updateBusiness as nvarchar(max)), char(13)+char(10), '
+        '), char(10), '
+        '), char(13), '
+        ') as updateBusiness, BusinessUpdate.updateDate
+        from PortfolioBasicInfo
+        left outer join DDL_IDGRole on PortfolioBasicInfo.IDGRoleID = DDL_IDGRole.IDGRoleID
+        left outer join DDL_Stage on PortfolioBasicInfo.stageID = DDL_Stage.stageID
+        left outer join DDL_InitialRole on PortfolioBasicInfo.InitialRoleID = DDL_InitialRole.InitialRoleID
+        left outer join DDL_Sector on PortfolioBasicInfo.sectorID = DDL_Sector.sectorID
+        left outer join DDL_SubSector on PortfolioBasicInfo.subSectorID = DDL_SubSector.subSectorID
+        left outer join DDL_AntiDilution on PortfolioBasicInfo.antiDilutionID = DDL_AntiDilution.antiDilutionID
+        left outer join IDG_Staff on PortfolioBasicInfo.IDGBoardRepresentative = IDG_Staff.staffID
+        left outer join (
+        select a.* from
+        (select portfolioID, updateDate, updateBusiness from Portfolio_BOV) as a
+        inner join
+        (select portfolioID, MAX(updateDate) as updateDate from Portfolio_BOV where updateDate &lt;= #{closeDate} group by portfolioID) as b
+        on a.portfolioID = b.portfolioID and a.updateDate = b.updateDate
+        ) as BusinessUpdate on PortfolioBasicInfo.portfolioID = BusinessUpdate.portfolioID
+        inner join (
+        select distinct portfolioID, fundID from PortfolioEquityInvestment where fundID = #{fundId} and closeDate &lt;= #{closeDate}
+        ) as temp on PortfolioBasicInfo.portfolioID = temp.portfolioID
+        inner join FundBasicInfo on FundBasicInfo.fundID = temp.fundID) as whole
+        where privateOrPublic in ('Private', 'Public')
+        order by reportName
+    </select>
+
+
+    <select id="selectPortfolioBusinessList" parameterType="java.util.Map" resultType="map">
+        select * from (select FundBasicInfo.fundName, FundBasicInfo.fundFullNameEng, PortfolioBasicInfo.portfolioID, abbName, fullName, case when reportName is null or reportName = '' then fullName else reportName end as reportName,
+        logo, DDL_IDGRole.IDGRole, DDL_Stage.stage, DDL_InitialRole.InitialRole, DDL_Sector.sector, DDL_SubSector.subSector, oneLineDesc, website,
+        DDL_AntiDilution.antiDilution as anticipatedExit,
+        case when IDGBoardRepresentative is null or IDGBoardRepresentative = '' then 0
+        else (case when IDGBoardRepresentative like '% %' then 1
+        else (case when IDG_Staff.staffID is null or IDG_Staff.staffID = '' then 0 else 1 end)
+        end
+        ) end as IDGOnBoard,
+        case when privateOrPublic = 'Public' and portfolioStatusDate >= #{closeDate} then 'Private' else privateOrPublic end as privateOrPublic,
+        stockCode, summaryReportNote, summaryReportIssueDate,
+        REPLACE(REPLACE(REPLACE(CAST(BusinessUpdate.updateBusiness as nvarchar(max)), char(13)+char(10), '
+        '), char(10), '
+        '), char(13), '
+        ') as updateBusiness,
+        BusinessUpdate.updateDate
+        from PortfolioBasicInfo
+        left outer join DDL_IDGRole on PortfolioBasicInfo.IDGRoleID = DDL_IDGRole.IDGRoleID
+        left outer join DDL_Stage on PortfolioBasicInfo.stageID = DDL_Stage.stageID
+        left outer join DDL_InitialRole on PortfolioBasicInfo.InitialRoleID = DDL_InitialRole.InitialRoleID
+        left outer join DDL_Sector on PortfolioBasicInfo.sectorID = DDL_Sector.sectorID
+        left outer join DDL_SubSector on PortfolioBasicInfo.subSectorID = DDL_SubSector.subSectorID
+        left outer join DDL_AntiDilution on PortfolioBasicInfo.antiDilutionID = DDL_AntiDilution.antiDilutionID
+        left outer join IDG_Staff on PortfolioBasicInfo.IDGBoardRepresentative = IDG_Staff.staffID
+        left outer join (
+        select a.* from
+        (select portfolioID, updateDate, updateBusiness from Portfolio_BOV) as a
+        inner join
+        (select portfolioID, MAX(updateDate) as updateDate from Portfolio_BOV where updateDate &lt;= #{closeDate} group by portfolioID) as b
+        on a.portfolioID = b.portfolioID and a.updateDate = b.updateDate
+        ) as BusinessUpdate on PortfolioBasicInfo.portfolioID = BusinessUpdate.portfolioID
+        inner join (
+        (select portfolioID, fundID from PortfolioEquityInvestment where fundID = #{fundId} and closeDate &lt;= #{closeDate})
+        union
+        (select portfolioID, fundID from PortfolioNote where fundID = #{fundId} and closeDate &lt;= #{closeDate})
+        ) as temp on PortfolioBasicInfo.portfolioID = temp.portfolioID
+        inner join FundBasicInfo on FundBasicInfo.fundID = temp.fundID) as whole
+        where privateOrPublic in ('Private', 'Public')
+        order by reportName
+
+    </select>
+
+
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.ExchangeratedetailMapper">
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Exchangeratedetail">
+    <id column="eid" jdbcType="BIGINT" property="eid" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="target" jdbcType="VARCHAR" property="target" />
+    <result column="valuedate" jdbcType="DATE" property="valuedate" />
+    <result column="rate" jdbcType="DECIMAL" property="rate" />
+  </resultMap>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ExchangeRateDetail
+    where eid = #{eid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Exchangeratedetail">
+    insert into ExchangeRateDetail ( source, target,
+      valuedate, rate)
+    values (#{source,jdbcType=VARCHAR}, #{target,jdbcType=VARCHAR},
+      #{valuedate,jdbcType=DATE}, #{rate,jdbcType=DECIMAL})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Exchangeratedetail">
+    update ExchangeRateDetail
+    set source = #{source,jdbcType=VARCHAR},
+      target = #{target,jdbcType=VARCHAR},
+      valuedate = #{valuedate,jdbcType=DATE},
+      rate = #{rate,jdbcType=DECIMAL}
+    where eid = #{eid,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select eid, source, target, valuedate, rate
+    from ExchangeRateDetail
+    where eid = #{eid,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select eid, source, target, valuedate, rate
+    from ExchangeRateDetail
+  </select>
+
+  <select id="queryExchangeRateList" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select eid, source, target, valuedate, rate
+    from ExchangeRateDetail
+    where valuedate between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE}
+    and source = #{source,jdbcType=VARCHAR};
+  </select>
+
+
+  <select id="getAllCurrency" resultType="java.lang.String">
+    select distinct(a.source) from (
+              select distinct source from ExchangeRateDetail
+              union
+              select distinct target from ExchangeRateDetail
+              ) a
+  </select>
+
+
+</mapper>

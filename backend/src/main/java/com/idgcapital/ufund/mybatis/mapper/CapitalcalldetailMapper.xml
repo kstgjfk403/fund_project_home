@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.CapitalcalldetailMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Capitalcalldetail" >
+    <id column="callDetailID" property="calldetailid" jdbcType="INTEGER" />
+    <result column="callID" property="callid" jdbcType="NVARCHAR" />
+    <result column="LPID" property="lpid" jdbcType="NVARCHAR" />
+    <result column="fundID" property="fundid" jdbcType="NVARCHAR" />
+    <result column="calledNum" property="callednum" jdbcType="DECIMAL" />
+    <result column="createdBy" property="createdby" jdbcType="NCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="TIMESTAMP" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="TIMESTAMP" />
+    <result column="emailSend" property="emailsend" jdbcType="BIT" />
+    <result column="emailSendDateTime" property="emailsenddatetime" jdbcType="TIMESTAMP" />
+    <result column="moneyReceived" property="moneyreceived" jdbcType="BIT" />
+    <result column="receiveDate" property="receivedate" jdbcType="DATE" />
+    <result column="ERISA" property="erisa" jdbcType="BIT" />
+    <result column="emailTo" property="emailto" jdbcType="NVARCHAR" />
+    <result column="emailBC" property="emailbc" jdbcType="NVARCHAR" />
+    <result column="emailCC" property="emailcc" jdbcType="NVARCHAR" />
+    <result column="subject" property="subject" jdbcType="NVARCHAR" />
+    <result column="emailContent" property="emailcontent" jdbcType="NVARCHAR" />
+    <result column="attachment" property="attachment" jdbcType="NVARCHAR" />
+    <result column="emailReviewed" property="emailreviewed" jdbcType="BIT" />
+    <result column="receiveNum" property="receivenum" jdbcType="DECIMAL" />
+    <result column="totalCommentNum" property="totalcommentnum" jdbcType="DECIMAL" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from CapitalCallDetail
+    where callDetailID = #{calldetailid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Capitalcalldetail" >
+    set IDENTITY_INSERT CapitalCallDetail  on
+    insert into CapitalCallDetail (callDetailID, callID, LPID, 
+      fundID, calledNum, createdBy, 
+      createdDate, modifiedBy, modifiedDate, 
+      emailSend, emailSendDateTime, moneyReceived, 
+      receiveDate, ERISA, emailTo, 
+      emailBC, emailCC, subject, 
+      emailContent, attachment, emailReviewed, 
+      receiveNum, totalCommentNum)
+    values (#{calldetailid,jdbcType=INTEGER}, #{callid,jdbcType=NVARCHAR}, #{lpid,jdbcType=NVARCHAR}, 
+      #{fundid,jdbcType=NVARCHAR}, #{callednum,jdbcType=DECIMAL}, #{createdby,jdbcType=NCHAR}, 
+      #{createddate,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=NCHAR}, #{modifieddate,jdbcType=TIMESTAMP}, 
+      #{emailsend,jdbcType=BIT}, #{emailsenddatetime,jdbcType=TIMESTAMP}, #{moneyreceived,jdbcType=BIT}, 
+      #{receivedate,jdbcType=DATE}, #{erisa,jdbcType=BIT}, #{emailto,jdbcType=NVARCHAR}, 
+      #{emailbc,jdbcType=NVARCHAR}, #{emailcc,jdbcType=NVARCHAR}, #{subject,jdbcType=NVARCHAR}, 
+      #{emailcontent,jdbcType=NVARCHAR}, #{attachment,jdbcType=NVARCHAR}, #{emailreviewed,jdbcType=BIT}, 
+      #{receivenum,jdbcType=DECIMAL}, #{totalcommentnum,jdbcType=DECIMAL})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Capitalcalldetail" >
+    update CapitalCallDetail
+    set callID = #{callid,jdbcType=NVARCHAR},
+      LPID = #{lpid,jdbcType=NVARCHAR},
+      fundID = #{fundid,jdbcType=NVARCHAR},
+      calledNum = #{callednum,jdbcType=DECIMAL},
+      createdBy = #{createdby,jdbcType=NCHAR},
+      createdDate = #{createddate,jdbcType=TIMESTAMP},
+      modifiedBy = #{modifiedby,jdbcType=NCHAR},
+      modifiedDate = #{modifieddate,jdbcType=TIMESTAMP},
+      emailSend = #{emailsend,jdbcType=BIT},
+      emailSendDateTime = #{emailsenddatetime,jdbcType=TIMESTAMP},
+      moneyReceived = #{moneyreceived,jdbcType=BIT},
+      receiveDate = #{receivedate,jdbcType=DATE},
+      ERISA = #{erisa,jdbcType=BIT},
+      emailTo = #{emailto,jdbcType=NVARCHAR},
+      emailBC = #{emailbc,jdbcType=NVARCHAR},
+      emailCC = #{emailcc,jdbcType=NVARCHAR},
+      subject = #{subject,jdbcType=NVARCHAR},
+      emailContent = #{emailcontent,jdbcType=NVARCHAR},
+      attachment = #{attachment,jdbcType=NVARCHAR},
+      emailReviewed = #{emailreviewed,jdbcType=BIT},
+      receiveNum = #{receivenum,jdbcType=DECIMAL},
+      totalCommentNum = #{totalcommentnum,jdbcType=DECIMAL}
+    where callDetailID = #{calldetailid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select callDetailID, callID, LPID, fundID, calledNum, createdBy, createdDate, modifiedBy, 
+    modifiedDate, emailSend, emailSendDateTime, moneyReceived, receiveDate, ERISA, emailTo, 
+    emailBC, emailCC, subject, emailContent, attachment, emailReviewed, receiveNum, totalCommentNum
+    from CapitalCallDetail
+    where callDetailID = #{calldetailid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select callDetailID, callID, LPID, fundID, calledNum, createdBy, createdDate, modifiedBy, 
+    modifiedDate, emailSend, emailSendDateTime, moneyReceived, receiveDate, ERISA, emailTo, 
+    emailBC, emailCC, subject, emailContent, attachment, emailReviewed, receiveNum, totalCommentNum
+    from CapitalCallDetail
+  </select>
+
+  <select id="selectCapitalCallDetailEntityList" parameterType="com.idgcapital.ufund.model.Capitalcalldetail" resultType="HashMap">
+    SELECT
+    w1.callDetailID, w1.callID, w1.LPID, w1.fundID, w1.calledNum, w1.createdBy, w1.createdDate,
+    w1.modifiedBy, w1.modifiedDate, w1.emailSend, case   w1.emailSend   when   1   then   'Y'   when   0   then   'N'   else   ''   end as emailSendStr,
+    w1.emailSendDateTime, CONVERT(varchar(100), w1.emailSendDateTime, 20) as emailSendDateTimeStr,
+    w1.moneyReceived, w1.receiveDate, w1.ERISA, case   w1.ERISA   when   1   then   'Y'   when   0   then   'N'   else   ''   end as erisaStr,
+
+    w1.emailTo, w1.emailBC, w1.emailCC, w1.subject,
+    w1.emailContent, w1.attachment, w1.emailReviewed, case   w1.emailReviewed   when   1   then   'Y'   when   0   then   'N'   else   ''   end as emailReviewedStr,
+
+    w1.receiveNum, w1.totalCommentNum,
+    w2.LPFamily, w2.LPLegalFullName
+    FROM CapitalCallDetail w1, LPBasicinfo w2
+    WHERE w1.LPID = w2.LPID
+    <if test="callid != null and callid != ''">
+      and  w1.callID = '${callid}'
+    </if>
+    <if test="lpFamily != null and lpFamily != ''">
+      and  lower(w2.LPFamily) like lower('%${lpFamily}%')
+    </if>
+    <if test="lpLegalFullName != null and lpLegalFullName != ''">
+      and  lower(w2.LPLegalFullName) like lower('%${lpLegalFullName}%')
+    </if>
+
+
+    ORDER BY w1.callDetailID ASC
+  </select>
+
+  <select id="selectCapitalCallDetailEntityListCount" parameterType="com.idgcapital.ufund.model.Capitalcalldetail" resultType="Long">
+    select count(1)
+    FROM CapitalCallDetail w1, LPBasicinfo w2
+    WHERE w1.LPID = w2.LPID
+    <if test="callid != null and callid != ''">
+      and  w1.callID = '${callid}'
+    </if>
+    <if test="lpFamily != null and lpFamily != ''">
+      and  lower(w2.LPFamily) like lower('%${lpFamily}%')
+    </if>
+    <if test="lpLegalFullName != null and lpLegalFullName != ''">
+      and  lower(w2.LPLegalFullName) like lower('%${lpLegalFullName}%')
+    </if>
+  </select>
+
+  <select id="selectMaxCallDetailId"  resultType="java.lang.Integer">
+    select max(w1.callDetailID)
+    FROM CapitalCallDetail w1
+  </select>
+
+  <select id="selectCapitalCallDetailListByFundIdAndCallIdAndLpId" parameterType="com.idgcapital.ufund.model.Capitalcalldetail" resultMap="BaseResultMap">
+    select callDetailID, callID, LPID, fundID, calledNum, createdBy, createdDate, modifiedBy,
+           modifiedDate, emailSend, emailSendDateTime, moneyReceived, receiveDate, ERISA, emailTo,
+           emailBC, emailCC, subject, emailContent, attachment, emailReviewed, receiveNum, totalCommentNum
+    from CapitalCallDetail
+    where 1=1
+    <if test="fundid != null and fundid != ''">
+      and  fundID = #{fundid,jdbcType=NVARCHAR}
+    </if>
+    <if test="callid != null and callid != ''">
+      and  callID = #{callid,jdbcType=NVARCHAR}
+    </if>
+    <if test="lpid != null and lpid != ''">
+      and  LPID = #{lpid,jdbcType=NVARCHAR}
+    </if>
+
+  </select>
+  <delete id="deleteByCallId" parameterType="java.lang.String" >
+    delete from CapitalCallDetail
+    where callID = #{callid,jdbcType=NVARCHAR}
+  </delete>
+
+</mapper>

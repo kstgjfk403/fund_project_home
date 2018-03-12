@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.CapitalcommitmentMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Capitalcommitment" >
+    <id column="commitID" property="commitid" jdbcType="INTEGER" />
+    <result column="LPID" property="lpid" jdbcType="NVARCHAR" />
+    <result column="fundID" property="fundid" jdbcType="NVARCHAR" />
+    <result column="commitmentNum" property="commitmentnum" jdbcType="DECIMAL" />
+    <result column="commitmentCur" property="commitmentcur" jdbcType="NVARCHAR" />
+    <result column="commitmentDate" property="commitmentdate" jdbcType="DATE" />
+    <result column="percentage" property="percentage" jdbcType="NCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="TIMESTAMP" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="TIMESTAMP" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="transferFromLPID" property="transferfromlpid" jdbcType="NVARCHAR" />
+    <result column="transferDate" property="transferdate" jdbcType="DATE" />
+    <result column="transferToLPID" property="transfertolpid" jdbcType="NVARCHAR" />
+    <result column="transferAmount" property="transferamount" jdbcType="DECIMAL" />
+    <result column="comment" property="comment" jdbcType="NVARCHAR" />
+    <result column="LPLegalFullName" property="lplegalfullname" jdbcType="NVARCHAR" />
+    <result column="LPFamily" property="lpfamily" jdbcType="NVARCHAR" />
+
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from CapitalCommitment
+    where commitID = #{commitid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Capitalcommitment" >
+    set IDENTITY_INSERT CapitalCommitment  on
+    insert into CapitalCommitment (commitID, LPID, fundID, 
+      commitmentNum, commitmentCur, commitmentDate, 
+      percentage, createdBy, createdDate, 
+      modifiedBy, modifiedDate, approved, 
+      transferFromLPID, transferDate, transferToLPID, 
+      transferAmount, comment)
+    values (#{commitid,jdbcType=INTEGER}, #{lpid,jdbcType=NVARCHAR}, #{fundid,jdbcType=NVARCHAR}, 
+      #{commitmentnum,jdbcType=DECIMAL}, #{commitmentcur,jdbcType=NVARCHAR}, #{commitmentdate,jdbcType=DATE}, 
+      #{percentage,jdbcType=NCHAR}, #{createdby,jdbcType=NCHAR}, #{createddate,jdbcType=TIMESTAMP}, 
+      #{modifiedby,jdbcType=NCHAR}, #{modifieddate,jdbcType=TIMESTAMP}, #{approved,jdbcType=BIT}, 
+      #{transferfromlpid,jdbcType=NVARCHAR}, #{transferdate,jdbcType=DATE}, #{transfertolpid,jdbcType=NVARCHAR}, 
+      #{transferamount,jdbcType=DECIMAL}, #{comment,jdbcType=NVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Capitalcommitment" >
+    update CapitalCommitment
+    set LPID = #{lpid,jdbcType=NVARCHAR},
+      fundID = #{fundid,jdbcType=NVARCHAR},
+      commitmentNum = #{commitmentnum,jdbcType=DECIMAL},
+      commitmentCur = #{commitmentcur,jdbcType=NVARCHAR},
+      commitmentDate = #{commitmentdate,jdbcType=DATE},
+      percentage = #{percentage,jdbcType=NCHAR},
+      createdBy = #{createdby,jdbcType=NCHAR},
+      createdDate = #{createddate,jdbcType=TIMESTAMP},
+      modifiedBy = #{modifiedby,jdbcType=NCHAR},
+      modifiedDate = #{modifieddate,jdbcType=TIMESTAMP},
+      approved = #{approved,jdbcType=BIT},
+      transferFromLPID = #{transferfromlpid,jdbcType=NVARCHAR},
+      transferDate = #{transferdate,jdbcType=DATE},
+      transferToLPID = #{transfertolpid,jdbcType=NVARCHAR},
+      transferAmount = #{transferamount,jdbcType=DECIMAL},
+      comment = #{comment,jdbcType=NVARCHAR}
+    where commitID = #{commitid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.idgcapital.ufund.model.Capitalcommitment" >
+    update CapitalCommitment
+    set LPID = #{lpid,jdbcType=NVARCHAR},
+
+    <if test=" commitmentnum != null  ">
+         commitmentNum = #{commitmentnum,jdbcType=DECIMAL} ,
+    </if>
+    <if test=" commitmentcur != null  ">
+      commitmentCur = #{commitmentcur,jdbcType=DECIMAL},
+    </if>
+    <if test=" commitmentdate != null  ">
+      commitmentDate = #{commitmentdate,jdbcType=DATE},
+    </if>
+
+    <if test=" percentage != null  ">
+      percentage = #{percentage,jdbcType=NCHAR},
+    </if>
+
+    <if test=" modifiedby != null  ">
+      modifiedBy = #{modifiedby,jdbcType=NCHAR},
+    </if>
+
+    <if test=" modifieddate != null  ">
+      modifiedDate = #{modifieddate,jdbcType=TIMESTAMP},
+    </if>
+
+    <if test=" approved != null  ">
+      approved = #{approved,jdbcType=BIT},
+    </if>
+
+    <if test=" transferfromlpid != null  ">
+      transferFromLPID = #{transferfromlpid,jdbcType=NVARCHAR},
+    </if>
+
+    <if test=" transferdate != null  ">
+      transferDate = #{transferdate,jdbcType=DATE},
+    </if>
+
+    <if test=" transfertolpid != null  ">
+      transferToLPID = #{transfertolpid,jdbcType=NVARCHAR},
+    </if>
+
+    <if test=" transferamount != null  ">
+      transferAmount = #{transferamount,jdbcType=DECIMAL},
+    </if>
+
+    <if test=" comment != null  ">
+      comment = #{comment,jdbcType=NVARCHAR},
+    </if>
+
+    fundID = #{fundid,jdbcType=NVARCHAR}
+    where commitID = #{commitid,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select commitID, LPID, fundID, commitmentNum, commitmentCur, commitmentDate, percentage, 
+    createdBy, createdDate, modifiedBy, modifiedDate, approved, transferFromLPID, transferDate, 
+    transferToLPID, transferAmount, comment
+    from CapitalCommitment
+    where commitID = #{commitid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select commitID, LPID, fundID, commitmentNum, commitmentCur, commitmentDate, percentage, 
+    createdBy, createdDate, modifiedBy, modifiedDate, approved, transferFromLPID, transferDate, 
+    transferToLPID, transferAmount, comment
+    from CapitalCommitment
+  </select>
+  <select id="selectCapitalCommitmentEntityListByPara" parameterType="com.idgcapital.ufund.model.Capitalcommitment" resultMap="BaseResultMap" >
+    select a.commitID, a.LPID, a.fundID, a.commitmentNum, a.commitmentCur, a.commitmentDate, a.percentage,
+    a.createdBy, a.createdDate, a.modifiedBy, a.modifiedDate, a.approved, a.transferFromLPID, a.transferDate,
+    a.transferToLPID, a.transferAmount, a.comment, b.LPLegalFullName, b.LPFamily
+    from CapitalCommitment a, LPBasicInfo b
+    where a.LPID = b.LPID
+    <if test=" fundid != null and fundid != '' ">
+      and  a.fundID = #{fundid,jdbcType=NVARCHAR}
+    </if>
+    <if test=" lpfamily != null and lpfamily != '' ">
+      and  lower(b.LPFamily) like lower('%${lpfamily}%')
+    </if>
+    <if test=" lplegalfullname != null and lplegalfullname != '' ">
+      and  lower(b.LPLegalFullName) like lower('%${lplegalfullname}%')
+    </if>
+    <if test=" commitmentdate != null">
+      and  a.commitmentDate <![CDATA[<=]]> #{commitmentdate,jdbcType=DATE}
+    </if>
+    <if test=" comment != null and comment != '' ">
+      and  lower(a.comment) like lower('%${comment}%')
+    </if>
+    order by a. commitmentDate DESC
+  </select>
+
+  <select id="selectCapitalCommitmentEntityListForTransfer" parameterType="com.idgcapital.ufund.model.Capitalcommitment" resultType="HashMap" >
+    select a.commitID, a.LPID, a.fundID, a.commitmentNum, a.commitmentCur, a.commitmentDate, a.percentage,
+    a.createdBy, a.createdDate, a.modifiedBy, a.modifiedDate, a.approved, a.transferFromLPID, a.transferDate,
+    a.transferToLPID, a.transferAmount, a.comment,b.fundFamillyName, b.fundName, b.fundFullNameEng, b.fundFullNameChi
+    from CapitalCommitment a, FundBasicInfo b
+    where a.fundID = b.fundID
+    <if test=" lpid != null and lpid != '' ">
+      and  a.LPID = #{lpid,jdbcType=NVARCHAR}
+    </if>
+    order by a.fundID ASC, a.commitmentDate ASC
+
+
+  </select>
+
+  <select id="selectMaxCommitId"  resultType="java.lang.Integer">
+    select max(w1.commitID)
+    FROM CapitalCommitment w1
+  </select>
+</mapper>

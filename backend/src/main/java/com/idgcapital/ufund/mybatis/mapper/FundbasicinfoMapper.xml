@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.FundbasicinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Fundbasicinfo" >
+    <id column="fundID" property="fundid" jdbcType="NVARCHAR" />
+    <result column="fundFamillyName" property="fundfamillyname" jdbcType="NVARCHAR" />
+    <result column="fundName" property="fundname" jdbcType="NVARCHAR" />
+    <result column="fundFullNameEng" property="fundfullnameeng" jdbcType="NVARCHAR" />
+    <result column="fundFullNameChi" property="fundfullnamechi" jdbcType="NVARCHAR" />
+    <result column="fundTypeID" property="fundtypeid" jdbcType="NVARCHAR" />
+    <result column="fundStatus" property="fundstatus" jdbcType="NVARCHAR" />
+    <result column="incorpLocation" property="incorplocation" jdbcType="INTEGER" />
+    <result column="regAddress" property="regaddress" jdbcType="NVARCHAR" />
+    <result column="formationDate" property="formationdate" jdbcType="DATE" />
+    <result column="initialLPADate" property="initiallpadate" jdbcType="DATE" />
+    <result column="latestLPADate" property="latestlpadate" jdbcType="DATE" />
+    <result column="mainIndustry" property="mainindustry" jdbcType="NVARCHAR" />
+    <result column="closeDate" property="closedate" jdbcType="DATE" />
+    <result column="yearEnd" property="yearend" jdbcType="NVARCHAR" />
+    <result column="GAAP" property="gaap" jdbcType="NVARCHAR" />
+    <result column="Auditor" property="auditor" jdbcType="NVARCHAR" />
+    <result column="totalCommitmentNum" property="totalcommitmentnum" jdbcType="DECIMAL" />
+    <result column="totalCommitmentCur" property="totalcommitmentcur" jdbcType="NVARCHAR" />
+    <result column="bankName" property="bankname" jdbcType="NVARCHAR" />
+    <result column="bankAccount" property="bankaccount" jdbcType="NVARCHAR" />
+    <result column="swiftCode" property="swiftcode" jdbcType="NVARCHAR" />
+    <result column="ABA" property="aba" jdbcType="NVARCHAR" />
+    <result column="Attn" property="attn" jdbcType="NVARCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="TIMESTAMP" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="TIMESTAMP" />
+    <result column="legalAdvisor" property="legaladvisor" jdbcType="NVARCHAR" />
+    <result column="taxRepresentative" property="taxrepresentative" jdbcType="NVARCHAR" />
+    <result column="GPName" property="gpname" jdbcType="NVARCHAR" />
+    <result column="magtCompany" property="magtcompany" jdbcType="NVARCHAR" />
+    <result column="magtComIncorporated" property="magtcomincorporated" jdbcType="INTEGER" />
+    <result column="FATCA" property="fatca" jdbcType="BIT" />
+    <result column="FATCAType" property="fatcatype" jdbcType="NVARCHAR" />
+    <result column="FATCAOfficer" property="fatcaofficer" jdbcType="NVARCHAR" />
+    <result column="GIIN_No" property="giinNo" jdbcType="NVARCHAR" />
+    <result column="taxID" property="taxid" jdbcType="NVARCHAR" />
+    <result column="totalLPCommitNum" property="totallpcommitnum" jdbcType="DECIMAL" />
+    <result column="totalGPCommitNum" property="totalgpcommitnum" jdbcType="DECIMAL" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="relateFundID" property="relatefundid" jdbcType="NVARCHAR" />
+    <result column="fundWBName" property="fundwbname" jdbcType="NVARCHAR" />
+    <result column="fundManager" property="fundmanager" jdbcType="NVARCHAR" />
+    <result column="financeManager" property="financemanager" jdbcType="NVARCHAR" />
+    <result column="fundManagerEmail" property="fundmanageremail" jdbcType="NVARCHAR" />
+    <result column="financeManagerEmail" property="financemanageremail" jdbcType="NVARCHAR" />
+    <result column="managFeeDesc" property="managfeedesc" jdbcType="LONGVARCHAR" />
+    <result column="capitalAllocationsDesc" property="capitalallocationsdesc" jdbcType="LONGVARCHAR" />
+    <result column="bankAddress" property="bankaddress" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from FundBasicInfo
+    where fundID = #{fundid,jdbcType=NVARCHAR}
+  </delete>
+  <update id="deleteFundById" parameterType="java.lang.String">
+    update FundBasicInfo set validflag = '-1' where fundID = #{fundid,jdbcType=NVARCHAR}
+  </update>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Fundbasicinfo" >
+    insert into FundBasicInfo (fundID, fundFamillyName, fundName, 
+      fundFullNameEng, fundFullNameChi, fundTypeID, 
+      fundStatus, incorpLocation, regAddress, 
+      formationDate, initialLPADate, latestLPADate, 
+      mainIndustry, closeDate, yearEnd, 
+      GAAP, Auditor, totalCommitmentNum, 
+      totalCommitmentCur, bankName, bankAccount, 
+      swiftCode, ABA, Attn, 
+      createdBy, createdDate, modifiedBy, 
+      modifiedDate, legalAdvisor, taxRepresentative, 
+      GPName, magtCompany, magtComIncorporated, 
+      FATCA, FATCAType, FATCAOfficer, 
+      GIIN_No, taxID, totalLPCommitNum, 
+      totalGPCommitNum, approved, relateFundID, 
+      fundWBName, fundManager, financeManager, 
+      fundManagerEmail, financeManagerEmail, 
+      managFeeDesc, capitalAllocationsDesc, 
+      bankAddress,validFlag)
+    values (#{fundid,jdbcType=NVARCHAR}, #{fundfamillyname,jdbcType=NVARCHAR}, #{fundname,jdbcType=NVARCHAR}, 
+      #{fundfullnameeng,jdbcType=NVARCHAR}, #{fundfullnamechi,jdbcType=NVARCHAR}, #{fundtypeid,jdbcType=NVARCHAR}, 
+      #{fundstatus,jdbcType=NVARCHAR}, #{incorplocation,jdbcType=INTEGER}, #{regaddress,jdbcType=NVARCHAR}, 
+      #{formationdate,jdbcType=DATE}, #{initiallpadate,jdbcType=DATE}, #{latestlpadate,jdbcType=DATE}, 
+      #{mainindustry,jdbcType=NVARCHAR}, #{closedate,jdbcType=DATE}, #{yearend,jdbcType=NVARCHAR}, 
+      #{gaap,jdbcType=NVARCHAR}, #{auditor,jdbcType=NVARCHAR}, #{totalcommitmentnum,jdbcType=DECIMAL}, 
+      #{totalcommitmentcur,jdbcType=NVARCHAR}, #{bankname,jdbcType=NVARCHAR}, #{bankaccount,jdbcType=NVARCHAR}, 
+      #{swiftcode,jdbcType=NVARCHAR}, #{aba,jdbcType=NVARCHAR}, #{attn,jdbcType=NVARCHAR}, 
+      #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=NVARCHAR}, 
+      #{modifieddate,jdbcType=TIMESTAMP}, #{legaladvisor,jdbcType=NVARCHAR}, #{taxrepresentative,jdbcType=NVARCHAR}, 
+      #{gpname,jdbcType=NVARCHAR}, #{magtcompany,jdbcType=NVARCHAR}, #{magtcomincorporated,jdbcType=INTEGER}, 
+      #{fatca,jdbcType=BIT}, #{fatcatype,jdbcType=NVARCHAR}, #{fatcaofficer,jdbcType=NVARCHAR}, 
+      #{giinNo,jdbcType=NVARCHAR}, #{taxid,jdbcType=NVARCHAR}, #{totallpcommitnum,jdbcType=DECIMAL}, 
+      #{totalgpcommitnum,jdbcType=DECIMAL}, #{approved,jdbcType=BIT}, #{relatefundid,jdbcType=NVARCHAR}, 
+      #{fundwbname,jdbcType=NVARCHAR}, #{fundmanager,jdbcType=NVARCHAR}, #{financemanager,jdbcType=NVARCHAR}, 
+      #{fundmanageremail,jdbcType=NVARCHAR}, #{financemanageremail,jdbcType=NVARCHAR}, 
+      #{managfeedesc,jdbcType=LONGVARCHAR}, #{capitalallocationsdesc,jdbcType=LONGVARCHAR}, 
+      #{bankaddress,jdbcType=LONGVARCHAR},#{validflag,jdbcType=NVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Fundbasicinfo" >
+    update FundBasicInfo
+    set fundFamillyName = #{fundfamillyname,jdbcType=NVARCHAR},
+      fundName = #{fundname,jdbcType=NVARCHAR},
+      fundFullNameEng = #{fundfullnameeng,jdbcType=NVARCHAR},
+      fundFullNameChi = #{fundfullnamechi,jdbcType=NVARCHAR},
+      fundTypeID = #{fundtypeid,jdbcType=NVARCHAR},
+      fundStatus = #{fundstatus,jdbcType=NVARCHAR},
+      incorpLocation = #{incorplocation,jdbcType=INTEGER},
+      regAddress = #{regaddress,jdbcType=NVARCHAR},
+      formationDate = #{formationdate,jdbcType=DATE},
+      initialLPADate = #{initiallpadate,jdbcType=DATE},
+      latestLPADate = #{latestlpadate,jdbcType=DATE},
+      mainIndustry = #{mainindustry,jdbcType=NVARCHAR},
+      closeDate = #{closedate,jdbcType=DATE},
+      yearEnd = #{yearend,jdbcType=NVARCHAR},
+      GAAP = #{gaap,jdbcType=NVARCHAR},
+      Auditor = #{auditor,jdbcType=NVARCHAR},
+      totalCommitmentNum = #{totalcommitmentnum,jdbcType=DECIMAL},
+      totalCommitmentCur = #{totalcommitmentcur,jdbcType=NVARCHAR},
+      bankName = #{bankname,jdbcType=NVARCHAR},
+      bankAccount = #{bankaccount,jdbcType=NVARCHAR},
+      swiftCode = #{swiftcode,jdbcType=NVARCHAR},
+      ABA = #{aba,jdbcType=NVARCHAR},
+      Attn = #{attn,jdbcType=NVARCHAR},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=TIMESTAMP},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=TIMESTAMP},
+      legalAdvisor = #{legaladvisor,jdbcType=NVARCHAR},
+      taxRepresentative = #{taxrepresentative,jdbcType=NVARCHAR},
+      GPName = #{gpname,jdbcType=NVARCHAR},
+      magtCompany = #{magtcompany,jdbcType=NVARCHAR},
+      magtComIncorporated = #{magtcomincorporated,jdbcType=INTEGER},
+      FATCA = #{fatca,jdbcType=BIT},
+      FATCAType = #{fatcatype,jdbcType=NVARCHAR},
+      FATCAOfficer = #{fatcaofficer,jdbcType=NVARCHAR},
+      GIIN_No = #{giinNo,jdbcType=NVARCHAR},
+      taxID = #{taxid,jdbcType=NVARCHAR},
+      totalLPCommitNum = #{totallpcommitnum,jdbcType=DECIMAL},
+      totalGPCommitNum = #{totalgpcommitnum,jdbcType=DECIMAL},
+      approved = #{approved,jdbcType=BIT},
+      relateFundID = #{relatefundid,jdbcType=NVARCHAR},
+      fundWBName = #{fundwbname,jdbcType=NVARCHAR},
+      fundManager = #{fundmanager,jdbcType=NVARCHAR},
+      financeManager = #{financemanager,jdbcType=NVARCHAR},
+      fundManagerEmail = #{fundmanageremail,jdbcType=NVARCHAR},
+      financeManagerEmail = #{financemanageremail,jdbcType=NVARCHAR},
+      managFeeDesc = #{managfeedesc,jdbcType=LONGVARCHAR},
+      capitalAllocationsDesc = #{capitalallocationsdesc,jdbcType=LONGVARCHAR},
+      bankAddress = #{bankaddress,jdbcType=LONGVARCHAR}
+    where fundID = #{fundid,jdbcType=NVARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select fundID, fundFamillyName, fundName, fundFullNameEng, fundFullNameChi, fundTypeID, 
+    fundStatus, incorpLocation, regAddress, formationDate, initialLPADate, latestLPADate, 
+    mainIndustry, closeDate, yearEnd, GAAP, Auditor, totalCommitmentNum, totalCommitmentCur, 
+    bankName, bankAccount, swiftCode, ABA, Attn, createdBy, createdDate, modifiedBy, 
+    modifiedDate, legalAdvisor, taxRepresentative, GPName, magtCompany, magtComIncorporated, 
+    FATCA, FATCAType, FATCAOfficer, GIIN_No, taxID, totalLPCommitNum, totalGPCommitNum, 
+    approved, relateFundID, fundWBName, fundManager, financeManager, fundManagerEmail, 
+    financeManagerEmail, managFeeDesc, capitalAllocationsDesc, bankAddress
+    from FundBasicInfo
+    where fundID = #{fundid,jdbcType=NVARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select fundID, fundFamillyName, fundName, fundFullNameEng, fundFullNameChi, fundTypeID, 
+    fundStatus, incorpLocation, regAddress, formationDate, initialLPADate, latestLPADate, 
+    mainIndustry, closeDate, yearEnd, GAAP, Auditor, totalCommitmentNum, totalCommitmentCur, 
+    bankName, bankAccount, swiftCode, ABA, Attn, createdBy, createdDate, modifiedBy, 
+    modifiedDate, legalAdvisor, taxRepresentative, GPName, magtCompany, magtComIncorporated, 
+    FATCA, FATCAType, FATCAOfficer, GIIN_No, taxID, totalLPCommitNum, totalGPCommitNum, 
+    approved, relateFundID, fundWBName, fundManager, financeManager, fundManagerEmail, 
+    financeManagerEmail, managFeeDesc, capitalAllocationsDesc, bankAddress
+    from FundBasicInfo
+  </select>
+
+  <select id="selectMaxFundId" resultType="java.lang.String">
+    select max(fundID) from FundBasicInfo
+  </select>
+  
+  <select id="selectFundEntityList" parameterType="com.idgcapital.ufund.model.Fundbasicinfo" resultMap="BaseResultMap">
+   SELECT w1.* FROM FundBasicInfo w1,
+   (SELECT TOP (#{pageEnd,jdbcType=INTEGER}) row_number() OVER (order by fundId asc) n, fundId FROM FundBasicInfo f
+    where validFlag ='1'
+    <if test=" fundfamillyname != null and fundfamillyname != '' ">
+      and  lower(f.fundfamillyname) like lower('%${fundfamillyname}%')
+    </if>
+    <if test=" fundname != null and fundname != '' ">
+      and  lower(f.fundname) like lower('%${fundname}%')
+    </if>
+    <if test=" fundfullnameeng != null and fundfullnameeng != '' ">
+      and  lower(f.fundfullnameeng) like lower('%${fundfullnameeng}%')
+    </if>
+    <if test=" fundfullnamechi != null and fundfullnamechi != '' ">
+      and  lower(f.fundfullnamechi) like lower(N'%${fundfullnamechi}%')
+    </if>
+    <if test=" fundtypeid != null and fundtypeid != '' ">
+      and  lower(f.fundtypeid) like lower('%${fundtypeid}%')
+    </if>
+    <if test=" gpname != null and gpname != '' ">
+      and  lower(f.gpname) like lower('%${gpname}%')
+    </if>
+    <if test=" managfeedesc != null and managfeedesc != '' ">
+      and  f.managfeedesc like '%${managfeedesc}%'
+    </if>
+    <if test=" capitalallocationsdesc != null and capitalallocationsdesc != '' ">
+      and  f.capitalallocationsdesc like '%${capitalallocationsdesc}%'
+    </if>
+
+    ) w2
+   WHERE w1.fundId = w2.fundId AND w2.n > (#{pageStart,jdbcType=INTEGER}) ORDER BY w2.n ASC
+  </select>
+  
+  <select id="selectFundEntityCount" parameterType="com.idgcapital.ufund.model.Fundbasicinfo" resultType="java.lang.Long">
+    select count(*) from FundBasicInfo f
+    where validFlag ='1'
+    <if test=" fundfamillyname != null and fundfamillyname != '' ">
+      and  lower(f.fundfamillyname) like lower('%${fundfamillyname}%')
+    </if>
+    <if test=" fundname != null and fundname != '' ">
+      and  lower(f.fundname) like lower('%${fundname}%')
+    </if>
+    <if test=" fundfullnameeng != null and fundfullnameeng != '' ">
+      and  lower(f.fundfullnameeng) like lower('%${fundfullnameeng}%')
+    </if>
+    <if test=" fundfullnamechi != null and fundfullnamechi != '' ">
+      and  lower(f.fundfullnamechi) like lower(N'%${fundfullnamechi}%')
+    </if>
+    <if test=" fundtypeid != null and fundtypeid != '' ">
+      and  lower(f.fundtypeid) like lower('%${fundtypeid}%')
+    </if>
+    <if test=" gpname != null and gpname != '' ">
+      and  lower(f.gpname) like lower('%${gpname}%')
+    </if>
+    <if test=" managfeedesc != null and managfeedesc != '' ">
+      and  f.managfeedesc like '%${managfeedesc}%'
+    </if>
+    <if test=" capitalallocationsdesc != null and capitalallocationsdesc != '' ">
+      and  f.capitalallocationsdesc like '%${capitalallocationsdesc}%'
+    </if>
+  </select>
+
+  <select id="selectFundList" resultType="java.util.HashMap">
+   select fundID baseId,fundName baseName from FundBasicInfo
+  </select>
+
+  <select id="selectFundFamilyList" resultType="java.util.HashMap">
+    select DISTINCT  fundFamillyName baseId,fundFamillyName baseName from FundBasicInfo
+  </select>
+
+  <select id="selectFundByFamily" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    select * from FundBasicInfo where fundFamillyName = #{family}
+  </select>
+
+  <select id="selectFundEntityListWithoutPage"  resultMap="BaseResultMap">
+    SELECT w1.* FROM FundBasicInfo w1
+
+    where validFlag ='1'
+    ORDER BY w1.fundFullNameEng ASC
+  </select>
+
+</mapper>

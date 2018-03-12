@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfoliofinancialinfoMapper">
+    <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfoliofinancialinfo">
+        <id column="portfolioFinancialLot" property="portfoliofinanciallot" jdbcType="INTEGER"/>
+        <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR"/>
+        <result column="startDate" property="startdate" jdbcType="DATE"/>
+        <result column="endDate" property="enddate" jdbcType="DATE"/>
+        <result column="YTD" property="ytd" jdbcType="NVARCHAR"/>
+        <result column="revenue" property="revenue" jdbcType="DECIMAL"/>
+        <result column="grossMargin" property="grossmargin" jdbcType="DECIMAL"/>
+        <result column="EBITDA" property="ebitda" jdbcType="DECIMAL"/>
+        <result column="operatingProfits" property="operatingprofits" jdbcType="DECIMAL"/>
+        <result column="netProfits" property="netprofits" jdbcType="DECIMAL"/>
+        <result column="cashBurnPerMonth" property="cashburnpermonth" jdbcType="DECIMAL"/>
+        <result column="totalAssets" property="totalassets" jdbcType="DECIMAL"/>
+        <result column="totalLiabilities" property="totalliabilities" jdbcType="DECIMAL"/>
+        <result column="currentAssets" property="currentassets" jdbcType="DECIMAL"/>
+        <result column="currentLiabilities" property="currentliabilities" jdbcType="DECIMAL"/>
+        <result column="currentNetA_L" property="currentnetaL" jdbcType="DECIMAL"/>
+        <result column="cashLevel" property="cashlevel" jdbcType="DECIMAL"/>
+        <result column="approved" property="approved" jdbcType="BIT"/>
+        <result column="cashAssets" property="cashassets" jdbcType="DECIMAL"/>
+        <result column="otherAssets" property="otherassets" jdbcType="DECIMAL"/>
+        <result column="ownerEquity" property="ownerequity" jdbcType="DECIMAL"/>
+        <result column="operatingIncome" property="operatingincome" jdbcType="DECIMAL"/>
+        <result column="debt" property="debt" jdbcType="DOUBLE"/>
+        <result column="createdBy" property="createdby" jdbcType="NVARCHAR"/>
+        <result column="createdDate" property="createddate" jdbcType="DATE"/>
+        <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR"/>
+        <result column="modifiedDate" property="modifieddate" jdbcType="DATE"/>
+        <result column="currency" property="currency" jdbcType="NVARCHAR"/>
+        <result column="FSDate" property="fsdate" jdbcType="NVARCHAR"/>
+        <result column="YEMth" property="yemth" jdbcType="NVARCHAR"/>
+        <result column="retainedEarnings" property="retainedearnings" jdbcType="DECIMAL"/>
+        <result column="grossProfit" property="grossprofit" jdbcType="DECIMAL"/>
+        <result column="exchangeRate" property="exchangerate" jdbcType="DECIMAL"/>
+        <result column="shareCapital" property="sharecapital" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMapName" type="com.idgcapital.ufund.model.Portfoliofinancialinfo">
+        <id column="portfolioFinancialLot" property="portfoliofinanciallot" jdbcType="INTEGER"/>
+        <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR"/>
+        <result column="startDate" property="startdate" jdbcType="DATE"/>
+        <result column="endDate" property="enddate" jdbcType="DATE"/>
+        <result column="YTD" property="ytd" jdbcType="NVARCHAR"/>
+        <result column="revenue" property="revenue" jdbcType="DECIMAL"/>
+        <result column="grossMargin" property="grossmargin" jdbcType="DECIMAL"/>
+        <result column="EBITDA" property="ebitda" jdbcType="DECIMAL"/>
+        <result column="operatingProfits" property="operatingprofits" jdbcType="DECIMAL"/>
+        <result column="netProfits" property="netprofits" jdbcType="DECIMAL"/>
+        <result column="cashBurnPerMonth" property="cashburnpermonth" jdbcType="DECIMAL"/>
+        <result column="totalAssets" property="totalassets" jdbcType="DECIMAL"/>
+        <result column="totalLiabilities" property="totalliabilities" jdbcType="DECIMAL"/>
+        <result column="currentAssets" property="currentassets" jdbcType="DECIMAL"/>
+        <result column="currentLiabilities" property="currentliabilities" jdbcType="DECIMAL"/>
+        <result column="currentNetA_L" property="currentnetaL" jdbcType="DECIMAL"/>
+        <result column="cashLevel" property="cashlevel" jdbcType="DECIMAL"/>
+        <result column="approved" property="approved" jdbcType="BIT"/>
+        <result column="cashAssets" property="cashassets" jdbcType="DECIMAL"/>
+        <result column="otherAssets" property="otherassets" jdbcType="DECIMAL"/>
+        <result column="ownerEquity" property="ownerequity" jdbcType="DECIMAL"/>
+        <result column="operatingIncome" property="operatingincome" jdbcType="DECIMAL"/>
+        <result column="debt" property="debt" jdbcType="DOUBLE"/>
+        <result column="createdBy" property="createdby" jdbcType="NVARCHAR"/>
+        <result column="createdDate" property="createddate" jdbcType="DATE"/>
+        <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR"/>
+        <result column="modifiedDate" property="modifieddate" jdbcType="DATE"/>
+        <result column="currency" property="currency" jdbcType="NVARCHAR"/>
+        <result column="FSDate" property="fsdate" jdbcType="NVARCHAR"/>
+        <result column="YEMth" property="yemth" jdbcType="NVARCHAR"/>
+        <result column="retainedEarnings" property="retainedearnings" jdbcType="DECIMAL"/>
+        <result column="grossProfit" property="grossprofit" jdbcType="DECIMAL"/>
+        <result column="exchangeRate" property="exchangerate" jdbcType="DECIMAL"/>
+        <result column="shareCapital" property="sharecapital" jdbcType="DECIMAL"/>
+        <result column="abbName" property="abbname" jdbcType="NVARCHAR"/>
+    </resultMap>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from PortfolioFinancialInfo
+    where portfolioFinancialLot = #{portfoliofinanciallot,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfoliofinancialinfo">
+    insert into PortfolioFinancialInfo ( portfolioID,
+      startDate, endDate, YTD, 
+      revenue, grossMargin, EBITDA, 
+      operatingProfits, netProfits, cashBurnPerMonth, 
+      totalAssets, totalLiabilities, currentAssets, 
+      currentLiabilities, currentNetA_L, cashLevel, 
+      approved, cashAssets, otherAssets, 
+      ownerEquity, operatingIncome, debt, 
+      createdBy, createdDate, modifiedBy, 
+      modifiedDate, currency, FSDate, 
+      YEMth, retainedEarnings, grossProfit, 
+      exchangeRate, shareCapital)
+    values (#{portfolioid,jdbcType=NVARCHAR},
+      #{startdate,jdbcType=DATE}, #{enddate,jdbcType=DATE}, #{ytd,jdbcType=NVARCHAR}, 
+      #{revenue,jdbcType=DECIMAL}, #{grossmargin,jdbcType=DECIMAL}, #{ebitda,jdbcType=DECIMAL}, 
+      #{operatingprofits,jdbcType=DECIMAL}, #{netprofits,jdbcType=DECIMAL}, #{cashburnpermonth,jdbcType=DECIMAL}, 
+      #{totalassets,jdbcType=DECIMAL}, #{totalliabilities,jdbcType=DECIMAL}, #{currentassets,jdbcType=DECIMAL}, 
+      #{currentliabilities,jdbcType=DECIMAL}, #{currentnetaL,jdbcType=DECIMAL}, #{cashlevel,jdbcType=DECIMAL}, 
+      #{approved,jdbcType=BIT}, #{cashassets,jdbcType=DECIMAL}, #{otherassets,jdbcType=DECIMAL}, 
+      #{ownerequity,jdbcType=DECIMAL}, #{operatingincome,jdbcType=DECIMAL}, #{debt,jdbcType=DOUBLE}, 
+      #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=DATE}, #{modifiedby,jdbcType=NVARCHAR}, 
+      #{modifieddate,jdbcType=DATE}, #{currency,jdbcType=NVARCHAR}, #{fsdate,jdbcType=NVARCHAR}, 
+      #{yemth,jdbcType=NVARCHAR}, #{retainedearnings,jdbcType=DECIMAL}, #{grossprofit,jdbcType=DECIMAL}, 
+      #{exchangerate,jdbcType=DECIMAL}, #{sharecapital,jdbcType=DECIMAL})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfoliofinancialinfo">
+    update PortfolioFinancialInfo
+    set portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      startDate = #{startdate,jdbcType=DATE},
+      endDate = #{enddate,jdbcType=DATE},
+      YTD = #{ytd,jdbcType=NVARCHAR},
+      revenue = #{revenue,jdbcType=DECIMAL},
+      grossMargin = #{grossmargin,jdbcType=DECIMAL},
+      EBITDA = #{ebitda,jdbcType=DECIMAL},
+      operatingProfits = #{operatingprofits,jdbcType=DECIMAL},
+      netProfits = #{netprofits,jdbcType=DECIMAL},
+      cashBurnPerMonth = #{cashburnpermonth,jdbcType=DECIMAL},
+      totalAssets = #{totalassets,jdbcType=DECIMAL},
+      totalLiabilities = #{totalliabilities,jdbcType=DECIMAL},
+      currentAssets = #{currentassets,jdbcType=DECIMAL},
+      currentLiabilities = #{currentliabilities,jdbcType=DECIMAL},
+      currentNetA_L = #{currentnetaL,jdbcType=DECIMAL},
+      cashLevel = #{cashlevel,jdbcType=DECIMAL},
+      approved = #{approved,jdbcType=BIT},
+      cashAssets = #{cashassets,jdbcType=DECIMAL},
+      otherAssets = #{otherassets,jdbcType=DECIMAL},
+      ownerEquity = #{ownerequity,jdbcType=DECIMAL},
+      operatingIncome = #{operatingincome,jdbcType=DECIMAL},
+      debt = #{debt,jdbcType=DOUBLE},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      currency = #{currency,jdbcType=NVARCHAR},
+      FSDate = #{fsdate,jdbcType=NVARCHAR},
+      YEMth = #{yemth,jdbcType=NVARCHAR},
+      retainedEarnings = #{retainedearnings,jdbcType=DECIMAL},
+      grossProfit = #{grossprofit,jdbcType=DECIMAL},
+      exchangeRate = #{exchangerate,jdbcType=DECIMAL},
+      shareCapital = #{sharecapital,jdbcType=DECIMAL}
+    where portfolioFinancialLot = #{portfoliofinanciallot,jdbcType=INTEGER}
+  </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.idgcapital.ufund.model.Portfoliofinancialinfo">
+        update PortfolioFinancialInfo
+        set portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+        <if test="ytd!=null">
+          YTD = #{ytd,jdbcType=NVARCHAR},
+        </if>
+        <if test="grossMargin!=null">
+            grossMargin = #{grossmargin,jdbcType=DECIMAL},
+        </if>
+        <if test="ebitda!=null">
+            EBITDA = #{ebitda,jdbcType=DECIMAL},
+        </if>
+        <if test="cashburnpermonth!=null">
+            cashBurnPerMonth = #{cashburnpermonth,jdbcType=DECIMAL},
+        </if>
+        <if test="currentassets!=null">
+            currentAssets = #{currentassets,jdbcType=DECIMAL},
+        </if>
+        <if test="currentliabilities!=null">
+            currentLiabilities = #{currentliabilities,jdbcType=DECIMAL},
+        </if>
+        <if test="currentnetaL!=null">
+            currentNetA_L = #{currentnetaL,jdbcType=DECIMAL},
+        </if>
+        <if test="cashlevel!=null">
+            cashLevel = #{cashlevel,jdbcType=DECIMAL},
+        </if>
+        <if test="approved!=null">
+            approved = #{approved,jdbcType=BIT},
+        </if>
+        <if test="cashassets!=null">
+            cashAssets = #{cashassets,jdbcType=DECIMAL},
+        </if>
+
+        <if test="otherassets!=null">
+            otherAssets = #{otherassets,jdbcType=DECIMAL},
+        </if>
+        <if test="ownerequity!=null">
+            ownerEquity = #{ownerequity,jdbcType=DECIMAL},
+        </if>
+
+        <if test="modifiedBy!=null">
+            modifiedBy = #{modifiedby,jdbcType=INTEGER},
+        </if>
+
+        <if test="currency!=null">
+            currency = #{currency,jdbcType=INTEGER},
+        </if>
+        <if test="FSDate!=null">
+            FSDate = #{fsdate,jdbcType=DATE},
+        </if>
+        <if test="yemth!=null">
+            YEMth = #{yemth,jdbcType=NVARCHAR},
+        </if>
+        <if test="retainedEarnings!=null">
+            retainedEarnings = #{retainedearnings,jdbcType=DECIMAL},
+        </if>
+        <if test="shareCapital!=null">
+            shareCapital = #{sharecapital,jdbcType=INTEGER},
+        </if>
+        revenue = #{revenue,jdbcType=DECIMAL},
+        grossProfit = #{grossprofit,jdbcType=DECIMAL},
+        operatingIncome = #{operatingincome,jdbcType=DECIMAL},
+        debt = #{debt,jdbcType=DOUBLE},
+        operatingProfits = #{operatingprofits,jdbcType=DECIMAL},
+        netProfits = #{netprofits,jdbcType=DECIMAL},
+        totalAssets = #{totalassets,jdbcType=DECIMAL},
+        totalLiabilities = #{totalliabilities,jdbcType=DECIMAL},
+        startDate = #{startdate,jdbcType=DATE},
+        endDate = #{enddate,jdbcType=DATE},
+        modifiedDate = #{modifieddate,jdbcType=DATE}
+        where portfolioFinancialLot = #{portfoliofinanciallot,jdbcType=INTEGER}
+
+    </update>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select portfolioFinancialLot, portfolioID, startDate, endDate, YTD, revenue, grossMargin, 
+    EBITDA, operatingProfits, netProfits, cashBurnPerMonth, totalAssets, totalLiabilities, 
+    currentAssets, currentLiabilities, currentNetA_L, cashLevel, approved, cashAssets, 
+    otherAssets, ownerEquity, operatingIncome, debt, createdBy, createdDate, modifiedBy, 
+    modifiedDate, currency, FSDate, YEMth, retainedEarnings, grossProfit, exchangeRate, 
+    shareCapital
+    from PortfolioFinancialInfo
+    where portfolioFinancialLot = #{portfoliofinanciallot,jdbcType=INTEGER}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select portfolioFinancialLot, portfolioID, startDate, endDate, YTD, revenue, grossMargin, 
+    EBITDA, operatingProfits, netProfits, cashBurnPerMonth, totalAssets, totalLiabilities, 
+    currentAssets, currentLiabilities, currentNetA_L, cashLevel, approved, cashAssets, 
+    otherAssets, ownerEquity, operatingIncome, debt, createdBy, createdDate, modifiedBy, 
+    modifiedDate, currency, FSDate, YEMth, retainedEarnings, grossProfit, exchangeRate, 
+    shareCapital
+    from PortfolioFinancialInfo
+  </select>
+
+    <select id="queryFinancialData" resultMap="BaseResultMap"
+            parameterType="com.idgcapital.ufund.model.Portfoliofinancialinfo">
+
+        select v.*
+        from PortfolioFinancialInfo v
+        where 1 = 1
+        <if test="portfolioid != null">
+            and v.portfolioid = #{portfolioid,jdbcType=DATE}
+        </if>
+        <if test="enddate != null">
+            and v.enddate = #{enddate,jdbcType=DATE}
+        </if>
+    </select>
+
+    <select id="queryLatestFinancialData" resultMap="BaseResultMap"
+            parameterType="com.idgcapital.ufund.model.Portfoliofinancialinfo">
+
+        select v.*
+        from PortfolioFinancialInfo v
+        where 1 = 1
+        <if test="portfolioid != null">
+            and v.portfolioid = #{portfolioid,jdbcType=DATE}
+        </if>
+        <if test="enddate != null">
+            and v.enddate = (select max(a.enddate) PortfolioFinancialInfo a where a.enddate &lt;=#{enddate,jdbcType=DATE})
+        </if>
+    </select>
+
+
+    <select id="queryFinancialDataList" resultMap="BaseResultMapName"
+            parameterType="com.idgcapital.ufund.model.Portfoliofinancialinfo">
+
+        select v.*,b.abbName as abbname
+        from PortfolioFinancialInfo v left join PortfolioBasicInfo b on v.portfolioid = b.portfolioid
+        where 1 = 1
+        <if test="portfolioid != null">
+            and v.portfolioid = #{portfolioid,jdbcType=DATE}
+        </if>
+        ORDER BY v.portfolioid desc, v.endDate desc
+
+    </select>
+
+
+</mapper>

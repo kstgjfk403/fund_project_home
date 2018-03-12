@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfoliovaluationMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfoliovaluation" >
+    <id column="valuationID" property="valuationid" jdbcType="INTEGER" />
+    <result column="valuationDate" property="valuationdate" jdbcType="DATE" />
+    <result column="fundID" property="fundid" jdbcType="NVARCHAR" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="Valuation" property="valuation" jdbcType="DECIMAL" />
+    <result column="rating" property="rating" jdbcType="NVARCHAR" />
+    <result column="status" property="status" jdbcType="NVARCHAR" />
+    <result column="valuationNote" property="valuationnote" jdbcType="LONGNVARCHAR" />
+    <result column="valuationMethod" property="valuationmethod" jdbcType="NVARCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="Revaluation" property="revaluation" jdbcType="DECIMAL" />
+    <result column="GainsLosses" property="gainslosses" jdbcType="DECIMAL" />
+    <result column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="taxotDate" property="taxotdate" jdbcType="DATE" />
+    <result column="IRR" property="irr" jdbcType="DECIMAL" />
+    <result column="referenceShare" property="referenceshare" jdbcType="INTEGER" />
+    <result column="valuationType" property="valuationtype" jdbcType="VARCHAR" />
+    <result column="fairValue" property="fairvalue" jdbcType="NUMERIC" />
+    <result column="prop" property="prop" jdbcType="DECIMAL" />
+    <result column="discount" property="discount" jdbcType="NUMERIC" />
+    <result column="fin48Tax" property="fin48tax" jdbcType="NUMERIC" />
+    <result column="additional" property="additional" jdbcType="NUMERIC" />
+    <result column="multiple" property="multiple" jdbcType="NUMERIC" />
+    <result column="netvaluation" property="netvaluation" jdbcType="NUMERIC" />
+  </resultMap>
+
+  <resultMap id="valutionListMap" type="com.idgcapital.ufund.model.Portfoliovaluation" >
+    <id column="valuationID" property="valuationid" jdbcType="INTEGER" />
+    <result column="valuationDate" property="valuationdate" jdbcType="DATE" />
+    <result column="fundID" property="fundid" jdbcType="NVARCHAR" />
+    <result column="fundName" property="fundName" jdbcType="NVARCHAR" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="portfolioName" property="portfolioName" jdbcType="NVARCHAR" />
+    <result column="Valuation" property="valuation" jdbcType="DECIMAL" />
+    <result column="rating" property="rating" jdbcType="NVARCHAR" />
+    <result column="status" property="status" jdbcType="NVARCHAR" />
+    <result column="valuationNote" property="valuationnote" jdbcType="LONGNVARCHAR" />
+    <result column="valuationMethod" property="valuationmethod" jdbcType="NVARCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="Revaluation" property="revaluation" jdbcType="DECIMAL" />
+    <result column="GainsLosses" property="gainslosses" jdbcType="DECIMAL" />
+    <result column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="taxotDate" property="taxotdate" jdbcType="DATE" />
+    <result column="IRR" property="irr" jdbcType="DECIMAL" />
+    <result column="referenceShare" property="referenceshare" jdbcType="INTEGER" />
+    <result column="valuationType" property="valuationtype" jdbcType="VARCHAR" />
+    <result column="fairValue" property="fairvalue" jdbcType="NUMERIC" />
+    <result column="prop" property="prop" jdbcType="DECIMAL" />
+    <result column="discount" property="discount" jdbcType="NUMERIC" />
+    <result column="fin48Tax" property="fin48tax" jdbcType="NUMERIC" />
+    <result column="additional" property="additional" jdbcType="NUMERIC" />
+    <result column="multiple" property="multiple" jdbcType="NUMERIC" />
+    <result column="optionproceed" property="optionproceed" jdbcType="NUMERIC" />
+    <result column="preferstockprefer" property="preferstockprefer" jdbcType="NUMERIC" />
+    <result column="netvaluation" property="netvaluation" jdbcType="NUMERIC" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from PortfolioValuation
+    where valuationID = #{valuationid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfoliovaluation" >
+    insert into PortfolioValuation ( valuationDate, fundID,
+      portfolioID, Valuation, rating, 
+      status, valuationNote, valuationMethod, 
+      createdBy, createdDate, modifiedBy, 
+      modifiedDate, approved, Revaluation, 
+      GainsLosses, cid, taxotDate, 
+      IRR, referenceShare, valuationType, 
+      fairValue, prop, discount, 
+      fin48Tax,additional,multiple,optionproceed,preferstockprefer,netvaluation)
+    values ( #{valuationdate,jdbcType=DATE}, #{fundid,jdbcType=NVARCHAR},
+      #{portfolioid,jdbcType=NVARCHAR}, #{valuation,jdbcType=DECIMAL}, #{rating,jdbcType=NVARCHAR}, 
+      #{status,jdbcType=NVARCHAR}, #{valuationnote,jdbcType=LONGNVARCHAR}, #{valuationmethod,jdbcType=NVARCHAR}, 
+      #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=DATE}, #{modifiedby,jdbcType=NVARCHAR}, 
+      #{modifieddate,jdbcType=DATE}, #{approved,jdbcType=BIT}, #{revaluation,jdbcType=DECIMAL}, 
+      #{gainslosses,jdbcType=DECIMAL}, #{cid,jdbcType=INTEGER}, #{taxotdate,jdbcType=DATE}, 
+      #{irr,jdbcType=DECIMAL}, #{referenceshare,jdbcType=INTEGER}, #{valuationtype,jdbcType=VARCHAR}, 
+      #{fairvalue,jdbcType=NUMERIC}, #{prop,jdbcType=DECIMAL}, #{discount,jdbcType=NUMERIC}, 
+      #{fin48tax,jdbcType=NUMERIC} , #{additional,jdbcType=NUMERIC},#{multiple,jdbcType=NUMERIC},#{optionproceed,jdbcType=NUMERIC},#{preferstockprefer,jdbcType=NUMERIC},#{netvaluation,jdbcType=NUMERIC})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfoliovaluation" >
+    update PortfolioValuation
+    set valuationDate = #{valuationdate,jdbcType=DATE},
+      fundID = #{fundid,jdbcType=NVARCHAR},
+      portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      Valuation = #{valuation,jdbcType=DECIMAL},
+      rating = #{rating,jdbcType=NVARCHAR},
+      status = #{status,jdbcType=NVARCHAR},
+      valuationNote = #{valuationnote,jdbcType=LONGNVARCHAR},
+      valuationMethod = #{valuationmethod,jdbcType=NVARCHAR},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      approved = #{approved,jdbcType=BIT},
+      Revaluation = #{revaluation,jdbcType=DECIMAL},
+      GainsLosses = #{gainslosses,jdbcType=DECIMAL},
+      cid = #{cid,jdbcType=INTEGER},
+      taxotDate = #{taxotdate,jdbcType=DATE},
+      IRR = #{irr,jdbcType=DECIMAL},
+      referenceShare = #{referenceshare,jdbcType=INTEGER},
+      valuationType = #{valuationtype,jdbcType=VARCHAR},
+      fairValue = #{fairvalue,jdbcType=NUMERIC},
+      prop = #{prop,jdbcType=DECIMAL},
+      discount = #{discount,jdbcType=NUMERIC},
+      fin48Tax = #{fin48tax,jdbcType=NUMERIC},
+      additional = #{additional,jdbcType=NUMERIC},
+      multiple = #{multiple,jdbcType=NUMERIC},
+      optionproceed = #{optionproceed,jdbcType=NUMERIC},
+      preferstockprefer = #{preferstockprefer,jdbcType=NUMERIC},
+      netvaluation = #{netvaluation,jdbcType=NUMERIC}
+    where valuationID = #{valuationid,jdbcType=INTEGER}
+  </update>
+
+
+  <update id="updateBySelective" parameterType="com.idgcapital.ufund.model.Portfoliovaluation" >
+    update PortfolioValuation
+    set valuationDate = #{valuationdate,jdbcType=DATE},
+    fundID = #{fundid,jdbcType=NVARCHAR},
+    portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+    Valuation = #{valuation,jdbcType=DECIMAL},
+    <if test="rating!=null">
+      rating = #{rating,jdbcType=NVARCHAR},
+    </if>
+    <if test="status!=null">
+      status = #{status,jdbcType=NVARCHAR},
+    </if>
+    <if test="valuationnote!=null">
+      valuationNote = #{valuationnote,jdbcType=LONGNVARCHAR},
+    </if>
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+
+    <if test="approved!=null">
+       approved = #{approved,jdbcType=BIT},
+    </if>
+    <if test="revaluation!=null">
+       Revaluation = #{revaluation,jdbcType=DECIMAL},
+    </if>
+    <if test="gainslosses!=null">
+       GainsLosses = #{gainslosses,jdbcType=DECIMAL},
+    </if>
+    <if test="cid!=null">
+       cid = #{cid,jdbcType=INTEGER},
+    </if>
+    <if test="taxotdate!=null">
+       taxotDate = #{taxotdate,jdbcType=DATE},
+    </if>
+    <if test="irr!=null">
+       IRR = #{irr,jdbcType=DECIMAL},
+    </if>
+    <if test="referenceshare!=null">
+       referenceShare = #{referenceshare,jdbcType=INTEGER},
+    </if>
+    <if test="optionproceed!=null">
+      optionproceed = #{optionproceed,jdbcType=INTEGER},
+    </if>
+    <if test="preferstockprefer!=null">
+      preferstockprefer = #{preferstockprefer,jdbcType=INTEGER},
+    </if>
+    valuationType = #{valuationtype,jdbcType=VARCHAR},
+    valuationMethod = #{valuationmethod,jdbcType=NVARCHAR},
+    fairValue = #{fairvalue,jdbcType=NUMERIC},
+    prop = #{prop,jdbcType=DECIMAL},
+    discount = #{discount,jdbcType=NUMERIC},
+    fin48Tax = #{fin48tax,jdbcType=NUMERIC},
+    multiple = #{multiple,jdbcType=DECIMAL},
+    netvaluation = #{netvaluation,jdbcType=NUMERIC},
+    additional = #{additional,jdbcType=NUMERIC},
+    modifiedDate = #{modifieddate,jdbcType=DATE}
+    where valuationID = #{valuationid,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select valuationID, valuationDate, fundID, portfolioID, Valuation, rating, status, 
+    valuationNote, valuationMethod, createdBy, createdDate, modifiedBy, modifiedDate, 
+    approved, Revaluation, GainsLosses, cid, taxotDate, IRR, referenceShare, valuationType, 
+    fairValue, prop, discount, fin48Tax,additional,multiple,optionproceed,preferstockprefer,netvaluation
+    from PortfolioValuation
+    where valuationID = #{valuationid,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select valuationID, valuationDate, fundID, portfolioID, Valuation, rating, status, 
+    valuationNote, valuationMethod, createdBy, createdDate, modifiedBy, modifiedDate, 
+    approved, Revaluation, GainsLosses, cid, taxotDate, IRR, referenceShare, valuationType, 
+    fairValue, prop, discount, fin48Tax,additional,multiple,optionproceed,preferstockprefer,netvaluation
+    from PortfolioValuation
+  </select>
+
+  <select id="queryPortfolioValuationList" resultMap="valutionListMap" parameterType="com.idgcapital.ufund.model.Portfoliovaluation">
+    select   v.*, i.fundName as fundName, p.abbName as portfolioName
+    from PortfolioValuation v
+    left join FundBasicInfo i on v.fundID = i.fundID
+    left join PortfolioBasicInfo p on v.portfolioId = p.portfolioId
+    where 1 = 1
+    <if test="valuationdate != null">
+      and v.valuationDate = #{valuationdate,jdbcType=DATE}
+    </if>
+    <if test="checkQuery != null">
+      <if test=" checkQuery.fundIds != null and checkQuery.fundIds.size() &gt; 0 ">
+        and v.fundId in
+        <foreach close=")" collection="checkQuery.fundIds" item="item" open="(" separator=",">
+          #{item}
+        </foreach>
+      </if>
+    </if>
+    order by v.portfolioId
+  </select>
+
+  <select id="queryLastQuarterValuation" resultMap="BaseResultMap" parameterType="com.idgcapital.ufund.model.Portfoliovaluation">
+    select valuationID, valuationDate, fundID, portfolioID, Valuation, rating, status,
+    valuationNote, valuationMethod, createdBy, createdDate, modifiedBy, modifiedDate,
+    approved, Revaluation, GainsLosses, cid, taxotDate, IRR, referenceShare, valuationType,
+    fairValue, prop, discount, fin48Tax,additional,multiple,optionproceed,preferstockprefer,netvaluation
+    from PortfolioValuation a
+    where a.valuationDate = ( select max(valuationDate) from PortfolioValuation p where p.portfolioid=#{portfolioid,jdbcType=VARCHAR} and p.valuationDate &lt; #{valuationdate,jdbcType=DATE})
+        and a.fundID = #{fundid,jdbcType=VARCHAR}
+        and a.portfolioID = #{portfolioid,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="queryValuationByFund" resultMap="BaseResultMap" parameterType="com.idgcapital.ufund.model.Portfoliovaluation">
+    select valuationID, valuationDate, fundID, portfolioID, Valuation, rating, status,
+    valuationNote, valuationMethod, createdBy, createdDate, modifiedBy, modifiedDate,
+    approved, Revaluation, GainsLosses, cid, taxotDate, IRR, referenceShare, valuationType,
+    fairValue, prop, discount, fin48Tax,additional,multiple,optionproceed,preferstockprefer,netvaluation
+    from PortfolioValuation a
+    where valuationDate = #{valuationdate,jdbcType=DATE}
+    and a.fundID = #{fundid,jdbcType=VARCHAR}
+    and a.portfolioID = #{portfolioid,jdbcType=VARCHAR}
+  </select>
+
+
+
+</mapper>

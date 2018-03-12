@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.LpdistributiondetailMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Lpdistributiondetail" >
+    <id column="distributionDetailID" property="distributiondetailid" jdbcType="INTEGER" />
+    <result column="LPDistributionID" property="lpdistributionid" jdbcType="NVARCHAR" />
+    <result column="emailSend" property="emailsend" jdbcType="BIT" />
+    <result column="emailSendDateTime" property="emailsenddatetime" jdbcType="TIMESTAMP" />
+    <result column="emailTo" property="emailto" jdbcType="NVARCHAR" />
+    <result column="emailBC" property="emailbc" jdbcType="NVARCHAR" />
+    <result column="emailCC" property="emailcc" jdbcType="NVARCHAR" />
+    <result column="subject" property="subject" jdbcType="NVARCHAR" />
+    <result column="emailContent" property="emailcontent" jdbcType="NVARCHAR" />
+    <result column="attachment" property="attachment" jdbcType="NVARCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="TIMESTAMP" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="TIMESTAMP" />
+    <result column="emailReviewed" property="emailreviewed" jdbcType="BIT" />
+    <result column="distributionAmount" property="distributionamount" jdbcType="DECIMAL" />
+    <result column="LPID" property="lpid" jdbcType="NVARCHAR" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="fundID" property="fundid" jdbcType="NVARCHAR" />
+    <result column="GPCarryAmount" property="gpcarryamount" jdbcType="DECIMAL" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from LPDistributionDetail
+    where distributionDetailID = #{distributiondetailid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Lpdistributiondetail" >
+    insert into LPDistributionDetail (distributionDetailID, LPDistributionID, 
+      emailSend, emailSendDateTime, emailTo, 
+      emailBC, emailCC, subject, 
+      emailContent, attachment, createdBy, 
+      createdDate, modifiedBy, modifiedDate, 
+      emailReviewed, distributionAmount, LPID, 
+      approved, fundID, GPCarryAmount
+      )
+    values (#{distributiondetailid,jdbcType=INTEGER}, #{lpdistributionid,jdbcType=NVARCHAR}, 
+      #{emailsend,jdbcType=BIT}, #{emailsenddatetime,jdbcType=TIMESTAMP}, #{emailto,jdbcType=NVARCHAR}, 
+      #{emailbc,jdbcType=NVARCHAR}, #{emailcc,jdbcType=NVARCHAR}, #{subject,jdbcType=NVARCHAR}, 
+      #{emailcontent,jdbcType=NVARCHAR}, #{attachment,jdbcType=NVARCHAR}, #{createdby,jdbcType=NVARCHAR}, 
+      #{createddate,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=TIMESTAMP}, 
+      #{emailreviewed,jdbcType=BIT}, #{distributionamount,jdbcType=DECIMAL}, #{lpid,jdbcType=NVARCHAR}, 
+      #{approved,jdbcType=BIT}, #{fundid,jdbcType=NVARCHAR}, #{gpcarryamount,jdbcType=DECIMAL}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Lpdistributiondetail" >
+    update LPDistributionDetail
+    set LPDistributionID = #{lpdistributionid,jdbcType=NVARCHAR},
+      emailSend = #{emailsend,jdbcType=BIT},
+      emailSendDateTime = #{emailsenddatetime,jdbcType=TIMESTAMP},
+      emailTo = #{emailto,jdbcType=NVARCHAR},
+      emailBC = #{emailbc,jdbcType=NVARCHAR},
+      emailCC = #{emailcc,jdbcType=NVARCHAR},
+      subject = #{subject,jdbcType=NVARCHAR},
+      emailContent = #{emailcontent,jdbcType=NVARCHAR},
+      attachment = #{attachment,jdbcType=NVARCHAR},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=TIMESTAMP},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=TIMESTAMP},
+      emailReviewed = #{emailreviewed,jdbcType=BIT},
+      distributionAmount = #{distributionamount,jdbcType=DECIMAL},
+      LPID = #{lpid,jdbcType=NVARCHAR},
+      approved = #{approved,jdbcType=BIT},
+      fundID = #{fundid,jdbcType=NVARCHAR},
+      GPCarryAmount = #{gpcarryamount,jdbcType=DECIMAL}
+    where distributionDetailID = #{distributiondetailid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select distributionDetailID, LPDistributionID, emailSend, emailSendDateTime, emailTo, 
+    emailBC, emailCC, subject, emailContent, attachment, createdBy, createdDate, modifiedBy, 
+    modifiedDate, emailReviewed, distributionAmount, LPID, approved, fundID, GPCarryAmount
+    from LPDistributionDetail
+    where distributionDetailID = #{distributiondetailid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select distributionDetailID, LPDistributionID, emailSend, emailSendDateTime, emailTo, 
+    emailBC, emailCC, subject, emailContent, attachment, createdBy, createdDate, modifiedBy, 
+    modifiedDate, emailReviewed, distributionAmount, LPID, approved, fundID, GPCarryAmount
+    from LPDistributionDetail
+  </select>
+
+  <select id="selectMaxDistribtuionDetailId"  resultType="java.lang.Integer">
+    select max(w1.distributionDetailID)
+    FROM LPDistributionDetail w1
+  </select>
+
+  <delete id="deleteByDistributionId" parameterType="java.lang.String" >
+    delete from LPDistributionDetail
+    where LPDistributionID = #{distributionId,jdbcType=NVARCHAR}
+  </delete>
+</mapper>

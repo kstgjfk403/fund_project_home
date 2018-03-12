@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfoliostatushistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfoliostatushistory" >
+    <id column="LogID" property="logid" jdbcType="INTEGER" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="portfolioStatus" property="portfoliostatus" jdbcType="INTEGER" />
+    <result column="statusEffectiveDate" property="statuseffectivedate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from PortfolioStatusHistory
+    where LogID = #{logid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfoliostatushistory" >
+    insert into PortfolioStatusHistory (  portfolioID, portfolioStatus,
+      statusEffectiveDate, modifiedBy, modifiedDate, 
+      approved)
+    values (  #{portfolioid,jdbcType=NVARCHAR}, #{portfoliostatus,jdbcType=INTEGER},
+      #{statuseffectivedate,jdbcType=DATE}, #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE}, 
+      #{approved,jdbcType=BIT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfoliostatushistory" >
+    update PortfolioStatusHistory
+    set portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      portfolioStatus = #{portfoliostatus,jdbcType=INTEGER},
+      statusEffectiveDate = #{statuseffectivedate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      approved = #{approved,jdbcType=BIT}
+    where LogID = #{logid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select LogID, portfolioID, portfolioStatus, statusEffectiveDate, modifiedBy, modifiedDate, 
+    approved
+    from PortfolioStatusHistory
+    where LogID = #{logid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select LogID, portfolioID, portfolioStatus, statusEffectiveDate, modifiedBy, modifiedDate, 
+    approved
+    from PortfolioStatusHistory
+  </select>
+  <select id="selectByPortfolioStatus" parameterType="com.idgcapital.ufund.model.Portfoliostatushistory" resultMap="BaseResultMap" >
+    select top 1 LogID, portfolioID, portfolioStatus, statusEffectiveDate, modifiedBy, modifiedDate,approved
+    from PortfolioStatusHistory
+    where portfolioID = #{portfolioid,jdbcType=NVARCHAR} and portfolioStatus = #{portfoliostatus,jdbcType=INTEGER} and statusEffectiveDate = #{statuseffectivedate,jdbcType=DATE}
+  </select>
+</mapper>

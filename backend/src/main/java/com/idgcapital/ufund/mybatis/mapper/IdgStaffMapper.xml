@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.IdgStaffMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.IdgStaff" >
+    <id column="staffID" property="staffid" jdbcType="NVARCHAR" />
+    <result column="branchID" property="branchid" jdbcType="INTEGER" />
+    <result column="deptID" property="deptid" jdbcType="INTEGER" />
+    <result column="groupID" property="groupid" jdbcType="INTEGER" />
+    <result column="firstNameEng" property="firstnameeng" jdbcType="NVARCHAR" />
+    <result column="lastNameEng" property="lastnameeng" jdbcType="NVARCHAR" />
+    <result column="firstNameChi" property="firstnamechi" jdbcType="NVARCHAR" />
+    <result column="lastNameChi" property="lastnamechi" jdbcType="NVARCHAR" />
+    <result column="nickName" property="nickname" jdbcType="NVARCHAR" />
+    <result column="title" property="title" jdbcType="NVARCHAR" />
+    <result column="email" property="email" jdbcType="NVARCHAR" />
+    <result column="officeNo" property="officeno" jdbcType="NVARCHAR" />
+    <result column="mobileNo" property="mobileno" jdbcType="NVARCHAR" />
+    <result column="faxNo" property="faxno" jdbcType="NVARCHAR" />
+    <result column="joinDate" property="joindate" jdbcType="DATE" />
+    <result column="leaveDate" property="leavedate" jdbcType="DATE" />
+    <result column="userName" property="username" jdbcType="NVARCHAR" />
+    <result column="password" property="password" jdbcType="NVARCHAR" />
+    <result column="lastLoginDate" property="lastlogindate" jdbcType="DATE" />
+    <result column="staffType" property="stafftype" jdbcType="NVARCHAR" />
+    <result column="staffStatus" property="staffstatus" jdbcType="NVARCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="pin" property="pin" jdbcType="NVARCHAR" />
+    <result column="userStatus" property="userstatus" jdbcType="NVARCHAR" />
+    <result column="PM" property="pm" jdbcType="BIT" />
+    <result column="boardRepresentative" property="boardrepresentative" jdbcType="BIT" />
+    <result column="InhouseCounsel" property="inhousecounsel" jdbcType="BIT" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="comment" property="comment" jdbcType="NVARCHAR" />
+    <result column="Observer" property="observer" jdbcType="BIT" />
+    <result column="address" property="address" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from IDG_Staff
+    where staffID = #{staffid,jdbcType=NVARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.IdgStaff" >
+    insert into IDG_Staff (staffID, branchID, deptID, 
+      groupID, firstNameEng, lastNameEng, 
+      firstNameChi, lastNameChi, nickName, 
+      title, email, officeNo, 
+      mobileNo, faxNo, joinDate, 
+      leaveDate, userName, password, 
+      lastLoginDate, staffType, staffStatus, 
+      createdBy, createdDate, modifiedBy, 
+      modifiedDate, pin, userStatus, 
+      PM, boardRepresentative, InhouseCounsel, 
+      approved, comment, Observer, 
+      address)
+    values (#{staffid,jdbcType=NVARCHAR}, #{branchid,jdbcType=INTEGER}, #{deptid,jdbcType=INTEGER}, 
+      #{groupid,jdbcType=INTEGER}, #{firstnameeng,jdbcType=NVARCHAR}, #{lastnameeng,jdbcType=NVARCHAR}, 
+      #{firstnamechi,jdbcType=NVARCHAR}, #{lastnamechi,jdbcType=NVARCHAR}, #{nickname,jdbcType=NVARCHAR}, 
+      #{title,jdbcType=NVARCHAR}, #{email,jdbcType=NVARCHAR}, #{officeno,jdbcType=NVARCHAR}, 
+      #{mobileno,jdbcType=NVARCHAR}, #{faxno,jdbcType=NVARCHAR}, #{joindate,jdbcType=DATE}, 
+      #{leavedate,jdbcType=DATE}, #{username,jdbcType=NVARCHAR}, #{password,jdbcType=NVARCHAR}, 
+      #{lastlogindate,jdbcType=DATE}, #{stafftype,jdbcType=NVARCHAR}, #{staffstatus,jdbcType=NVARCHAR}, 
+      #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=DATE}, #{modifiedby,jdbcType=NVARCHAR}, 
+      #{modifieddate,jdbcType=DATE}, #{pin,jdbcType=NVARCHAR}, #{userstatus,jdbcType=NVARCHAR}, 
+      #{pm,jdbcType=BIT}, #{boardrepresentative,jdbcType=BIT}, #{inhousecounsel,jdbcType=BIT}, 
+      #{approved,jdbcType=BIT}, #{comment,jdbcType=NVARCHAR}, #{observer,jdbcType=BIT}, 
+      #{address,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.IdgStaff" >
+    update IDG_Staff
+    set branchID = #{branchid,jdbcType=INTEGER},
+      deptID = #{deptid,jdbcType=INTEGER},
+      groupID = #{groupid,jdbcType=INTEGER},
+      firstNameEng = #{firstnameeng,jdbcType=NVARCHAR},
+      lastNameEng = #{lastnameeng,jdbcType=NVARCHAR},
+      firstNameChi = #{firstnamechi,jdbcType=NVARCHAR},
+      lastNameChi = #{lastnamechi,jdbcType=NVARCHAR},
+      nickName = #{nickname,jdbcType=NVARCHAR},
+      title = #{title,jdbcType=NVARCHAR},
+      email = #{email,jdbcType=NVARCHAR},
+      officeNo = #{officeno,jdbcType=NVARCHAR},
+      mobileNo = #{mobileno,jdbcType=NVARCHAR},
+      faxNo = #{faxno,jdbcType=NVARCHAR},
+      joinDate = #{joindate,jdbcType=DATE},
+      leaveDate = #{leavedate,jdbcType=DATE},
+      userName = #{username,jdbcType=NVARCHAR},
+      password = #{password,jdbcType=NVARCHAR},
+      lastLoginDate = #{lastlogindate,jdbcType=DATE},
+      staffType = #{stafftype,jdbcType=NVARCHAR},
+      staffStatus = #{staffstatus,jdbcType=NVARCHAR},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      pin = #{pin,jdbcType=NVARCHAR},
+      userStatus = #{userstatus,jdbcType=NVARCHAR},
+      PM = #{pm,jdbcType=BIT},
+      boardRepresentative = #{boardrepresentative,jdbcType=BIT},
+      InhouseCounsel = #{inhousecounsel,jdbcType=BIT},
+      approved = #{approved,jdbcType=BIT},
+      comment = #{comment,jdbcType=NVARCHAR},
+      Observer = #{observer,jdbcType=BIT},
+      address = #{address,jdbcType=LONGVARCHAR}
+    where staffID = #{staffid,jdbcType=NVARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select staffID, branchID, deptID, groupID, firstNameEng, lastNameEng, firstNameChi, 
+    lastNameChi, nickName, title, email, officeNo, mobileNo, faxNo, joinDate, leaveDate, 
+    userName, password, lastLoginDate, staffType, staffStatus, createdBy, createdDate, 
+    modifiedBy, modifiedDate, pin, userStatus, PM, boardRepresentative, InhouseCounsel, 
+    approved, comment, Observer, address
+    from IDG_Staff
+    where staffID = #{staffid,jdbcType=NVARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select staffID, branchID, deptID, groupID, firstNameEng, lastNameEng, firstNameChi, 
+    lastNameChi, nickName, title, email, officeNo, mobileNo, faxNo, joinDate, leaveDate, 
+    userName, password, lastLoginDate, staffType, staffStatus, createdBy, createdDate, 
+    modifiedBy, modifiedDate, pin, userStatus, PM, boardRepresentative, InhouseCounsel, 
+    approved, comment, Observer, address
+    from IDG_Staff
+  </select>
+  <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select staffID, branchID, deptID, groupID, firstNameEng, lastNameEng, firstNameChi,
+    lastNameChi, nickName, title, email, officeNo, mobileNo, faxNo, joinDate, leaveDate,
+    userName, password, lastLoginDate, staffType, staffStatus, createdBy, createdDate,
+    modifiedBy, modifiedDate, pin, userStatus, PM, boardRepresentative, InhouseCounsel,
+    approved, comment, Observer, address
+    from IDG_Staff
+    where userName = #{userName,jdbcType=NVARCHAR}
+  </select>
+
+  <select id="selectStaffList" parameterType="com.idgcapital.ufund.model.IdgStaff" resultMap="BaseResultMap">
+     select staffID,firstNameEng,lastNameEng,lastNameChi,firstNameChi from IDG_Staff
+  </select>
+
+
+</mapper>

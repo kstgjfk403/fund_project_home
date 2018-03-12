@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfoliobasicinfoMapper">
+    <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfoliobasicinfo">
+        <id column="portfolioID" property="portfolioid" jdbcType="NVARCHAR"/>
+        <result column="abbName" property="abbname" jdbcType="NVARCHAR"/>
+        <result column="fullName" property="fullname" jdbcType="NVARCHAR"/>
+        <result column="abbNameChi" property="abbnamechi" jdbcType="NVARCHAR"/>
+        <result column="fullNameChi" property="fullnamechi" jdbcType="NVARCHAR"/>
+        <result column="reportName" property="reportname" jdbcType="NVARCHAR"/>
+        <result column="logo" property="logo" jdbcType="NVARCHAR"/>
+        <result column="projectManager" property="projectmanager" jdbcType="NVARCHAR"/>
+        <result column="projectBuddy" property="projectbuddy" jdbcType="NVARCHAR"/>
+        <result column="IDGRoleID" property="idgroleid" jdbcType="INTEGER"/>
+        <result column="stageID" property="stageid" jdbcType="INTEGER"/>
+        <result column="InitialRoleID" property="initialroleid" jdbcType="INTEGER"/>
+        <result column="firstInvestID" property="firstinvestid" jdbcType="INTEGER"/>
+        <result column="sectorID" property="sectorid" jdbcType="INTEGER"/>
+        <result column="subSectorID" property="subsectorid" jdbcType="INTEGER"/>
+        <result column="oneLineDesc" property="onelinedesc" jdbcType="NVARCHAR"/>
+        <result column="oneLineDesChi" property="onelinedeschi" jdbcType="NVARCHAR"/>
+        <result column="website" property="website" jdbcType="NVARCHAR"/>
+        <result column="headcount" property="headcount" jdbcType="NVARCHAR"/>
+        <result column="antiDilutionID" property="antidilutionid" jdbcType="INTEGER"/>
+        <result column="IDGInhouseCounsel" property="idginhousecounsel" jdbcType="NVARCHAR"/>
+        <result column="locationID" property="locationid" jdbcType="INTEGER"/>
+        <result column="foundedDate" property="foundeddate" jdbcType="NVARCHAR"/>
+        <result column="registerNo" property="registerno" jdbcType="NVARCHAR"/>
+        <result column="formID" property="formid" jdbcType="INTEGER"/>
+        <result column="IDGBoardRepresentative" property="idgboardrepresentative" jdbcType="NVARCHAR"/>
+        <result column="liquidationPreference" property="liquidationpreference" jdbcType="NVARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="NVARCHAR"/>
+        <result column="fax" property="fax" jdbcType="NVARCHAR"/>
+        <result column="address" property="address" jdbcType="NVARCHAR"/>
+        <result column="addressChi" property="addresschi" jdbcType="NVARCHAR"/>
+        <result column="privateOrPublic" property="privateorpublic" jdbcType="NVARCHAR"/>
+        <result column="ADRRatio" property="adrratio" jdbcType="NVARCHAR"/>
+        <result column="lockupPeriod" property="lockupperiod" jdbcType="NVARCHAR"/>
+        <result column="lockupExpiredDate" property="lockupexpireddate" jdbcType="DATE"/>
+        <result column="stockExchangeID" property="stockexchangeid" jdbcType="INTEGER"/>
+        <result column="stockCode" property="stockcode" jdbcType="NVARCHAR"/>
+        <result column="SPVJurisdition" property="spvjurisdition" jdbcType="NVARCHAR"/>
+        <result column="createdBy" property="createdby" jdbcType="NVARCHAR"/>
+        <result column="createdDate" property="createddate" jdbcType="DATE"/>
+        <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR"/>
+        <result column="modifiedDate" property="modifieddate" jdbcType="DATE"/>
+        <result column="CEO" property="ceo" jdbcType="NVARCHAR"/>
+        <result column="product" property="product" jdbcType="NVARCHAR"/>
+        <result column="PrimaryBusiness" property="primarybusiness" jdbcType="NVARCHAR"/>
+        <result column="YTD" property="ytd" jdbcType="NVARCHAR"/>
+        <result column="approved" property="approved" jdbcType="BIT"/>
+        <result column="memo" property="memo" jdbcType="NVARCHAR"/>
+        <result column="IDGBoardSeatNo" property="idgboardseatno" jdbcType="INTEGER"/>
+        <result column="totalBoardSeatNo" property="totalboardseatno" jdbcType="INTEGER"/>
+        <result column="fundOfFund" property="fundoffund" jdbcType="BIT"/>
+        <result column="remarkes" property="remarkes" jdbcType="NVARCHAR"/>
+        <result column="portfolioStatusDate" property="portfoliostatusdate" jdbcType="DATE"/>
+        <result column="portfolioStatus" property="portfoliostatus" jdbcType="INTEGER"/>
+        <result column="auditConfAddress" property="auditconfaddress" jdbcType="NVARCHAR"/>
+        <result column="auditConfAddress2" property="auditconfaddress2" jdbcType="NVARCHAR"/>
+        <result column="auditConfAddress3" property="auditconfaddress3" jdbcType="NVARCHAR"/>
+        <result column="NomineeName" property="nomineename" jdbcType="NVARCHAR"/>
+        <result column="ICEForceID" property="iceforceid" jdbcType="NVARCHAR"/>
+        <result column="observer" property="observer" jdbcType="NVARCHAR"/>
+
+        <result column="IdgOnBoardFlag" property="idgonboardflag" jdbcType="BIT"/>
+    </resultMap>
+    <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >-->
+    <!--delete from PortfolioBasicInfo-->
+    <!--where portfolioID = #{portfolioid,jdbcType=NVARCHAR}-->
+    <!--</delete>-->
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+      update PortfolioBasicInfo set validFlag = '-1' where portfolioID = #{portfolioid,jdbcType=NVARCHAR}
+  </delete>
+
+
+    <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfoliobasicinfo">
+    insert into PortfolioBasicInfo (portfolioID, abbName, fullName, 
+      abbNameChi, fullNameChi, reportName, 
+      logo, projectManager, projectBuddy, 
+      IDGRoleID, stageID, InitialRoleID, 
+      firstInvestID, sectorID, subSectorID, 
+      oneLineDesc, oneLineDesChi, website, 
+      headcount, antiDilutionID, IDGInhouseCounsel, 
+      locationID, foundedDate, registerNo, 
+      formID, IDGBoardRepresentative, liquidationPreference, 
+      telephone, fax, address, 
+      addressChi, privateOrPublic, ADRRatio, 
+      lockupPeriod, lockupExpiredDate, stockExchangeID, 
+      stockCode, SPVJurisdition, createdBy, 
+      createdDate, modifiedBy, modifiedDate, 
+      CEO, product, PrimaryBusiness, 
+      YTD, approved, memo, IDGBoardSeatNo, totalBoardSeatNo,
+      fundOfFund, remarkes, portfolioStatusDate, portfolioStatus,
+      auditConfAddress, auditConfAddress2, 
+      auditConfAddress3, NomineeName, ICEForceID, 
+      observer,validFlag,IdgOnBoardFlag)
+    values (#{portfolioid,jdbcType=NVARCHAR}, #{abbname,jdbcType=NVARCHAR}, #{fullname,jdbcType=NVARCHAR}, 
+      #{abbnamechi,jdbcType=NVARCHAR}, #{fullnamechi,jdbcType=NVARCHAR}, #{reportname,jdbcType=NVARCHAR}, 
+      #{logo,jdbcType=NVARCHAR}, #{projectmanager,jdbcType=NVARCHAR}, #{projectbuddy,jdbcType=NVARCHAR}, 
+      #{idgroleid,jdbcType=INTEGER}, #{stageid,jdbcType=INTEGER}, #{initialroleid,jdbcType=INTEGER}, 
+      #{firstinvestid,jdbcType=INTEGER}, #{sectorid,jdbcType=INTEGER}, #{subsectorid,jdbcType=INTEGER}, 
+      #{onelinedesc,jdbcType=NVARCHAR}, #{onelinedeschi,jdbcType=NVARCHAR}, #{website,jdbcType=NVARCHAR}, 
+      #{headcount,jdbcType=NVARCHAR}, #{antidilutionid,jdbcType=INTEGER}, #{idginhousecounsel,jdbcType=NVARCHAR}, 
+      #{locationid,jdbcType=INTEGER}, #{foundeddate,jdbcType=NVARCHAR}, #{registerno,jdbcType=NVARCHAR}, 
+      #{formid,jdbcType=INTEGER}, #{idgboardrepresentative,jdbcType=NVARCHAR}, #{liquidationpreference,jdbcType=NVARCHAR}, 
+      #{telephone,jdbcType=NVARCHAR}, #{fax,jdbcType=NVARCHAR}, #{address,jdbcType=NVARCHAR}, 
+      #{addresschi,jdbcType=NVARCHAR}, #{privateorpublic,jdbcType=NVARCHAR}, #{adrratio,jdbcType=NVARCHAR}, 
+      #{lockupperiod,jdbcType=NVARCHAR}, #{lockupexpireddate,jdbcType=DATE}, #{stockexchangeid,jdbcType=INTEGER}, 
+      #{stockcode,jdbcType=NVARCHAR}, #{spvjurisdition,jdbcType=NVARCHAR}, #{createdby,jdbcType=NVARCHAR}, 
+      #{createddate,jdbcType=DATE}, #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE}, 
+      #{ceo,jdbcType=NVARCHAR}, #{product,jdbcType=NVARCHAR}, #{primarybusiness,jdbcType=NVARCHAR}, 
+      #{ytd,jdbcType=NVARCHAR}, #{approved,jdbcType=BIT},#{memo,jdbcType=NVARCHAR}, #{idgboardseatno,jdbcType=INTEGER}, #{totalboardseatno,jdbcType=INTEGER},
+      #{fundoffund,jdbcType=BIT}, #{remarkes,jdbcType=NVARCHAR}, #{portfoliostatusdate,jdbcType=DATE}, #{portfoliostatus,jdbcType=INTEGER},
+      #{auditconfaddress,jdbcType=NVARCHAR}, #{auditconfaddress2,jdbcType=NVARCHAR}, 
+      #{auditconfaddress3,jdbcType=NVARCHAR}, #{nomineename,jdbcType=NVARCHAR}, #{iceforceid,jdbcType=NVARCHAR}, 
+      #{observer,jdbcType=NVARCHAR},#{validFlag,jdbcType=NVARCHAR},#{idgonboardflag,jdbcType=BIT})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfoliobasicinfo">
+    update PortfolioBasicInfo
+    set abbName = #{abbname,jdbcType=NVARCHAR},
+      fullName = #{fullname,jdbcType=NVARCHAR},
+      abbNameChi = #{abbnamechi,jdbcType=NVARCHAR},
+      fullNameChi = #{fullnamechi,jdbcType=NVARCHAR},
+      reportName = #{reportname,jdbcType=NVARCHAR},
+      logo = #{logo,jdbcType=NVARCHAR},
+      projectManager = #{projectmanager,jdbcType=NVARCHAR},
+      projectBuddy = #{projectbuddy,jdbcType=NVARCHAR},
+      IDGRoleID = #{idgroleid,jdbcType=INTEGER},
+      stageID = #{stageid,jdbcType=INTEGER},
+      InitialRoleID = #{initialroleid,jdbcType=INTEGER},
+      firstInvestID = #{firstinvestid,jdbcType=INTEGER},
+      sectorID = #{sectorid,jdbcType=INTEGER},
+      subSectorID = #{subsectorid,jdbcType=INTEGER},
+      oneLineDesc = #{onelinedesc,jdbcType=NVARCHAR},
+      oneLineDesChi = #{onelinedeschi,jdbcType=NVARCHAR},
+      website = #{website,jdbcType=NVARCHAR},
+      headcount = #{headcount,jdbcType=NVARCHAR},
+      antiDilutionID = #{antidilutionid,jdbcType=INTEGER},
+      IDGInhouseCounsel = #{idginhousecounsel,jdbcType=NVARCHAR},
+      locationID = #{locationid,jdbcType=INTEGER},
+      foundedDate = #{foundeddate,jdbcType=NVARCHAR},
+      registerNo = #{registerno,jdbcType=NVARCHAR},
+      formID = #{formid,jdbcType=INTEGER},
+      liquidationPreference = #{liquidationpreference,jdbcType=NVARCHAR},
+      telephone = #{telephone,jdbcType=NVARCHAR},
+      fax = #{fax,jdbcType=NVARCHAR},
+      address = #{address,jdbcType=NVARCHAR},
+      addressChi = #{addresschi,jdbcType=NVARCHAR},
+      ADRRatio = #{adrratio,jdbcType=NVARCHAR},
+      lockupPeriod = #{lockupperiod,jdbcType=NVARCHAR},
+      lockupExpiredDate = #{lockupexpireddate,jdbcType=DATE},
+      stockExchangeID = #{stockexchangeid,jdbcType=INTEGER},
+      stockCode = #{stockcode,jdbcType=NVARCHAR},
+      SPVJurisdition = #{spvjurisdition,jdbcType=NVARCHAR},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      CEO = #{ceo,jdbcType=NVARCHAR},
+      product = #{product,jdbcType=NVARCHAR},
+      PrimaryBusiness = #{primarybusiness,jdbcType=NVARCHAR},
+      YTD = #{ytd,jdbcType=NVARCHAR},
+      memo = #{memo,jdbcType=NVARCHAR},
+      IDGBoardSeatNo = #{idgboardseatno,jdbcType=INTEGER},
+      fundOfFund = #{fundoffund,jdbcType=BIT},
+
+      remarkes = #{remarkes,jdbcType=NVARCHAR},
+      portfolioStatusDate = #{portfoliostatusdate,jdbcType=DATE},
+      portfolioStatus = #{portfoliostatus,jdbcType=INTEGER},
+      auditConfAddress = #{auditconfaddress,jdbcType=NVARCHAR},
+      auditConfAddress2 = #{auditconfaddress2,jdbcType=NVARCHAR},
+      auditConfAddress3 = #{auditconfaddress3,jdbcType=NVARCHAR},
+      NomineeName = #{nomineename,jdbcType=NVARCHAR},
+      ICEForceID = #{iceforceid,jdbcType=NVARCHAR},
+      observer = #{observer,jdbcType=NVARCHAR}
+    where portfolioID = #{portfolioid,jdbcType=NVARCHAR}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+
+    select p.portfolioID, abbName, fullName, abbNameChi, fullNameChi, reportName, logo,
+    projectManager, projectBuddy, IDGRoleID, stageID, InitialRoleID, firstInvestID, sectorID,
+    subSectorID, oneLineDesc, oneLineDesChi, website, headcount, antiDilutionID, IDGInhouseCounsel,
+    locationID, foundedDate, registerNo, formID, IDGBoardRepresentative, liquidationPreference,
+    telephone, fax, address, addressChi, privateOrPublic, ADRRatio, lockupPeriod, lockupExpiredDate,
+    stockExchangeID, stockCode, SPVJurisdition, createdBy, createdDate, modifiedBy, modifiedDate,
+    CEO, product, PrimaryBusiness, YTD, approved, memo, IDGBoardSeatNo, totalBoardSeatNo,
+    fundOfFund, remarkes, portfolioStatusDate, auditConfAddress, auditConfAddress2, auditConfAddress3,portfolioStatus,
+    NomineeName, ICEForceID, observer,s.heldbyspv,IdgOnBoardFlag
+    from PortfolioBasicInfo p
+	left join
+	(select portfolioID, heldbyspv = stuff((select ',' +spvID  from SPVPortfolioInfo where portfolioID = t.portfolioID  for xml path('')) , 1 , 1 , '')
+      from SPVPortfolioInfo  t  group by portfolioID) s on p.portfolioID = s.portfolioID
+    where p.portfolioID = #{portfolioid,jdbcType=NVARCHAR} and validFlag = '1';
+
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select portfolioID, abbName, fullName, abbNameChi, fullNameChi, reportName, logo, 
+    projectManager, projectBuddy, IDGRoleID, stageID, InitialRoleID, firstInvestID, sectorID, 
+    subSectorID, oneLineDesc, oneLineDesChi, website, headcount, antiDilutionID, IDGInhouseCounsel, 
+    locationID, foundedDate, registerNo, formID, IDGBoardRepresentative, liquidationPreference, 
+    telephone, fax, address, addressChi, privateOrPublic, ADRRatio, lockupPeriod, lockupExpiredDate, 
+    stockExchangeID, stockCode, SPVJurisdition, createdBy, createdDate, modifiedBy, modifiedDate, 
+    CEO, product, PrimaryBusiness, YTD, approved, memo, IDGBoardSeatNo, totalBoardSeatNo,
+    fundOfFund, remarkes, portfolioStatusDate, auditConfAddress, auditConfAddress2, auditConfAddress3, 
+    NomineeName, ICEForceID, observer
+    from PortfolioBasicInfo
+  </select>
+
+    <select id="selectMaxPortfolioId" resultType="java.lang.String">
+    select max(portfolioID) from PortfolioBasicInfo
+  </select>
+
+
+    <select id="queryPortfolioByFundId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from PortfolioBasicInfo where fundID = #{fundID,jdbcType=NVARCHAR}
+  </select>
+
+    <select id="selectPortfolioList" parameterType="com.idgcapital.ufund.model.Portfoliobasicinfo"
+            resultMap="BaseResultMap">
+
+        SELECT w1.portfolioID,w1.ICEForceID,w1.abbName,w1.abbNameChi,w1.fullName,w1.fullNameChi,w1.reportName,directorFlag,
+        w1.projectManager,w1.IDGBoardRepresentative,w1.portfolioStatus,w2.heldbyspv,
+        #{heldbyspvflag,jdbcType=BIT} as HeldBySpvFlag
+        FROM PortfolioBasicInfo w1,
+        (
+        SELECT TOP (#{pageEnd,jdbcType=INTEGER}) row_number() OVER (order by p.portfolioID asc) n, p.portfolioID
+        ,s.heldbyspv,b.directorFlag FROM PortfolioBasicInfo p
+        left join
+        ( select portfolioID, heldbyspv = stuff((select ',' +spvID from SPVPortfolioInfo where portfolioID =
+        t.portfolioID for xml path('')) , 1 , 1 , '')
+        from SPVPortfolioInfo t group by portfolioID ) s on s.portfolioID = p.portfolioID
+        left join(
+        select portfolioID,(case when count(*) &gt;0 then 1 else 0 end) directorFlag from PortfolioDirector where directorType = 'director' and directorStartDate &lt;= CONVERT(varchar,GETDATE(),23)
+        and ISNULL(directorEndDate,'2999-01-01') &gt;= CONVERT(varchar,GETDATE(),23) group by portfolioID) b on p.portfolioID = b.portfolioID
+        where validFlag ='1'
+        <if test=" abbname != null and abbname != '' ">
+            and lower(p.abbName) like lower('%${abbname}%')
+        </if>
+        <if test=" abbnamechi != null and abbnamechi != '' ">
+            and lower(p.abbNameChi) like lower(N'%${abbnamechi}%')
+        </if>
+        <if test=" fullname != null and fullname != '' ">
+            and lower(p.fullName) like lower('%${fullname}%')
+        </if>
+        <if test=" fullnamechi != null and fullnamechi != '' ">
+            and lower(p.fullNameChi) like lower(N'%${fullnamechi}%')
+        </if>
+        <if test=" reportname != null and reportname != '' ">
+            and lower(p.reportName) like lower('%${reportname}%')
+        </if>
+        <if test=" portfoliostatus != null and portfoliostatus != '' ">
+            and p.portfoliostatus = #{portfoliostatus,jdbcType=INTEGER}
+        </if>
+
+        <if test=" projectmanager != null and projectmanager != '' ">
+            and p.projectmanager like '%${projectmanager}%'
+        </if>
+
+        <if test=" heldbyspvflag != null">
+            <if test=" heldbyspvflag == false">
+                and (s.heldbyspv is null or s.heldbyspv = '')
+            </if>
+            <if test=" heldbyspvflag == true">
+                and (s.heldbyspv is not null and s.heldbyspv != '')
+            </if>
+        </if>
+
+        <if test=" idgonboardflag != null">
+            <if test=" idgonboardflag == true">
+                and b.directorFlag = 1
+            </if>
+            <if test=" idgonboardflag ==false">
+                and (b.directorFlag = 0 or b.directorFlag is null)
+            </if>
+        </if>
+        ) w2
+        WHERE w1.portfolioID = w2.portfolioID AND w2.n > (#{pageStart,jdbcType=INTEGER}) ORDER BY w2.n ASC
+
+    </select>
+
+    <select id="selectPortfolioCount" parameterType="com.idgcapital.ufund.model.Portfoliobasicinfo"
+            resultType="java.lang.Long">
+        SELECT count(*) FROM PortfolioBasicInfo p
+        left join
+        ( select portfolioID, heldbyspv = stuff((select ',' +spvID from SPVPortfolioInfo where portfolioID =
+        t.portfolioID for xml path('')) , 1 , 1 , '')
+        from SPVPortfolioInfo t group by portfolioID ) s on s.portfolioID = p.portfolioID
+        left join(
+        select portfolioID,(case when count(*) &gt;0 then 1 else 0 end) directorFlag from PortfolioDirector where directorType = 'director' and directorStartDate &lt;= CONVERT(varchar,GETDATE(),23)
+        and ISNULL(directorEndDate,'2999-01-01') &gt;= CONVERT(varchar,GETDATE(),23) group by portfolioID) b on p.portfolioID = b.portfolioID
+        where validFlag ='1'
+        <if test=" abbname != null and abbname != '' ">
+            and lower(p.abbName) like lower('%${abbname}%')
+        </if>
+        <if test=" abbnamechi != null and abbnamechi != '' ">
+            and lower(p.abbNameChi) like lower(N'%${abbnamechi}%')
+        </if>
+        <if test=" fullname != null and fullname != '' ">
+            and lower(p.fullName) like lower('%${fullname}%')
+        </if>
+        <if test=" fullnamechi != null and fullnamechi != '' ">
+            and lower(p.fullNameChi) like lower(N'%${fullnamechi}%')
+        </if>
+        <if test=" reportname != null and reportname != '' ">
+            and lower(p.reportName) like lower('%${reportname}%')
+        </if>
+        <if test=" portfoliostatus != null and portfoliostatus != '' ">
+            and p.portfoliostatus = #{portfoliostatus,jdbcType=INTEGER}
+        </if>
+
+        <if test=" projectmanager != null and projectmanager != '' ">
+            and p.projectmanager like '%${projectmanager}%'
+        </if>
+
+        <if test=" heldbyspvflag != null">
+            <if test=" heldbyspvflag == false">
+                and (s.heldbyspv is null or s.heldbyspv = '')
+            </if>
+            <if test=" heldbyspvflag == true">
+                and (s.heldbyspv is not null and s.heldbyspv != '')
+            </if>
+        </if>
+
+        <if test=" idgonboardflag != null">
+            <if test=" idgonboardflag == true">
+                and b.directorFlag = 1
+            </if>
+            <if test=" idgonboardflag ==false">
+                and (b.directorFlag = 0 or b.directorFlag is null)
+            </if>
+        </if>
+    </select>
+
+    <select id="queryTotalShare" resultType="java.math.BigDecimal" parameterType="com.idgcapital.ufund.model.Portfoliovaluation">
+        select (ISNULL(Shares.shares, 0) + ISNULL(WarrantShares.sharesNo, 0)) as totalNoOfShares
+        from PortfolioBasicInfo PortfolioBasicInfo  left outer join (
+        select portfolioID, SUM(ISNULL(shareOwnedNo, 0) * CAST(ISNULL(conversionRatio, 1) as decimal(18, 8))) as shares
+        from PortfolioShareStructure where closeDate &lt;= GETDATE() group by portfolioID
+        ) as Shares on Shares.portfolioID = PortfolioBasicInfo.portfolioID
+        left outer join (
+        select portfolioID, SUM(ISNULL(sharesNO, 0)) as sharesNo from PortfolioWarrant where GETDATE() between issueDate and dueDate group by portfolioID
+        ) as WarrantShares on WarrantShares.portfolioID = PortfolioBasicInfo.portfolioID
+        where PortfolioBasicInfo.portfolioID = #{portfolioid,jdbcType=NVARCHAR}
+    </select>
+
+    <select id="queryIdgShare" resultType="java.math.BigDecimal" parameterType="com.idgcapital.ufund.model.Portfoliovaluation">
+        select   SUM(ISNULL(shareOwnedNo, 0) * CAST(ISNULL(conversionRatio, 1) as decimal(18, 8))) as idgShareOwnedNo
+        from PortfolioEquityInvestment
+        where PortfolioEquityInvestment.closeDate &lt;= GETDATE() AND portfolioID= #{portfolioid,jdbcType=NVARCHAR} group by portfolioID
+
+    </select>
+
+
+      <select id="queryGpCarryByMap" parameterType="HashMap" resultType="HashMap">
+
+        SELECT sum(isnull(a.GPCarryAmount,0.00)) cashValue
+        FROM LPDistributionDetail a
+        INNER JOIN lpcashdistribution b on a.LPDistributionID = b.LPDistributionID
+        INNER JOIN LPBasicInfo c on  a.LPID = c.LPID
+        WHERE a.fundID = #{fundid,jdbcType=NVARCHAR}
+        AND (c.partnerType = 'Generate Partner' OR c.partnerType = '有限合伙人')
+        AND b.issueDate <![CDATA[<=]]> #{date,jdbcType=DATE}
+        AND b.issueDate <![CDATA[>]]> #{startDate,jdbcType=DATE}
+
+      </select>
+
+      <select id="selectFundInvestPortfoliosByParam" parameterType="HashMap" resultType="HashMap">
+
+        select distinct a.portfolioID, a.abbName, a.fullName, a.abbNameChi, a.fullNameChi, a.reportName
+          from PortfolioBasicInfo a, PortfolioEquityInvestment b
+         where a.portfolioID = b.portfolioID
+          <if test=" fundId != null">
+             and b.fundID = #{fundId,jdbcType=NVARCHAR}
+          </if>
+
+      </select>
+
+    <update id="updateProjDirectorById" parameterType="com.idgcapital.ufund.model.Portfoliobasicinfo">
+        update PortfolioBasicInfo set
+          totalBoardSeatNo = #{totalboardseatno,jdbcType=INTEGER},
+          modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+          modifiedDate = #{modifieddate,jdbcType=DATE}
+          where portfolioID = #{portfolioid,jdbcType=NVARCHAR}
+    </update>
+
+
+
+
+
+</mapper>

@@ -1,0 +1,33 @@
+
+server:
+  contextPath:
+
+
+
+spring:
+    datasource:
+        url: @jdbc.ufund.url@
+        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        username: @jdbc.ufund.username@
+        password: @jdbc.ufund.password@
+    #页面模板
+    thymeleaf:
+              prefix: classpath:/templates/
+              mode: HTML5
+              encoding: UTF-8
+              content-type: text/html
+              cache: false
+    #mvc:
+     #    view:
+      #         prefix: /WEB-INF/jsp/
+       #        suffix: .jsp
+        #initial-size: 15
+        #maximum-pool-size: 30
+        #test-while-idle: true
+        #time-between-eviction-runs-millis: 300000
+        #validation-query: SELECT 1
+
+mybatis:
+    typeAliasesPackage: com.idgcapital.ufund.**.model
+    mapperLocations: classpath:com/idgcapital/ufund/mybatis/mapper/*.xml
+    configLocation: classpath:mybatis/mybatis-config.xml

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfoliodividentbonusMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfoliodividentbonus" >
+    <id column="DBID" property="dbid" jdbcType="NVARCHAR" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="fundID" property="fundid" jdbcType="NVARCHAR" />
+    <result column="fundName" property="fundname" jdbcType="NVARCHAR" />
+    <result column="fundFamillyName" property="fundfamillyname" jdbcType="NVARCHAR" />
+    <result column="investType" property="investtype" jdbcType="NVARCHAR" />
+    <result column="closeDate" property="closedate" jdbcType="DATE" />
+    <result column="round" property="round" jdbcType="NVARCHAR" />
+    <result column="securityTypeID" property="securitytypeid" jdbcType="INTEGER" />
+    <result column="shareOwnedNo" property="shareownedno" jdbcType="NUMERIC" />
+    <result column="conversionRatio" property="conversionratio" jdbcType="DECIMAL" />
+    <result column="remarks" property="remarks" jdbcType="NVARCHAR" />
+    <result column="costRelization" property="costrelization" jdbcType="DECIMAL" />
+    <result column="proceeds" property="proceeds" jdbcType="DECIMAL" />
+    <result column="currency" property="currency" jdbcType="NVARCHAR" />
+    <result column="Redemption" property="redemption" jdbcType="LONGNVARCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="financialDate" property="financialdate" jdbcType="DATE" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PortfolioDividentBonus
+    where DBID = #{dbid,jdbcType=NVARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfoliodividentbonus" >
+    insert into PortfolioDividentBonus (DBID, portfolioID, fundID, 
+      fundName, fundFamillyName, investType, 
+      closeDate, round, securityTypeID, 
+      shareOwnedNo, conversionRatio, remarks, 
+      costRelization, proceeds, currency, 
+      Redemption, createdBy, createdDate, 
+      modifiedBy, modifiedDate, approved, 
+      financialDate)
+    values (#{dbid,jdbcType=NVARCHAR}, #{portfolioid,jdbcType=NVARCHAR}, #{fundid,jdbcType=NVARCHAR}, 
+      #{fundname,jdbcType=NVARCHAR}, #{fundfamillyname,jdbcType=NVARCHAR}, #{investtype,jdbcType=NVARCHAR}, 
+      #{closedate,jdbcType=DATE}, #{round,jdbcType=NVARCHAR}, #{securitytypeid,jdbcType=INTEGER}, 
+      #{shareownedno,jdbcType=NUMERIC}, #{conversionratio,jdbcType=DECIMAL}, #{remarks,jdbcType=NVARCHAR}, 
+      #{costrelization,jdbcType=DECIMAL}, #{proceeds,jdbcType=DECIMAL}, #{currency,jdbcType=NVARCHAR}, 
+      #{redemption,jdbcType=LONGNVARCHAR}, #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=DATE}, 
+      #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE}, #{approved,jdbcType=BIT}, 
+      #{financialdate,jdbcType=DATE})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfoliodividentbonus" >
+    update PortfolioDividentBonus
+    set portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      fundID = #{fundid,jdbcType=NVARCHAR},
+      fundName = #{fundname,jdbcType=NVARCHAR},
+      fundFamillyName = #{fundfamillyname,jdbcType=NVARCHAR},
+      investType = #{investtype,jdbcType=NVARCHAR},
+      closeDate = #{closedate,jdbcType=DATE},
+      round = #{round,jdbcType=NVARCHAR},
+      securityTypeID = #{securitytypeid,jdbcType=INTEGER},
+      shareOwnedNo = #{shareownedno,jdbcType=NUMERIC},
+      conversionRatio = #{conversionratio,jdbcType=DECIMAL},
+      remarks = #{remarks,jdbcType=NVARCHAR},
+      costRelization = #{costrelization,jdbcType=DECIMAL},
+      proceeds = #{proceeds,jdbcType=DECIMAL},
+      currency = #{currency,jdbcType=NVARCHAR},
+      Redemption = #{redemption,jdbcType=LONGNVARCHAR},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      approved = #{approved,jdbcType=BIT},
+      financialDate = #{financialdate,jdbcType=DATE}
+    where DBID = #{dbid,jdbcType=NVARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select DBID, portfolioID, fundID, fundName, fundFamillyName, investType, closeDate, 
+    round, securityTypeID, shareOwnedNo, conversionRatio, remarks, costRelization, proceeds, 
+    currency, Redemption, createdBy, createdDate, modifiedBy, modifiedDate, approved, 
+    financialDate
+    from PortfolioDividentBonus
+    where DBID = #{dbid,jdbcType=NVARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select DBID, portfolioID, fundID, fundName, fundFamillyName, investType, closeDate, 
+    round, securityTypeID, shareOwnedNo, conversionRatio, remarks, costRelization, proceeds, 
+    currency, Redemption, createdBy, createdDate, modifiedBy, modifiedDate, approved, 
+    financialDate
+    from PortfolioDividentBonus
+  </select>
+
+  <select id="queryPortfolioDividendListByPortfolioId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select DBID, portfolioID, fundID, fundName, fundFamillyName, investType, closeDate,
+    round, securityTypeID, shareOwnedNo, conversionRatio, remarks, costRelization, proceeds,
+    currency, Redemption, createdBy, createdDate, modifiedBy, modifiedDate, approved,
+    financialDate
+    from PortfolioDividentBonus
+    WHERE portfolioID = #{portfolioid,jdbcType=NVARCHAR}
+      AND investType = 'Dividends'
+  </select>
+
+  <select id="queryPortfolioBonusShareListByPortfolioId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select DBID, portfolioID, fundID, fundName, fundFamillyName, investType, closeDate,
+    round, securityTypeID, shareOwnedNo, conversionRatio, remarks, costRelization, proceeds,
+    currency, Redemption, createdBy, createdDate, modifiedBy, modifiedDate, approved,
+    financialDate
+    from PortfolioDividentBonus
+     WHERE portfolioID = #{portfolioid,jdbcType=NVARCHAR}
+      AND investType = 'Bonus Shares'
+  </select>
+
+
+  <select id="selectMaxDbId" parameterType="com.idgcapital.ufund.model.Portfoliodividentbonus" resultType="java.lang.String">
+    select max(w1.DBID)
+    FROM PortfolioDividentBonus w1
+
+    WHERE w1.portfolioID = #{portfolioid,jdbcType=NVARCHAR}
+  </select>
+
+</mapper>

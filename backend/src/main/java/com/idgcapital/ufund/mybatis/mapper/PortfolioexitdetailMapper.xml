@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfolioexitdetailMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfolioexitdetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="exitId" property="exitid" jdbcType="INTEGER" />
+    <result column="EIID" property="eiid" jdbcType="NVARCHAR" />
+    <result column="shareExit" property="shareexit" jdbcType="NUMERIC" />
+    <result column="costRelization" property="costrelization" jdbcType="DECIMAL" />
+    <result column="costUnRelization" property="costunrelization" jdbcType="DECIMAL" />
+    <result column="proceedsRelization" property="proceedsrelization" jdbcType="DECIMAL" />
+    <result column="proceedsUnRelization" property="proceedsunrelization" jdbcType="DECIMAL" />
+    <result column="lossRelization" property="lossrelization" jdbcType="DECIMAL" />
+    <result column="remarks" property="remarks" jdbcType="NVARCHAR" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from PortfolioExitDetail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfolioexitdetail" >
+    insert into PortfolioExitDetail ( exitId, EIID,
+      shareExit, costRelization, costUnRelization, 
+      proceedsRelization, proceedsUnRelization, 
+      lossRelization, remarks, approved
+      )
+    values (#{exitid,jdbcType=INTEGER}, #{eiid,jdbcType=NVARCHAR},
+      #{shareexit,jdbcType=NUMERIC}, #{costrelization,jdbcType=DECIMAL}, #{costunrelization,jdbcType=DECIMAL}, 
+      #{proceedsrelization,jdbcType=DECIMAL}, #{proceedsunrelization,jdbcType=DECIMAL}, 
+      #{lossrelization,jdbcType=DECIMAL}, #{remarks,jdbcType=NVARCHAR}, #{approved,jdbcType=BIT}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfolioexitdetail" >
+    update PortfolioExitDetail
+    set exitId = #{exitid,jdbcType=INTEGER},
+      EIID = #{eiid,jdbcType=NVARCHAR},
+      shareExit = #{shareexit,jdbcType=NUMERIC},
+      costRelization = #{costrelization,jdbcType=DECIMAL},
+      costUnRelization = #{costunrelization,jdbcType=DECIMAL},
+      proceedsRelization = #{proceedsrelization,jdbcType=DECIMAL},
+      proceedsUnRelization = #{proceedsunrelization,jdbcType=DECIMAL},
+      lossRelization = #{lossrelization,jdbcType=DECIMAL},
+      remarks = #{remarks,jdbcType=NVARCHAR},
+      approved = #{approved,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, exitId, EIID, shareExit, costRelization, costUnRelization, proceedsRelization, 
+    proceedsUnRelization, lossRelization, remarks, approved
+    from PortfolioExitDetail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, exitId, EIID, shareExit, costRelization, costUnRelization, proceedsRelization, 
+    proceedsUnRelization, lossRelization, remarks, approved
+    from PortfolioExitDetail
+  </select>
+  <!---->
+</mapper>

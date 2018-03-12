@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfolioloantoequityMapper">
+    <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfolioloantoequity">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="EIID" property="eiid" jdbcType="NVARCHAR"/>
+        <result column="closeDate" property="closedate" jdbcType="DATE"/>
+        <result column="noteID" property="noteid" jdbcType="NVARCHAR"/>
+        <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR"/>
+        <result column="fundID" property="fundid" jdbcType="NVARCHAR"/>
+        <result column="convertAmount" property="convertamount" jdbcType="DECIMAL"/>
+        <result column="securityTypeID" property="securitytypeid" jdbcType="INTEGER"/>
+        <result column="costRelization" property="costrelization" jdbcType="DECIMAL"/>
+        <result column="proceeds" property="proceeds" jdbcType="DECIMAL"/>
+        <result column="shareOwnedNo" property="shareownedno" jdbcType="NUMERIC"/>
+        <result column="conversionRatio" property="conversionratio" jdbcType="DECIMAL"/>
+        <result column="additionalCost" property="additionalcost" jdbcType="DECIMAL"/>
+        <result column="otherFees" property="otherfees" jdbcType="DECIMAL"/>
+        <result column="remarks" property="remarks" jdbcType="NVARCHAR"/>
+        <result column="createdBy" property="createdby" jdbcType="NVARCHAR"/>
+        <result column="createdDate" property="createddate" jdbcType="DATE"/>
+        <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR"/>
+        <result column="modifiedDate" property="modifieddate" jdbcType="DATE"/>
+        <result column="approved" property="approved" jdbcType="BIT"/>
+        <result column="fundName" property="fundname" jdbcType="NVARCHAR" />
+        <result column="fundFamillyName" property="fundfamillyname" jdbcType="NVARCHAR" />
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from PortfolioLoanToEquity
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfolioloantoequity">
+    insert into PortfolioLoanToEquity ( EIID, closeDate,
+      noteID, portfolioID, fundID, 
+      convertAmount, securityTypeID, costRelization, 
+      proceeds, shareOwnedNo, conversionRatio, 
+      additionalCost, otherFees, remarks, 
+      createdBy, createdDate, modifiedBy, 
+      modifiedDate, approved)
+    values (#{eiid,jdbcType=NVARCHAR}, #{closedate,jdbcType=DATE},
+      #{noteid,jdbcType=NVARCHAR}, #{portfolioid,jdbcType=NVARCHAR}, #{fundid,jdbcType=NVARCHAR}, 
+      #{convertamount,jdbcType=DECIMAL}, #{securitytypeid,jdbcType=INTEGER}, #{costrelization,jdbcType=DECIMAL}, 
+      #{proceeds,jdbcType=DECIMAL}, #{shareownedno,jdbcType=NUMERIC}, #{conversionratio,jdbcType=DECIMAL}, 
+      #{additionalcost,jdbcType=DECIMAL}, #{otherfees,jdbcType=DECIMAL}, #{remarks,jdbcType=NVARCHAR}, 
+      #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=DATE}, #{modifiedby,jdbcType=NVARCHAR}, 
+      #{modifieddate,jdbcType=DATE}, #{approved,jdbcType=BIT})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfolioloantoequity">
+    update PortfolioLoanToEquity
+    set EIID = #{eiid,jdbcType=NVARCHAR},
+      closeDate = #{closedate,jdbcType=DATE},
+      noteID = #{noteid,jdbcType=NVARCHAR},
+      portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      fundID = #{fundid,jdbcType=NVARCHAR},
+      convertAmount = #{convertamount,jdbcType=DECIMAL},
+      securityTypeID = #{securitytypeid,jdbcType=INTEGER},
+      costRelization = #{costrelization,jdbcType=DECIMAL},
+      proceeds = #{proceeds,jdbcType=DECIMAL},
+      shareOwnedNo = #{shareownedno,jdbcType=NUMERIC},
+      conversionRatio = #{conversionratio,jdbcType=DECIMAL},
+      additionalCost = #{additionalcost,jdbcType=DECIMAL},
+      otherFees = #{otherfees,jdbcType=DECIMAL},
+      remarks = #{remarks,jdbcType=NVARCHAR},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      approved = #{approved,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select id, EIID, closeDate, noteID, portfolioID, fundID, convertAmount, securityTypeID, 
+    costRelization, proceeds, shareOwnedNo, conversionRatio, additionalCost, otherFees, 
+    remarks, createdBy, createdDate, modifiedBy, modifiedDate, approved
+    from PortfolioLoanToEquity
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select id, EIID, closeDate, noteID, portfolioID, fundID, convertAmount, securityTypeID, 
+    costRelization, proceeds, shareOwnedNo, conversionRatio, additionalCost, otherFees, 
+    remarks, createdBy, createdDate, modifiedBy, modifiedDate, approved
+    from PortfolioLoanToEquity
+  </select>
+    <select id="selectLoanToEquityListByFundFamilyName" parameterType="java.lang.String" resultMap="BaseResultMap">
+	select f.fundFamillyName,n.closeDate,sum(n.convertAmount) convertAmount,sum(otherFees) otherFees from PortfolioLoanToEquity  n
+	left join FundBasicInfo f on n.fundID = f.fundID group by fundFamillyName,n.closeDate ,n.portfolioID having fundFamillyName = #{fundfamillyname} and portfolioID = #{portfolioid}
+  </select>
+    <select id="selectLoanToEquityListByEiid" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from PortfolioLoanToEquity where eiid = #{eiid}
+    </select>
+    <select id="deleteByEiid" parameterType="java.lang.String">
+        delete from PortfolioLoanToEquity where eiid = #{eiid}
+    </select>
+    <select id="selectByNoteId" parameterType="java.lang.String" resultType="java.math.BigDecimal">
+        select sum(convertAmount) convertAmount from  PortfolioLoanToEquity group by noteId having noteId=#{noteId}
+    </select>
+</mapper>

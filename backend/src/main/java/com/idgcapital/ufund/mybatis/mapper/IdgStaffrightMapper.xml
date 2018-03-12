@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.IdgStaffrightMapper">
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.IdgStaffright">
+    <id column="rightID" jdbcType="INTEGER" property="rightid" />
+    <result column="staffID" jdbcType="NVARCHAR" property="staffid" />
+    <result column="page" jdbcType="NVARCHAR" property="page" />
+    <result column="viewRight" jdbcType="BIT" property="viewright" />
+    <result column="addRight" jdbcType="BIT" property="addright" />
+    <result column="editRight" jdbcType="BIT" property="editright" />
+    <result column="deleteRight" jdbcType="BIT" property="deleteright" />
+    <result column="createdBy" jdbcType="NVARCHAR" property="createdby" />
+    <result column="createdDate" jdbcType="DATE" property="createddate" />
+    <result column="modifiedBy" jdbcType="NVARCHAR" property="modifiedby" />
+    <result column="modifiedDate" jdbcType="DATE" property="modifieddate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from IDG_StaffRight
+    where rightID = #{rightid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.IdgStaffright">
+    insert into IDG_StaffRight (rightID, staffID, page, 
+      viewRight, addRight, editRight, 
+      deleteRight, createdBy, createdDate, 
+      modifiedBy, modifiedDate)
+    values (#{rightid,jdbcType=INTEGER}, #{staffid,jdbcType=NVARCHAR}, #{page,jdbcType=NVARCHAR}, 
+      #{viewright,jdbcType=BIT}, #{addright,jdbcType=BIT}, #{editright,jdbcType=BIT}, 
+      #{deleteright,jdbcType=BIT}, #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=DATE}, 
+      #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.IdgStaffright">
+    update IDG_StaffRight
+    set staffID = #{staffid,jdbcType=NVARCHAR},
+      page = #{page,jdbcType=NVARCHAR},
+      viewRight = #{viewright,jdbcType=BIT},
+      addRight = #{addright,jdbcType=BIT},
+      editRight = #{editright,jdbcType=BIT},
+      deleteRight = #{deleteright,jdbcType=BIT},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE}
+    where rightID = #{rightid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select rightID, staffID, page, viewRight, addRight, editRight, deleteRight, createdBy, 
+    createdDate, modifiedBy, modifiedDate
+    from IDG_StaffRight
+    where rightID = #{rightid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select rightID, staffID, page, viewRight, addRight, editRight, deleteRight, createdBy, 
+    createdDate, modifiedBy, modifiedDate
+    from IDG_StaffRight
+  </select>
+
+
+</mapper>

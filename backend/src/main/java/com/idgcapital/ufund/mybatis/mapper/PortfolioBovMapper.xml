@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfolioBovMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.PortfolioBov" >
+    <id column="BOVID" property="bovid" jdbcType="INTEGER" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="updateDate" property="updatedate" jdbcType="DATE" />
+    <result column="companyBackground" property="companybackground" jdbcType="LONGNVARCHAR" />
+    <result column="operationAndBusinessDevelopment" property="operationandbusinessdevelopment" jdbcType="LONGNVARCHAR" />
+    <result column="valuation" property="valuation" jdbcType="LONGNVARCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="Management" property="management" jdbcType="LONGNVARCHAR" />
+    <result column="Disposal" property="disposal" jdbcType="LONGNVARCHAR" />
+    <result column="Comparables" property="comparables" jdbcType="LONGNVARCHAR" />
+    <result column="updateBusiness" property="updatebusiness" jdbcType="LONGNVARCHAR" />
+    <result column="headcount" property="headcount" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from Portfolio_BOV
+    where BOVID = #{bovid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.PortfolioBov" >
+    insert into Portfolio_BOV (portfolioID, updateDate,
+      companyBackground, operationAndBusinessDevelopment, 
+      valuation, createdBy, createdDate, 
+      modifiedBy, modifiedDate, approved, 
+      Management, Disposal, Comparables, 
+      updateBusiness, headcount)
+    values (#{portfolioid,jdbcType=NVARCHAR}, #{updatedate,jdbcType=DATE},
+      #{companybackground,jdbcType=LONGNVARCHAR}, #{operationandbusinessdevelopment,jdbcType=LONGNVARCHAR}, 
+      #{valuation,jdbcType=LONGNVARCHAR}, #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=DATE}, 
+      #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE}, #{approved,jdbcType=BIT}, 
+      #{management,jdbcType=LONGNVARCHAR}, #{disposal,jdbcType=LONGNVARCHAR}, #{comparables,jdbcType=LONGNVARCHAR}, 
+      #{updatebusiness,jdbcType=LONGNVARCHAR}, #{headcount,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.PortfolioBov" >
+    update Portfolio_BOV
+    set portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      updateDate = #{updatedate,jdbcType=DATE},
+      companyBackground = #{companybackground,jdbcType=LONGNVARCHAR},
+      operationAndBusinessDevelopment = #{operationandbusinessdevelopment,jdbcType=LONGNVARCHAR},
+      valuation = #{valuation,jdbcType=LONGNVARCHAR},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      approved = #{approved,jdbcType=BIT},
+      Management = #{management,jdbcType=LONGNVARCHAR},
+      Disposal = #{disposal,jdbcType=LONGNVARCHAR},
+      Comparables = #{comparables,jdbcType=LONGNVARCHAR},
+      updateBusiness = #{updatebusiness,jdbcType=LONGNVARCHAR},
+      headcount = #{headcount,jdbcType=INTEGER}
+    where BOVID = #{bovid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select BOVID, portfolioID, updateDate, companyBackground, operationAndBusinessDevelopment, 
+    valuation, createdBy, createdDate, modifiedBy, modifiedDate, approved, Management, 
+    Disposal, Comparables, updateBusiness, headcount
+    from Portfolio_BOV
+    where BOVID = #{bovid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select BOVID, portfolioID, updateDate, companyBackground, operationAndBusinessDevelopment, 
+    valuation, createdBy, createdDate, modifiedBy, modifiedDate, approved, Management, 
+    Disposal, Comparables, updateBusiness, headcount
+    from Portfolio_BOV
+  </select>
+
+  <select id="queryPortfolioBovListByPortfolioId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select BOVID, portfolioID, updateDate, companyBackground, operationAndBusinessDevelopment,
+    valuation, createdBy, createdDate, modifiedBy, modifiedDate, approved, Management,
+    Disposal, Comparables, updateBusiness, headcount
+    from Portfolio_BOV
+    WHERE portfolioID = #{portfolioid,jdbcType=NVARCHAR}
+    ORDER BY updateDate DESC
+  </select>
+
+</mapper>

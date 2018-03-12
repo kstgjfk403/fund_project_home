@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.SpvinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Spvinfo" >
+    <id column="spvID" property="spvid" jdbcType="NVARCHAR" />
+    <result column="spvName" property="spvname" jdbcType="NVARCHAR" />
+    <result column="spvNameChi" property="spvnamechi" jdbcType="NVARCHAR" />
+    <result column="parentSpvID" property="parentspvid" jdbcType="NVARCHAR" />
+    <result column="spvLevel" property="spvlevel" jdbcType="INTEGER" />
+    <result column="regAddress" property="regaddress" jdbcType="NVARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="NVARCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="isLeaf" property="isleaf" jdbcType="NVARCHAR" />
+    <result column="spvType" property="spvtype" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from spvInfo
+    where spvID = #{spvid,jdbcType=NVARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Spvinfo" >
+    insert into spvInfo (spvID, spvName, spvNameChi, 
+      parentSpvID, spvLevel, regAddress, 
+      remarks, createdBy, createdDate, 
+      modifiedBy, modifiedDate,isLeaf,spvType)
+    values (#{spvid,jdbcType=NVARCHAR}, #{spvname,jdbcType=NVARCHAR}, #{spvnamechi,jdbcType=NVARCHAR}, 
+      #{parentspvid,jdbcType=NVARCHAR}, #{spvlevel,jdbcType=INTEGER}, #{regaddress,jdbcType=NVARCHAR}, 
+      #{remarks,jdbcType=NVARCHAR}, #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=DATE}, 
+      #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE},#{isleaf,jdbcType=NVARCHAR}, #{spvtype,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Spvinfo" >
+    update spvInfo
+    set spvName = #{spvname,jdbcType=NVARCHAR},
+      spvNameChi = #{spvnamechi,jdbcType=NVARCHAR},
+      parentSpvID = #{parentspvid,jdbcType=NVARCHAR},
+      spvLevel = #{spvlevel,jdbcType=INTEGER},
+      regAddress = #{regaddress,jdbcType=NVARCHAR},
+      remarks = #{remarks,jdbcType=NVARCHAR},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      isLeaf = #{isleaf,jdbcType=NVARCHAR},
+      spvType = #{spvtype,jdbcType=INTEGER}
+    where spvID = #{spvid,jdbcType=NVARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	select spvID, isnull(spvName,'') spvName,  isnull(spvNameChi,'') spvNameChi, parentSpvID, spvLevel,isnull(regAddress,'') regAddress,isLeaf, isnull(remarks,'') remarks, createdBy,
+    createdDate, modifiedBy, modifiedDate,isLeaf,spvType
+    from spvInfo
+    where spvID = #{spvid,jdbcType=NVARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select spvID, spvName, spvNameChi, parentSpvID, spvLevel, regAddress, remarks, createdBy, 
+    createdDate, modifiedBy, modifiedDate,isLeaf,spvType
+    from spvInfo
+  </select>
+
+  <select id="selectMaxSPVId" resultType="java.lang.String">
+    select max(spvID) from spvInfo
+  </select>
+  <select id="selectSPVList" resultType="java.util.HashMap">
+    select spvID as baseId,spvName as baseName from spvInfo
+  </select>
+  <select id="selectBySPVParentId" parameterType="java.lang.String" resultMap="BaseResultMap">
+
+     WITH SPV_CTE(spvID,parentSpvID,spvName,spvLevel,isLeaf)
+      AS
+      (
+          --基本语句
+          SELECT spvID,parentSpvID,spvName,0 AS spvLevel,isLeaf FROM spvInfo
+          WHERE parentSpvID = #{parentspvid,jdbcType=NVARCHAR}
+          UNION ALL  --递归语句
+          SELECT c.spvID,c.parentSpvID,c.spvName,ce.spvLevel + 1,c.isLeaf FROM spvInfo AS c
+          INNER JOIN SPV_CTE AS ce    --递归查询
+          ON c.parentSpvID = ce.spvID
+      )
+      SELECT * FROM SPV_CTE order by spvID;
+
+  </select>
+
+  <select id="selectSPVEntityCount" parameterType="com.idgcapital.ufund.model.Spvinfo" resultType="java.lang.Integer">
+    select count(*) from spvInfo p
+    where 1=1
+    <if test=" spvname != null and spvname != '' ">
+      and  lower(p.spvname) like lower('%${spvname}%')
+    </if>
+  </select>
+
+  <select id="selectSPVEntityList" parameterType="com.idgcapital.ufund.model.Spvinfo" resultMap="BaseResultMap">
+   SELECT w1.spvID, isnull(spvName,'') spvName,  isnull(spvNameChi,'') spvNameChi, parentSpvID, spvLevel,isnull(regAddress,'') regAddress,isLeaf, isnull(remarks,'') remarks ,isLeaf,spvType
+   FROM spvInfo w1,
+   (
+     SELECT TOP (#{pageEnd,jdbcType=INTEGER}) row_number() OVER (order by p.spvID asc) n, p.spvID  FROM spvInfo p
+     where 1=1
+    <if test=" spvname != null and spvname != '' ">
+      and  lower(p.spvname) like lower('%${spvname}%')
+    </if>
+   ) w2
+   WHERE w1.spvID = w2.spvID AND w2.n > (#{pageStart,jdbcType=INTEGER}) ORDER BY w2.n ASC
+  </select>
+</mapper>

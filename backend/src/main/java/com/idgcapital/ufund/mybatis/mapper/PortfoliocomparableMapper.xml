@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfoliocomparableMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfoliocomparable" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="comparable_name" property="comparableName" jdbcType="VARCHAR" />
+    <result column="value_date" property="valueDate" jdbcType="DATE" />
+    <result column="multiple" property="multiple" jdbcType="NUMERIC" />
+    <result column="weight" property="weight" jdbcType="NUMERIC" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from PortfolioComparable
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfoliocomparable" >
+    insert into PortfolioComparable (   pid, comparable_name,
+      value_date, multiple, weight
+      )
+    values ( #{pid,jdbcType=VARCHAR}, #{comparableName,jdbcType=VARCHAR},
+      #{valueDate,jdbcType=DATE}, #{multiple,jdbcType=DECIMAL}, #{weight,jdbcType=DECIMAL}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfoliocomparable" >
+    update PortfolioComparable
+    set pid = #{pid,jdbcType=VARCHAR},
+      comparable_name = #{comparableName,jdbcType=VARCHAR},
+      value_date = #{valueDate,jdbcType=DATE},
+      multiple = #{multiple,jdbcType=NUMERIC},
+      weight = #{weight,jdbcType=NUMERIC}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select cid, pid, comparable_name, value_date, multiple, weight
+    from PortfolioComparable
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select cid, pid, comparable_name, value_date, multiple, weight
+    from PortfolioComparable
+  </select>
+
+  <select id="queryPortfolioComparableList" resultMap="BaseResultMap" parameterType="com.idgcapital.ufund.model.Portfoliocomparable">
+    select cid, pid, comparable_name, value_date, multiple, weight
+    from PortfolioComparable where pid = #{pid,jdbcType=VARCHAR}
+    <if test="valueDate!=null">
+        and value_date = #{valueDate,jdbcType=DATE}
+    </if>
+  </select>
+
+
+</mapper>

@@ -1,0 +1,576 @@
+/*----------------------------全局样式start------------------------*/
+html{
+
+    height: 100%;
+    body{
+        height: 100%;
+        font-size:16px;
+    }
+}
+*{
+    box-sizing: border-box;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+}
+.font16{
+    font-size:16px;
+}
+.font14{
+    font-size:14px;
+}
+.font12{
+    font-size:12px;
+}
+.fontweight{
+    font-weight: bold;
+}
+.bordernone{
+    border:none;
+    border:0px solid transparent;
+}
+.width15{
+  width:15%;
+}
+.width20{
+    width:20%;
+}
+.width25{
+    width:25%;
+}
+.width33{
+    width:33%;
+}
+.width40{
+    width:40%;
+}
+.width50{
+    width:50%;
+}
+.width60{
+    width:60%;
+}
+.width80{
+    width:80%;
+}
+.floatright{
+    float:right;
+}
+.floatleft{
+    float:left;
+}
+.clearFix:after{
+    display:block;clear:both;content:"";visibility:hidden;height:0    
+}
+.clearFix{
+    zoom:1;
+}
+.title{
+    padding:1px 5px;
+    box-sizing: border-box;
+    font-size: 20px;
+    color:white;
+    font-weight:bold;
+    background:#00a1e9;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a{
+    color: #333333;
+    text-decoration: none;
+}
+.spinner {
+  width: 60px;
+  height: 60px;
+  position: relative;
+  margin: 100px auto;
+}
+.double-bounce1, .double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #67CF22;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-animation: bounce 2.0s infinite ease-in-out;
+  animation: bounce 2.0s infinite ease-in-out;
+}
+
+.double-bounce2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% {
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+
+/*----------------------------全局样式end------------------------*/
+.listpage th .el-input__inner{
+    height:30px;
+    border-color:#ccc;
+}
+ .listpage th .el-input{
+    margin-top: 10px;
+ }
+.add-project .el-input__inner{
+    height:35px;
+    border-color:#ccc;
+}
+.add-project .el-textarea textarea{
+    border-color:#ccc;
+}
+.add-project h3,.add-project h2{
+    padding-left:10px;
+}
+.add-project .el-form-item .el-form-item__label{
+    width:40%;
+}
+.add-project .el-form-item .el-form-item__content{
+    margin-left:40% !important;
+    width:43%;
+}
+.add-project .el-form-item.addpro-button{
+    margin:0;
+    padding:5px 15px;
+    box-sizing: border-box;
+}
+.add-project .el-form-item.addpro-button .el-form-item__content{
+    text-align:right;
+    width:auto;
+}
+.add-project .el-form-item.oneline{
+    width:50%;
+}
+.add-project .el-form-item.oneline .el-textarea__inner{
+    min-height:100px !important;
+    width:220%;
+}
+
+.add-project .el-form-item .el-form-item__content .el-select{
+    width:100%;
+}
+.add-project .el-date-editor.el-input{
+    width:100%;
+}
+.pagination-container .el-pagination__total{
+    margin-left:10px;
+}
+.el-icon-info,.el-icon-circle-plus{
+    color:#66b1ff;
+}
+.el-icon-edit{
+    color:#85ce61;
+}
+
+.el-icon-delete{
+    color:#f78989;
+}
+.el-icon-info,.el-icon-edit,.el-icon-delete{
+    cursor: pointer;
+}
+.el-upload{
+    width:100%;
+    height: 100%;
+}
+.basic-detail-container{
+    .el-icon-edit{
+        color:#ffffff;
+    }
+    .el-table--border {
+      border-right: 1px solid #ddd;
+      border-top:1px solid #ddd;
+      border-bottom: none;
+    }
+}
+.add-project{
+    .big-base-container{
+        .singal-base-container{
+            .el-form-item{
+                width:50%;
+            }
+        }
+    }
+}
+.add-project{
+    .big-base-container{
+        .singal-base-container{
+            .el-form-item{
+                .el-form-item__content{
+                    width:80%;
+                }
+            }
+        }
+    }
+}
+.add-project{
+    .big-base-container{
+        .singal-base-container{
+            .el-form-item{
+                .el-textarea__inner{
+                    min-height:80px !important;
+                }
+            }
+        }
+    }
+}
+.add-project .el-table--border {
+  border-right: 1px solid #ddd;
+  border-top:1px solid #ddd;
+  border-bottom: none;
+}
+// .spv-member-list
+
+.spv-member-list .el-table__body-wrapper{
+  overflow:hidden;
+}
+//spv 
+.inputnone{
+    .el-input__inner{
+        border-color:transparent;
+    }
+}
+.spv-member-list .el-dialog{
+    border-radius:4px;
+    width:68%;
+    overflow:hidden;
+    .el-input__inner{
+        height:30px;
+        border-color:#ccc;
+        font-size:12px;
+    }
+    .el-form-item{
+        width:31%;
+        .el-form-item__content{
+            width:65%;
+        }
+        .el-form-item__label{
+            width:35%;
+            font-size:12px;
+        }
+    }
+    .el-select-dropdown__item{
+        font-size:12px;
+    }
+    .el-table--fit{
+        font-size:12px;
+    }
+    .el-dialog__header{
+        background:#eee;
+    }
+}
+.loan .el-input{
+    width:auto;
+}
+.loan .select-container .el-form-item{
+    width:33%;
+    float:left;
+}
+.loan .select-container{
+    overflow:hidden;
+    .el-select{
+        .el-input{
+            width:100%;
+        }
+        width:49%;
+    }
+    
+    .el-form-item__label{
+        width:40%;
+    }
+    .el-table td, .el-table th{
+        padding:2px 0;
+    }
+}
+.loan{
+    margin-bottom:20px;
+    .el-dialog{
+        width:85%;
+        .el-dialog__body{
+            padding-top:14px;
+            padding-bottom:7px;
+        }
+    }
+}
+.capTable{
+    margin-bottom:20px;
+    .el-dialog{
+        width:85%;
+        .el-dialog__body{
+            padding-top:14px;
+            padding-bottom:7px;
+        }
+    }
+}
+.capTable .content .el-table__body-wrapper{
+    overflow: hidden;
+}
+
+.invest .select-container{
+    overflow:hidden;
+    .el-select{
+        .el-input{
+            width:100%;
+        }
+        width:100%;
+    }
+}
+.invest .table-condensed > tbody > tr > td{
+    padding:0
+}
+.invest{
+    .table{
+        td{
+            padding:0;
+        }
+    }
+}
+.invest .el-form-item{
+    margin-bottom:16px;
+}
+.el-select-dropdown__item:hover{
+    background:#00a1e9 !important;
+    color:white !important;
+}
+.valuation .el-form-item{
+    margin-bottom:10px;
+}
+.el-radio-group{
+    width:90%;
+}
+.el-radio-group .el-radio{
+    width:10%;
+    margin-left:30px;
+    margin-top: 10px;
+}
+
+.valuation .el-dialog{
+    width:80%;
+}
+.valuation .select-container .select-fixed .el-input{
+    width:auto;
+}
+.valuation .el-table__body-wrapper {
+    overflow: hidden;
+}
+.valuation .el-dialog .select-container .el-form-item{
+    width:31%;
+}
+.valuation .el-dialog .select-container .el-form-item .el-select{
+    width:55%;
+}
+.valuation .select-container .select-fixed .el-date-editor{
+    width:55%;
+}
+.el-table tr td{
+    border-color:#ddd;
+}
+.el-table tr th.is-leaf{
+    border-color:#ddd;
+}
+.capTable .table-content .el-table:nth-child(1){
+    display: inline-block;
+    width:auto !important;
+    overflow:hidden;
+    vertical-align: top;
+}
+.capTable .table-content .el-table:nth-child(2){
+  display: inline-block;
+  width:auto !important;
+  overflow:hidden;
+  vertical-align: top;
+}
+// .capTable .table-content .el-table:nth-child(3){
+//   display: inline-block;
+//   width:720 !important;
+//   overflow:hidden;
+//   vertical-align: top;
+// }
+.capTable .table-content .el-table:nth-child(1){
+    float:left;
+}
+.capTable .el-table__body-wrapper{
+  overflow:hidden;
+}
+//报表部分样式
+.idgaccelchinareport .el-table{
+    font-size: 12px;
+    td{
+        padding:0;
+    }
+    th{
+        padding:0;
+    }
+}
+.financial .el-table__body-wrapper{
+    overflow:auto;
+}
+.financial .el-dialog {
+    .el-dialog__body{
+        padding-bottom:10px;
+        .el-form{
+            overflow: hidden;
+        }
+    }
+    
+}
+
+.financial .business .el-table {
+  tbody td .cell{
+    line-height:23px;max-height:69px;overflow:hidden;
+  }
+}
+
+.financial.business1 .el-dialog .businessfull {
+  .el-form-item__label{
+    width:13%;
+  }
+  .el-form-item__content{
+    margin-left:13% !important;
+    width:80%;
+  }
+}
+.director .has-gutter th:nth-last-of-type(2){
+    border-right:1px solid #ddd;
+}
+.director{
+    .el-dialog{
+        width:60%;
+    }
+    .select-container .select-fixed .el-form-item{
+        width:49%;
+    }
+} 
+
+.funddistribution {
+    .el-dialog{
+        width:65%;
+    }
+}
+.funddistribution .el-input{
+    width:auto;
+}
+.funddistribution .select-container .el-form-item{
+    width:33%;
+    float:left;
+}
+.funddistribution .select-container{
+    overflow:hidden;
+    .el-select{
+        .el-input{
+            width:100%;
+        }
+        width:49%;
+    }
+    .el-input{
+        width:49%;
+    }
+    .el-textarea{
+        width:49%;
+    }
+    .el-form-item__label{
+        width:40%;
+    }
+    .el-table td, .el-table th{
+        padding:2px 0;
+    }
+}
+.lpinfo .table thead tr th .el-input__inner{
+  height: 30px;
+}
+
+.lpinfo .el-textarea{
+  width:49%;
+}
+.lpinfo .el-form-item{
+  .el-date-editor{
+    width:49%;
+  }
+  height:41px;
+}
+.lpinfo .el-pagination__editor.el-input{
+  width:50px;
+}
+//capitalcalllistpage
+
+.capitalcall .select-container .el-form-item{
+  width:33%;
+  float:left;
+}
+.capitalcall .select-container .el-form-item .el-input{
+  width:auto;
+}
+
+.capitalcall .select-container .el-form-item .el-date-editor{
+  width:48%;
+}
+
+/*appendix2样式*/
+.mytable.el-table th.is-leaf{
+    text-align: center;
+}
+.mytable.el-table {       
+     border:1px solid #ebeef5;
+     height:650px;       
+}
+.mytable.el-table td, .mytable.el-table th{
+    box-sizing: border-box;
+    padding:0 5px 0 5px;
+}
+.mytable.el-table .cell{
+    line-height:25px;
+    word-wrap:break-word;
+    word-break: normal;         
+} 
+/* 文本对齐方式 */
+.textLeft{
+    text-align: left;
+}
+.textCenter{
+    text-align:center;
+}
+.textRight{
+    text-align:right;
+}

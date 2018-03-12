@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfoliocaptablenameMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfoliocaptablename" >
+    <id column="shareOwnerId" property="shareownerid" jdbcType="INTEGER" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="shareType" property="sharetype" jdbcType="NVARCHAR" />
+    <result column="shareOwner" property="shareowner" jdbcType="NVARCHAR" />
+    <result column="securityTypeID" property="securitytypeid" jdbcType="INTEGER" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from PortfolioCapTableName
+    where shareOwnerId = #{shareownerid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfoliocaptablename" >
+    insert into PortfolioCapTableName ( portfolioID, shareType,
+      shareOwner, securityTypeID, createdBy, 
+      createdDate, modifiedBy, modifiedDate, 
+      approved)
+    values ( #{portfolioid,jdbcType=NVARCHAR}, #{sharetype,jdbcType=NVARCHAR},
+      #{shareowner,jdbcType=NVARCHAR}, #{securitytypeid,jdbcType=INTEGER}, #{createdby,jdbcType=NVARCHAR}, 
+      #{createddate,jdbcType=DATE}, #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE}, 
+      #{approved,jdbcType=BIT})
+  </insert>
+  <select id="selectMaxId" resultType="java.lang.Integer">
+    select max(shareOwnerId) from PortfolioCapTableName
+  </select>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfoliocaptablename" >
+    update PortfolioCapTableName
+    set portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      shareType = #{sharetype,jdbcType=NVARCHAR},
+      shareOwner = #{shareowner,jdbcType=NVARCHAR},
+      securityTypeID = #{securitytypeid,jdbcType=INTEGER},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      approved = #{approved,jdbcType=BIT}
+    where shareOwnerId = #{shareownerid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select shareOwnerId, portfolioID, shareType, shareOwner, securityTypeID, createdBy, 
+    createdDate, modifiedBy, modifiedDate, approved
+    from PortfolioCapTableName
+    where shareOwnerId = #{shareownerid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select shareOwnerId, portfolioID, shareType, shareOwner, securityTypeID, createdBy, 
+    createdDate, modifiedBy, modifiedDate, approved
+    from PortfolioCapTableName
+  </select>
+
+  <select id="queryShareHolderList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+     select n.* from PortfolioCapTableName n ,
+	(select distinct shareownerid from PortfolioCapTableValue) v where n.shareOwnerId = v.shareownerid and portfolioId = #{portfolioid}
+  </select>
+
+  <select id="queryDuplicateCaptableName"  parameterType="com.idgcapital.ufund.model.Portfoliocaptablename" resultMap="BaseResultMap">
+    select * from PortfolioCapTableName  where portfolioId = #{portfolioid} and shareOwner = #{shareowner} and securityTypeID = #{securitytypeid}
+  </select>
+
+  <delete id="deleteByPortfolioId" parameterType="java.lang.String">
+    delete from PortfolioCapTableName where portfolioId = #{portfolioid}
+  </delete>
+</mapper>

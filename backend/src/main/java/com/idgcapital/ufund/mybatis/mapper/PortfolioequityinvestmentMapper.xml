@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfolioequityinvestmentMapper">
+    <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfolioequityinvestment">
+        <id column="EIID" property="eiid" jdbcType="NVARCHAR"/>
+        <result column="fromEIID" property="fromeiid" jdbcType="NVARCHAR"/>
+        <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR"/>
+        <result column="fundID" property="fundid" jdbcType="NVARCHAR"/>
+        <result column="investType" property="investtype" jdbcType="NVARCHAR"/>
+        <result column="closeDate" property="closedate" jdbcType="DATE"/>
+        <result column="termSignDate " property="termsigndate " jdbcType="DATE"/>
+        <result column="round" property="round" jdbcType="NVARCHAR"/>
+        <result column="securityTypeID" property="securitytypeid" jdbcType="INTEGER"/>
+        <result column="shareOwnedNo" property="shareownedno" jdbcType="NUMERIC"/>
+        <result column="conversionRatio" property="conversionratio" jdbcType="DECIMAL"/>
+        <result column="cost" property="cost" jdbcType="DECIMAL"/>
+        <result column="otherFees" property="otherfees" jdbcType="DECIMAL"/>
+        <result column="value" property="value" jdbcType="DECIMAL"/>
+        <result column="remarks" property="remarks" jdbcType="NVARCHAR"/>
+        <result column="Comments" property="comments" jdbcType="NVARCHAR"/>
+        <result column="convertRemark" property="convertremark" jdbcType="NVARCHAR"/>
+        <result column="costRelization" property="costrelization" jdbcType="DECIMAL"/>
+        <result column="proceeds" property="proceeds" jdbcType="DECIMAL"/>
+        <result column="otherProceeds" property="otherproceeds" jdbcType="DECIMAL"/>
+        <result column="shareSplitRate" property="sharesplitrate" jdbcType="DOUBLE"/>
+        <result column="PIC" property="pic" jdbcType="DECIMAL"/>
+        <result column="currency" property="currency" jdbcType="NVARCHAR"/>
+        <result column="convertFromNoteID" property="convertfromnoteid" jdbcType="NVARCHAR"/>
+        <result column="convertAmount" property="convertamount" jdbcType="DECIMAL"/>
+        <result column="convertToNoteID" property="converttonoteid" jdbcType="NVARCHAR"/>
+        <result column="WarrantID" property="warrantid" jdbcType="NVARCHAR"/>
+        <result column="liquidationPreference" property="liquidationpreference" jdbcType="LONGNVARCHAR"/>
+        <result column="Redemption" property="redemption" jdbcType="LONGNVARCHAR"/>
+        <result column="createdBy" property="createdby" jdbcType="NVARCHAR"/>
+        <result column="createdDate" property="createddate" jdbcType="DATE"/>
+        <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR"/>
+        <result column="modifiedDate" property="modifieddate" jdbcType="DATE"/>
+        <result column="approved" property="approved" jdbcType="BIT"/>
+        <result column="EInterestPercentage" property="einterestpercentage" jdbcType="DECIMAL"/>
+        <result column="investmentAmount" property="investmentamount" jdbcType="DECIMAL"/>
+        <result column="amountToFund" property="amounttofund" jdbcType="DECIMAL"/>
+        <result column="taxLotDate" property="taxlotdate" jdbcType="DATE"/>
+        <result column="Vouncher" property="vouncher" jdbcType="NVARCHAR"/>
+        <result column="Trans" property="trans" jdbcType="INTEGER"/>
+        <result column="preMoney" property="premoney" jdbcType="DECIMAL"/>
+        <result column="currentRound" property="currentround" jdbcType="DECIMAL"/>
+        <result column="postMoney" property="postmoney" jdbcType="DECIMAL"/>
+        <result column="USD_RMB_Rate" property="usdRmbRate" jdbcType="DOUBLE"/>
+        <result column="lastUpdateDate" property="lastupdatedate" jdbcType="DATE"/>
+        <result column="rid" property="rid" jdbcType="INTEGER"/>
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="convertEquityAmount" property="convertequityamount" jdbcType="DECIMAL"/>
+        <result column="convertFundID" property="convertfundid" jdbcType="NVARCHAR"/>
+        <result column="financialDate" property="financialdate" jdbcType="DATE"/>
+        <result column="tax" property="tax" jdbcType="DECIMAL"/>
+        <result column="futureProceeds" property="futureproceeds" jdbcType="DECIMAL"/>
+        <result column="fundName" property="fundname" jdbcType="NVARCHAR"/>
+        <result column="fundFamillyName" property="fundfamillyname" jdbcType="NVARCHAR"/>
+        <result column="convertDate" property="convertdate" jdbcType="DATE"/>
+        <result column="convertFromWarrantId" property="convertfromwarrantid" jdbcType="NVARCHAR"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PortfolioEquityInvestment
+    where EIID = #{eiid,jdbcType=NVARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfolioequityinvestment">
+    insert into PortfolioEquityInvestment (EIID, fromEIID, portfolioID, 
+      fundID, investType, closeDate, termSignDate ,
+      round, securityTypeID, shareOwnedNo, 
+      conversionRatio, cost, otherFees, 
+      value, remarks, Comments, 
+      convertRemark, costRelization, proceeds, 
+      otherProceeds, shareSplitRate, PIC, 
+      currency, convertFromNoteID, convertAmount, 
+      convertToNoteID, WarrantID, liquidationPreference, 
+      Redemption, createdBy, createdDate, 
+      modifiedBy, modifiedDate, approved, 
+      EInterestPercentage, investmentAmount, 
+      amountToFund, taxLotDate, Vouncher, 
+      Trans, preMoney, currentRound, 
+      postMoney, USD_RMB_Rate, lastUpdateDate, 
+      rid, id, convertEquityAmount, 
+      convertFundID, financialDate, tax, 
+      futureProceeds,convertDate,convertFromWarrantId)
+    values (#{eiid,jdbcType=NVARCHAR}, #{fromeiid,jdbcType=NVARCHAR}, #{portfolioid,jdbcType=NVARCHAR}, 
+      #{fundid,jdbcType=NVARCHAR}, #{investtype,jdbcType=NVARCHAR}, #{closedate,jdbcType=DATE}, #{termsigndate,jdbcType=DATE},
+      #{round,jdbcType=NVARCHAR}, #{securitytypeid,jdbcType=INTEGER}, #{shareownedno,jdbcType=NUMERIC}, 
+      #{conversionratio,jdbcType=DECIMAL}, #{cost,jdbcType=DECIMAL}, #{otherfees,jdbcType=DECIMAL}, 
+      #{value,jdbcType=DECIMAL}, #{remarks,jdbcType=NVARCHAR}, #{comments,jdbcType=NVARCHAR}, 
+      #{convertremark,jdbcType=NVARCHAR}, #{costrelization,jdbcType=DECIMAL}, #{proceeds,jdbcType=DECIMAL}, 
+      #{otherproceeds,jdbcType=DECIMAL}, #{sharesplitrate,jdbcType=DOUBLE}, #{pic,jdbcType=DECIMAL}, 
+      #{currency,jdbcType=NVARCHAR}, #{convertfromnoteid,jdbcType=NVARCHAR}, #{convertamount,jdbcType=DECIMAL}, 
+      #{converttonoteid,jdbcType=NVARCHAR}, #{warrantid,jdbcType=NVARCHAR}, #{liquidationpreference,jdbcType=LONGNVARCHAR}, 
+      #{redemption,jdbcType=LONGNVARCHAR}, #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=DATE}, 
+      #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE}, #{approved,jdbcType=BIT}, 
+      #{einterestpercentage,jdbcType=DECIMAL}, #{investmentamount,jdbcType=DECIMAL}, 
+      #{amounttofund,jdbcType=DECIMAL}, #{taxlotdate,jdbcType=DATE}, #{vouncher,jdbcType=NVARCHAR}, 
+      #{trans,jdbcType=INTEGER}, #{premoney,jdbcType=DECIMAL}, #{currentround,jdbcType=DECIMAL}, 
+      #{postmoney,jdbcType=DECIMAL}, #{usdRmbRate,jdbcType=DOUBLE}, #{lastupdatedate,jdbcType=DATE}, 
+      #{rid,jdbcType=INTEGER}, #{id,jdbcType=INTEGER}, #{convertequityamount,jdbcType=DECIMAL}, 
+      #{convertfundid,jdbcType=NVARCHAR}, #{financialdate,jdbcType=DATE}, #{tax,jdbcType=DECIMAL}, 
+      #{futureproceeds,jdbcType=DECIMAL},#{convertdate,jdbcType=DATE},#{convertfromwarrantid,jdbcType=NVARCHAR})
+  </insert>
+    <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfolioequityinvestment">
+    update PortfolioEquityInvestment
+    set
+      portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      fundID = #{fundid,jdbcType=NVARCHAR},
+      investType = #{investtype,jdbcType=NVARCHAR},
+      closeDate = #{closedate,jdbcType=DATE},
+      termSignDate = #{termsigndate,jdbcType=DATE},
+      round = #{round,jdbcType=NVARCHAR},
+      securityTypeID = #{securitytypeid,jdbcType=INTEGER},
+      shareOwnedNo = #{shareownedno,jdbcType=NUMERIC},
+      conversionRatio = #{conversionratio,jdbcType=DECIMAL},
+      cost = #{cost,jdbcType=DECIMAL},
+      otherFees = #{otherfees,jdbcType=DECIMAL},
+      remarks = #{remarks,jdbcType=NVARCHAR},
+      costRelization = #{costrelization,jdbcType=DECIMAL},
+      proceeds = #{proceeds,jdbcType=DECIMAL},
+      otherProceeds = #{otherproceeds,jdbcType=DECIMAL},
+       currency = #{currency,jdbcType=NVARCHAR},
+       convertAmount = #{convertamount,jdbcType=DECIMAL},
+       createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      approved = #{approved,jdbcType=BIT},
+       taxLotDate = #{taxlotdate,jdbcType=DATE},
+      Vouncher = #{vouncher,jdbcType=NVARCHAR},
+       preMoney = #{premoney,jdbcType=DECIMAL},
+       postMoney = #{postmoney,jdbcType=DECIMAL},
+       financialDate = #{financialdate,jdbcType=DATE},
+       tax = #{tax,jdbcType=DECIMAL},
+       convertDate = #{convertdate,jdbcType=DATE},
+       convertFromWarrantId = #{convertfromwarrantid,jdbcType=NVARCHAR}
+     where EIID = #{eiid,jdbcType=NVARCHAR}
+  </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select p.*,f.fundName,f.fundFamillyName
+    from PortfolioEquityInvestment p
+    left join FundBasicInfo f on p.fundID = f.fundID
+    where EIID = #{eiid,jdbcType=NVARCHAR}
+
+  </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+    select EIID, fromEIID, portfolioID, fundID, investType, closeDate,termSignDate, round, securityTypeID,
+    shareOwnedNo, conversionRatio, cost, otherFees, value, remarks, Comments, convertRemark, 
+    costRelization, proceeds, otherProceeds, shareSplitRate, PIC, currency, convertFromNoteID, 
+    convertAmount, convertToNoteID, WarrantID, liquidationPreference, Redemption, createdBy, 
+    createdDate, modifiedBy, modifiedDate, approved, EInterestPercentage, investmentAmount, 
+    amountToFund, taxLotDate, Vouncher, Trans, preMoney, currentRound, postMoney, USD_RMB_Rate, 
+    lastUpdateDate, rid, id, convertEquityAmount, convertFundID, financialDate, tax, 
+    futureProceeds,convertDate,convertFromWarrantId
+    from PortfolioEquityInvestment
+  </select>
+
+    <select id="selectPortfolioEquityListByPortfolioId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select f.fundName,f.fundFamillyName, p.* from PortfolioEquityInvestment p
+    left join FundBasicInfo f on p.fundID = f.fundID
+    where p.portfolioId = #{portfolioid} order by closeDate desc
+  </select>
+
+    <select id="selectMaxPortfolioEquityId" resultType="java.lang.String">
+    select max(eiid) from PortfolioEquityInvestment
+  </select>
+    <select id="queryInvestmentForExit" parameterType="com.idgcapital.ufund.model.Portfolioequityinvestment" resultMap="BaseResultMap">
+        select i.EIID,i.portfolioID,i.fundID,i.investType,i.closeDate,i.round,i.securityTypeID, (i.shareOwnedNo - ISNULL(d.share,0)) shareOwnedNo,
+		  (i.cost - ISNULL(d.cost,0)) cost from PortfolioEquityInvestment i
+		  left join (select EIID,sum(shareExit) share,sum(costRelization) cost from PortfolioExitDetail p group by EIID) d on i.EIID = d.EIID
+		   where i.fundID = #{fundid}
+           and i.portfolioID =#{portfolioid}
+           and i.round=#{round}
+           and i.securityTypeID =#{securitytypeid}
+           and investType in('Equity Investment&amp;Loan To Equity','Equity Investment','Equity Interest(Loan To Equity)','Equity Investment(Loan To Equity)')
+           order by closeDate
+    </select>
+
+    <select id="queryReclassificationByFundFamilyName" parameterType="com.idgcapital.ufund.model.Portfolioequityinvestment" resultMap="BaseResultMap">
+        select i.EIID,i.securityTypeID,i.round,(i.shareOwnedNo-ISNULL(s.convertAmount,0)) shareOwnedNo,f.fundname from
+        (select * from PortfolioEquityInvestment where investType like 'Equity Investment%' or investType = 'Equity Interest') i
+        left join (select * from PortfolioEquityInvestment where investType = 'Share Reclassification') s on i.EIID = s.fromEIID
+        left join FundBasicInfo f on i.fundID = f.fundID
+        where i.portfolioID = #{portfolioid} and f.fundFamillyName = #{fundfamillyname}
+    </select>
+
+
+    <select id="selectPortfolioEquityListByFundId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        p.EIID, p.fromEIID, p.portfolioID, p.fundID, p.investType, p.closeDate, p.round, p.securityTypeID,
+        p.shareOwnedNo, p.conversionRatio, p.cost, p.otherFees, p.value, p.remarks, p.Comments, p.convertRemark,
+        p.costRelization, p.proceeds, p.otherProceeds, p.shareSplitRate, p.PIC, p.currency, p.convertFromNoteID,
+        p.convertAmount, p.convertToNoteID, p.WarrantID, p.liquidationPreference, p.Redemption, p.createdBy,
+        p.createdDate, p.modifiedBy, p.modifiedDate, p.approved, p.EInterestPercentage, p.investmentAmount,
+        p.amountToFund, p.taxLotDate, p.Vouncher, p.Trans, p.preMoney, p.currentRound, p.postMoney, p.USD_RMB_Rate,
+        p.lastUpdateDate, p.rid, p.id, p.convertEquityAmount, p.convertFundID, p.financialDate, p.tax, p.futureProceeds,
+        p.termSignDate, p.convertDate, p.convertFromWarrantId
+        from portfolioEquityInvestment p
+        inner join FundBasicInfo f on p.fundID = f.fundID
+        where p.fundID = #{fundId}
+        order by closeDate ASC
+    </select>
+</mapper>

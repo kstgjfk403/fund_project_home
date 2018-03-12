@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfoliowarrantMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfoliowarrant" >
+    <id column="WarrantID" property="warrantid" jdbcType="NVARCHAR" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="fundID" property="fundid" jdbcType="NVARCHAR" />
+    <result column="issueDate" property="issuedate" jdbcType="DATE" />
+    <result column="dueDate" property="duedate" jdbcType="DATE" />
+    <result column="warrantAmount" property="warrantamount" jdbcType="DECIMAL" />
+    <result column="warrantPrice" property="warrantprice" jdbcType="DOUBLE" />
+    <result column="round" property="round" jdbcType="NVARCHAR" />
+    <result column="sharesNo" property="sharesno" jdbcType="INTEGER" />
+    <result column="securityTypeID" property="securitytypeid" jdbcType="INTEGER" />
+    <result column="currency" property="currency" jdbcType="NVARCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="TIMESTAMP" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="TIMESTAMP" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="comment" property="comment" jdbcType="NVARCHAR" />
+    <result column="ownership" property="ownership" jdbcType="DECIMAL" />
+    <result column="exercise" property="exercise" jdbcType="BIT" />
+    <result column="ownerType" property="ownertype" jdbcType="NVARCHAR" />
+    <result column="warrantOwnerName" property="warrantownername" jdbcType="NVARCHAR" />
+    <result column="valid" property="valid" jdbcType="BIT" />
+    <result column="fundName" property="fundname" jdbcType="NVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PortfolioWarrant
+    where WarrantID = #{warrantid,jdbcType=NVARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfoliowarrant" >
+    insert into PortfolioWarrant (WarrantID, portfolioID, fundID, 
+      issueDate, dueDate, warrantAmount, 
+      warrantPrice, round, sharesNo, 
+      securityTypeID, currency, createdBy, 
+      createdDate, modifiedBy, modifiedDate, 
+      approved, comment, ownership, 
+      exercise, ownerType, warrantOwnerName, 
+      valid)
+    values (#{warrantid,jdbcType=NVARCHAR}, #{portfolioid,jdbcType=NVARCHAR}, #{fundid,jdbcType=NVARCHAR}, 
+      #{issuedate,jdbcType=DATE}, #{duedate,jdbcType=DATE}, #{warrantamount,jdbcType=DECIMAL}, 
+      #{warrantprice,jdbcType=DOUBLE}, #{round,jdbcType=NVARCHAR}, #{sharesno,jdbcType=INTEGER}, 
+      #{securitytypeid,jdbcType=INTEGER}, #{currency,jdbcType=NVARCHAR}, #{createdby,jdbcType=NVARCHAR}, 
+      #{createddate,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=TIMESTAMP}, 
+      #{approved,jdbcType=BIT}, #{comment,jdbcType=NVARCHAR}, #{ownership,jdbcType=DECIMAL}, 
+      #{exercise,jdbcType=BIT}, #{ownertype,jdbcType=NVARCHAR}, #{warrantownername,jdbcType=NVARCHAR}, 
+      #{valid,jdbcType=BIT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfoliowarrant" >
+    update PortfolioWarrant
+    set portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      fundID = #{fundid,jdbcType=NVARCHAR},
+      issueDate = #{issuedate,jdbcType=DATE},
+      dueDate = #{duedate,jdbcType=DATE},
+      warrantAmount = #{warrantamount,jdbcType=DECIMAL},
+      warrantPrice = #{warrantprice,jdbcType=DOUBLE},
+      round = #{round,jdbcType=NVARCHAR},
+      sharesNo = #{sharesno,jdbcType=INTEGER},
+      securityTypeID = #{securitytypeid,jdbcType=INTEGER},
+      currency = #{currency,jdbcType=NVARCHAR},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=TIMESTAMP},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=TIMESTAMP},
+      approved = #{approved,jdbcType=BIT},
+      comment = #{comment,jdbcType=NVARCHAR},
+      ownership = #{ownership,jdbcType=DECIMAL},
+      exercise = #{exercise,jdbcType=BIT},
+      ownerType = #{ownertype,jdbcType=NVARCHAR},
+      warrantOwnerName = #{warrantownername,jdbcType=NVARCHAR},
+      valid = #{valid,jdbcType=BIT}
+    where WarrantID = #{warrantid,jdbcType=NVARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select WarrantID, portfolioID, fundID, issueDate, dueDate, warrantAmount, warrantPrice, 
+    round, sharesNo, securityTypeID, currency, createdBy, createdDate, modifiedBy, modifiedDate, 
+    approved, comment, ownership, exercise, ownerType, warrantOwnerName, valid
+    from PortfolioWarrant
+    where WarrantID = #{warrantid,jdbcType=NVARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select WarrantID, portfolioID, fundID, issueDate, dueDate, warrantAmount, warrantPrice, 
+    round, sharesNo, securityTypeID, currency, createdBy, createdDate, modifiedBy, modifiedDate, 
+    approved, comment, ownership, exercise, ownerType, warrantOwnerName, valid
+    from PortfolioWarrant
+  </select>
+
+  <select id="queryPortfolioWarrantListByPortfolioId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select WarrantID, portfolioID, fundID, issueDate, dueDate, warrantAmount, warrantPrice,
+    round, sharesNo, securityTypeID, currency, createdBy, createdDate, modifiedBy, modifiedDate,
+    approved, comment, ownership, exercise, ownerType, warrantOwnerName, valid
+    from PortfolioWarrant
+    where portfolioId = #{portfolioid,jdbcType=NVARCHAR} order by issueDate desc
+  </select>
+
+  <select id="selectMaxPortfolioWarrantId" resultType="java.lang.String">
+    select max(warrantid) from PortfolioWarrant
+  </select>
+
+  <select id="queryWarrantRemainByFundFamilyName" parameterType="com.idgcapital.ufund.model.Portfoliowarrant"  resultMap="BaseResultMap">
+	select w.WarrantID, f.fundName, w.portfolioID,round,issueDate, sharesNo from
+	(select w.WarrantID, w.portfolioID,w.fundID,(w.sharesNo-ISNULL(i.shareOwnedNo,0) ) sharesNo ,w.round ,ownerType,w.issueDate from  PortfolioWarrant w
+	left join (select convertFromWarrantId,sum(shareOwnedNo) shareOwnedNo,portfolioID from  PortfolioEquityInvestment group by portfolioID,convertFromWarrantId) i on w.WarrantID = i.convertFromWarrantId) w
+	left join FundBasicInfo f on w.fundID = f.fundID
+	where ownerType = 'IDG' and  w.portfolioID = #{portfolioid,jdbcType=NVARCHAR}
+  </select>
+</mapper>

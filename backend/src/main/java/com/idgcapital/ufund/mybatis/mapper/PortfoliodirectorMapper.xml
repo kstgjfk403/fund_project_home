@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfoliodirectorMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfoliodirector" >
+    <id column="directorId" property="directorid" jdbcType="INTEGER" />
+    <result column="staffID" property="staffid" jdbcType="NVARCHAR" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="directorType" property="directortype" jdbcType="NVARCHAR" />
+    <result column="directorStartDate" property="directorstartdate" jdbcType="DATE" />
+    <result column="directorEndDate" property="directorenddate" jdbcType="DATE" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="staffName" property="staffidstr" jdbcType="NVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from PortfolioDirector
+    where directorId = #{directorid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfoliodirector" >
+    insert into PortfolioDirector ( staffID, portfolioID,
+      directorType, directorStartDate, directorEndDate, 
+      approved, createdBy, createdDate, 
+      modifiedBy, modifiedDate)
+    values ( #{staffid,jdbcType=NVARCHAR}, #{portfolioid,jdbcType=NVARCHAR},
+      #{directortype,jdbcType=NVARCHAR}, #{directorstartdate,jdbcType=DATE}, #{directorenddate,jdbcType=DATE}, 
+      #{approved,jdbcType=BIT}, #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=DATE}, 
+      #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfoliodirector" >
+    update PortfolioDirector
+    set staffID = #{staffid,jdbcType=NVARCHAR},
+      portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      directorType = #{directortype,jdbcType=NVARCHAR},
+      directorStartDate = #{directorstartdate,jdbcType=DATE},
+      directorEndDate = #{directorenddate,jdbcType=DATE},
+      approved = #{approved,jdbcType=BIT},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE}
+    where directorId = #{directorid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select directorId, d.staffID,s.firstNameEng+' '+s.lastNameEng staffName, portfolioID, directorType, directorStartDate, directorEndDate,
+    d.approved, d.createdBy, d.createdDate, d.modifiedBy, d.modifiedDate
+    from PortfolioDirector d left join IDG_Staff s on d.staffID = s.staffID
+    where directorId = #{directorid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select directorId, staffID, portfolioID, directorType, directorStartDate, directorEndDate, 
+    approved, createdBy, createdDate, modifiedBy, modifiedDate
+    from PortfolioDirector
+  </select>
+
+  <select id="queryPortfolioDirectorListByPortfolioId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select directorId, d.staffID,s.firstNameEng+' '+s.lastNameEng staffName, portfolioID, directorType, directorStartDate, directorEndDate,
+    d.approved, d.createdBy, d.createdDate, d.modifiedBy, d.modifiedDate
+    from PortfolioDirector d left join IDG_Staff s on d.staffID = s.staffID
+    where portfolioId = #{portfolioid,jdbcType=NVARCHAR}
+  </select>
+
+  <select id="queryIDGPortfolioDirectorList" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select * from PortfolioDirector where portfolioID = #{portfolioid,jdbcType=NVARCHAR} and directorType = #{directortype,jdbcType=NVARCHAR}
+    and directorStartDate &lt;= #{todate,jdbcType=DATE}
+    and ISNULL(directorEndDate,'2999-01-01') &gt;= #{todate,jdbcType=DATE}
+  </select>
+</mapper>

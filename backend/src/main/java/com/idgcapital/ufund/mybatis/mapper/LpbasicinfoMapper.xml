@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.LpbasicinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Lpbasicinfo" >
+    <id column="LPID" property="lpid" jdbcType="NVARCHAR" />
+    <result column="LPFamily" property="lpfamily" jdbcType="NVARCHAR" />
+    <result column="LPLegalFullName" property="lplegalfullname" jdbcType="NVARCHAR" />
+    <result column="investorType" property="investortype" jdbcType="INTEGER" />
+    <result column="website" property="website" jdbcType="NVARCHAR" />
+    <result column="incorpLocation" property="incorplocation" jdbcType="NVARCHAR" />
+    <result column="registerPlace" property="registerplace" jdbcType="NVARCHAR" />
+    <result column="businessPlace" property="businessplace" jdbcType="NVARCHAR" />
+    <result column="yearEnd" property="yearend" jdbcType="NVARCHAR" />
+    <result column="auditor" property="auditor" jdbcType="NVARCHAR" />
+    <result column="SSNOrTIN" property="ssnortin" jdbcType="NVARCHAR" />
+    <result column="nature" property="nature" jdbcType="NVARCHAR" />
+    <result column="governmentEntity" property="governmententity" jdbcType="BIT" />
+    <result column="EABMembers" property="eabmembers" jdbcType="BIT" />
+    <result column="ERISA" property="erisa" jdbcType="BIT" />
+    <result column="createdBy" property="createdby" jdbcType="NCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="TIMESTAMP" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="TIMESTAMP" />
+    <result column="bankName" property="bankname" jdbcType="NVARCHAR" />
+    <result column="bankAccountName" property="bankaccountname" jdbcType="NVARCHAR" />
+    <result column="bankAccount" property="bankaccount" jdbcType="NVARCHAR" />
+    <result column="swiftCode" property="swiftcode" jdbcType="NVARCHAR" />
+    <result column="bankAddress" property="bankaddress" jdbcType="NVARCHAR" />
+    <result column="ABA" property="aba" jdbcType="NVARCHAR" />
+    <result column="bankRegion" property="bankregion" jdbcType="NVARCHAR" />
+    <result column="furCreditAccName" property="furcreditaccname" jdbcType="NVARCHAR" />
+    <result column="furCreditAcc" property="furcreditacc" jdbcType="NVARCHAR" />
+    <result column="geo" property="geo" jdbcType="INTEGER" />
+    <result column="taxID" property="taxid" jdbcType="NVARCHAR" />
+    <result column="source" property="source" jdbcType="NVARCHAR" />
+    <result column="organizationType" property="organizationtype" jdbcType="NVARCHAR" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="partnerType" property="partnertype" jdbcType="NVARCHAR" />
+    <result column="furtherCreditTo" property="furthercreditto" jdbcType="NVARCHAR" />
+    <result column="furtherAccountNo" property="furtheraccountno" jdbcType="NVARCHAR" />
+    <result column="deactive" property="deactive" jdbcType="BIT" />
+    <result column="deactiveDate" property="deactivedate" jdbcType="TIMESTAMP" />
+    <result column="forCreditTo" property="forcreditto" jdbcType="NVARCHAR" />
+    <result column="forCreditAccount" property="forcreditaccount" jdbcType="NVARCHAR" />
+    <result column="IBAN" property="iban" jdbcType="NVARCHAR" />
+    <result column="forCreditBank" property="forcreditbank" jdbcType="NVARCHAR" />
+    <result column="forCreditSwiftCode" property="forcreditswiftcode" jdbcType="NVARCHAR" />
+    <result column="furtherCreditIBAN" property="furthercreditiban" jdbcType="NVARCHAR" />
+    <result column="forCreditABA" property="forcreditaba" jdbcType="NVARCHAR" />
+    <result column="forCreditIBAN" property="forcreditiban" jdbcType="NVARCHAR" />
+    <result column="furtherCreditBank" property="furthercreditbank" jdbcType="NVARCHAR" />
+    <result column="furtherCreditSwiftCode" property="furthercreditswiftcode" jdbcType="NVARCHAR" />
+    <result column="furtherCreditABA" property="furthercreditaba" jdbcType="NVARCHAR" />
+    <result column="corAddress" property="coraddress" jdbcType="LONGVARCHAR" />
+    <result column="notes" property="notes" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from LPBasicInfo
+    where LPID = #{lpid,jdbcType=NVARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Lpbasicinfo" >
+    insert into LPBasicInfo (LPID, LPFamily, LPLegalFullName, 
+      investorType, website, incorpLocation, 
+      registerPlace, businessPlace, yearEnd, 
+      auditor, SSNOrTIN, nature, 
+      governmentEntity, EABMembers, ERISA, 
+      createdBy, createdDate, modifiedBy, 
+      modifiedDate, bankName, bankAccountName, 
+      bankAccount, swiftCode, bankAddress, 
+      ABA, bankRegion, furCreditAccName, 
+      furCreditAcc, geo, taxID, 
+      source, organizationType, approved, 
+      partnerType, furtherCreditTo, furtherAccountNo, 
+      deactive, deactiveDate, forCreditTo, 
+      forCreditAccount, IBAN, forCreditBank, 
+      forCreditSwiftCode, furtherCreditIBAN, 
+      forCreditABA, forCreditIBAN, furtherCreditBank, 
+      furtherCreditSwiftCode, furtherCreditABA, 
+      corAddress, notes)
+    values (#{lpid,jdbcType=NVARCHAR}, #{lpfamily,jdbcType=NVARCHAR}, #{lplegalfullname,jdbcType=NVARCHAR}, 
+      #{investortype,jdbcType=INTEGER}, #{website,jdbcType=NVARCHAR}, #{incorplocation,jdbcType=NVARCHAR}, 
+      #{registerplace,jdbcType=NVARCHAR}, #{businessplace,jdbcType=NVARCHAR}, #{yearend,jdbcType=NVARCHAR}, 
+      #{auditor,jdbcType=NVARCHAR}, #{ssnortin,jdbcType=NVARCHAR}, #{nature,jdbcType=NVARCHAR}, 
+      #{governmententity,jdbcType=BIT}, #{eabmembers,jdbcType=BIT}, #{erisa,jdbcType=BIT}, 
+      #{createdby,jdbcType=NCHAR}, #{createddate,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=NCHAR}, 
+      #{modifieddate,jdbcType=TIMESTAMP}, #{bankname,jdbcType=NVARCHAR}, #{bankaccountname,jdbcType=NVARCHAR}, 
+      #{bankaccount,jdbcType=NVARCHAR}, #{swiftcode,jdbcType=NVARCHAR}, #{bankaddress,jdbcType=NVARCHAR}, 
+      #{aba,jdbcType=NVARCHAR}, #{bankregion,jdbcType=NVARCHAR}, #{furcreditaccname,jdbcType=NVARCHAR}, 
+      #{furcreditacc,jdbcType=NVARCHAR}, #{geo,jdbcType=INTEGER}, #{taxid,jdbcType=NVARCHAR}, 
+      #{source,jdbcType=NVARCHAR}, #{organizationtype,jdbcType=NVARCHAR}, #{approved,jdbcType=BIT}, 
+      #{partnertype,jdbcType=NVARCHAR}, #{furthercreditto,jdbcType=NVARCHAR}, #{furtheraccountno,jdbcType=NVARCHAR}, 
+      #{deactive,jdbcType=BIT}, #{deactivedate,jdbcType=TIMESTAMP}, #{forcreditto,jdbcType=NVARCHAR}, 
+      #{forcreditaccount,jdbcType=NVARCHAR}, #{iban,jdbcType=NVARCHAR}, #{forcreditbank,jdbcType=NVARCHAR}, 
+      #{forcreditswiftcode,jdbcType=NVARCHAR}, #{furthercreditiban,jdbcType=NVARCHAR}, 
+      #{forcreditaba,jdbcType=NVARCHAR}, #{forcreditiban,jdbcType=NVARCHAR}, #{furthercreditbank,jdbcType=NVARCHAR}, 
+      #{furthercreditswiftcode,jdbcType=NVARCHAR}, #{furthercreditaba,jdbcType=NVARCHAR}, 
+      #{coraddress,jdbcType=LONGVARCHAR}, #{notes,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Lpbasicinfo" >
+    update LPBasicInfo
+    set LPFamily = #{lpfamily,jdbcType=NVARCHAR},
+      LPLegalFullName = #{lplegalfullname,jdbcType=NVARCHAR},
+      investorType = #{investortype,jdbcType=INTEGER},
+      website = #{website,jdbcType=NVARCHAR},
+      incorpLocation = #{incorplocation,jdbcType=NVARCHAR},
+      registerPlace = #{registerplace,jdbcType=NVARCHAR},
+      businessPlace = #{businessplace,jdbcType=NVARCHAR},
+      yearEnd = #{yearend,jdbcType=NVARCHAR},
+      auditor = #{auditor,jdbcType=NVARCHAR},
+      SSNOrTIN = #{ssnortin,jdbcType=NVARCHAR},
+      nature = #{nature,jdbcType=NVARCHAR},
+      governmentEntity = #{governmententity,jdbcType=BIT},
+      EABMembers = #{eabmembers,jdbcType=BIT},
+      ERISA = #{erisa,jdbcType=BIT},
+      modifiedBy = #{modifiedby,jdbcType=NCHAR},
+      modifiedDate = #{modifieddate,jdbcType=TIMESTAMP},
+      bankName = #{bankname,jdbcType=NVARCHAR},
+      bankAccountName = #{bankaccountname,jdbcType=NVARCHAR},
+      bankAccount = #{bankaccount,jdbcType=NVARCHAR},
+      swiftCode = #{swiftcode,jdbcType=NVARCHAR},
+      bankAddress = #{bankaddress,jdbcType=NVARCHAR},
+      ABA = #{aba,jdbcType=NVARCHAR},
+      bankRegion = #{bankregion,jdbcType=NVARCHAR},
+      furCreditAccName = #{furcreditaccname,jdbcType=NVARCHAR},
+      furCreditAcc = #{furcreditacc,jdbcType=NVARCHAR},
+      geo = #{geo,jdbcType=INTEGER},
+      taxID = #{taxid,jdbcType=NVARCHAR},
+      source = #{source,jdbcType=NVARCHAR},
+      organizationType = #{organizationtype,jdbcType=NVARCHAR},
+      partnerType = #{partnertype,jdbcType=NVARCHAR},
+      furtherCreditTo = #{furthercreditto,jdbcType=NVARCHAR},
+      furtherAccountNo = #{furtheraccountno,jdbcType=NVARCHAR},
+      deactive = #{deactive,jdbcType=BIT},
+      deactiveDate = #{deactivedate,jdbcType=TIMESTAMP},
+      forCreditTo = #{forcreditto,jdbcType=NVARCHAR},
+      forCreditAccount = #{forcreditaccount,jdbcType=NVARCHAR},
+      IBAN = #{iban,jdbcType=NVARCHAR},
+      forCreditBank = #{forcreditbank,jdbcType=NVARCHAR},
+      forCreditSwiftCode = #{forcreditswiftcode,jdbcType=NVARCHAR},
+      furtherCreditIBAN = #{furthercreditiban,jdbcType=NVARCHAR},
+      forCreditABA = #{forcreditaba,jdbcType=NVARCHAR},
+      forCreditIBAN = #{forcreditiban,jdbcType=NVARCHAR},
+      furtherCreditBank = #{furthercreditbank,jdbcType=NVARCHAR},
+      furtherCreditSwiftCode = #{furthercreditswiftcode,jdbcType=NVARCHAR},
+      furtherCreditABA = #{furthercreditaba,jdbcType=NVARCHAR},
+      corAddress = #{coraddress,jdbcType=LONGVARCHAR},
+      notes = #{notes,jdbcType=LONGVARCHAR}
+    where LPID = #{lpid,jdbcType=NVARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select LPID, LPFamily, LPLegalFullName, investorType, website, incorpLocation, registerPlace, 
+    businessPlace, yearEnd, auditor, SSNOrTIN, nature, governmentEntity, EABMembers, 
+    ERISA, createdBy, createdDate, modifiedBy, modifiedDate, bankName, bankAccountName, 
+    bankAccount, swiftCode, bankAddress, ABA, bankRegion, furCreditAccName, furCreditAcc, 
+    geo, taxID, source, organizationType, approved, partnerType, furtherCreditTo, furtherAccountNo, 
+    deactive, deactiveDate, forCreditTo, forCreditAccount, IBAN, forCreditBank, forCreditSwiftCode, 
+    furtherCreditIBAN, forCreditABA, forCreditIBAN, furtherCreditBank, furtherCreditSwiftCode, 
+    furtherCreditABA, corAddress, notes
+    from LPBasicInfo
+    where LPID = #{lpid,jdbcType=NVARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select LPID, LPFamily, LPLegalFullName, investorType, website, incorpLocation, registerPlace, 
+    businessPlace, yearEnd, auditor, SSNOrTIN, nature, governmentEntity, EABMembers,
+    ERISA, createdBy, createdDate, modifiedBy, modifiedDate, bankName, bankAccountName, 
+    bankAccount, swiftCode, bankAddress, ABA, bankRegion, furCreditAccName, furCreditAcc, 
+    geo, taxID, source, organizationType, approved, partnerType, furtherCreditTo, furtherAccountNo, 
+    deactive, deactiveDate, forCreditTo, forCreditAccount, IBAN, forCreditBank, forCreditSwiftCode, 
+    furtherCreditIBAN, forCreditABA, forCreditIBAN, furtherCreditBank, furtherCreditSwiftCode, 
+    furtherCreditABA, corAddress, notes
+    from LPBasicInfo
+  </select>
+  <select id="selectLPEntityList"  parameterType="com.idgcapital.ufund.model.Lpbasicinfo" resultMap="BaseResultMap" >
+    select LPID, LPFamily, LPLegalFullName, investorType, website, incorpLocation, registerPlace,
+    businessPlace, yearEnd, auditor, SSNOrTIN, nature, governmentEntity, EABMembers,
+    ERISA, createdBy, createdDate, modifiedBy, modifiedDate, bankName, bankAccountName,
+    bankAccount, swiftCode, bankAddress, ABA, bankRegion, furCreditAccName, furCreditAcc,
+    geo, taxID, source, organizationType, approved, partnerType, furtherCreditTo, furtherAccountNo,
+    deactive, deactiveDate, forCreditTo, forCreditAccount, IBAN, forCreditBank, forCreditSwiftCode,
+    furtherCreditIBAN, forCreditABA, forCreditIBAN, furtherCreditBank, furtherCreditSwiftCode,
+    furtherCreditABA, corAddress, notes
+    from LPBasicInfo
+    where 1=1
+    <if test=" lpfamily != null and lpfamily != '' ">
+      and  lower(LPFamily) like lower('%${lpfamily}%')
+    </if>
+    <if test=" lplegalfullname != null and lplegalfullname != '' ">
+      and  lower(LPLegalFullName) like lower('%${lplegalfullname}%')
+    </if>
+    order by LPID
+  </select>
+
+
+  <select id="selectMaxLPId" resultType="java.lang.String">
+    select max(LPID) from LPBasicInfo
+  </select>
+</mapper>

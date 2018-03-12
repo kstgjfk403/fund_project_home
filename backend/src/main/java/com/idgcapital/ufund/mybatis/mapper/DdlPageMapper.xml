@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.DdlPageMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.DdlPage" >
+    <id column="pageID" property="pageid" jdbcType="INTEGER" />
+    <result column="pageName" property="pagename" jdbcType="NVARCHAR" />
+    <result column="description" property="description" jdbcType="NVARCHAR" />
+    <result column="menu" property="menu" jdbcType="NVARCHAR" />
+    <result column="subMenu" property="submenu" jdbcType="NVARCHAR" />
+    <result column="linkPath" property="linkpath" jdbcType="NVARCHAR" />
+    <result column="thirdMenu" property="thirdmenu" jdbcType="NVARCHAR" />
+    <result column="menuChi" property="menuchi" jdbcType="NVARCHAR" />
+    <result column="subMenuChi" property="submenuchi" jdbcType="NVARCHAR" />
+    <result column="thirdMenuChi" property="thirdmenuchi" jdbcType="NVARCHAR" />
+    <result column="isEnabled" property="isenabled" jdbcType="BIT" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from DDL_Page
+    where pageID = #{pageid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.DdlPage" >
+    insert into DDL_Page (pageID, pageName, description, 
+      menu, subMenu, linkPath, 
+      thirdMenu, menuChi, subMenuChi, 
+      thirdMenuChi, isEnabled)
+    values (#{pageid,jdbcType=INTEGER}, #{pagename,jdbcType=NVARCHAR}, #{description,jdbcType=NVARCHAR}, 
+      #{menu,jdbcType=NVARCHAR}, #{submenu,jdbcType=NVARCHAR}, #{linkpath,jdbcType=NVARCHAR}, 
+      #{thirdmenu,jdbcType=NVARCHAR}, #{menuchi,jdbcType=NVARCHAR}, #{submenuchi,jdbcType=NVARCHAR}, 
+      #{thirdmenuchi,jdbcType=NVARCHAR}, #{isenabled,jdbcType=BIT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.DdlPage" >
+    update DDL_Page
+    set pageName = #{pagename,jdbcType=NVARCHAR},
+      description = #{description,jdbcType=NVARCHAR},
+      menu = #{menu,jdbcType=NVARCHAR},
+      subMenu = #{submenu,jdbcType=NVARCHAR},
+      linkPath = #{linkpath,jdbcType=NVARCHAR},
+      thirdMenu = #{thirdmenu,jdbcType=NVARCHAR},
+      menuChi = #{menuchi,jdbcType=NVARCHAR},
+      subMenuChi = #{submenuchi,jdbcType=NVARCHAR},
+      thirdMenuChi = #{thirdmenuchi,jdbcType=NVARCHAR},
+      isEnabled = #{isenabled,jdbcType=BIT}
+    where pageID = #{pageid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select pageID, pageName, description, menu, subMenu, linkPath, thirdMenu, menuChi, 
+    subMenuChi, thirdMenuChi, isEnabled
+    from DDL_Page
+    where pageID = #{pageid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select pageID, pageName, description, menu, subMenu, linkPath, thirdMenu, menuChi, 
+    subMenuChi, thirdMenuChi, isEnabled
+    from DDL_Page
+  </select>
+
+  <select id="selectDDLPage" parameterType="com.idgcapital.ufund.model.DdlPage" resultType="com.idgcapital.ufund.model.DdlPage">
+   select pageID, pageName, description, menu, subMenu, linkPath, thirdMenu, menuChi,
+    subMenuChi, thirdMenuChi, isEnabled
+    from DDL_Page
+--     select p.pageID, p.pageName, p.description,
+--         p.menu, p.subMenu, p.linkPath,
+--         p.thirdMenu, p.menuChi, p.subMenuChi,
+--         p.thirdMenuChi,d.gridId,d.gridName
+--      from DDL_Page p
+--      left join
+--      (select pageID, gridId = stuff((select ',' + CAST(gridID as nvarchar(10)) from DDL_Grid where pageID = t.pageID for xml path('')) , 1 , 1 , '') ,
+--      gridName = stuff((select ',' + gridName from DDL_Grid where isEnabled=1 and  pageID = t.pageID for xml path('')) , 1 , 1 , '')
+--      from DDL_Grid  t group by pageID) d on p.pageID = d.pageID
+--      where p.isEnabled=1;
+  </select>
+</mapper>

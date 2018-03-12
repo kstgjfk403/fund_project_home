@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfoliocaptablevaluedetailMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfoliocaptablevaluedetail" >
+    <id column="detailCapId" property="detailcapid" jdbcType="INTEGER" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="shareOwnerId" property="shareownerid" jdbcType="INTEGER" />
+    <result column="round" property="round" jdbcType="NVARCHAR" />
+    <result column="termSignDate" property="termsigndate" jdbcType="DATE" />
+    <result column="closeDate" property="closedate" jdbcType="DATE" />
+    <result column="securityTypeID" property="securitytypeid" jdbcType="INTEGER" />
+    <result column="preShareOwnedNo" property="preshareownedno" jdbcType="NUMERIC" />
+    <result column="shareOwnedNo" property="shareownedno" jdbcType="NUMERIC" />
+    <result column="addShareOwnedNo" property="addshareownedno" jdbcType="NUMERIC" />
+    <result column="cost" property="cost" jdbcType="DECIMAL" />
+    <result column="proper" property="proper" jdbcType="DECIMAL" />
+    <result column="properWithoutESOP" property="properwithoutesop" jdbcType="DECIMAL" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="shareOwner" property="shareowner" jdbcType="NVARCHAR" />
+    <result column="shareType" property="sharetype" jdbcType="NVARCHAR" />
+    <result column="bizid" property="bizid" jdbcType="NVARCHAR" />
+    <result column="investtype" property="investtype" jdbcType="NVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from PortfolioCapTableValueDetail
+    where detailCapId = #{detailcapid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfoliocaptablevaluedetail" >
+    insert into PortfolioCapTableValueDetail ( portfolioID, shareOwnerId,
+      round, termSignDate, closeDate, 
+      securityTypeID, preShareOwnedNo, shareOwnedNo, 
+      addShareOwnedNo, cost, proper, 
+      properWithoutESOP, createdBy, createdDate, 
+      modifiedBy, modifiedDate, approved,bizid,investtype
+      )
+    values (#{portfolioid,jdbcType=NVARCHAR}, #{shareownerid,jdbcType=INTEGER},
+      #{round,jdbcType=NVARCHAR}, #{termsigndate,jdbcType=DATE}, #{closedate,jdbcType=DATE}, 
+      #{securitytypeid,jdbcType=INTEGER}, #{preshareownedno,jdbcType=NUMERIC}, #{shareownedno,jdbcType=NUMERIC}, 
+      #{addshareownedno,jdbcType=NUMERIC}, #{cost,jdbcType=DECIMAL}, #{proper,jdbcType=DECIMAL}, 
+      #{properwithoutesop,jdbcType=DECIMAL}, #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=DATE}, 
+      #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE}, #{approved,jdbcType=BIT},#{bizid,jdbcType=NVARCHAR},#{investtype,jdbcType=NVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfoliocaptablevaluedetail" >
+    update PortfolioCapTableValueDetail
+    set portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      shareOwnerId = #{shareownerid,jdbcType=INTEGER},
+      round = #{round,jdbcType=NVARCHAR},
+      termSignDate = #{termsigndate,jdbcType=DATE},
+      closeDate = #{closedate,jdbcType=DATE},
+      securityTypeID = #{securitytypeid,jdbcType=INTEGER},
+      preShareOwnedNo = #{preshareownedno,jdbcType=NUMERIC},
+      shareOwnedNo = #{shareownedno,jdbcType=NUMERIC},
+      addShareOwnedNo = #{addshareownedno,jdbcType=NUMERIC},
+      cost = #{cost,jdbcType=DECIMAL},
+      proper = #{proper,jdbcType=DECIMAL},
+      properWithoutESOP = #{properwithoutesop,jdbcType=DECIMAL},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      approved = #{approved,jdbcType=BIT}
+    where detailCapId = #{detailcapid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select detailCapId, portfolioID, shareOwnerId, round, termSignDate, closeDate, securityTypeID, 
+    preShareOwnedNo, shareOwnedNo, addShareOwnedNo, cost, proper, properWithoutESOP, 
+    createdBy, createdDate, modifiedBy, modifiedDate, approved
+    from PortfolioCapTableValueDetail
+    where detailCapId = #{detailcapid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select detailCapId, portfolioID, shareOwnerId, round, termSignDate, closeDate, securityTypeID, 
+    preShareOwnedNo, shareOwnedNo, addShareOwnedNo, cost, proper, properWithoutESOP, 
+    createdBy, createdDate, modifiedBy, modifiedDate, approved
+    from PortfolioCapTableValueDetail
+  </select>
+
+  <select id="selectALLCapTableByRound" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    select  portfolioID,round,termSignDate,closeDate,bizId,investType from PortfolioCapTableValueDetail where portfolioid= #{portfolioId} group by portfolioID,round,termSignDate,closeDate,bizId,investType
+  </select>
+
+  <select id="selectMaxCloseDate" parameterType="java.lang.String" resultType="java.util.Date">
+    select MAX(closeDate) from PortfolioCapTableValueDetail where portfolioID = #{portfolioid}
+  </select>
+
+  <select id="selectCapTableByRound" parameterType="com.idgcapital.ufund.model.Portfoliocaptablevaluedetail" resultMap="BaseResultMap">
+    select n.portfolioID,n.shareOwner,n.shareType,n.shareOwnerId,n.securityTypeID,
+    detailCapId ,ISNULL(preShareOwnedNo,0) preShareOwnedNo ,ISNULL(shareOwnedNo,0) shareOwnedNo,
+    ISNULL(addShareOwnedNo,0) addShareOwnedNo,ISNULL(cost,0) cost,ISNULL(proper,0) proper,
+    ISNULL(properWithoutESOP,0) properWithoutESOP, n.createdBy, n.createdDate, n.modifiedBy,
+    n.modifiedDate, v.approved
+    from (	select n.shareOwnerId, n.portfolioID, n.shareType, n.securityTypeID, n.createdBy,
+    n.createdDate, n.modifiedBy, n.modifiedDate, n.approved,(case when n.shareType = 'IDG' then f.fundName else n.shareOwner end ) shareOwner,d.typeID
+    from  PortfolioCapTableName n left join FundBasicInfo f on n.shareOwner = f.fundID
+    left join DDL_ShareHolderType d on n.shareType = d.typeName) n left join PortfolioCapTableValueDetail v on v.shareOwnerId = n.shareOwnerId and v.closeDate = #{closedate} and n.portfolioID = v.portfolioID and round = #{round}
+    where 1=1
+    <if test=" portfolioid != null and portfolioid != '' ">
+      and n.portfolioID = #{portfolioid}
+    </if>
+    order by n.typeID
+  </select>
+
+  <select id="selectCapTableByLastedDate" parameterType="com.idgcapital.ufund.model.Portfoliocaptablevaluedetail" resultMap="BaseResultMap">
+    select detailCapId, v.portfolioID, v.shareOwnerId, round,v.securityTypeID, termSignDate, preShareOwnedNo, shareOwnedNo,closeDate,
+    addShareOwnedNo, cost, proper, properWithoutESOP, v.createdBy, v.createdDate, v.modifiedBy,
+    v.modifiedDate, v.approved ,n.shareType,n.shareOwner
+    from PortfolioCapTableValueDetail v left join PortfolioCapTableName n on v.shareOwnerId = n.shareOwnerId
+    where 1=1
+    <if test=" portfolioid != null and portfolioid != '' ">
+      and v.portfolioID = #{portfolioid}
+    </if>
+    <if test=" round != null and round != '' ">
+      and v.round = #{round}
+    </if>
+    <if test=" termsigndate != null ">
+      and v.termSignDate = #{termsigndate}
+    </if>
+    <if test=" closedate != null ">
+      and v.closeDate = (select max(closeDate) from PortfolioCapTableValueDetail)
+    </if>
+    order by n.shareType
+  </select>
+
+  <select id="selectCapTableTotalByLastedDate" parameterType="com.idgcapital.ufund.model.Portfoliocaptablevaluedetail" resultMap="BaseResultMap">
+    select capid, v.portfolioID, v.shareOwnerId, round,v.securityTypeID, termSignDate, preShareOwnedNo, shareOwnedNo,
+    addShareOwnedNo, cost, proper, properWithoutESOP, v.createdBy, v.createdDate, v.modifiedBy,
+    v.modifiedDate, v.approved ,n.shareType,n.shareOwner
+    from PortfolioCapTableValue v left join PortfolioCapTableName n on v.shareOwnerId = n.shareOwnerId
+    where 1=1
+    <if test=" portfolioid != null and portfolioid != '' ">
+      and v.portfolioID = #{portfolioid}
+    </if>
+    <if test=" termsigndate != null ">
+      and v.termSignDate = (select max(termSignDate) from PortfolioCapTableValue where portfolioID = #{portfolioid})
+    </if>
+    order by n.shareType
+  </select>
+
+  <select id="queryCapTableInvestorBeforeList" parameterType="com.idgcapital.ufund.model.Portfoliocaptablevaluedetail" resultMap="BaseResultMap">
+
+    <!--select ISNULL(t.detailCapId,v.detailCapId) detailCapId,ISNULL(t.portfolioID,v.portfolioID) portfolioID,ISNULL(t.shareOwnerId,v.shareOwnerId) shareOwnerId,
+    ISNULL(t.round,v.round) round,ISNULL(t.termSignDate,v.termSignDate) termSignDate,ISNULL(t.securityTypeID,v.securityTypeID) securityTypeID,ISNULL(t.closeDate,v.closeDate) closeDate,
+    ISNULL(t.preShareOwnedNo,v.preShareOwnedNo) preShareOwnedNo,ISNULL(t.shareOwnedNo,v.shareOwnedNo) shareOwnedNo,
+    ISNULL(t.addShareOwnedNo,v.addShareOwnedNo) addShareOwnedNo,ISNULL(t.shareType,v.shareType) shareType,ISNULL(t.shareOwner,v.shareOwner) shareOwner,
+    ISNULL(t.cost,v.cost) cost,ISNULL(t.proper,v.proper) proper,ISNULL(t.properWithoutESOP,v.properWithoutESOP) properWithoutESOP
+    from (select k.*,j.shareOwner,j.shareType from PortfolioCapTableValueDetail k left join PortfolioCapTableName j on k.shareOwnerId = j.shareOwnerId
+    where closeDate = (select max(closeDate) from PortfolioCapTableValueDetail where closeDate  &lt;#{closedate}) and  k.portfolioID = #{portfolioid}) v
+    left join
+    (select x.*,y.shareOwner,y.shareType from PortfolioCapTableValueDetail x left join PortfolioCapTableName y on x.shareOwnerId = y.shareOwnerId
+    where closeDate = #{closedate}) t  on v.portfolioID =t.portfolioID and v.shareOwnerId = t.shareOwnerId-->
+
+
+    select k.*,j.shareOwner,j.shareType from (	select n.shareOwnerId, n.portfolioID, n.shareType, n.securityTypeID, n.createdBy,
+    n.createdDate, n.modifiedBy, n.modifiedDate, n.approved,(case when n.shareType = 'IDG' then f.fundName else n.shareOwner end ) shareOwner,d.typeID
+    from  PortfolioCapTableName n left join FundBasicInfo f on n.shareOwner = f.fundID
+    left join DDL_ShareHolderType d on n.shareType = d.typeName
+    ) j
+    left join PortfolioCapTableValueDetail k on k.shareOwnerId = j.shareOwnerId
+    where closeDate = (select max(closeDate) from PortfolioCapTableValueDetail where closeDate  &lt; #{closedate} and portfolioID = #{portfolioid}) and  j.portfolioID = #{portfolioid}
+    <if test=" sharetype != null and sharetype != '' ">
+      and j.shareType = #{sharetype}
+    </if>
+    <if test=" securitytypeid != null and securitytypeid != '' ">
+      and k.securitytypeid = #{securitytypeid}
+    </if>
+    order by typeID
+  </select>
+
+  <delete id="deleteByEiid" parameterType="java.lang.String" >
+    delete from PortfolioCapTableValueDetail where bizId = #{eiid}
+  </delete>
+
+  <select id="queryCloseDateHistoryList" parameterType="com.idgcapital.ufund.model.Portfolioequityinvestment" resultMap="BaseResultMap">
+       select termSignDate,closeDate,round from PortfolioCapTableValueDetail where portfolioID = #{portfolioid}  and  closeDate  &gt; #{closedate} group by termSignDate,closeDate,round order by closedate
+  </select>
+  <select id="queryCaptableListByEiid" parameterType="java.lang.String"  resultMap="BaseResultMap">
+    select * from PortfolioCapTableValueDetail where bizId = #{eiid}
+  </select>
+
+  <select id="queryDetailListByRound" parameterType="com.idgcapital.ufund.model.Portfolioequityinvestment" resultMap="BaseResultMap">
+    select * from PortfolioCapTableValueDetail where portfolioID = #{portfolioid}  and  termSignDate = #{termsigndate} and round = #{round}
+  </select>
+  <select id="queryCaptableListByPortfolioId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from PortfolioCapTableValueDetail where portfolioID = #{portfolioid}
+  </select>
+
+</mapper>

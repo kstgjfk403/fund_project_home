@@ -1,0 +1,20 @@
+
+<span th:if="${method=='MAINTAIN'}">
+From the OPM analysis and after applying a 10% FIN48 tax provision, our investment is valued at US<span th:text="${opmValue}"/> versus the current carrying value of US<span th:text="${carryValue}"/>.
+Since the variance is immaterial and within 10% of the current carrying value,Therefore, it is recommended to continue to carry the investment at the current valuation of US<span th:text="${opmValue}"/>.
+</span>
+
+<span th:if="${method=='WRITEUP'}">
+From the OPM analysis and after applying a 10% FIN48 tax provision, our investment is valued at US<span th:text="${opmValue}"/>, which is <span th:text="${percent}"/> above the current carrying value of US<span th:text="${carryValue}"/>.
+Therefore, it is recommended to write up the investment to US<span th:text="${opmValue}"/> accordingly.
+</span>
+
+<span th:if="${method=='WRITEDOWN'}">
+From the OPM analysis and after applying a 10% FIN48 tax provision, the investment is valued at US<span th:text="${opmValue}"/>, which is <span th:text="${percent}"/> below the current carrying value of US<span th:text="${carryValue}"/>.
+Therefore, it is recommended to write down the valuation of the investment to US<span th:text="${opmValue}"/> accordingly.
+</span>
+
+<span th:if="${method=='ADJUST'}">
+From the OPM analysis and after applying a 10% FIN48 tax provision, the investment is valued at US<span th:text="${opmValue}"/>, which is <span th:text="${percent}"/> <span th:text="${lowOrAbove}"/> the current carrying value of US<span th:text="${carryValue}"/>.
+Therefore, it is recommended to adjust the valuation of the investment to US<span th:text="${opmValue}"/> accordingly.
+</span>

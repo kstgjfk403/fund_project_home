@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.DdlGridMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.DdlGrid" >
+    <result column="gridID" property="gridid" jdbcType="INTEGER" />
+    <result column="gridName" property="gridname" jdbcType="NVARCHAR" />
+    <result column="pageID" property="pageid" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="NVARCHAR" />
+    <result column="isEnabled" property="isenabled" jdbcType="BIT" />
+  </resultMap>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.DdlGrid" >
+    insert into DDL_Grid (gridID, gridName, pageID, 
+      description, isEnabled)
+    values (#{gridid,jdbcType=INTEGER}, #{gridname,jdbcType=NVARCHAR}, #{pageid,jdbcType=INTEGER}, 
+      #{description,jdbcType=NVARCHAR}, #{isenabled,jdbcType=BIT})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select gridID, gridName, pageID, description, isEnabled
+    from DDL_Grid
+  </select>
+</mapper>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.DdlBaseInfoMapper">
+
+    <select id="selectIDGRoleList" resultType="java.util.LinkedHashMap">
+    select IDGRoleID baseId,IDGRole baseName from DDL_IDGRole order by IDGRoleID
+  </select>
+
+    <select id="selectStageList" resultType="java.util.LinkedHashMap">
+    select stageID baseId,stage baseName from DDL_Stage order by stageID
+  </select>
+
+    <select id="selectInitialRoleList" resultType="java.util.LinkedHashMap">
+   select InitialRoleID baseId,InitialRole baseName from DDL_InitialRole order by InitialRoleID
+  </select>
+
+    <select id="selectIDGFirstInvestList" resultType="java.util.LinkedHashMap">
+    select firstInvestID baseId,IDGFirstInvest baseName from DDL_IDGFirstInvest order by firstInvestID
+  </select>
+
+    <select id="selectSectorList" resultType="java.util.LinkedHashMap">
+    select sectorID baseId,sector baseName from DDL_Sector order by sectorID
+  </select>
+
+    <select id="selectSubSectorList" resultType="java.util.LinkedHashMap">
+     select sectorID parentId ,subSectorID baseId,subSector baseName from DDL_SubSector order by subSectorID
+  </select>
+
+    <select id="selectAntiDilutionList" resultType="java.util.LinkedHashMap">
+    select antiDilutionID baseId,antiDilution baseName from DDL_AntiDilution order by antiDilutionID
+  </select>
+
+    <select id="selectIncorpLocationList" resultType="java.util.LinkedHashMap">
+    select locationID baseId,location baseName from DDL_IncorpLocation order by locationID
+  </select>
+
+    <select id="selectCompanyLegalFormList" resultType="java.util.LinkedHashMap">
+    select formID baseId,form baseName from DDL_CompanyLegalForm order by formID
+  </select>
+
+    <select id="selectStockExchangeList" resultType="java.util.LinkedHashMap">
+    select stockExchangeID baseId,fullName baseName from DDL_StockExchange order by stockExchangeID
+  </select>
+
+    <select id="selectPortfolioStatusList" resultType="java.util.LinkedHashMap">
+    select portfolioStatusID baseId,portfolioStatus baseName from DDL_PortfolioStatus
+  </select>
+
+    <select id="selectInvestorTypeList" resultType="java.util.LinkedHashMap">
+    select investorTypeID baseId,investorTypeName baseName from DDL_SpvInvestorType
+  </select>
+
+    <select id="selectSpvTypeList" resultType="java.util.LinkedHashMap">
+    select typeID baseId,typeNameCN baseName from DDL_SpvType
+  </select>
+
+    <select id="selectInvestTypeList" resultType="java.util.LinkedHashMap">
+    select investType baseId,investType baseName from DDL_InvestType where bizType = 'investment' order by orderBy
+  </select>
+
+    <select id="selectSecurityTypeList" resultType="java.util.LinkedHashMap">
+    select securityTypeID baseId,securityType baseName from DDL_SecurityType
+  </select>
+  <select id="selectShareTypeList"  resultType="java.util.LinkedHashMap">
+     select typeId baseId,typeName baseName from DDL_ShareType
+  </select>
+  <select id="selectShareHolderTypeList" resultType="java.util.LinkedHashMap">
+    select typeName baseId,typeName baseName from DDL_ShareHolderType
+  </select>
+  <select id="selectExitTypeList" resultType="java.util.LinkedHashMap">
+    select typeName baseId,typeName baseName from DDL_ExitType
+  </select>
+  <select id="selectExitModeTypeList" resultType="java.util.LinkedHashMap">
+    select typeName baseId,typeName baseName,bizType bizType from DDL_ExitModeType
+  </select>
+  <select id="selectSecurityType4WarrantList" resultType="java.util.LinkedHashMap">
+    select securityTypeID baseId,securityType baseName from DDL_SecurityType where securityTypeID in(2,3,6)
+  </select>
+
+</mapper>

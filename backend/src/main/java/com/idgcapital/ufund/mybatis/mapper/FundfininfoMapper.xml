@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.FundfininfoMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Fundfininfo" >
+    <id column="finId" property="finid" jdbcType="NVARCHAR" />
+    <result column="fundId" property="fundid" jdbcType="NVARCHAR" />
+    <result column="finDate" property="findate" jdbcType="DATE" />
+    <result column="projFairValue" property="projfairvalue" jdbcType="DECIMAL" />
+    <result column="netAssets" property="netassets" jdbcType="DECIMAL" />
+    <result column="curIncome" property="curincome" jdbcType="DECIMAL" />
+    <result column="curProfit" property="curprofit" jdbcType="DECIMAL" />
+    <result column="cashAssets" property="cashassets" jdbcType="DECIMAL" />
+    <result column="otherAssets" property="otherassets" jdbcType="DECIMAL" />
+    <result column="gpNetAssets" property="gpnetassets" jdbcType="DECIMAL" />
+    <result column="lpNetAssets" property="lpnetassets" jdbcType="DECIMAL" />
+    <result column="debtValue" property="debtvalue" jdbcType="DECIMAL" />
+    <result column="gpDistribution" property="gpdistribution" jdbcType="DECIMAL" />
+    <result column="netProfit" property="netprofit" jdbcType="DECIMAL" />
+    <result column="distributableProfit" property="distributableprofit" jdbcType="DECIMAL" />
+    <result column="netValueFundAsset" property="netvaluefundasset" jdbcType="DECIMAL" />
+    <result column="callAsset" property="callasset" jdbcType="DECIMAL" />
+    <result column="netIrrLp" property="netirrlp" jdbcType="DECIMAL" />
+    <result column="netIrrGp" property="netirrgp" jdbcType="DECIMAL" />
+    <result column="netMultipleLp" property="netmultiplelp" jdbcType="DECIMAL" />
+    <result column="netMultipleGp" property="netmultiplegp" jdbcType="DECIMAL" />
+    <result column="isModified" property="ismodified" jdbcType="CHAR" />
+    <result column="validFlag" property="validflag" jdbcType="CHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="fundWorkReport" property="fundworkreport" jdbcType="VARCHAR" />
+    <result column="fundWorkReportCode" property="fundworkreportcode" jdbcType="VARCHAR" />
+    <result column="createBy" property="createby" jdbcType="NVARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="editBy" property="editby" jdbcType="NVARCHAR" />
+    <result column="editDate" property="editdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from fundFinInfo
+    where finId = #{finid,jdbcType=NVARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Fundfininfo" >
+    insert into fundFinInfo (finId, fundId, finDate, 
+      projFairValue, netAssets, curIncome, 
+      curProfit, cashAssets, otherAssets, 
+      gpNetAssets, lpNetAssets, debtValue, 
+      gpDistribution, netProfit, distributableProfit, 
+      netValueFundAsset, callAsset, netIrrLp, 
+      netIrrGp, netMultipleLp, netMultipleGp, 
+      isModified, validFlag, remarks, 
+      fundWorkReport, fundWorkReportCode, createBy, 
+      createDate, editBy, editDate
+      )
+    values (#{finid,jdbcType=NVARCHAR}, #{fundid,jdbcType=NVARCHAR}, #{findate,jdbcType=DATE}, 
+      #{projfairvalue,jdbcType=DECIMAL}, #{netassets,jdbcType=DECIMAL}, #{curincome,jdbcType=DECIMAL}, 
+      #{curprofit,jdbcType=DECIMAL}, #{cashassets,jdbcType=DECIMAL}, #{otherassets,jdbcType=DECIMAL}, 
+      #{gpnetassets,jdbcType=DECIMAL}, #{lpnetassets,jdbcType=DECIMAL}, #{debtvalue,jdbcType=DECIMAL}, 
+      #{gpdistribution,jdbcType=DECIMAL}, #{netprofit,jdbcType=DECIMAL}, #{distributableprofit,jdbcType=DECIMAL}, 
+      #{netvaluefundasset,jdbcType=DECIMAL}, #{callasset,jdbcType=DECIMAL}, #{netirrlp,jdbcType=DECIMAL}, 
+      #{netirrgp,jdbcType=DECIMAL}, #{netmultiplelp,jdbcType=DECIMAL}, #{netmultiplegp,jdbcType=DECIMAL}, 
+      #{ismodified,jdbcType=CHAR}, #{validflag,jdbcType=CHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{fundworkreport,jdbcType=VARCHAR}, #{fundworkreportcode,jdbcType=VARCHAR}, #{createby,jdbcType=NVARCHAR}, 
+      #{createdate,jdbcType=TIMESTAMP}, #{editby,jdbcType=NVARCHAR}, #{editdate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Fundfininfo" >
+    update fundFinInfo
+    set fundId = #{fundid,jdbcType=NVARCHAR},
+      finDate = #{findate,jdbcType=DATE},
+      projFairValue = #{projfairvalue,jdbcType=DECIMAL},
+      netAssets = #{netassets,jdbcType=DECIMAL},
+      curIncome = #{curincome,jdbcType=DECIMAL},
+      curProfit = #{curprofit,jdbcType=DECIMAL},
+      cashAssets = #{cashassets,jdbcType=DECIMAL},
+      otherAssets = #{otherassets,jdbcType=DECIMAL},
+      gpNetAssets = #{gpnetassets,jdbcType=DECIMAL},
+      lpNetAssets = #{lpnetassets,jdbcType=DECIMAL},
+      debtValue = #{debtvalue,jdbcType=DECIMAL},
+      gpDistribution = #{gpdistribution,jdbcType=DECIMAL},
+      netProfit = #{netprofit,jdbcType=DECIMAL},
+      distributableProfit = #{distributableprofit,jdbcType=DECIMAL},
+      netValueFundAsset = #{netvaluefundasset,jdbcType=DECIMAL},
+      callAsset = #{callasset,jdbcType=DECIMAL},
+      netIrrLp = #{netirrlp,jdbcType=DECIMAL},
+      netIrrGp = #{netirrgp,jdbcType=DECIMAL},
+      netMultipleLp = #{netmultiplelp,jdbcType=DECIMAL},
+      netMultipleGp = #{netmultiplegp,jdbcType=DECIMAL},
+      isModified = #{ismodified,jdbcType=CHAR},
+      validFlag = #{validflag,jdbcType=CHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      fundWorkReport = #{fundworkreport,jdbcType=VARCHAR},
+      fundWorkReportCode = #{fundworkreportcode,jdbcType=VARCHAR},
+      createBy = #{createby,jdbcType=NVARCHAR},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      editBy = #{editby,jdbcType=NVARCHAR},
+      editDate = #{editdate,jdbcType=TIMESTAMP}
+    where finId = #{finid,jdbcType=NVARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select finId, fundId, finDate, projFairValue, netAssets, curIncome, curProfit, cashAssets, 
+    otherAssets, gpNetAssets, lpNetAssets, debtValue, gpDistribution, netProfit, distributableProfit, 
+    netValueFundAsset, callAsset, netIrrLp, netIrrGp, netMultipleLp, netMultipleGp, isModified, 
+    validFlag, remarks, fundWorkReport, fundWorkReportCode, createBy, createDate, editBy, 
+    editDate
+    from fundFinInfo
+    where finId = #{finid,jdbcType=NVARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select finId, fundId, finDate, projFairValue, netAssets, curIncome, curProfit, cashAssets, 
+    otherAssets, gpNetAssets, lpNetAssets, debtValue, gpDistribution, netProfit, distributableProfit, 
+    netValueFundAsset, callAsset, netIrrLp, netIrrGp, netMultipleLp, netMultipleGp, isModified, 
+    validFlag, remarks, fundWorkReport, fundWorkReportCode, createBy, createDate, editBy, 
+    editDate
+    from fundFinInfo
+  </select>
+  <select id="queryFundFinInfoListByFundIdAndFinDate" resultMap="BaseResultMap" parameterType="com.idgcapital.ufund.model.Fundfininfo" >
+    select finId, fundId, finDate, projFairValue, netAssets, curIncome, curProfit, cashAssets,
+    otherAssets, gpNetAssets, lpNetAssets, debtValue, gpDistribution, netProfit, distributableProfit,
+    netValueFundAsset, callAsset, netIrrLp, netIrrGp, netMultipleLp, netMultipleGp, isModified,
+    validFlag, remarks, fundWorkReport, fundWorkReportCode, createBy, createDate, editBy,
+    editDate
+    from fundFinInfo
+    where 1=1
+      <if test=" fundid != null and fundid != '' ">
+        and fundId = #{fundid,jdbcType=NVARCHAR}
+      </if>
+      <if test=" findate != null">
+        and finDate = #{findate,jdbcType=DATE}
+      </if>
+     order by finDate DESC
+  </select>
+
+  <select id="queryFundFinEntityList" resultType="HashMap" parameterType="HashMap" >
+    select finId, a.fundId, finDate, projFairValue, netAssets, curIncome, curProfit, cashAssets,
+    otherAssets, gpNetAssets, lpNetAssets, debtValue, gpDistribution, netProfit, distributableProfit,
+    netValueFundAsset, callAsset, netIrrLp, netIrrGp, netMultipleLp, netMultipleGp, isModified,
+    a.validFlag, remarks, fundWorkReport, fundWorkReportCode, createBy, createDate, editBy,
+    editDate,b.fundName, b.fundFullNameEng
+    from fundFinInfo a, FundBasicInfo b
+    where a.fundID = b.fundID
+    <if test=" fundid != null and fundid != '' ">
+      and a.fundId = #{fundid,jdbcType=NVARCHAR}
+    </if>
+    <if test=" date != null">
+      and a.finDate = #{date,jdbcType=DATE}
+    </if>
+    <if test=" fundName != null and fundName != '' ">
+      and  lower(b.fundName) like lower('%${fundName}%')
+    </if>
+    <if test=" fundFullNameEng != null and fundFullNameEng != '' ">
+      and  lower(b.fundFullNameEng) like lower('%${fundFullNameEng}%')
+    </if>
+    order by a.finDate DESC
+  </select>
+
+
+  <select id="queryLpCashListByFundId" parameterType="HashMap" resultType="HashMap">
+    <!-- lp capital call -->
+    SELECT cc.dueDate cashDate, (0 - cp.calledNum) cashValue
+    FROM CapitalCallDetail cp
+    INNER JOIN CapitalCall cc on cp.callID = cc.callID
+    INNER JOIN LPBasicInfo lp on  cp.LPID = lp.LPID
+    WHERE cc.fundID = #{fundid,jdbcType=NVARCHAR}
+    AND (not (partnerType = 'Generate Partner' or partnerType = '普通合伙人') OR partnerType is null)
+    AND cc.dueDate <![CDATA[<=]]> #{findate,jdbcType=DATE}
+
+
+    UNION ALL
+
+    <!-- lp distribution -->
+    SELECT b.issueDate cashDate, a.distributionAmount cashValue
+    FROM LPDistributionDetail a
+    INNER JOIN lpcashdistribution b on a.LPDistributionID = b.LPDistributionID
+    INNER JOIN LPBasicInfo c on  a.LPID = c.LPID
+    WHERE a.fundID = #{fundid,jdbcType=NVARCHAR}
+    AND (not (partnerType = 'Generate Partner' or partnerType = '普通合伙人') OR partnerType is null)
+    AND b.issueDate <![CDATA[<=]]> #{findate,jdbcType=DATE}
+
+    <!--
+	UNION ALL
+	SELECT f.fin_date cashDate, f.lp_net_assets cashValue
+	FROM fund_fin_info f
+	WHERE f.org_no = #{orgNo}
+	AND f.fund_id = #{fundId}
+	AND f.fin_id = #{finId}
+	-->
+    ORDER BY cashDate
+  </select>
+
+  <select id="queryGrossCashListByFundId" parameterType="HashMap" resultType="HashMap">
+    <!-- lp capital call -->
+    SELECT cc.calledDate cashDate, (0 - isnull(cp.calledNum,0.00)) cashValue
+    FROM CapitalCallDetail cp
+    INNER JOIN CapitalCall cc on cp.callID = cc.callID
+    INNER JOIN LPBasicInfo lp on  cp.LPID = lp.LPID
+    WHERE cc.fundID = #{fundid,jdbcType=NVARCHAR}
+    AND cc.calledDate <![CDATA[<=]]> #{findate,jdbcType=DATE}
+
+    UNION ALL
+
+    SELECT b.issueDate cashDate, isnull(distributionAmount,0.00)+ isnull(GPCarryAmount,0.00) cashValue
+    FROM LPDistributionDetail a
+    INNER JOIN lpcashdistribution b on a.LPDistributionID = b.LPDistributionID
+    INNER JOIN LPBasicInfo c on  a.LPID = c.LPID
+    WHERE a.fundID = #{fundid,jdbcType=NVARCHAR}
+    AND b.issueDate <![CDATA[<=]]> #{findate,jdbcType=DATE}
+
+    UNION ALL
+
+    SELECT finDate cashDate, isnull(gpDistribution,0.00) cashValue
+    FROM fundFinInfo
+    WHERE fundID = #{fundid,jdbcType=NVARCHAR}
+    AND finDate <![CDATA[<=]]> #{findate,jdbcType=DATE}
+    AND gpDistribution is not NULL
+    AND gpDistribution!=0.00
+
+    ORDER BY cashDate
+  </select>
+
+  <select id="queryPortfolioCashListTrue" parameterType="HashMap" resultType="HashMap">
+    <!-- lp capital call -->
+    SELECT 'invest' as cashType, a.closeDate cashDate, (0 - isnull(a.cost,0.00)) cashValue
+    FROM PortfolioEquityInvestment a
+
+    WHERE a.fundID = #{fundId,jdbcType=NVARCHAR}
+    AND a.portfolioID = #{portfolioId,jdbcType=NVARCHAR}
+    AND a.closeDate <![CDATA[<=]]> #{endDate,jdbcType=DATE}
+
+    UNION ALL
+
+    SELECT 'exit' as cashType, a.closeDate cashDate, isnull(a.proceeds,0.00) cashValue
+    FROM PortfolioExit a
+
+    WHERE a.fundID = #{fundId,jdbcType=NVARCHAR}
+    AND a.portfolioID = #{portfolioId,jdbcType=NVARCHAR}
+    AND a.closeDate <![CDATA[<=]]> #{endDate,jdbcType=DATE}
+
+    UNION ALL
+
+    SELECT 'valuation' as cashType, a.valuationDate cashDate, isnull(a.Valuation,0.00) cashValue
+    FROM PortfolioValuation a
+    WHERE a.fundID = #{fundId,jdbcType=NVARCHAR}
+    AND a.portfolioID = #{portfolioId,jdbcType=NVARCHAR}
+    AND a.valuationDate = #{endDate,jdbcType=DATE}
+
+    ORDER BY cashDate
+  </select>
+  <select id="queryPortfolioCashList" parameterType="HashMap" resultType="HashMap">
+    <!-- lp capital call -->
+    SELECT 'invest' as cashType, a.closeDate cashDate, (0 - isnull(a.cost,0.00)) cashValue
+    FROM PortfolioEquityInvestmentTmp a
+
+    WHERE a.fundID = #{fundId,jdbcType=NVARCHAR}
+    AND a.portfolioID = #{portfolioId,jdbcType=NVARCHAR}
+    AND a.closeDate <![CDATA[<=]]> #{endDate,jdbcType=DATE}
+
+
+    ORDER BY cashDate
+  </select>
+
+
+
+  <select id="queryGpCarryByMap" parameterType="HashMap" resultType="HashMap">
+
+    SELECT sum(isnull(a.GPCarryAmount,0.00)) cashValue
+    FROM LPDistributionDetail a
+    INNER JOIN lpcashdistribution b on a.LPDistributionID = b.LPDistributionID
+    INNER JOIN LPBasicInfo c on  a.LPID = c.LPID
+    WHERE a.fundID = #{fundid,jdbcType=NVARCHAR}
+    AND (c.partnerType = 'Generate Partner' OR c.partnerType = '有限合伙人')
+    AND b.issueDate <![CDATA[<=]]> #{date,jdbcType=DATE}
+    AND b.issueDate <![CDATA[>]]> #{startDate,jdbcType=DATE}
+
+  </select>
+
+  <select id="queryFundInvestmentOverview" parameterType="HashMap" resultType="HashMap">
+    <!-- lp capital call -->
+    select a.portfolioID, a.abbName, a.fullName as company, a.abbNameChi, a.fullNameChi, a.reportName, a.oneLineDesc as businessDescription,
+    a.sectorID,(select sector from DDL_Sector where sectorID = a.sectorID) as sectorStr,
+    a.portfolioStatus,(select portfolioStatus from DDL_PortfolioStatus where portfolioStatusID = a.portfolioStatus) as portfolioStatusStr,
+    a.privateOrPublic,
+    (select top 1 x.proper from PortfolioCapTableValue x,PortfolioCapTableName y
+    where y.shareOwnerId = x.shareOwnerId
+    and y.shareType = 'IDG' and y.shareOwner = #{fundId,jdbcType=NVARCHAR} and x.portfolioID = a.portfolioID
+    and x.termSignDate = (select MIN(m.termSignDate) from  PortfolioCapTableValue m,PortfolioCapTableName n
+    where m.shareOwnerId = n.shareOwnerId
+    and n.shareType = 'IDG'
+    and n.shareOwner = #{fundId,jdbcType=NVARCHAR}
+    and m.termSignDate <![CDATA[<=]]> #{date,jdbcType=DATE}
+    and m.portfolioID = a.portfolioID
+    )) as currentOwnership,
+    (select MIN(closeDate) from PortfolioEquityInvestment
+     where portfolioID = a.portfolioID and fundID = #{fundId,jdbcType=NVARCHAR}
+     <if test=" date != null">
+      AND closeDate <![CDATA[<=]]> #{date,jdbcType=DATE}
+     </if>
+    ) as investmentDate,
+    (select MIN(closeDate) from PortfolioExit
+     where portfolioID = a.portfolioID and fundID = #{fundId,jdbcType=NVARCHAR}
+      <if test=" date != null">
+        AND closeDate <![CDATA[<=]]> #{date,jdbcType=DATE}
+      </if>
+    ) as exitDate,
+    a.upround, a.IdgOnBoardFlag, a.IDGOnBoard as boardSeats,
+    case   a.IDGOnBoard   when   1   then   'Y'   when   0   then   'N'   else   ''   end as boardSeatsStr,
+    a.projectManager, (select firstNameEng + ' ' + lastNameEng from IDG_Staff where staffID = a.projectManager) as lead
+    from PortfolioBasicInfo a
+    where a.portfolioID in
+    (select portfolioID from PortfolioEquityInvestment
+     where fundID = #{fundId,jdbcType=NVARCHAR}
+    <if test=" date != null">
+      AND closeDate <![CDATA[<=]]> #{date,jdbcType=DATE}
+    </if>
+
+    )
+  </select>
+
+
+  <select id="queryPortfolioTrackRecordList" parameterType="HashMap" resultType="HashMap">
+    <!-- lp capital call -->
+    select a.portfolioID, a.abbName, a.fullName  as company, a.abbNameChi, a.fullNameChi, a.reportName,
+    sum(isnull(b.cost,0.00)+isnull(b.otherFees,0.00)) as investedCost, sum(isnull(c.proceeds,0.00)) as realisedProceeds
+    from PortfolioBasicInfo a
+    inner join PortfolioEquityInvestment b on a.portfolioID = b.portfolioID
+    left join PortfolioExit c on a.portfolioID = c.portfolioID and c.fundID= #{fundid,jdbcType=NVARCHAR} and c.closeDate <![CDATA[<=]]> #{date,jdbcType=DATE}
+    where b.closeDate <![CDATA[<=]]> #{date,jdbcType=DATE}
+     and b.fundID = #{fundid,jdbcType=NVARCHAR}
+     and b.cost>0.00
+     and a.portfolioID in
+    (select portfolioID from PortfolioEquityInvestment where fundID = #{fundid,jdbcType=NVARCHAR} AND closeDate <![CDATA[<=]]> #{date,jdbcType=DATE})
+    group by a.portfolioID, a.abbName, a.fullName, a.abbNameChi, a.fullNameChi, a.reportName
+  </select>
+
+  <select id="queryPortfolioInvestmentList" parameterType="HashMap" resultType="HashMap">
+    <!-- lp capital call -->
+    <!-- lp capital call -->
+    SELECT a.portfolioID as portfolioID, b.abbName, b.fullName as company, b.abbNameChi, b.fullNameChi, b.reportName,
+    'invest' as cashType, a.closeDate cashDate, a.securityTypeID as securityTypeId, (select securityType from DDL_SecurityType where securityTypeID = a.securityTypeID) as security,
+    a.shareOwnedNo as shares,
+    0.00 as ownership, '' as ownershipStr,
+    (isnull(a.cost,0.00)) investedCost , isnull(a.cost,0.00) as investedCostAbs,  '' as investedCostStr,
+    0.00 as distribution, 0.00 as distributionAbs, '' as distributionStr,
+    0.00 as fairValue, 0.00 as fairValueAbs, '' as fairValueStr,
+    'Purchase' as descriptionStr
+
+    FROM PortfolioEquityInvestment a, PortfolioBasicInfo b
+
+    WHERE a.portfolioID = b.portfolioID
+    AND a.fundID = #{fundid,jdbcType=NVARCHAR}
+    AND a.closeDate <![CDATA[<=]]> #{date,jdbcType=DATE}
+
+    UNION ALL
+
+    SELECT a.portfolioID as portfolioID, b.abbName, b.fullName as company, b.abbNameChi, b.fullNameChi, b.reportName,
+    'exit' as cashType, a.closeDate cashDate, a.securityTypeID as securityTypeId, (select securityType from DDL_SecurityType where securityTypeID = a.securityTypeID) as security,
+    a.shareExit as shares,
+
+    0.00 as ownership, '' as ownershipStr,
+    0.00 investedCost, 0.00 as investedCostAbs, '' as investedCostStr,
+    isnull(a.proceeds,0.00) as distribution, isnull(a.proceeds,0.00) as distributionAbs, '' as distributionStr,
+    0.00 as fairValue, 0.00 as fairValueAbs, '' as fairValueStr,
+    'Sale' as descriptionStr
+
+    FROM PortfolioExit a, PortfolioBasicInfo b
+
+    WHERE a.portfolioID = b.portfolioID
+    AND a.fundID = #{fundid,jdbcType=NVARCHAR}
+    AND a.closeDate <![CDATA[<=]]> #{date,jdbcType=DATE}
+
+    UNION ALL
+
+    SELECT a.portfolioID as portfolioID, b.abbName, b.fullName as company, b.abbNameChi, b.fullNameChi, b.reportName,
+    'valuation' as cashType, a.valuationDate cashDate, -1 as securityTypeId, '' as security,
+    0.00 as shares,
+    (select top 1 proper from PortfolioCapTableValueDetail x,PortfolioCapTableName y
+    where y.shareOwnerId = x.shareOwnerId
+    and y.shareType = 'IDG' and y.shareOwner = #{fundid,jdbcType=NVARCHAR} and x.portfolioID = a.portfolioID
+    and x.closeDate = (select MAX(m.closeDate) from  PortfolioCapTableValueDetail m,PortfolioCapTableName n
+    where m.shareOwnerId = n.shareOwnerId
+    and n.shareType = 'IDG' and n.shareOwner = #{fundid,jdbcType=NVARCHAR} and m.portfolioID = a.portfolioID
+    and m.closeDate  <![CDATA[<=]]> #{date,jdbcType=DATE}
+    )) as ownership, '' as ownershipStr,
+
+    0.00 investedCost, 0.00 as investedCostAbs, '' as investedCostStr,
+    0.00 as distribution, 0.00 as distributionAbs, '' as distributionStr,
+    isnull(a.Valuation,0.00) as fairValue, isnull(a.Valuation,0.00) as fairValueAbs, '' as fairValueStr,
+    'Fair Value' as descriptionStr
+
+    FROM PortfolioValuation a, PortfolioBasicInfo b
+
+    WHERE a.portfolioID = b.portfolioID
+    AND a.fundID = #{fundid,jdbcType=NVARCHAR}
+    AND a.valuationDate <![CDATA[<=]]> #{date,jdbcType=DATE}
+
+    order by portfolioID, cashDate
+
+  </select>
+
+
+  <select id="queryPortfolioExitList" parameterType="HashMap" resultType="HashMap">
+    <!-- lp capital call -->
+    select a.exitType, a.exitMode, a.portfolioID, a.fundFamillyName, a.fundID,
+           a.closeDate, a.currency, a.proceeds,a.shareExit,a.shareRemain, a.round, a.securityTypeID,
+            a.otherfeesRelization, a.costRelization, a.costUnRelization,
+            a.proceedsRelization, a.proceedsUnRelization,
+            a.lossRelization, a.noteID, a.EIID,
+            a.remarks, a.createdBy, a.createdDate,
+            a.modifiedBy, a.modifiedDate, a.approved
+     from PortfolioExit a
+    where a.portfolioID = #{portfolioId,jdbcType=NVARCHAR}
+      and a.fundID = #{fundId,jdbcType=NVARCHAR}
+      and a.closeDate <![CDATA[<=]]> #{date,jdbcType=DATE}
+    order by a.closeDate DESC
+  </select>
+
+  <select id="queryPortfolioValuationList" parameterType="HashMap" resultType="HashMap">
+    <!-- lp capital call -->
+    select a.fundId, a.portfolioID, isnull(a.netvaluation,0.00) as Valuation, a.valuationDate
+    from PortfolioValuation a
+    where a.portfolioID = #{portfolioId,jdbcType=NVARCHAR}
+    and a.fundID = #{fundId,jdbcType=NVARCHAR}
+    and a.valuationDate = #{date,jdbcType=DATE}
+  </select>
+
+  <select id="queryPortfolioValuationListOrderByDateDesc" parameterType="HashMap" resultType="HashMap">
+    <!-- lp capital call -->
+    select a.fundId, a.portfolioID, isnull(a.netvaluation,0.00) as Valuation, a.valuationDate
+    from PortfolioValuation a
+    where a.portfolioID = #{portfolioId,jdbcType=NVARCHAR}
+    and a.fundID = #{fundId,jdbcType=NVARCHAR}
+    and a.valuationDate <![CDATA[<=]]> #{date,jdbcType=DATE}
+    order by a.valuationDate desc
+  </select>
+
+</mapper>

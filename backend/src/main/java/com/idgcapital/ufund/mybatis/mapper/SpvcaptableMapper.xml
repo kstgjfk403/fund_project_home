@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.SpvcaptableMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Spvcaptable" >
+    <id column="capID" property="capid" jdbcType="INTEGER" />
+    <result column="spvID" property="spvid" jdbcType="NVARCHAR" />
+    <result column="StockHolderName" property="stockholdername" jdbcType="NVARCHAR" />
+    <result column="StockHolderType" property="stockholdertype" jdbcType="NVARCHAR" />
+    <result column="type" property="type" jdbcType="NVARCHAR" />
+    <result column="StockHolderID" property="stockholderid" jdbcType="NVARCHAR" />
+    <result column="StockHolderCode" property="stockholdercode" jdbcType="NVARCHAR" />
+    <result column="lpaAmt" property="lpaamt" jdbcType="NVARCHAR" />
+    <result column="lpaAmtDate" property="lpaamtdate" jdbcType="DATE" />
+    <result column="paidAmt" property="paidamt" jdbcType="NVARCHAR" />
+    <result column="paidAmtDate" property="paidamtdate" jdbcType="DATE" />
+    <result column="capDate" property="capdate" jdbcType="DATE" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="TIMESTAMP" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from spvCapTable
+    where capID = #{capid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Spvcaptable" >
+    insert into spvCapTable (spvID, StockHolderName,
+      StockHolderType, StockHolderID, StockHolderCode, 
+      lpaAmt, lpaAmtDate, paidAmt, 
+      paidAmtDate, capDate, createdBy, 
+      createdDate, modifiedBy, modifiedDate,type
+      )
+    values (  #{spvid,jdbcType=NVARCHAR}, #{stockholdername,jdbcType=NVARCHAR},
+      #{stockholdertype,jdbcType=NVARCHAR}, #{stockholderid,jdbcType=NVARCHAR}, #{stockholdercode,jdbcType=NVARCHAR}, 
+      #{lpaamt,jdbcType=NVARCHAR}, #{lpaamtdate,jdbcType=DATE}, #{paidamt,jdbcType=NVARCHAR}, 
+      #{paidamtdate,jdbcType=DATE}, #{capdate,jdbcType=DATE}, #{createdby,jdbcType=NVARCHAR}, 
+      #{createddate,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=TIMESTAMP},#{type,jdbcType=NVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Spvcaptable" >
+    update spvCapTable
+    set spvID = #{spvid,jdbcType=NVARCHAR},
+      StockHolderName = #{stockholdername,jdbcType=NVARCHAR},
+      StockHolderType = #{stockholdertype,jdbcType=NVARCHAR},
+      type = #{type,jdbcType=NVARCHAR},
+      StockHolderID = #{stockholderid,jdbcType=NVARCHAR},
+      StockHolderCode = #{stockholdercode,jdbcType=NVARCHAR},
+      lpaAmt = #{lpaamt,jdbcType=NVARCHAR},
+      lpaAmtDate = #{lpaamtdate,jdbcType=DATE},
+      paidAmt = #{paidamt,jdbcType=NVARCHAR},
+      paidAmtDate = #{paidamtdate,jdbcType=DATE},
+      capDate = #{capdate,jdbcType=DATE},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=TIMESTAMP},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=TIMESTAMP}
+    where capID = #{capid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select capID, spvID, StockHolderName, StockHolderType, StockHolderID, StockHolderCode, 
+    lpaAmt, lpaAmtDate, paidAmt, paidAmtDate, capDate, createdBy, createdDate, modifiedBy, 
+    modifiedDate,type
+    from spvCapTable
+    where capID = #{capid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select capID, spvID, StockHolderName, StockHolderType, StockHolderID, StockHolderCode, 
+    lpaAmt, lpaAmtDate, paidAmt, paidAmtDate, capDate, createdBy, createdDate, modifiedBy, 
+    modifiedDate,type
+    from spvCapTable
+  </select>
+
+  <select id="selectInvestorListBySPVId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select capID, spvID, StockHolderName, StockHolderType, StockHolderID, StockHolderCode,
+    lpaAmt, lpaAmtDate, paidAmt, paidAmtDate, capDate, createdBy, createdDate, modifiedBy,
+    modifiedDate,type
+    from spvCapTable
+    where 1=1
+
+    <if test="spvid != null">
+      and spvID = #{spvid,jdbcType=NVARCHAR}
+    </if>
+
+    <if test="capdate != null">
+      and capDate = #{capdate,jdbcType=DATE}
+    </if>
+
+    order by capDate desc,StockHolderName
+  </select>
+
+  <delete id="deleteInvestorListBySPVId" parameterType="com.idgcapital.ufund.model.Spvcaptable" >
+    delete  from spvCapTable where spvID = #{spvid,jdbcType=NVARCHAR} and capDate = #{capdate,jdbcType=DATE}
+  </delete>
+</mapper>

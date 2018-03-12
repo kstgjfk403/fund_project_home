@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.LpcashdistributionMapper">
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Lpcashdistribution">
+    <id column="LPDistributionID" jdbcType="NVARCHAR" property="lpdistributionid" />
+    <result column="fundID" jdbcType="NVARCHAR" property="fundid" />
+    <result column="issueDate" jdbcType="DATE" property="issuedate" />
+    <result column="createdBy" jdbcType="NVARCHAR" property="createdby" />
+    <result column="createdDate" jdbcType="TIMESTAMP" property="createddate" />
+    <result column="modifiedBy" jdbcType="NVARCHAR" property="modifiedby" />
+    <result column="modifiedDate" jdbcType="TIMESTAMP" property="modifieddate" />
+    <result column="approved" jdbcType="BIT" property="approved" />
+    <result column="totalDistributionAmount" jdbcType="DECIMAL" property="totaldistributionamount" />
+    <result column="distributionDes" jdbcType="NVARCHAR" property="distributiondes" />
+    <result column="distributionOrder" jdbcType="INTEGER" property="distributionorder" />
+    <result column="multiple" jdbcType="DECIMAL" property="multiple" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from LPCashDistribution
+    where LPDistributionID = #{lpdistributionid,jdbcType=NVARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Lpcashdistribution">
+    insert into LPCashDistribution (LPDistributionID, fundID, issueDate, 
+      createdBy, createdDate, modifiedBy, 
+      modifiedDate, approved, totalDistributionAmount, 
+      distributionDes, distributionOrder, multiple
+      )
+    values (#{lpdistributionid,jdbcType=NVARCHAR}, #{fundid,jdbcType=NVARCHAR}, #{issuedate,jdbcType=DATE}, 
+      #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=NVARCHAR}, 
+      #{modifieddate,jdbcType=TIMESTAMP}, #{approved,jdbcType=BIT}, #{totaldistributionamount,jdbcType=DECIMAL}, 
+      #{distributiondes,jdbcType=NVARCHAR}, #{distributionorder,jdbcType=INTEGER}, #{multiple,jdbcType=DECIMAL}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Lpcashdistribution">
+    update LPCashDistribution
+    set fundID = #{fundid,jdbcType=NVARCHAR},
+      issueDate = #{issuedate,jdbcType=DATE},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=TIMESTAMP},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=TIMESTAMP},
+      approved = #{approved,jdbcType=BIT},
+      totalDistributionAmount = #{totaldistributionamount,jdbcType=DECIMAL},
+      distributionDes = #{distributiondes,jdbcType=NVARCHAR},
+      distributionOrder = #{distributionorder,jdbcType=INTEGER},
+      multiple = #{multiple,jdbcType=DECIMAL}
+    where LPDistributionID = #{lpdistributionid,jdbcType=NVARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select LPDistributionID, fundID, issueDate, createdBy, createdDate, modifiedBy, modifiedDate, 
+    approved, totalDistributionAmount, distributionDes, distributionOrder, multiple
+    from LPCashDistribution
+    where LPDistributionID = #{lpdistributionid,jdbcType=NVARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select LPDistributionID, fundID, issueDate, createdBy, createdDate, modifiedBy, modifiedDate, 
+    approved, totalDistributionAmount, distributionDes, distributionOrder, multiple
+    from LPCashDistribution
+  </select>
+
+
+
+  <select id="queryDistritableList" parameterType="HashMap" resultType="HashMap">
+    <!-- lp capital call -->
+    select convert(nvarchar,a.id) as sourceid, 'exit' as sourcetype, a.exitMode as concretesourcetype, a.closeDate as paymentdate, a.proceeds as payment,a.currency as currency,
+    b.abbName as portfolioname
+
+
+    from portfolioExit a, PortfolioBasicInfo b
+    where a.portfolioID = b.portfolioID
+    and a.fundID = #{fundid,jdbcType=NVARCHAR}
+    and  not exists (select 1 from DistributionSource where sourceID = convert(nvarchar,a.id))
+
+    union ALL
+
+    select a.DBID as sourceid, 'dividend' as sourcetype, a.investType as concretesourcetype, a.closeDate as paymentdate, a.proceeds as payment,a.currency as currency,
+    b.abbName as portfolioname
+
+    from PortfolioDividentBonus a, PortfolioBasicInfo b
+    where a.portfolioID = b.portfolioID
+    and a.fundID = #{fundid,jdbcType=NVARCHAR}
+    and a.investType = 'Dividends'
+    and  not exists (select 1 from DistributionSource where sourceID = a.DBID)
+
+    order by paymentdate ASC
+  </select>
+
+
+  <select id="selectDistributionEntityList" parameterType="com.idgcapital.ufund.model.Lpcashdistribution" resultType="HashMap">
+    SELECT  TOP (#{pageCount,jdbcType=INTEGER})
+    w1.LPDistributionID, w1.fundID, w1.issueDate, w1.distributionDes,  w1.multiple,
+    w1.createdBy, w1.createdDate, w1.modifiedBy, w1.modifiedDate, w1.distributionOrder, w1.approved, w1.totalDistributionAmount,
+    w2.fundFamillyName, w2.fundName, w2.fundFullNameEng, w2.fundFullNameChi
+    FROM LPCashDistribution w1,
+    (SELECT f.fundId, f.fundFamillyName, f.fundName, f.fundFullNameEng, f.fundFullNameChi FROM FundBasicInfo f
+    where validFlag ='1'
+    <if test=" fundid != null and fundid != '' ">
+      and  f.fundID = #{fundid,jdbcType=NVARCHAR}
+    </if>
+    <if test=" fundfamillyname != null and fundfamillyname != '' ">
+      and  lower(f.fundfamillyname) like lower('%${fundfamillyname}%')
+    </if>
+    <if test=" fundname != null and fundname != '' ">
+      and  lower(f.fundname) like lower('%${fundname}%')
+    </if>
+    <if test=" fundfullnameeng != null and fundfullnameeng != '' ">
+      and  lower(f.fundfullnameeng) like lower('%${fundfullnameeng}%')
+    </if>
+    <if test=" fundfullnamechi != null and fundfullnamechi != '' ">
+      and  lower(f.fundfullnamechi) like lower(N'%${fundfullnamechi}%')
+    </if>
+    ) w2
+    WHERE w1.fundId = w2.fundId
+    AND w1.LPDistributionID not in
+    (SELECT   TOP (#{pageStart,jdbcType=INTEGER})
+    t1.LPDistributionID
+    FROM LPCashDistribution t1,
+    (SELECT f1.fundId, f1.fundFamillyName, f1.fundName, f1.fundFullNameEng, f1.fundFullNameChi FROM FundBasicInfo f1
+    where f1.validFlag ='1'
+    <if test=" fundid != null and fundid != '' ">
+      and  f1.fundID = #{fundid,jdbcType=NVARCHAR}
+    </if>
+    <if test=" fundfamillyname != null and fundfamillyname != '' ">
+      and  lower(f1.fundfamillyname) like lower('%${fundfamillyname}%')
+    </if>
+    <if test=" fundname != null and fundname != '' ">
+      and  lower(f1.fundname) like lower('%${fundname}%')
+    </if>
+    <if test=" fundfullnameeng != null and fundfullnameeng != '' ">
+      and  lower(f1.fundfullnameeng) like lower('%${fundfullnameeng}%')
+    </if>
+    <if test=" fundfullnamechi != null and fundfullnamechi != '' ">
+      and  lower(f1.fundfullnamechi) like lower(N'%${fundfullnamechi}%')
+    </if>
+    ) t2
+    WHERE t1.fundId = t2.fundId ORDER BY t1.fundID ASC, t1.issueDate DESC)
+
+    ORDER BY w1.fundID ASC, w1.issueDate DESC
+  </select>
+
+  <select id="selectDistributionEntityListCount" parameterType="com.idgcapital.ufund.model.Lpcashdistribution" resultType="Long">
+    select count(1)
+    FROM LPCashDistribution w1,
+    (SELECT f.fundId, f.fundFamillyName, f.fundName, f.fundFullNameEng, f.fundFullNameChi FROM FundBasicInfo f
+    where validFlag ='1'
+    <if test=" fundid != null and fundid != '' ">
+      and  f.fundID = #{fundid,jdbcType=NVARCHAR}
+    </if>
+    <if test=" fundfamillyname != null and fundfamillyname != '' ">
+      and  lower(f.fundfamillyname) like lower('%${fundfamillyname}%')
+    </if>
+    <if test=" fundname != null and fundname != '' ">
+      and  lower(f.fundname) like lower('%${fundname}%')
+    </if>
+    <if test=" fundfullnameeng != null and fundfullnameeng != '' ">
+      and  lower(f.fundfullnameeng) like lower('%${fundfullnameeng}%')
+    </if>
+    <if test=" fundfullnamechi != null and fundfullnamechi != '' ">
+      and  lower(f.fundfullnamechi) like lower(N'%${fundfullnamechi}%')
+    </if>
+    ) w2
+    WHERE w1.fundId = w2.fundId
+  </select>
+
+  <select id="selectMaxDistributionId" parameterType="com.idgcapital.ufund.model.Lpcashdistribution" resultType="java.lang.String">
+    select max(w1.LPDistributionID)
+    FROM LPCashDistribution w1
+
+    WHERE w1.fundId = #{fundid,jdbcType=NVARCHAR}
+  </select>
+
+</mapper>

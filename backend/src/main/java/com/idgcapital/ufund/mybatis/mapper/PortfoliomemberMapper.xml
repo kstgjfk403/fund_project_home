@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfoliomemberMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfoliomember" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="staffID" property="staffid" jdbcType="NVARCHAR" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="memberType" property="membertype" jdbcType="NVARCHAR" />
+    <result column="memberOrder" property="memberorder" jdbcType="INTEGER" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from portfolioMember
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByProjId" parameterType="com.idgcapital.ufund.model.Portfoliomember">
+    delete from portfolioMember
+    where portfolioID = #{portfolioid,jdbcType=INTEGER} and memberType = #{membertype,jdbcType=NVARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfoliomember" >
+    insert into portfolioMember (staffID, portfolioID,
+      memberType, memberOrder, createdBy, 
+      createdDate, modifiedBy, modifiedDate
+      )
+    values (#{staffid,jdbcType=NVARCHAR}, #{portfolioid,jdbcType=NVARCHAR},
+      #{membertype,jdbcType=NVARCHAR}, #{memberorder,jdbcType=INTEGER}, #{createdby,jdbcType=NVARCHAR}, 
+      #{createddate,jdbcType=DATE}, #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfoliomember" >
+    update portfolioMember
+    set staffID = #{staffid,jdbcType=NVARCHAR},
+      portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      memberType = #{membertype,jdbcType=NVARCHAR},
+      memberOrder = #{memberorder,jdbcType=INTEGER},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, staffID, portfolioID, memberType, memberOrder, createdBy, createdDate, 
+    modifiedBy, modifiedDate
+    from portfolioMember
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, staffID, portfolioID, memberType, memberOrder, createdBy, createdDate, 
+    modifiedBy, modifiedDate
+    from portfolioMember
+  </select>
+</mapper>

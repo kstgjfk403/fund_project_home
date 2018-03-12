@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfolioWbstatusMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.PortfolioWbstatus" >
+    <id column="WBID" property="wbid" jdbcType="INTEGER" />
+    <result column="WBDate" property="wbdate" jdbcType="DATE" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="WBStatus" property="wbstatus" jdbcType="NVARCHAR" />
+    <result column="generate" property="generate" jdbcType="BIT" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="valuationReady" property="valuationready" jdbcType="BIT" />
+    <result column="finicialReady" property="finicialready" jdbcType="BIT" />
+    <result column="BOVUpdate" property="bovupdate" jdbcType="BIT" />
+    <result column="fundType" property="fundtype" jdbcType="NVARCHAR" />
+    <result column="fundID" property="fundid" jdbcType="NVARCHAR" />
+    <result column="startpageNo" property="startpageno" jdbcType="INTEGER" />
+    <result column="html" property="html" jdbcType="LONGNVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from Portfolio_WBStatus
+    where WBID = #{wbid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.PortfolioWbstatus" >
+
+    insert into Portfolio_WBStatus (WBDate, portfolioID,
+      WBStatus, generate, createdBy, 
+      createdDate, modifiedBy, modifiedDate, 
+      approved, valuationReady, finicialReady, 
+      BOVUpdate, fundType, fundID, 
+      startpageNo, html)
+    values (#{wbdate,jdbcType=DATE}, #{portfolioid,jdbcType=NVARCHAR},
+      #{wbstatus,jdbcType=NVARCHAR}, #{generate,jdbcType=BIT}, #{createdby,jdbcType=NVARCHAR}, 
+      #{createddate,jdbcType=DATE}, #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE}, 
+      #{approved,jdbcType=BIT}, #{valuationready,jdbcType=BIT}, #{finicialready,jdbcType=BIT}, 
+      #{bovupdate,jdbcType=BIT}, #{fundtype,jdbcType=NVARCHAR}, #{fundid,jdbcType=NVARCHAR}, 
+      #{startpageno,jdbcType=INTEGER}, #{html,jdbcType=LONGNVARCHAR});
+
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.PortfolioWbstatus" >
+    update Portfolio_WBStatus
+    set WBDate = #{wbdate,jdbcType=DATE},
+      portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      WBStatus = #{wbstatus,jdbcType=NVARCHAR},
+      generate = #{generate,jdbcType=BIT},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      approved = #{approved,jdbcType=BIT},
+      valuationReady = #{valuationready,jdbcType=BIT},
+      finicialReady = #{finicialready,jdbcType=BIT},
+      BOVUpdate = #{bovupdate,jdbcType=BIT},
+      fundType = #{fundtype,jdbcType=NVARCHAR},
+      fundID = #{fundid,jdbcType=NVARCHAR},
+      startpageNo = #{startpageno,jdbcType=INTEGER},
+      html = #{html,jdbcType=LONGNVARCHAR}
+    where WBID = #{wbid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select WBID, WBDate, portfolioID, WBStatus, generate, createdBy, createdDate, modifiedBy, 
+    modifiedDate, approved, valuationReady, finicialReady, BOVUpdate, fundType, fundID, 
+    startpageNo, html
+    from Portfolio_WBStatus
+    where WBID = #{wbid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select WBID, WBDate, portfolioID, WBStatus, generate, createdBy, createdDate, modifiedBy, 
+    modifiedDate, approved, valuationReady, finicialReady, BOVUpdate, fundType, fundID, 
+    startpageNo, html
+    from Portfolio_WBStatus
+  </select>
+
+  <select id="selectByPortfolioIdAndWbdate" parameterType="com.idgcapital.ufund.model.PortfolioWbstatus" resultMap="BaseResultMap" >
+    select WBID, WBDate, portfolioID, WBStatus, generate, createdBy, createdDate, modifiedBy,
+    modifiedDate, approved, valuationReady, finicialReady, BOVUpdate, fundType, fundID,
+    startpageNo, html
+    from Portfolio_WBStatus
+    where portfolioID = #{portfolioid,jdbcType=INTEGER}
+    and WBDate = #{wbdate,jdbcType=NVARCHAR}
+    order by WBID DESC
+  </select>
+
+</mapper>

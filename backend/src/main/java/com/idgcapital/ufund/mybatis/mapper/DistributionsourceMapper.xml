@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.DistributionsourceMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Distributionsource" >
+    <id column="LPDistributionID" property="lpdistributionid" jdbcType="NVARCHAR" />
+    <id column="sourceType" property="sourcetype" jdbcType="NVARCHAR" />
+    <id column="sourceID" property="sourceid" jdbcType="NVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from DistributionSource
+    where LPDistributionID = #{lpdistributionid,jdbcType=NVARCHAR}
+      and sourceType = #{sourcetype,jdbcType=NVARCHAR}
+      and sourceID = #{sourceid,jdbcType=NVARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Distributionsource" >
+    insert into DistributionSource (LPDistributionID, sourceType, sourceID
+      )
+    values (#{lpdistributionid,jdbcType=NVARCHAR}, #{sourcetype,jdbcType=NVARCHAR}, #{sourceid,jdbcType=NVARCHAR}
+      )
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select LPDistributionID, sourceType, sourceID
+    from DistributionSource
+  </select>
+
+  <delete id="deleteByDistributionId" parameterType="java.lang.String" >
+    delete from DistributionSource
+    where LPDistributionID = #{distributionId,jdbcType=NVARCHAR}
+  </delete>
+</mapper>

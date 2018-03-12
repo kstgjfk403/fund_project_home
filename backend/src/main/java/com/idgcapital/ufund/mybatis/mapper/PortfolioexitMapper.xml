@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfolioexitMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfolioexit" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="exitType" property="exittype" jdbcType="NVARCHAR" />
+    <result column="exitMode" property="exitmode" jdbcType="NVARCHAR" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="fundFamillyName" property="fundfamillyname" jdbcType="NVARCHAR" />
+    <result column="fundID" property="fundid" jdbcType="NVARCHAR" />
+    <result column="fundName" property="fundname" jdbcType="NVARCHAR" />
+    <result column="closeDate" property="closedate" jdbcType="DATE" />
+    <result column="currency" property="currency" jdbcType="NVARCHAR" />
+    <result column="proceeds" property="proceeds" jdbcType="DECIMAL" />
+    <result column="shareExit" property="shareexit" jdbcType="NUMERIC" />
+    <result column="shareRemain" property="shareremain" jdbcType="NUMERIC" />
+    <result column="round" property="round" jdbcType="NVARCHAR" />
+    <result column="securityTypeID" property="securitytypeid" jdbcType="INTEGER" />
+    <result column="otherfeesRelization" property="otherfeesrelization" jdbcType="DECIMAL" />
+    <result column="costRelization" property="costrelization" jdbcType="DECIMAL" />
+    <result column="costUnRelization" property="costunrelization" jdbcType="DECIMAL" />
+    <result column="proceedsRelization" property="proceedsrelization" jdbcType="DECIMAL" />
+    <result column="proceedsUnRelization" property="proceedsunrelization" jdbcType="DECIMAL" />
+    <result column="lossRelization" property="lossrelization" jdbcType="DECIMAL" />
+    <result column="noteID" property="noteid" jdbcType="NVARCHAR" />
+    <result column="EIID" property="eiid" jdbcType="NVARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="NVARCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="termSignDate" property="termsigndate" jdbcType="DATE" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from PortfolioExit
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfolioexit" >
+    insert into PortfolioExit ( exitType, exitMode,
+      portfolioID, fundFamillyName, fundID, 
+      closeDate, currency, proceeds, 
+      shareExit,shareRemain, round, securityTypeID,
+      otherfeesRelization, costRelization, costUnRelization, 
+      proceedsRelization, proceedsUnRelization, 
+      lossRelization, noteID, EIID, 
+      remarks, createdBy, createdDate, 
+      modifiedBy, modifiedDate, approved,termSignDate
+      )
+    values ( #{exittype,jdbcType=NVARCHAR}, #{exitmode,jdbcType=NVARCHAR},
+      #{portfolioid,jdbcType=NVARCHAR}, #{fundfamillyname,jdbcType=NVARCHAR}, #{fundid,jdbcType=NVARCHAR}, 
+      #{closedate,jdbcType=DATE}, #{currency,jdbcType=NVARCHAR}, #{proceeds,jdbcType=DECIMAL}, 
+      #{shareexit,jdbcType=NUMERIC}, #{shareremain,jdbcType=NUMERIC}, #{round,jdbcType=NVARCHAR}, #{securitytypeid,jdbcType=INTEGER},
+      #{otherfeesrelization,jdbcType=DECIMAL}, #{costrelization,jdbcType=DECIMAL}, #{costunrelization,jdbcType=DECIMAL}, 
+      #{proceedsrelization,jdbcType=DECIMAL}, #{proceedsunrelization,jdbcType=DECIMAL}, 
+      #{lossrelization,jdbcType=DECIMAL}, #{noteid,jdbcType=NVARCHAR}, #{eiid,jdbcType=NVARCHAR}, 
+      #{remarks,jdbcType=NVARCHAR}, #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=DATE}, 
+      #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE}, #{approved,jdbcType=BIT}, #{termsigndate,jdbcType=DATE}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfolioexit" >
+    update PortfolioExit
+    set exitType = #{exittype,jdbcType=NVARCHAR},
+      exitMode = #{exitmode,jdbcType=NVARCHAR},
+      portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      fundFamillyName = #{fundfamillyname,jdbcType=NVARCHAR},
+      fundID = #{fundid,jdbcType=NVARCHAR},
+      closeDate = #{closedate,jdbcType=DATE},
+      currency = #{currency,jdbcType=NVARCHAR},
+      proceeds = #{proceeds,jdbcType=DECIMAL},
+      shareExit = #{shareexit,jdbcType=NUMERIC},
+      shareRemain = #{shareremain,jdbcType=NUMERIC},
+      round = #{round,jdbcType=NVARCHAR},
+      securityTypeID = #{securitytypeid,jdbcType=INTEGER},
+      otherfeesRelization = #{otherfeesrelization,jdbcType=DECIMAL},
+      costRelization = #{costrelization,jdbcType=DECIMAL},
+      costUnRelization = #{costunrelization,jdbcType=DECIMAL},
+      proceedsRelization = #{proceedsrelization,jdbcType=DECIMAL},
+      proceedsUnRelization = #{proceedsunrelization,jdbcType=DECIMAL},
+      lossRelization = #{lossrelization,jdbcType=DECIMAL},
+      noteID = #{noteid,jdbcType=NVARCHAR},
+      EIID = #{eiid,jdbcType=NVARCHAR},
+      remarks = #{remarks,jdbcType=NVARCHAR},
+      createdBy = #{createdby,jdbcType=NVARCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      approved = #{approved,jdbcType=BIT},
+      termSignDate = #{termsigndate,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+	select id, exitType, exitMode, portfolioID, fundFamillyName, t.fundID,f.fundName, closeDate, currency,
+    proceeds, shareExit,shareRemain, round, securityTypeID, otherfeesRelization, costRelization,
+    costUnRelization, proceedsRelization, proceedsUnRelization, lossRelization, noteID,
+    EIID, remarks, createdBy, createdDate, modifiedBy, modifiedDate, approved,termSignDate
+    from PortfolioExit t left join (select fundID,fundName from  FundBasicInfo) f on t.fundID = f.fundID
+    where id = #{id,jdbcType=INTEGER}
+
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, exitType, exitMode, portfolioID, fundFamillyName, fundID, closeDate, currency, 
+    proceeds, shareExit,shareRemain, round, securityTypeID, otherfeesRelization, costRelization,
+    costUnRelization, proceedsRelization, proceedsUnRelization, lossRelization, noteID, 
+    EIID, remarks, createdBy, createdDate, modifiedBy, modifiedDate, approved,termSignDate
+    from PortfolioExit
+  </select>
+  <select id="selectPortfolioExitListByPortfolioId" resultType="java.lang.String" resultMap="BaseResultMap">
+	select id, exitType, exitMode, portfolioID, fundFamillyName, t.fundID,f.fundName, closeDate, currency,
+    proceeds, shareExit,shareRemain, round, securityTypeID, otherfeesRelization, costRelization, costUnRelization,
+    proceedsRelization, proceedsUnRelization, lossRelization, noteID, EIID, remarks,
+    createdBy, createdDate, modifiedBy, modifiedDate, approved,termSignDate
+    from PortfolioExit t left join (select fundID,fundName from  FundBasicInfo) f on t.fundID = f.fundID
+    where portfolioID = #{portfolioid}
+  </select>
+  <select id="selectShareListByFundFamily" parameterType="com.idgcapital.ufund.model.PortfolioexitShare" resultType="com.idgcapital.ufund.model.PortfolioexitShare">
+	select a.fundFamillyName fundfamillyname,a.securityTypeID securitytypeid,a.round round,(ISNULL(a.totalShare,0)-ISNULL(b.totalExit,0)) shareremain ,#{portfolioid} portfolioid from (
+	select f.fundFamillyName,sum(t.shareOwnedNo) totalShare,t.securityTypeID,t.round from
+	(select * from PortfolioEquityInvestment where securityTypeID in(2,3,6) and portfolioID =#{portfolioid}) t
+	left join FundBasicInfo f on t.fundID = f.fundID group by f.fundFamillyName,t.securityTypeID,t.round having f.fundFamillyName = #{fundfamillyname}) a
+	left join (
+	select f.fundFamillyName,sum(t.shareExit) totalExit,t.securityTypeID,t.round from
+	(select * from PortfolioExit where securityTypeID in(2,3,6) and portfolioID =#{portfolioid}) t
+	left join FundBasicInfo f on t.fundID = f.fundID group by f.fundFamillyName,t.securityTypeID,t.round having f.fundFamillyName = #{fundfamillyname}) b
+	on a.fundFamillyName = b.fundFamillyName and a.securityTypeID = b.securityTypeID and a.round = b.round
+  </select>
+
+  <select id="selectShareListByFundId" parameterType="com.idgcapital.ufund.model.PortfolioexitShare" resultType="com.idgcapital.ufund.model.PortfolioexitShare">
+
+	select a.fundID fundid,a.securityTypeID securitytypeid,a.round round,(ISNULL(a.totalShare,0)-ISNULL(b.totalExit,0)) shareremain,#{portfolioid} portfolioid   from (
+	select f.fundID,sum(t.shareOwnedNo) totalShare,t.securityTypeID,t.round from
+	(select * from PortfolioEquityInvestment where securityTypeID in(2,3,6) and portfolioID =#{portfolioid}) t
+	left join FundBasicInfo f on t.fundID = f.fundID group by f.fundID,t.securityTypeID,t.round having f.fundID =  #{fundid}) a
+	left join (
+	select f.fundID,sum(t.shareExit) totalExit,t.securityTypeID,t.round from
+	(select * from PortfolioExit where securityTypeID in(2,3,6) and portfolioID =#{portfolioid}) t
+	left join FundBasicInfo f on t.fundID = f.fundID group by f.fundID,t.securityTypeID,t.round having f.fundID =  #{fundid}) b
+	on a.fundID = b.fundID and a.securityTypeID = b.securityTypeID and a.round = b.round
+
+  </select>
+
+  <select id="queryRemainSharesByFundId" parameterType="com.idgcapital.ufund.model.Portfolioexit" resultMap="BaseResultMap">
+    select i.EIID,i.portfolioID,i.fundID,i.investType,i.closeDate,i.round,i.securityTypeID, (i.shareOwnedNo - ISNULL(d.share,0)) shareRemain from PortfolioEquityInvestment i
+    left join (
+      select EIID,sum(shareExit) share,sum(costRelization) cost from
+      (select d.*,e.closeDate from (select * from PortfolioExit where closeDate &lt;= #{closedate}) e
+      left join
+      PortfolioExitDetail d on d.exitId = e.id) m
+      group by EIID
+    ) d on i.EIID = d.EIID
+    where i.fundID = #{fundid}
+    and i.portfolioID =#{portfolioid}
+    and closeDate &lt;= #{closedate}
+    and investType in('Equity Investment&amp;amp;Loan To Equity','Equity Investment')
+    order by closeDate
+  </select>
+
+  <select id="queryUnrealizedCostByFundId" parameterType="com.idgcapital.ufund.model.Portfolioexit" resultType="java.math.BigDecimal">
+    select (a.cost - ISNULL(b.costRelization,0)) costUnRelization from
+    (select portfolioID,fundID,sum(cost) cost from PortfolioEquityInvestment where closeDate &lt;= #{closedate} and portfolioID = #{portfolioid}  and fundID = #{fundid}
+    and investType in('Equity Investment&amp;amp;Loan To Equity','Equity Investment') group by portfolioID,fundID) a
+    left join
+    (select top 1 portfolioID,fundID, costRelization  from PortfolioExit where closeDate &lt;= #{closedate} and portfolioID = #{portfolioid} and fundID = #{fundid} and exitType='Equity'  order by closeDate) b
+    on a.portfolioID = b.portfolioID and a.fundID = b.fundID
+  </select>
+
+  <select id="selectMaxExitId" resultType="java.lang.Integer">
+    select max(id) id from PortfolioExit
+  </select>
+</mapper>

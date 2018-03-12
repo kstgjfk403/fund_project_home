@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfoliocontactorinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfoliocontactorinfo" >
+    <id column="contactID" property="contactid" jdbcType="INTEGER" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="firstNameEng" property="firstnameeng" jdbcType="NVARCHAR" />
+    <result column="lastNameEng" property="lastnameeng" jdbcType="NVARCHAR" />
+    <result column="firstNameChi" property="firstnamechi" jdbcType="NVARCHAR" />
+    <result column="lastNameChi" property="lastnamechi" jdbcType="NVARCHAR" />
+    <result column="title" property="title" jdbcType="NVARCHAR" />
+    <result column="email" property="email" jdbcType="NVARCHAR" />
+    <result column="officeNo" property="officeno" jdbcType="NVARCHAR" />
+    <result column="mobileNo" property="mobileno" jdbcType="NVARCHAR" />
+    <result column="faxNo" property="faxno" jdbcType="NVARCHAR" />
+    <result column="address" property="address" jdbcType="NVARCHAR" />
+    <result column="nickName" property="nickname" jdbcType="NVARCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="TIMESTAMP" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="TIMESTAMP" />
+    <result column="emailContactorType" property="emailcontactortype" jdbcType="NVARCHAR" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="status" property="status" jdbcType="NVARCHAR" />
+    <result column="preferredLanguage" property="preferredlanguage" jdbcType="NVARCHAR" />
+    <result column="financialCollection" property="financialcollection" jdbcType="NVARCHAR" />
+    <result column="businessUpdate" property="businessupdate" jdbcType="NVARCHAR" />
+    <result column="auditConfirmation" property="auditconfirmation" jdbcType="NVARCHAR" />
+    <result column="ccPM" property="ccpm" jdbcType="BIT" />
+    <result column="quarterlyEmail" property="quarterlyemail" jdbcType="NVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from PortfolioContactorInfo
+    where contactID = #{contactid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfoliocontactorinfo" >
+    insert into PortfolioContactorInfo ( portfolioID, firstNameEng,
+      lastNameEng, firstNameChi, lastNameChi, 
+      title, email, officeNo, 
+      mobileNo, faxNo, address, 
+      nickName, createdBy, createdDate, 
+      modifiedBy, modifiedDate, emailContactorType, 
+      approved, status, preferredLanguage, 
+      financialCollection, businessUpdate, 
+      auditConfirmation, ccPM, quarterlyEmail
+      )
+    values ( #{portfolioid,jdbcType=NVARCHAR}, #{firstnameeng,jdbcType=NVARCHAR},
+      #{lastnameeng,jdbcType=NVARCHAR}, #{firstnamechi,jdbcType=NVARCHAR}, #{lastnamechi,jdbcType=NVARCHAR}, 
+      #{title,jdbcType=NVARCHAR}, #{email,jdbcType=NVARCHAR}, #{officeno,jdbcType=NVARCHAR}, 
+      #{mobileno,jdbcType=NVARCHAR}, #{faxno,jdbcType=NVARCHAR}, #{address,jdbcType=NVARCHAR}, 
+      #{nickname,jdbcType=NVARCHAR}, #{createdby,jdbcType=NCHAR}, #{createddate,jdbcType=TIMESTAMP}, 
+      #{modifiedby,jdbcType=NCHAR}, #{modifieddate,jdbcType=TIMESTAMP}, #{emailcontactortype,jdbcType=NVARCHAR}, 
+      #{approved,jdbcType=BIT}, #{status,jdbcType=NVARCHAR}, #{preferredlanguage,jdbcType=NVARCHAR}, 
+      #{financialcollection,jdbcType=NVARCHAR}, #{businessupdate,jdbcType=NVARCHAR}, 
+      #{auditconfirmation,jdbcType=NVARCHAR}, #{ccpm,jdbcType=BIT}, #{quarterlyemail,jdbcType=NVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfoliocontactorinfo" >
+    update PortfolioContactorInfo
+    set portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      firstNameEng = #{firstnameeng,jdbcType=NVARCHAR},
+      lastNameEng = #{lastnameeng,jdbcType=NVARCHAR},
+      firstNameChi = #{firstnamechi,jdbcType=NVARCHAR},
+      lastNameChi = #{lastnamechi,jdbcType=NVARCHAR},
+      title = #{title,jdbcType=NVARCHAR},
+      email = #{email,jdbcType=NVARCHAR},
+      officeNo = #{officeno,jdbcType=NVARCHAR},
+      mobileNo = #{mobileno,jdbcType=NVARCHAR},
+      faxNo = #{faxno,jdbcType=NVARCHAR},
+      address = #{address,jdbcType=NVARCHAR},
+      nickName = #{nickname,jdbcType=NVARCHAR},
+      modifiedBy = #{modifiedby,jdbcType=NCHAR},
+      modifiedDate = #{modifieddate,jdbcType=TIMESTAMP},
+      emailContactorType = #{emailcontactortype,jdbcType=NVARCHAR},
+      approved = #{approved,jdbcType=BIT},
+      preferredLanguage = #{preferredlanguage,jdbcType=NVARCHAR},
+      financialCollection = #{financialcollection,jdbcType=NVARCHAR},
+      businessUpdate = #{businessupdate,jdbcType=NVARCHAR},
+      auditConfirmation = #{auditconfirmation,jdbcType=NVARCHAR},
+      ccPM = #{ccpm,jdbcType=BIT},
+      quarterlyEmail = #{quarterlyemail,jdbcType=NVARCHAR}
+    where contactID = #{contactid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select contactID, portfolioID, firstNameEng, lastNameEng, firstNameChi, lastNameChi, 
+    title, email, officeNo, mobileNo, faxNo, address, nickName, createdBy, createdDate, 
+    modifiedBy, modifiedDate, emailContactorType, approved, status, preferredLanguage, 
+    financialCollection, businessUpdate, auditConfirmation, ccPM, quarterlyEmail
+    from PortfolioContactorInfo
+    where contactID = #{contactid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select contactID, portfolioID, firstNameEng, lastNameEng, firstNameChi, lastNameChi, 
+    title, email, officeNo, mobileNo, faxNo, address, nickName, createdBy, createdDate, 
+    modifiedBy, modifiedDate, emailContactorType, approved, status, preferredLanguage, 
+    financialCollection, businessUpdate, auditConfirmation, ccPM, quarterlyEmail
+    from PortfolioContactorInfo
+  </select>
+
+  <select id="selectContactListByProjId" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select contactID, portfolioID, firstNameEng, lastNameEng, firstNameChi, lastNameChi,
+    title, email, officeNo, mobileNo, faxNo, address, nickName, createdBy, createdDate,
+    modifiedBy, modifiedDate, emailContactorType, approved, status, preferredLanguage,
+    financialCollection, businessUpdate, auditConfirmation, ccPM, quarterlyEmail
+    from PortfolioContactorInfo where portfolioID = #{portfolioID,jdbcType=NVARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.SpvportfolioinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Spvportfolioinfo" >
+    <id column="spvPortfolioID" property="spvportfolioid" jdbcType="INTEGER" />
+    <result column="spvID" property="spvid" jdbcType="NVARCHAR" />
+    <result column="spvName" property="spvName" jdbcType="NVARCHAR" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="NVARCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="fundID" property="fundid" jdbcType="NVARCHAR" />
+    <result column="fundFamilyName" property="fundfamilyname" jdbcType="NVARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from SPVPortfolioInfo
+    where spvPortfolioID = #{spvportfolioid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Spvportfolioinfo" >
+    insert into SPVPortfolioInfo (spvID, portfolioID,
+      remarks, createdBy, createdDate, 
+      modifiedBy, modifiedDate, approved, 
+      fundID, fundFamilyName)
+    values (#{spvid,jdbcType=NVARCHAR}, #{portfolioid,jdbcType=NVARCHAR},
+      #{remarks,jdbcType=NVARCHAR}, #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=DATE}, 
+      #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE}, #{approved,jdbcType=BIT}, 
+      #{fundid,jdbcType=NVARCHAR}, #{fundfamilyname,jdbcType=NVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Spvportfolioinfo" >
+    update SPVPortfolioInfo
+    set spvID = #{spvid,jdbcType=NVARCHAR},
+      portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      remarks = #{remarks,jdbcType=NVARCHAR},
+      modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      fundID = #{fundid,jdbcType=NVARCHAR},
+      fundFamilyName = #{fundfamilyname,jdbcType=NVARCHAR}
+    where spvPortfolioID = #{spvportfolioid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select spvPortfolioID, spvID, portfolioID, remarks, createdBy, createdDate, modifiedBy, 
+    modifiedDate, approved, fundID, fundFamilyName
+    from SPVPortfolioInfo
+    where spvPortfolioID = #{spvportfolioid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select spvPortfolioID, spvID, portfolioID, remarks, createdBy, createdDate, modifiedBy, 
+    modifiedDate, approved, fundID, fundFamilyName
+    from SPVPortfolioInfo
+  </select>
+
+  <select id="selectSpvByPortfolio" parameterType="com.idgcapital.ufund.model.Spvportfolioinfo" resultMap="BaseResultMap">
+     select b.spvName,p.* from SPVBasicInfo b left join SPVPortfolioInfo p on  b.spvID = p.spvID
+     where 1=1
+    <if test="fundfamilyname != null">
+      and p.fundFamilyName = #{fundFamilyName,jdbcType=NVARCHAR}
+    </if>
+    <if test="fundid != null">
+      and p.fundid = #{fundid,jdbcType=NVARCHAR}
+    </if>
+    <if test="portfolioid != null">
+      and p.portfolioid = #{portfolioid,jdbcType=NVARCHAR}
+    </if>
+    order by modifieddate desc
+  </select>
+
+  <delete id="deleteSPVByPortfolioId" parameterType="java.lang.String">
+    delete from SPVPortfolioInfo where portfolioID = #{portfolioid,jdbcType=NVARCHAR}
+  </delete>
+
+</mapper>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.PortfoliosharestructureMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Portfoliosharestructure" >
+    <id column="shareCaptialID" property="sharecaptialid" jdbcType="INTEGER" />
+    <result column="portfolioID" property="portfolioid" jdbcType="NVARCHAR" />
+    <result column="fundID" property="fundid" jdbcType="NVARCHAR" />
+    <result column="EIID" property="eiid" jdbcType="NVARCHAR" />
+    <result column="shareType" property="sharetype" jdbcType="NVARCHAR" />
+    <result column="shareOwner" property="shareowner" jdbcType="NVARCHAR" />
+    <result column="abbName" property="abbname" jdbcType="NVARCHAR" />
+    <result column="round" property="round" jdbcType="NVARCHAR" />
+    <result column="closeDate" property="closedate" jdbcType="DATE" />
+    <result column="liquidationPreference" property="liquidationpreference" jdbcType="NVARCHAR" />
+    <result column="conversionRatio" property="conversionratio" jdbcType="NVARCHAR" />
+    <result column="securityTypeID" property="securitytypeid" jdbcType="INTEGER" />
+    <result column="shareOwnedNo" property="shareownedno" jdbcType="NUMERIC" />
+    <result column="cost" property="cost" jdbcType="DECIMAL" />
+    <result column="otherFees" property="otherfees" jdbcType="DECIMAL" />
+    <result column="value" property="value" jdbcType="DECIMAL" />
+    <result column="lastUpdateDate" property="lastupdatedate" jdbcType="DATE" />
+    <result column="remarks" property="remarks" jdbcType="NVARCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="preMoney" property="premoney" jdbcType="DECIMAL" />
+    <result column="currentRound" property="currentround" jdbcType="NUMERIC" />
+    <result column="postMoney" property="postmoney" jdbcType="NUMERIC" />
+    <result column="currency" property="currency" jdbcType="NVARCHAR" />
+    <result column="USD_RMB_Rate" property="usdRmbRate" jdbcType="DOUBLE" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="investmentAmount" property="investmentamount" jdbcType="DECIMAL" />
+    <result column="amountToFund" property="amounttofund" jdbcType="DECIMAL" />
+    <result column="Comments" property="comments" jdbcType="NVARCHAR" />
+    <result column="rid" property="rid" jdbcType="NUMERIC" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="investType" property="investtype" jdbcType="NVARCHAR" />
+    <result column="PIC" property="pic" jdbcType="DECIMAL" />
+    <result column="warrantID" property="warrantid" jdbcType="NVARCHAR" />
+    <result column="costRealization" property="costrealization" jdbcType="DECIMAL" />
+    <result column="totalShareOwnedNo" property="totalshareownedno" jdbcType="NUMERIC" />
+    <result column="proper" property="proper" jdbcType="DECIMAL" />
+    <result column="properWithoutESOP" property="properwithoutesop" jdbcType="DECIMAL" />
+    <result column="totalCost" property="totalcost" jdbcType="DECIMAL" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from PortfolioShareStructure
+    where shareCaptialID = #{sharecaptialid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Portfoliosharestructure" >
+    insert into PortfolioShareStructure ( portfolioID, fundID,
+      EIID, shareType, shareOwner, 
+      abbName, round, closeDate, 
+      liquidationPreference, conversionRatio, 
+      securityTypeID, shareOwnedNo, cost, 
+      otherFees, value, lastUpdateDate, 
+      remarks, createdBy, createdDate, 
+      modifiedBy, modifiedDate, preMoney, 
+      currentRound, postMoney, currency, 
+      USD_RMB_Rate, approved, investmentAmount, 
+      amountToFund, Comments, rid, 
+      id, investType, PIC, 
+      warrantID, costRealization, totalShareOwnedNo, 
+      proper, properWithoutESOP, totalCost
+      )
+    values ( #{portfolioid,jdbcType=NVARCHAR}, #{fundid,jdbcType=NVARCHAR},
+      #{eiid,jdbcType=NVARCHAR}, #{sharetype,jdbcType=NVARCHAR}, #{shareowner,jdbcType=NVARCHAR}, 
+      #{abbname,jdbcType=NVARCHAR}, #{round,jdbcType=NVARCHAR}, #{closedate,jdbcType=DATE}, 
+      #{liquidationpreference,jdbcType=NVARCHAR}, #{conversionratio,jdbcType=NVARCHAR}, 
+      #{securitytypeid,jdbcType=INTEGER}, #{shareownedno,jdbcType=NUMERIC}, #{cost,jdbcType=DECIMAL}, 
+      #{otherfees,jdbcType=DECIMAL}, #{value,jdbcType=DECIMAL}, #{lastupdatedate,jdbcType=DATE}, 
+      #{remarks,jdbcType=NVARCHAR}, #{createdby,jdbcType=NCHAR}, #{createddate,jdbcType=DATE}, 
+      #{modifiedby,jdbcType=NCHAR}, #{modifieddate,jdbcType=DATE}, #{premoney,jdbcType=DECIMAL}, 
+      #{currentround,jdbcType=NUMERIC}, #{postmoney,jdbcType=NUMERIC}, #{currency,jdbcType=NVARCHAR}, 
+      #{usdRmbRate,jdbcType=DOUBLE}, #{approved,jdbcType=BIT}, #{investmentamount,jdbcType=DECIMAL}, 
+      #{amounttofund,jdbcType=DECIMAL}, #{comments,jdbcType=NVARCHAR}, #{rid,jdbcType=NUMERIC}, 
+      #{id,jdbcType=INTEGER}, #{investtype,jdbcType=NVARCHAR}, #{pic,jdbcType=DECIMAL}, 
+      #{warrantid,jdbcType=NVARCHAR}, #{costrealization,jdbcType=DECIMAL}, #{totalshareownedno,jdbcType=NUMERIC}, 
+      #{proper,jdbcType=DECIMAL}, #{properwithoutesop,jdbcType=DECIMAL}, #{totalcost,jdbcType=DECIMAL}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Portfoliosharestructure" >
+    update PortfolioShareStructure
+    set portfolioID = #{portfolioid,jdbcType=NVARCHAR},
+      fundID = #{fundid,jdbcType=NVARCHAR},
+      EIID = #{eiid,jdbcType=NVARCHAR},
+      shareType = #{sharetype,jdbcType=NVARCHAR},
+      shareOwner = #{shareowner,jdbcType=NVARCHAR},
+      abbName = #{abbname,jdbcType=NVARCHAR},
+      round = #{round,jdbcType=NVARCHAR},
+      closeDate = #{closedate,jdbcType=DATE},
+      liquidationPreference = #{liquidationpreference,jdbcType=NVARCHAR},
+      conversionRatio = #{conversionratio,jdbcType=NVARCHAR},
+      securityTypeID = #{securitytypeid,jdbcType=INTEGER},
+      shareOwnedNo = #{shareownedno,jdbcType=NUMERIC},
+      cost = #{cost,jdbcType=DECIMAL},
+      otherFees = #{otherfees,jdbcType=DECIMAL},
+      value = #{value,jdbcType=DECIMAL},
+      lastUpdateDate = #{lastupdatedate,jdbcType=DATE},
+      remarks = #{remarks,jdbcType=NVARCHAR},
+      createdBy = #{createdby,jdbcType=NCHAR},
+      createdDate = #{createddate,jdbcType=DATE},
+      modifiedBy = #{modifiedby,jdbcType=NCHAR},
+      modifiedDate = #{modifieddate,jdbcType=DATE},
+      preMoney = #{premoney,jdbcType=DECIMAL},
+      currentRound = #{currentround,jdbcType=NUMERIC},
+      postMoney = #{postmoney,jdbcType=NUMERIC},
+      currency = #{currency,jdbcType=NVARCHAR},
+      USD_RMB_Rate = #{usdRmbRate,jdbcType=DOUBLE},
+      approved = #{approved,jdbcType=BIT},
+      investmentAmount = #{investmentamount,jdbcType=DECIMAL},
+      amountToFund = #{amounttofund,jdbcType=DECIMAL},
+      Comments = #{comments,jdbcType=NVARCHAR},
+      rid = #{rid,jdbcType=NUMERIC},
+      id = #{id,jdbcType=INTEGER},
+      investType = #{investtype,jdbcType=NVARCHAR},
+      PIC = #{pic,jdbcType=DECIMAL},
+      warrantID = #{warrantid,jdbcType=NVARCHAR},
+      costRealization = #{costrealization,jdbcType=DECIMAL},
+      totalShareOwnedNo = #{totalshareownedno,jdbcType=NUMERIC},
+      proper = #{proper,jdbcType=DECIMAL},
+      properWithoutESOP = #{properwithoutesop,jdbcType=DECIMAL},
+      totalCost = #{totalcost,jdbcType=DECIMAL}
+    where shareCaptialID = #{sharecaptialid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select shareCaptialID, portfolioID, fundID, EIID, shareType, shareOwner, abbName, 
+    round, closeDate, liquidationPreference, conversionRatio, securityTypeID, shareOwnedNo, 
+    cost, otherFees, value, lastUpdateDate, remarks, createdBy, createdDate, modifiedBy, 
+    modifiedDate, preMoney, currentRound, postMoney, currency, USD_RMB_Rate, approved, 
+    investmentAmount, amountToFund, Comments, rid, id, investType, PIC, warrantID, costRealization, 
+    totalShareOwnedNo, proper, properWithoutESOP, totalCost
+    from PortfolioShareStructure
+    where shareCaptialID = #{sharecaptialid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select shareCaptialID, portfolioID, fundID, EIID, shareType, shareOwner, abbName, 
+    round, closeDate, liquidationPreference, conversionRatio, securityTypeID, shareOwnedNo, 
+    cost, otherFees, value, lastUpdateDate, remarks, createdBy, createdDate, modifiedBy, 
+    modifiedDate, preMoney, currentRound, postMoney, currency, USD_RMB_Rate, approved, 
+    investmentAmount, amountToFund, Comments, rid, id, investType, PIC, warrantID, costRealization, 
+    totalShareOwnedNo, proper, properWithoutESOP, totalCost
+    from PortfolioShareStructure
+  </select>
+  <select id="selectCapTableByRound" resultType="com.idgcapital.ufund.model.Portfoliosharestructure" resultMap="BaseResultMap">
+    select shareCaptialID, portfolioID, fundID, EIID, shareType, shareOwner, abbName,
+    round, closeDate, liquidationPreference, conversionRatio, securityTypeID, shareOwnedNo,
+    cost, otherFees, value, lastUpdateDate, remarks, createdBy, createdDate, modifiedBy,
+    modifiedDate, preMoney, currentRound, postMoney, currency, USD_RMB_Rate, approved,
+    investmentAmount, amountToFund, Comments, rid, id, investType, PIC, warrantID, costRealization,
+    totalShareOwnedNo, proper, properWithoutESOP, totalCost
+    from PortfolioShareStructure
+    where portfolioID = #{portfolioid}
+    AND fundID = #{fundid}
+    AND securityTypeID = #{securitytypeid}
+    AND round = #{round}
+  </select>
+</mapper>

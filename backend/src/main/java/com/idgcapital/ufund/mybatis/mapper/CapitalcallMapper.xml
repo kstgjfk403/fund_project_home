@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idgcapital.ufund.mybatis.dao.CapitalcallMapper" >
+  <resultMap id="BaseResultMap" type="com.idgcapital.ufund.model.Capitalcall" >
+    <id column="callID" property="callid" jdbcType="NVARCHAR" />
+    <result column="fundID" property="fundid" jdbcType="NVARCHAR" />
+    <result column="calledDate" property="calleddate" jdbcType="DATE" />
+    <result column="calledPecentage" property="calledpecentage" jdbcType="DECIMAL" />
+    <result column="dueDate" property="duedate" jdbcType="DATE" />
+    <result column="calledPurpose" property="calledpurpose" jdbcType="NVARCHAR" />
+    <result column="status" property="status" jdbcType="NVARCHAR" />
+    <result column="createdBy" property="createdby" jdbcType="NVARCHAR" />
+    <result column="createdDate" property="createddate" jdbcType="DATE" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="NVARCHAR" />
+    <result column="modifiedDate" property="modifieddate" jdbcType="DATE" />
+    <result column="callOrder" property="callorder" jdbcType="INTEGER" />
+    <result column="approved" property="approved" jdbcType="BIT" />
+    <result column="totalCallAmount" property="totalcallamount" jdbcType="DECIMAL" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CapitalCall
+    where callID = #{callid,jdbcType=NVARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.idgcapital.ufund.model.Capitalcall" >
+    insert into CapitalCall (callID, fundID, calledDate,
+    calledPecentage, dueDate, calledPurpose,
+    status, createdBy, createdDate,
+    modifiedBy, modifiedDate, callOrder,
+    approved, totalCallAmount)
+    values (#{callid,jdbcType=NVARCHAR}, #{fundid,jdbcType=NVARCHAR}, #{calleddate,jdbcType=DATE},
+    #{calledpecentage,jdbcType=DECIMAL}, #{duedate,jdbcType=DATE}, #{calledpurpose,jdbcType=NVARCHAR},
+    #{status,jdbcType=NVARCHAR}, #{createdby,jdbcType=NVARCHAR}, #{createddate,jdbcType=DATE},
+    #{modifiedby,jdbcType=NVARCHAR}, #{modifieddate,jdbcType=DATE}, #{callorder,jdbcType=INTEGER},
+    #{approved,jdbcType=BIT}, #{totalcallamount,jdbcType=DECIMAL})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.idgcapital.ufund.model.Capitalcall" >
+    update CapitalCall
+    set fundID = #{fundid,jdbcType=NVARCHAR},
+    calledDate = #{calleddate,jdbcType=DATE},
+    calledPecentage = #{calledpecentage,jdbcType=DECIMAL},
+    dueDate = #{duedate,jdbcType=DATE},
+    calledPurpose = #{calledpurpose,jdbcType=NVARCHAR},
+    status = #{status,jdbcType=NVARCHAR},
+    createdBy = #{createdby,jdbcType=NVARCHAR},
+    createdDate = #{createddate,jdbcType=DATE},
+    modifiedBy = #{modifiedby,jdbcType=NVARCHAR},
+    modifiedDate = #{modifieddate,jdbcType=DATE},
+    callOrder = #{callorder,jdbcType=INTEGER},
+    approved = #{approved,jdbcType=BIT},
+    totalCallAmount = #{totalcallamount,jdbcType=DECIMAL}
+    where callID = #{callid,jdbcType=NVARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select callID, fundID, calledDate, calledPecentage, dueDate, calledPurpose, status,
+    createdBy, createdDate, modifiedBy, modifiedDate, callOrder, approved, totalCallAmount
+    from CapitalCall
+    where callID = #{callid,jdbcType=NVARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select callID, fundID, calledDate, calledPecentage, dueDate, calledPurpose, status,
+    createdBy, createdDate, modifiedBy, modifiedDate, callOrder, approved, totalCallAmount
+    from CapitalCall
+  </select>
+  <select id="selectCapitalCallEntityList" parameterType="com.idgcapital.ufund.model.Capitalcall" resultType="HashMap">
+    SELECT  TOP (#{pageCount,jdbcType=INTEGER})
+    w1.callID, w1.fundID, w1.calledDate, w1.calledPecentage, w1.dueDate, w1.calledPurpose, w1.status,
+    w1.createdBy, w1.createdDate, w1.modifiedBy, w1.modifiedDate, w1.callOrder, w1.approved, w1.totalCallAmount,
+    w2.fundFamillyName, w2.fundName, w2.fundFullNameEng, w2.fundFullNameChi
+    FROM CapitalCall w1,
+    (SELECT f.fundId, f.fundFamillyName, f.fundName, f.fundFullNameEng, f.fundFullNameChi FROM FundBasicInfo f
+    where validFlag ='1'
+    <if test=" fundfamillyname != null and fundfamillyname != '' ">
+      and  lower(f.fundfamillyname) like lower('%${fundfamillyname}%')
+    </if>
+    <if test=" fundname != null and fundname != '' ">
+      and  lower(f.fundname) like lower('%${fundname}%')
+    </if>
+    <if test=" fundfullnameeng != null and fundfullnameeng != '' ">
+      and  lower(f.fundfullnameeng) like lower('%${fundfullnameeng}%')
+    </if>
+    <if test=" fundfullnamechi != null and fundfullnamechi != '' ">
+      and  lower(f.fundfullnamechi) like lower(N'%${fundfullnamechi}%')
+    </if>
+    ) w2
+    WHERE w1.fundId = w2.fundId
+    AND w1.callID not in
+    (SELECT   TOP (#{pageStart,jdbcType=INTEGER})
+    t1.callID
+    FROM CapitalCall t1,
+    (SELECT f1.fundId, f1.fundFamillyName, f1.fundName, f1.fundFullNameEng, f1.fundFullNameChi FROM FundBasicInfo f1
+    where f1.validFlag ='1'
+    <if test=" fundfamillyname != null and fundfamillyname != '' ">
+      and  lower(f1.fundfamillyname) like lower('%${fundfamillyname}%')
+    </if>
+    <if test=" fundname != null and fundname != '' ">
+      and  lower(f1.fundname) like lower('%${fundname}%')
+    </if>
+    <if test=" fundfullnameeng != null and fundfullnameeng != '' ">
+      and  lower(f1.fundfullnameeng) like lower('%${fundfullnameeng}%')
+    </if>
+    <if test=" fundfullnamechi != null and fundfullnamechi != '' ">
+      and  lower(f1.fundfullnamechi) like lower(N'%${fundfullnamechi}%')
+    </if>
+    ) t2
+    WHERE t1.fundId = t2.fundId ORDER BY t1.fundID ASC, t1.calledDate DESC)
+
+    ORDER BY w1.fundID ASC, w1.calledDate DESC
+  </select>
+
+  <select id="selectCapitalCallEntityListCount" parameterType="com.idgcapital.ufund.model.Capitalcall" resultType="Long">
+    select count(1)
+    FROM CapitalCall w1,
+    (SELECT f.fundId, f.fundFamillyName, f.fundName, f.fundFullNameEng, f.fundFullNameChi FROM FundBasicInfo f
+    where validFlag ='1'
+    <if test=" fundfamillyname != null and fundfamillyname != '' ">
+      and  lower(f.fundfamillyname) like lower('%${fundfamillyname}%')
+    </if>
+    <if test=" fundname != null and fundname != '' ">
+      and  lower(f.fundname) like lower('%${fundname}%')
+    </if>
+    <if test=" fundfullnameeng != null and fundfullnameeng != '' ">
+      and  lower(f.fundfullnameeng) like lower('%${fundfullnameeng}%')
+    </if>
+    <if test=" fundfullnamechi != null and fundfullnamechi != '' ">
+      and  lower(f.fundfullnamechi) like lower(N'%${fundfullnamechi}%')
+    </if>
+    ) w2
+    WHERE w1.fundId = w2.fundId
+  </select>
+
+  <select id="selectMaxCallId" parameterType="com.idgcapital.ufund.model.Capitalcall" resultType="java.lang.String">
+    select max(w1.callId)
+    FROM CapitalCall w1
+
+    WHERE w1.fundId = #{fundid,jdbcType=NVARCHAR}
+  </select>
+
+  <select id="selectLpCommitmentInfoList" parameterType="com.idgcapital.ufund.model.Capitalcall" resultType="HashMap">
+    select a.fundID, a.LPID, a.LPCommitmentNum, b.totalCommitmentNum, a.LPCommitmentNum/b.totalCommitmentNum as LPCommitmentPerc,
+           b.fundFullNameEng
+    from
+    (
+      select c.fundID, c.LPID, SUM(c.commitmentNum) as LPCommitmentNum
+      from CapitalCommitment c, LPBasicInfo b
+      where c.LPID = b.LPID
+        and c.commitmentDate <![CDATA[<=]]> #{calleddate,jdbcType=DATE}
+      <if test=" erisastatus != null and erisastatus == 'erisaonly' ">
+          and  b.ERISA = 1
+      </if>
+      <if test=" erisastatus != null and erisastatus == 'excludeerisa' ">
+          and  b.ERISA = 0
+      </if>
+
+      group by c.fundID, c.LPID
+    ) a, fundBasicInfo b
+    where a.fundID = b.fundID
+    and a.fundID = #{fundid,jdbcType=NVARCHAR}
+  </select>
+
+</mapper>
