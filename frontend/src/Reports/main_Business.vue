@@ -17,7 +17,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" size="mini" @click="searchSubmit('searchForm')">查询</el-button>
-                <el-button type="primary" size="mini" v-loading="downloading" @click="myGetPdf()">导出PDF</el-button>
+                <el-button type="primary" size="mini" v-loading="downloading" @click="myGetPdf()" title="导出pdf时:目标打印机选择另存为pdf,并点击保存">打印或导出PDF</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -35,14 +35,14 @@
         </tr>
         <template v-for="(item,index) in searchData">
         <tr  class="borderTop">
-            <td style="padding-top:30px;"><img style="height:50px;min-height:55px;" :src="baseurl+item.logo"></td>
+            <td style="padding-top:15px;"><img style="height:45px;min-height:45px;" :src="baseurl+item.logo"></td>
             <td rowspan="8" style="vertical-align: middle;">{{item.oneLineDesc}}</td>
         </tr>
         <tr>
-            <td >{{item.reportName}}</td>
+            <td style="font-weight:bold;">{{item.reportName}}</td>
         </tr>
         <tr>
-            <td>http://www.cjia.com/</td>
+            <td >http://www.cjia.com/</td>
         </tr>
         <tr>
             <td>Sector | Sub-Sector: TMT | Consumer & O2O</td>
@@ -57,14 +57,14 @@
             <td>Board Seat: {{item.IDGOnBoard=="1"?"Yes":"NO"}}</td>
         </tr>
         <tr>
-            <td style="padding-bottom:20px;">Status: Private</td>
+            <td style="padding-bottom:12px;">Status: Private</td>
         </tr>
         </template>
         <tr>
-            <td colspan="2" style="text-align:center; color: rgb(185, 58, 58);border-top:1px solid #000; padding-top:20px; font-weight:800;">IDG Capital</td>
+            <td colspan="2" style="text-align:center; color: rgb(185, 58, 58);border-top:1px solid #000; padding-top:15px; font-weight:800;">IDG Capital</td>
         </tr>
          <tr>
-            <td colspan="2" style="text-align:center; color:rgb(180, 184, 187);padding-bottom:52px;">Confidential & Proprietary</td>
+            <td colspan="2" style="text-align:center; color:rgb(180, 184, 187);padding-bottom:15px;">Confidential & Proprietary</td>
         </tr>
 
         
@@ -85,7 +85,7 @@ import JsPDF from 'jspdf'
     data() {
       return {
         fundList:[],
-        baseurl:"",
+        baseurl:"",//http://localhost:8080
         downloading:false,
         searchForm:{
             fundId:'F0022',
@@ -153,6 +153,7 @@ import JsPDF from 'jspdf'
             return result;
         },
         myGetPdf(){
+            window.print();return;
             let PDF = new JsPDF('', 'pt', 'a4');
 
             //先完成一个table的转换
@@ -168,12 +169,6 @@ import JsPDF from 'jspdf'
             canvas.height = height * scale;
             let context = canvas.getContext('2d'); 
             context.scale(scale, scale); 
-
-            /* 关闭抗锯齿 */
-            // context.mozImageSmoothingEnabled = true;
-            // context.webkitImageSmoothingEnabled = true;
-            // context.msImageSmoothingEnabled = true;
-            // context.imageSmoothingEnabled = true;
 
             /* canvas转换选项 */
             let opts = {
@@ -213,12 +208,6 @@ import JsPDF from 'jspdf'
             covert().then(function(){
                 PDF.save('text' + '.pdf');
             })
-            
-            
-            
-
-
-
         },         
         /* 数据搜索 end */
         getPdf () {
@@ -307,23 +296,26 @@ import JsPDF from 'jspdf'
        margin:auto
     }
     .mytable{                        
-        width:982px;
-        margin:auto; 
+        width:800px;
+        margin:auto;
+         
         td,th{
-            box-sizing: border-box;           
-            padding:5px;
+            box-sizing: border-box;
             color:#000;
             font-family: STSong;            
             /*border:1px solid #ebeef5;*/ 
         }
         td{
-            font-size:16px;
-            line-height:16px;
+            font-size:14px;
+            line-height:14px;
+            padding-top:2px;
+            padding-bottom:2px;
         }
         th{
             text-align:right;
             height:20px;
             line-height:20px;
+            padding:5px;
         }
         td:nth-of-type(5){
             text-align:center;
@@ -336,11 +328,42 @@ import JsPDF from 'jspdf'
             border-top:1px solid #000;
         }
         .firstPage{
-            padding-top:0px;//60
+            padding-top:10px;//60
         }
         .pageSpace{
-            padding-top:0px;//60
+            padding-top:10px;//60
+            border-top:1px dashed #000;
         }
     }
+    @media print {
+        .mysearch,#app>div>div:nth-of-type(1){
+            display:none!important;
+        }
+        .mytable{
+            page-break-after: always;
+            /* margin-top:30px; */
+            width:700px!important;
+        }
+        .mytable td, .mytable th{
+            font-family: 'Times New Roman', Times, serif;
+        }     
+        #pdfDom{
+            margin-left:10px;
+            font-family: 'Times New Roman'!important;
+        }
+        .pageSpace{
+            border-top:0px!important;
+        }
+        @page { 
+            size: A4 portrait;             
+        }
+        @page { 
+            margin-right:20px;             
+        }
+    
+    }
+    
+    
+ 
     
 </style>

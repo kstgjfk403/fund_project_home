@@ -205,7 +205,7 @@ export default {
         this.$router.push({ path: "addproject", query:{portfolioid:id,path:'editor'}})
       },
       handleAvatarSuccess(res, file) {
-        //this.imageUrl = URL.createObjectURL(file.raw);
+        this.imageUrl = URL.createObjectURL(file.raw);
         this.requestdetails(this.$route.query.portfolioid);
       },
       beforeAvatarUpload(file) {

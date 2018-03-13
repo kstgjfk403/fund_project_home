@@ -14,6 +14,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" size="mini" @click="searchSubmit('searchForm')">查询</el-button>
+                <!-- <el-button type="primary" size="mini" @click="myGetPdf()" title="导出pdf时:目标打印机选择另存为pdf,并点击保存">打印或导出PDF</el-button> -->
             </el-form-item>
         </el-form>
     </div>
@@ -158,6 +159,9 @@ import Header from "@/components/common/Header";
             });    
         },
         /* 数据搜索 end */
+        myGetPdf(){
+            window.print();
+        },
                 
     }
     
@@ -221,6 +225,7 @@ import Header from "@/components/common/Header";
             display:inline-block;
             position:absolute;
             left:0px;
+
         }
         .positionRelative{
             position: relative;

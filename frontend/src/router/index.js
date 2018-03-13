@@ -3,9 +3,7 @@
  import store from '@/vuex/store'
  Vue.use(Router)
  import Listpage from '../components/Listpage'
-//  const Listpage = resolve => require(['../components/Listpage'],resolve)
  import Detail from '../components/Detail'
-//  const Detail = resolve => require(['../components/Detail'],resolve)
  import Addproject from '../components/Addproject'
  import FundListpage from '../DollarFund/Listpage'
  import FundDetail from '../DollarFund/Detail'

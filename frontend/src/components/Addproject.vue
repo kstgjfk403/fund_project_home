@@ -6,172 +6,171 @@
     <el-form :label-position="labelposition" :model="formData" :rules="rules" ref="userform">
         <h3>Essential information </h3>
         <div class="base-info-container">
-            <div class="baseinfo-left">
-                <el-form-item label="Project Name" prop="abbname">
-                    <el-input v-model="formData.abbname"></el-input>
-                </el-form-item>
-                <el-form-item label="Company Legal Name" prop="fullname">
-                    <el-input v-model="formData.fullname"></el-input>
-                </el-form-item>
-                <el-form-item label="Report Name" prop="reportname">
-                    <el-input v-model="formData.reportname"></el-input>
-                </el-form-item>
-                <el-form-item label="Portfolio Status" prop="portfoliostatus">
-                    <el-select v-model="formData.portfoliostatus">
-                    <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.DDL_PortfolioStatus"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="IDG Role(Lead/Co-invest)">
-                    <el-select v-model="formData.idgroleid">
-                        <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.DDL_IDGRole"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="Initial Role" multiple>
-                    <el-select v-model="formData.initialroleid">
-                        <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.DDL_InitialRole"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="Industry Sector" prop="sectorid">
-                    <el-select v-model="formData.sectorid" filterable  @change="togetherChange">
-                        <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.DDL_Sector"></el-option>
-                    </el-select>
-                </el-form-item>
+          <div class="baseinfo-left">
+            <el-form-item label="Project Name" prop="abbname">
+              <el-input v-model="formData.abbname"></el-input>
+            </el-form-item>
+            <el-form-item label="Company Legal Name" prop="fullname">
+              <el-input v-model="formData.fullname"></el-input>
+            </el-form-item>
+            <el-form-item label="Report Name" prop="reportname">
+              <el-input v-model="formData.reportname"></el-input>
+            </el-form-item>
+            <el-form-item label="Portfolio Status" prop="portfoliostatus">
+              <el-select v-model="formData.portfoliostatus">
+              <el-option :key="item.baseId"
+                :label="item.baseName"
+                :value="item.baseId"
+                v-for="item in dictarraylist.DDL_PortfolioStatus"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="IDG Role(Lead/Co-invest)">
+              <el-select v-model="formData.idgroleid">
+                <el-option :key="item.baseId"
+                :label="item.baseName"
+                :value="item.baseId"
+                v-for="item in dictarraylist.DDL_IDGRole"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="Initial Role" multiple>
+              <el-select v-model="formData.initialroleid">
+                <el-option :key="item.baseId"
+                :label="item.baseName"
+                :value="item.baseId"
+                v-for="item in dictarraylist.DDL_InitialRole"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="Industry Sector" prop="sectorid">
+              <el-select v-model="formData.sectorid" filterable  @change="togetherChange">
+                <el-option :key="item.baseId"
+                :label="item.baseName"
+                :value="item.baseId"
+                v-for="item in dictarraylist.DDL_Sector"></el-option>
+              </el-select>
+            </el-form-item>
 
-                <el-form-item label="Anticipated Exit">
-                    <el-select v-model="formData.antidilutionid">
-                    <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.DDL_AntiDilution"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="Incorporated In">
-                    <el-select v-model="formData.locationid">
-                    <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.DDL_IncorpLocation"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="Company Register No." prop="registerno">
-                    <el-input v-model="formData.registerno"></el-input>
-                </el-form-item>
+            <el-form-item label="Anticipated Exit">
+              <el-select v-model="formData.antidilutionid">
+              <el-option :key="item.baseId"
+                :label="item.baseName"
+                :value="item.baseId"
+                v-for="item in dictarraylist.DDL_AntiDilution"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="Incorporated In">
+              <el-select v-model="formData.locationid">
+              <el-option :key="item.baseId"
+                :label="item.baseName"
+                :value="item.baseId"
+                v-for="item in dictarraylist.DDL_IncorpLocation"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="Company Register No." prop="registerno">
+              <el-input v-model="formData.registerno"></el-input>
+            </el-form-item>
 
-                <el-form-item label="Financial YTD">
-                    <el-select v-model="formData.ytd" filterable>
-                        <el-option :key="item.baseId"
-                        :label="item.baseId"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.YTD"></el-option>
-                    </el-select>
-                </el-form-item>
-            </div>
-            <div class="baseinfo-right">
-                <el-form-item label="Portfolio Chinese Name" prop="abbnamechi">
-                    <el-input v-model="formData.abbnamechi"></el-input>
-                </el-form-item>
-                <el-form-item label="Company Chinese Name" prop="fullnamechi">
-                    <el-input v-model="formData.fullnamechi"></el-input>
-                </el-form-item>
-                <el-form-item label="CEO" prop="ceo">
-                    <el-input v-model="formData.ceo"></el-input>
-                </el-form-item>
-                <el-form-item label="Portfolio Status Date" prop='portfoliostatusdate'>
-                    <el-date-picker v-model="formData.portfoliostatusdate" type="date"></el-date-picker>
-                </el-form-item>
-                <el-form-item label="Initial Stage">
-                    <el-select v-model="formData.stageid">
-                    <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.DDL_Stage"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="IDG First Investment">
-                    <el-select v-model="formData.firstinvestid">
-                    <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.DDL_IDGFirstInvest"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="Sub Sector" prop="subsectorid">
-                    <el-select v-model="formData.subsectorid">
-                    <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in subsectorlist"></el-option>
-                    </el-select>
-                </el-form-item>
+            <el-form-item label="Financial YTD">
+              <el-select v-model="formData.ytd" filterable>
+                <el-option :key="item.baseId"
+                :label="item.baseId"
+                :value="item.baseId"
+                v-for="item in dictarraylist.YTD"></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+          <div class="baseinfo-right">
+            <el-form-item label="Portfolio Chinese Name" prop="abbnamechi">
+              <el-input v-model="formData.abbnamechi"></el-input>
+            </el-form-item>
+            <el-form-item label="Company Chinese Name" prop="fullnamechi">
+              <el-input v-model="formData.fullnamechi"></el-input>
+            </el-form-item>
+            <el-form-item label="CEO" prop="ceo">
+              <el-input v-model="formData.ceo"></el-input>
+            </el-form-item>
+            <el-form-item label="Portfolio Status Date" prop='portfoliostatusdate'>
+              <el-date-picker v-model="formData.portfoliostatusdate" type="date"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="Initial Stage">
+              <el-select v-model="formData.stageid">
+              <el-option :key="item.baseId"
+                :label="item.baseName"
+                :value="item.baseId"
+                v-for="item in dictarraylist.DDL_Stage"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="IDG First Investment">
+              <el-select v-model="formData.firstinvestid">
+              <el-option :key="item.baseId"
+                :label="item.baseName"
+                :value="item.baseId"
+                v-for="item in dictarraylist.DDL_IDGFirstInvest"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="Sub Sector" prop="subsectorid">
+              <el-select v-model="formData.subsectorid">
+              <el-option :key="item.baseId"
+                :label="item.baseName"
+                :value="item.baseId"
+                v-for="item in subsectorlist"></el-option>
+              </el-select>
+            </el-form-item>
 
-                <el-form-item label="Fund of Fund" prop="fundoffund">
-                    <el-checkbox-group v-model="formData.fundoffund">
-                        <el-checkbox label="" value="true" name="type"></el-checkbox>
-                    </el-checkbox-group>
-                </el-form-item>
-                <el-form-item label="Year of Incorpration">
-                    <el-date-picker v-model="formData.foundeddate"
-                      align="right"
-                      type="year" format="yyyy" value-format="yyyy-MM-dd">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item label="Investment structure legal form">
-                    <el-select v-model="formData.formid">
-                    <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.DDL_CompanyLegalForm"></el-option>
-                    </el-select>
-                </el-form-item>
-            </div>
+            <el-form-item label="Fund of Fund" prop="fundoffund">
+              <el-checkbox-group v-model="formData.fundoffund">
+                <el-checkbox label="" value="true" name="type"></el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
+            <el-form-item label="Year of Incorpration">
+              <el-date-picker v-model="formData.foundeddate"
+                align="right"
+                type="year" format="yyyy" value-format="yyyy-MM-dd">
+              </el-date-picker>
+            </el-form-item>
+            <el-form-item label="Investment structure legal form">
+              <el-select v-model="formData.formid">
+              <el-option :key="item.baseId"
+                :label="item.baseName"
+                :value="item.baseId"
+                v-for="item in dictarraylist.DDL_CompanyLegalForm"></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
         </div>
         <h3>Personnel information</h3>
         <div class="base-info-container">
-            <div class="baseinfo-left">
-                <el-form-item label="Project Manager" prop="projectmanager">
-                    <el-select v-model="formData.projectmanager" multiple filterable>
-                        <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.IDG_Staff"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="Project Buddy" prop="projectbuddy">
-                    <el-select v-model="formData.projectbuddy" multiple filterable>
-                        <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.IDG_Staff"></el-option>
-                    </el-select>
-                </el-form-item>
+          <div class="baseinfo-left">
+            <el-form-item label="Project Manager" prop="projectmanager">
+              <el-select v-model="formData.projectmanager" multiple filterable>
+                <el-option :key="item.baseId"
+                :label="item.baseName"
+                :value="item.baseId"
+                v-for="item in dictarraylist.IDG_Staff"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="Project Buddy" prop="projectbuddy">
+              <el-select v-model="formData.projectbuddy" multiple filterable>
+                <el-option :key="item.baseId"
+                :label="item.baseName"
+                :value="item.baseId"
+                v-for="item in dictarraylist.IDG_Staff"></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+          <div class="baseinfo-right">
+            <el-form-item label="IDG Inhouse Counsel">
+              <el-select v-model="formData.idginhousecounsel" multiple filterable>
+                <el-option :key="item.baseId"
+                :label="item.baseName"
+                :value="item.baseId"
+                v-for="item in dictarraylist.IDG_Staff"></el-option>
+              </el-select>
+            </el-form-item>
 
-            </div>
-            <div class="baseinfo-right">
-                <el-form-item label="IDG Inhouse Counsel">
-                    <el-select v-model="formData.idginhousecounsel" multiple filterable>
-                        <el-option :key="item.baseId"
-                        :label="item.baseName"
-                        :value="item.baseId"
-                        v-for="item in dictarraylist.IDG_Staff"></el-option>
-                    </el-select>
-                </el-form-item>
-
-                <el-form-item label="Comment(Memo)">
-                    <el-input type="textarea" v-model="formData.memo"></el-input>
-                </el-form-item>
-            </div>
+            <el-form-item label="Comment(Memo)">
+              <el-input type="textarea" v-model="formData.memo"></el-input>
+            </el-form-item>
+          </div>
         </div>
         <h3>Contact information </h3>
         <div class="base-info-container">
@@ -220,14 +219,14 @@
           </el-form-item>
         </div>
         <el-form-item class="addpro-button">
-            <div v-if="opreationType=='creatuserform'">
-                <el-button type="primary" size="mini" @click="submitForm1('userform')">Submit</el-button>
-                <router-link to="listpage" style="margin-left:10px"><el-button size="mini">Return</el-button></router-link>
-            </div>
-            <div v-else>
-                <el-button type="primary" size="mini" @click="submitForm2('userform')">Submit</el-button>
-                <el-button size="mini" type="primary" @click="linktodetail">Return</el-button>
-            </div>
+          <div v-if="opreationType=='creatuserform'">
+            <el-button type="primary" size="mini" @click="submitForm1('userform')">Submit</el-button>
+            <router-link to="listpage" style="margin-left:10px"><el-button size="mini">Return</el-button></router-link>
+          </div>
+          <div v-else>
+            <el-button type="primary" size="mini" @click="submitForm2('userform')">Submit</el-button>
+            <el-button size="mini" type="primary" @click="linktodetail">Return</el-button>
+          </div>
         </el-form-item>
     </el-form>
     </div>
@@ -441,10 +440,12 @@ export default {
                 obj.idgboardrepresentative=obj.idgboardrepresentative==''?[]:obj.idgboardrepresentative.split(",");
                 obj.idginhousecounsel=obj.idginhousecounsel==''?[]:obj.idginhousecounsel.split(",")
                 obj.observer=obj.observer==''?[]:obj.observer.split(",");
-                obj.privateorpublic="Realized";
+                //obj.privateorpublic="Realized";
+                obj.portfoliostatusdate=new Date(obj.portfoliostatusdate)
                 delete obj.heldbyspvflag;
                 delete obj.heldbyspv;
                 this.formData=obj;
+                console.log(obj);
                 this.$store.dispatch('storetotalboardseatno',obj.totalboardseatno)
             }).catch((res)=>{
             })

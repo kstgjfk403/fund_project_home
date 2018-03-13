@@ -14,7 +14,8 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" size="mini" @click="searchSubmit('searchForm')">查询</el-button>
-                
+                <el-button type="primary" size="mini" @click="myGetPdf()" title="导出pdf时:目标打印机选择另存为pdf,并点击保存">打印或导出PDF</el-button>
+            
             </el-form-item>
         </el-form>
     </div>
@@ -39,7 +40,7 @@
                 
                 <th>Shares</th>
                 <th>Fully Diluted</th>
-                <th rowspan="2" style="border-bottom:4px solid #666;">&nbsp;&nbsp;</th>
+                <th rowspan="2" style="border-bottom:4px solid #666;"></th>
                 <th></th>
                 <!-- <th rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> -->
                 <th rowspan="2" style="border-bottom:4px solid #666;"></th>
@@ -70,17 +71,23 @@
                     <td>{{transTime(items.purchaseDate)}}</td>
                     <td>{{items.security}}</td>
                     <td>&nbsp;</td>
-                    <td style="text-align:right">{{mytoThousands(items.sharesOwned)}}</td>
+                    <td style="text-align:right" :class="{doubleline:items.purchaseDate==''}">{{mytoThousands(items.sharesOwned)}}</td>
                     <td>{{items.FullyDiluted}}</td>
                     <td></td>
-                    <td style="text-align:right">{{mytoThousands(items.Cost)}}</td>            
+                    <td style="text-align:right" class="textRight positionRelative symbol" :class="{doubleline:items.purchaseDate==''}">{{mytoThousands(items.Cost)}}</td>            
                     <td></td>                    
-                    <td style="text-align:right">{{mytoThousands(items.FairValue)}}</td>
+                    <td style="text-align:right" class="textRight positionRelative symbol" :class="{doubleline:items.purchaseDate==''}">{{mytoThousands(items.FairValue)}}</td>
                 </tr>
             </template>
+            <tr>
+            <td colspan="9" style="text-align:center; color: rgb(185, 58, 58);border-top:1px solid #000; font-weight:600;">IDG Capital</td>
+            </tr>
+            <tr>
+                <td colspan="9" style="text-align:center; color:rgb(180, 184, 187);">Confidential & Proprietary</td>
+            </tr>
         </table>
         <!-- private + total-->
-        <table class="mytable">
+        <!-- <table class="mytable">
             <tr>
                 <th style="text-align:right;color:#b93a3a;" colspan="10">{{tableInfoObj.fundFullName}}</th>                        
             </tr>
@@ -155,9 +162,9 @@
             <tr>
                 <th colspan="10" >&nbsp;</th>                        
             </tr>
-        </table>
+        </table> -->
         <!-- securityTotal -->
-        <table class="mytable">
+        <!-- <table class="mytable">
             <tr>
                 <th style="text-align:right;color:#b93a3a;" colspan="10">{{tableInfoObj.fundFullName}}</th>                        
             </tr>
@@ -224,7 +231,7 @@
             <tr>
                 <th colspan="10" >&nbsp;</th>                        
             </tr>
-        </table>
+        </table> -->
     </div>
     
   
@@ -325,7 +332,10 @@ import Header from "@/components/common/Header";
                 }
                 
             }
-        }
+        },
+        myGetPdf(){
+            window.print();            
+        },
     }
     
   }
@@ -335,7 +345,9 @@ import Header from "@/components/common/Header";
         margin:auto;                
         width:80%;
         /* border:1px solid #ebeef5; */
-        
+        tr:hover td, tr:hover th{
+            background-color:#f5f7fa;
+        }
         td,th{
             box-sizing: border-box;                      
             padding:5px;
@@ -390,6 +402,38 @@ import Header from "@/components/common/Header";
         .positionRelative{
             position: relative;
         }
+    }
+    /* 打印样式 */
+    @media print {
+        .mysearch,#app>div>div:nth-of-type(1){
+            display:none!important;
+        }
+        .mytable{
+            page-break-after: always;
+            /* margin-top:30px; */
+            width:700px!important;
+            margin-left:10px;
+        }
+        form{
+            display:none!important;
+        }
+        .mytable td, .mytable th{
+            font-family: 'Times New Roman', Times, serif;
+        }     
+        #pdfDom{
+            
+            font-family: 'Times New Roman'!important;
+        }
+        .pageSpace{
+            border-top:0px!important;
+        }
+        @page { 
+            size: A4 portrait;             
+        }
+        @page { 
+            margin-right:20px;             
+        }
+    
     }
     
 </style>
