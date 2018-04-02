@@ -38,11 +38,4 @@ mvn spring-boot:run
 
 https://www.ico.la/   ico图标
 
-192.168.105.11  //中文投资管理系统
-
-li_zhao
-a123123
-
-http://192.168.105.14  用户名/密码   cho_wang    ,./美元基金
-
-good
+dataTable 参数说明                               https://www.cnblogs.com/hyywaq/p/5919412.html
