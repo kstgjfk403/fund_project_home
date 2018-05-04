@@ -4,38 +4,38 @@ Bcore                                            http://www.laozuo.org/5886.html
 
 bootswitch                                       https://bootswatch.com/cerulean/
 
-10¿î»ùÓÚbootstrap µÄºóÌ¨¹ÜÀí¿ò¼Ü                 http://www.laozuo.org/5886.html
+10æ¬¾åŸºäºbootstrap çš„åå°ç®¡ç†æ¡†æ¶                 http://www.laozuo.org/5886.html
 
 metro                                            https://www.js-css.cn/divcss/admin/metro/index.html
 
-git »ñÈ¡Ô¶³ÌÖ¸¶¨·ÖÖ§ÉÏµÄ´úÂë                     https://www.cnblogs.com/phpper/p/7136048.html
+git è·å–è¿œç¨‹æŒ‡å®šåˆ†æ”¯ä¸Šçš„ä»£ç                      https://www.cnblogs.com/phpper/p/7136048.html
 
-git Ô¶³Ì·ÖÖ§´´½¨ÓëÍÆËÍ                           https://www.cnblogs.com/Camier-myNiuer/p/5558884.html
+git è¿œç¨‹åˆ†æ”¯åˆ›å»ºä¸æ¨é€                           https://www.cnblogs.com/Camier-myNiuer/p/5558884.html
 
-git É¾³ıÎÄ¼ş                                     https://www.jianshu.com/p/c3ff8f0da85e
+git åˆ é™¤æ–‡ä»¶                                     https://www.jianshu.com/p/c3ff8f0da85e
 
-Git ·ÖÖ§ - ·ÖÖ§µÄĞÂ½¨ÓëºÏ²¢£¨ÊµÕ½£©              https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF                                                    %E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6
+Git åˆ†æ”¯ - åˆ†æ”¯çš„æ–°å»ºä¸åˆå¹¶ï¼ˆå®æˆ˜ï¼‰              https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF                                                    %E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6
 
-git Éú³Éssh                                      https://www.cnblogs.com/superGG1990/p/6844952.html
+git ç”Ÿæˆssh                                      https://www.cnblogs.com/superGG1990/p/6844952.html
 
-DOMÊÂ¼şµÄ¼àÌı                                    https://davidwalsh.name/dom-events-javascript
+DOMäº‹ä»¶çš„ç›‘å¬                                    https://davidwalsh.name/dom-events-javascript
 
-Unicode ×Ö·û±àÂë°Ù¿Æ                             https://unicode-table.com/cn/#control-character
+Unicode å­—ç¬¦ç¼–ç ç™¾ç§‘                             https://unicode-table.com/cn/#control-character
 
-°Ù¶ÈÔÆ·şÎñÆ÷Ê¹ÓÃËµÃ÷£º                           https://www.cnblogs.com/ZhongChunPei/p/8127690.html
+ç™¾åº¦äº‘æœåŠ¡å™¨ä½¿ç”¨è¯´æ˜ï¼š                           https://www.cnblogs.com/ZhongChunPei/p/8127690.html
 
-h5 FormDataÔÚ±íµ¥Òì²½Ìá½»ÖĞµÄÓ¦ÓÃ¡£              https://www.cnblogs.com/lyr1213/p/6238026.html     
+h5 FormDataåœ¨è¡¨å•å¼‚æ­¥æäº¤ä¸­çš„åº”ç”¨ã€‚              https://www.cnblogs.com/lyr1213/p/6238026.html     
 
-vs code Ê¹ÓÃ¼¼ÇÉ                                 https://zhuanlan.zhihu.com/p/22880087   
+vs code ä½¿ç”¨æŠ€å·§                                 https://zhuanlan.zhihu.com/p/22880087   
 
-react Â·ÓÉ´«²ÎµÄ¼¸ÖÖ·½Ê½                         http://blog.csdn.net/qq_23158083/article/details/68488831
+react è·¯ç”±ä¼ å‚çš„å‡ ç§æ–¹å¼                         http://blog.csdn.net/qq_23158083/article/details/68488831
     
-html table±í¸ñ µ¹³Éexcel ´øÑùÊ½                  http://www.cnblogs.com/suyuanli/p/7945102.html
+html tableè¡¨æ ¼ å€’æˆexcel å¸¦æ ·å¼                  http://www.cnblogs.com/suyuanli/p/7945102.html
 
 mvn --projects backend spring-boot:run 
 
 mvn spring-boot:run
 
-https://www.ico.la/   icoÍ¼±ê
+https://www.ico.la/   icoå›¾æ ‡
 
-dataTable ²ÎÊıËµÃ÷                               https://www.cnblogs.com/hyywaq/p/5919412.html
+dataTable å‚æ•°è¯´æ˜ï¼ˆé‡è¦ï¼‰ Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  Â  https://www.cnblogs.com/hyywaq/p/5919412.html
